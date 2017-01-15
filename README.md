@@ -2,7 +2,7 @@ The CanvasCV project
 ====================
 This is an interactive canvas like drawing library for OpenCV.
 Currently only C++ is supported.
-Note also that this is a beta version and there are opened issues.
+Note also that this is not a beta version but there are known missing features and probably some API changes for the next release.
 
 What is it good for ?
 ---------------------
