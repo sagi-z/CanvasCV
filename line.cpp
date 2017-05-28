@@ -86,7 +86,7 @@ bool Line::mouseReleased(const cv::Point &pos)
 
 std::list<Handle *> Line::getConnectionTargets()
 {
-    return std::list<Handle *>();
+    return {pt1, pt2};
 }
 
 }

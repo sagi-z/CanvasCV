@@ -35,13 +35,14 @@ void help()
             "4: LineCrossing\n" <<
             "5: Quadrilateral\n" <<
             "6: Rectangle\n" <<
-            "7: ShapesConnector\n" <<
-            "8: LabeledShapesConnector\n" <<
+            "7: Ellipse\n" <<
+            "8: ShapesConnector\n" <<
+            "9: LabeledShapesConnector\n" <<
             "h: print usage message\n" <<
             "c: clear the canvas\n" <<
             "s: save to config.xml\n" <<
             "l: load from config.xml\n" <<
-            "DEL: delete active shape\n" <<
+            "d: delete active shape\n" <<
             "q: exit" << endl;
 }
 
@@ -95,9 +96,12 @@ int main(int argc, char **argv)
             c.setShapeType("Rectangle");
             break;
         case '7':
-            c.setShapeType("ShapesConnector");
+            c.setShapeType("Ellipse");
             break;
         case '8':
+            c.setShapeType("ShapesConnector");
+            break;
+        case '9':
             c.setShapeType("LabeledShapesConnector");
             break;
         case 'h':
@@ -118,7 +122,7 @@ int main(int argc, char **argv)
             fs["Canvas"] >> c;
         }
             break;
-        case 65535:
+        case 'd':
             c.deleteActive();
             break;
         }

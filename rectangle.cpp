@@ -84,7 +84,7 @@ void Rectangle::readInternals(const cv::FileNode &node)
 
 std::list<Handle *> Rectangle::getConnectionTargets()
 {
-    return std::list<Handle *>({rotate1, rotate2, rotate3, rotate4});
+    return {rotate1, rotate2, rotate3, rotate4};
 }
 
 }

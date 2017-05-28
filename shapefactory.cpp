@@ -30,6 +30,7 @@ void ShapeFactory::addShape(std::string name, ShapeFactory::Allocator a)
 #include "linecrossing.h"
 #include "quadrilateral.h"
 #include "rectangle.h"
+#include "ellipse.h"
 #include "shapesconnector.h"
 #include "labeledshapesconnector.h"
 
@@ -43,6 +44,7 @@ REGISTER_SHAPE(TextBox);
 REGISTER_SHAPE(LineCrossing);
 REGISTER_SHAPE(Quadrilateral);
 REGISTER_SHAPE(Rectangle);
+REGISTER_SHAPE(Ellipse);
 REGISTER_SHAPE(ShapesConnector);
 REGISTER_SHAPE(LabeledShapesConnector);
 

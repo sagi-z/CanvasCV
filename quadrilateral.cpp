@@ -105,7 +105,7 @@ bool Quadrilateral::mouseReleased(const cv::Point &pos)
 
 std::list<Handle *> Quadrilateral::getConnectionTargets()
 {
-    return std::list<Handle *>();
+    return {pts[0], pts[1], pts[2], pts[3]};
 }
 
 }

@@ -178,7 +178,7 @@ void TextBox::registerCBs()
 
 std::list<Handle *> TextBox::getConnectionTargets()
 {
-    return std::list<Handle *>({topLeft.get()});
+    return {topLeft.get()};
 }
 
 std::shared_ptr<Shape> TextBox::getShape(int id)
