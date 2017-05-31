@@ -4,7 +4,7 @@
 #include "shapesconnector.h"
 #include "textbox.h"
 
-namespace canvasvc
+namespace canvascv
 {
 
 class LabeledShapesConnector : public ShapesConnector
@@ -12,7 +12,7 @@ class LabeledShapesConnector : public ShapesConnector
 public:
     LabeledShapesConnector(const cv::Point &pos);
     virtual const char *getType() const {
-        return "LabeledShapesConnector";
+        return type;
     }
 
     TextBox &getTextBox()
@@ -20,6 +20,7 @@ public:
         return *label;
     }
 
+    static const char * type;
 
 private:
     TextBox *label;

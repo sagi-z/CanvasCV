@@ -8,7 +8,7 @@
 #include <functional>
 #include <list>
 
-namespace canvasvc
+namespace canvascv
 {
 
 class Handle : public Shape
@@ -42,7 +42,7 @@ public:
     }
     virtual std::list<Handle *> getConnectionTargets();
     virtual const char *getType() const {
-        return "Handle";
+        return type;
     }
     virtual void lostFocus();
 
@@ -81,6 +81,7 @@ public:
     void connect(Handle &other);
     void disconnect(Handle &other);
 
+    static const char * type;
 
 protected:
     virtual void writeInternals(cv::FileStorage &fs) const;

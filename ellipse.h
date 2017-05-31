@@ -3,7 +3,7 @@
 
 #include "rectangle.h"
 
-namespace canvasvc
+namespace canvascv
 {
 
 class Ellipse : public Rectangle
@@ -15,8 +15,10 @@ public:
 
     virtual const char *getType() const
     {
-        return "Ellipse";
+        return type;
     }
+
+    static const char * type;
 };
 
 }

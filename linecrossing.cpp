@@ -1,7 +1,9 @@
 #include "linecrossing.h"
 #include <opencv2/imgproc.hpp>
 
-namespace canvasvc {
+namespace canvascv {
+
+const char * LineCrossing::type = "LineCrossing";
 
 void LineCrossing::draw(cv::Mat &canvas)
 {
@@ -46,6 +48,12 @@ void LineCrossing::readInternals(const cv::FileNode &node)
     CompoundShape::readInternals(node);
     node["direction"] >> direction;
     registerCBs();
+}
+
+const string &LineCrossing::getStatusMsg() const
+{
+   const static string msg = "Click on the arrow to change crossing direction.\nDrag line or Handles to position.";
+   return msg;
 }
 
 

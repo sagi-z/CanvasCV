@@ -1,7 +1,9 @@
 #include "labeledshapesconnector.h"
 
-namespace canvasvc
+namespace canvascv
 {
+
+const char * LabeledShapesConnector::type = "LabeledShapesConnector";
 
 LabeledShapesConnector::LabeledShapesConnector(const Point &pos)
     : ShapesConnector(pos)

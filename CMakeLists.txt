@@ -32,8 +32,8 @@ add_library(canvascv ${LIB_TYPE} ${CanvasCV_SRC})
 
 option(BUILD_TEST "Create an executable" OFF)
 if(BUILD_TEST)
-        add_executable(test ${CanvasCV_SRC_TST})
-        target_link_libraries (test canvascv ${OpenCV_LIBS})
+        add_executable(shapes ${CanvasCV_SRC_TST})
+        target_link_libraries (shapes canvascv ${OpenCV_LIBS})
 endif()
 
 install(TARGETS canvascv

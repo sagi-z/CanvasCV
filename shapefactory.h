@@ -5,7 +5,7 @@
 #include <map>
 #include <functional>
 
-namespace canvasvc
+namespace canvascv
 {
 
 using namespace std;
@@ -32,7 +32,7 @@ class ShapeFactoryT : public ShapeFactory
 {
 public:
     static bool addType(std::string name);
-    static Shape *newShape(const cv::Point &pos);
+    static T *newShape(const cv::Point &pos);
 };
 
 template <class T>
@@ -48,15 +48,15 @@ bool ShapeFactoryT<T>::addType(std::string name)
 }
 
 template <class T>
-Shape *ShapeFactoryT<T>::newShape(const cv::Point &pos)
+T *ShapeFactoryT<T>::newShape(const cv::Point &pos)
 {
-   Shape *shape = new T(pos);
+   T *shape = new T(pos);
    return shape;
 }
 
 }
 
-#define REGISTER_SHAPE(X) bool regShape##X = canvasvc::ShapeFactoryT<X>::addType(#X)
+#define REGISTER_SHAPE(X) bool regShape##X = canvascv::ShapeFactoryT<X>::addType(#X)
 
 
 #endif // SHAPEFACTORY_H

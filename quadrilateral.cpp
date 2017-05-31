@@ -1,8 +1,10 @@
 #include "quadrilateral.h"
 
 
-namespace canvasvc
+namespace canvascv
 {
+
+const char * Quadrilateral::type = "Quadrilateral";
 
 void Quadrilateral::draw(cv::Mat &canvas)
 {
@@ -48,7 +50,8 @@ bool Quadrilateral::mousePressed(const cv::Point &pos, bool onCreate)
         return true;
     }
 
-    if (selectedPoint1) {
+    if (selectedPoint1)
+    {
         selectedPoint1->setVisible(false);
         selectedPoint2->setVisible(false);
     }
@@ -89,7 +92,8 @@ bool Quadrilateral::mouseReleased(const cv::Point &pos)
         return true;
     }
 
-    if (selectedPoint1) {
+    if (selectedPoint1)
+    {
         selectedPoint1->setVisible(false);
         selectedPoint2->setVisible(false);
     }

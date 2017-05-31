@@ -2,7 +2,9 @@
 #include "shapefactory.h"
 #include <opencv2/imgproc.hpp>
 
-namespace canvasvc {
+namespace canvascv {
+
+const char * Arrow::type = "Arrow";
 
 void Arrow::draw(cv::Mat &canvas)
 {

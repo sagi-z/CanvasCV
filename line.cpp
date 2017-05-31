@@ -1,8 +1,10 @@
 #include "line.h"
 #include <opencv2/imgproc.hpp>
 
-namespace canvasvc
+namespace canvascv
 {
+
+const char * Line::type = "Line";
 
 void Line::draw(cv::Mat &canvas)
 {

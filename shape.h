@@ -9,7 +9,7 @@
 #include <iostream>
 #include <memory>
 
-namespace canvasvc
+namespace canvascv
 {
 
 class Handle;
@@ -199,6 +199,8 @@ public:
      * @param value
      */
     void setCanvas(Canvas &value);
+
+    virtual const std::string &getStatusMsg() const;
 
 protected:
     virtual void writeInternals(cv::FileStorage& fs) const = 0;

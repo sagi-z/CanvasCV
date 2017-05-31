@@ -3,7 +3,7 @@
 
 #include "line.h"
 
-namespace canvasvc
+namespace canvascv
 {
 
 class ShapesConnector : public Line
@@ -16,7 +16,7 @@ public:
     virtual bool mouseReleased(const cv::Point &pos);
     virtual std::list<Handle *> getConnectionTargets();
     virtual const char *getType() const {
-        return "ShapesConnector";
+        return type;
     }
 
     int getSpacing() const;
@@ -44,6 +44,8 @@ public:
     Shape *getHeadShape();
 
     void disconnectShape(int id);
+
+    static const char * type;
 
 protected:
     Handle *center;

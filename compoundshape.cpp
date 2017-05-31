@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-namespace canvasvc
+namespace canvascv
 {
 
 void CompoundShape::draw(cv::Mat &canvas)

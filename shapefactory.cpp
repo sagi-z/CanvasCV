@@ -1,6 +1,6 @@
 #include "shapefactory.h"
 
-namespace canvasvc
+namespace canvascv
 {
 
 ShapeFactory::AllocatorsMap *ShapeFactory::allocators;
@@ -34,7 +34,7 @@ void ShapeFactory::addShape(std::string name, ShapeFactory::Allocator a)
 #include "shapesconnector.h"
 #include "labeledshapesconnector.h"
 
-namespace canvasvc
+namespace canvascv
 {
 
 REGISTER_SHAPE(Handle);

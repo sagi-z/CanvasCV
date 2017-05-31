@@ -8,7 +8,7 @@
 #include <list>
 #include <memory>
 
-namespace canvasvc
+namespace canvascv
 {
 
 class CompoundShape : public Shape

@@ -7,7 +7,7 @@
 
 #include <opencv2/highgui.hpp>
 
-namespace canvasvc
+namespace canvascv
 {
 
 class Line : public CompoundShape
@@ -31,7 +31,7 @@ public:
 
     virtual std::list<Handle *> getConnectionTargets();
     virtual const char *getType() const {
-        return "Line";
+        return type;
     }
 
     void lockTail(bool isLocked)
@@ -116,6 +116,8 @@ public:
     {
         return (*pt2)();
     }
+
+    static const char * type;
 
 protected:
     Handle* pt1;

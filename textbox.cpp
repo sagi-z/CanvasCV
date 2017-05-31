@@ -3,12 +3,15 @@
 
 #include <opencv2/imgproc.hpp>
 
-namespace canvasvc
+namespace canvascv
 {
+
+const char * TextBox::type = "TextBox";
 
 TextBox::TextBox(const cv::Point &pos) :
     Shape(),
     text("text"),
+    prevText(text),
     fontFace(FONT_HERSHEY_PLAIN),
     fontScale(1)
 {
@@ -30,9 +33,9 @@ void TextBox::draw(cv::Mat &canvas)
             rectSelected.y -= 2;
             rectSelected.width += 4;
             rectSelected.height += 4;
-            rectangle(canvas, rectSelected, outlineColor);
+            rectangle(canvas, rectSelected, outlineColor, thickness);
         }
-        rectangle(canvas, rect, outlineColor);
+        rectangle(canvas, rect, outlineColor, thickness);
         putText(canvas, text, cv::Point(rect.tl().x,rect.tl().y+baseline*2), fontFace, fontScale,
                 outlineColor, thickness, LINE_AA);
         topLeft->draw(canvas);

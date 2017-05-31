@@ -2,7 +2,7 @@
 #include "shapefactory.h"
 #include "canvas.h"
 
-namespace canvasvc
+namespace canvascv
 {
 
 void write(cv::FileStorage& fs, const std::string&, const Shape& x)
@@ -29,7 +29,13 @@ Shape::~Shape()
 
 void Shape::setCanvas(Canvas &value)
 {
-   canvas = &value;
+    canvas = &value;
+}
+
+const string &Shape::getStatusMsg() const
+{
+   static const string emptyStr;
+   return emptyStr;
 }
 
 void Shape::write(cv::FileStorage& fs) const

@@ -1,7 +1,9 @@
 #include "ellipse.h"
 
-namespace canvasvc
+namespace canvascv
 {
+
+const char * Ellipse::type = "Ellipse";
 
 Ellipse::Ellipse(const Point &pos)
     : Rectangle(pos)

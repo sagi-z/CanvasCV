@@ -1,8 +1,10 @@
 #include "shapesconnector.h"
 #include "canvas.h"
 
-namespace canvasvc
+namespace canvascv
 {
+
+const char * ShapesConnector::type = "ShapesConnector";
 
 ShapesConnector::ShapesConnector(const Point &pos)
     : Line(pos),
@@ -112,6 +114,7 @@ void ShapesConnector::connectTail(Shape &shape, Handle &handle)
         tailShape = shape.getId();
         tailHandle = handle.getId();
     }
+    pt1->setPos(handle(), false);
     pt1->delPosChangedCB(tailCBID);
     pt1->setLocked(true);
 }
@@ -123,6 +126,7 @@ void ShapesConnector::connectHead(Shape &shape, Handle &handle)
         headShape = shape.getId();
         headHandle = handle.getId();
     }
+    pt2->setPos(handle(), false);
     pt2->delPosChangedCB(headCBID);
     pt2->setLocked(true);
 }

@@ -3,8 +3,10 @@
 
 #include <opencv2/imgproc.hpp>
 
-namespace canvasvc
+namespace canvascv
 {
+
+const char * Handle::type = "Handle";
 
 Handle::~Handle()
 {

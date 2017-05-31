@@ -1,7 +1,9 @@
 #include "rectangle.h"
 
-namespace canvasvc
+namespace canvascv
 {
+
+const char * Rectangle::type = "Rectangle";
 
 void Rectangle::draw(Mat &canvas)
 {

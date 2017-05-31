@@ -3,12 +3,13 @@
 
 #include "shape.h"
 #include "shapefactory.h"
+#include "floatingtext.h"
 
 #include <list>
 #include <memory>
 #include <functional>
 
-namespace canvasvc
+namespace canvascv
 {
 
 class Canvas
@@ -32,6 +33,12 @@ public:
     void onMouseRelease(const cv::Point &pos);
 
     void onMouseMove(const cv::Point &pos);
+
+    /// Create shape on the canvas directly from code
+    std::shared_ptr<Shape> createShape(const cv::Point &pos, std::string type);
+
+    template <class T>
+    std::shared_ptr<T> createShape(const cv::Point &pos);
 
     /**
      * @brief consumeKey takes a key value and tries to use it
@@ -108,12 +115,46 @@ public:
      */
     void getShapes(const cv::Point &pos, std::list<std::shared_ptr<Shape>> &result);
 
+    void disableScreenText()
+    {
+        hasScreenText = false;
+    }
+
+    void disableStatusMsg()
+    {
+        hasStatusMsg = false;
+    }
+
+    void enableScreenText(cv::Scalar color = Colors::BLACK,
+                          cv::Scalar bgColor = Colors::P1_GRAY,
+                          double scale = 0.5,
+                          int thickness = 1,
+                          double alpha = 0.3,
+                          int fontFace = FONT_HERSHEY_COMPLEX_SMALL);
+
+    void enableStatusMsg(cv::Scalar color = Colors::P1_ORANGE,
+                         cv::Scalar bgColor = Colors::P1_GRAY,
+                         double scale = 0.5,
+                         int thickness = 1,
+                         double alpha = 0.3,
+                         int fontFace = FONT_HERSHEY_COMPLEX_SMALL);
+
+    void setStatusMsg(const std::string &msg);
+
+    void setScreenText(const std::string &msg);
+
 private:
 
     void broadcastCreate(Shape *shape);
     void broadcastModify(Shape *shape);
     void broadcastDelete(Shape *shape);
 
+    void processNewShape();
+
+    bool hasScreenText;
+    bool hasStatusMsg;
+    FloatingText screenText;
+    FloatingText statusMsg;
     std::string shapeType;
     std::list<std::shared_ptr<Shape>> shapes;
     std::shared_ptr<Shape> active;
@@ -124,6 +165,16 @@ private:
     friend void write(cv::FileStorage& fs, const std::string&, const Canvas& x);
     friend void read(const cv::FileNode& node, Canvas& x, const Canvas&);
 };
+
+template <class T>
+std::shared_ptr<T> Canvas::createShape(const cv::Point &pos)
+{
+    std::shared_ptr<T> shape(ShapeFactoryT<T>::newShape(pos));
+    shapes.push_back(shape);
+    processNewShape();
+    shape->lostFocus();
+    return shape;
+}
 
 template <class T>
 void Canvas::getShapes(std::list<std::shared_ptr<T>> &result)

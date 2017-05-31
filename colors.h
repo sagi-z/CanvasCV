@@ -3,7 +3,7 @@
 
 #include <opencv2/opencv.hpp>
 
-namespace canvasvc
+namespace canvascv
 {
 
 class Colors

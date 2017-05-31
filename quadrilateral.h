@@ -4,7 +4,7 @@
 #include "compoundshape.h"
 #include "handle.h"
 
-namespace canvasvc
+namespace canvascv
 {
 
 class Quadrilateral : public CompoundShape
@@ -40,7 +40,7 @@ public:
     virtual std::list<Handle *> getConnectionTargets();
     virtual const char *getType() const
     {
-        return "Quadrilateral";
+        return type;
     }
 
     bool isPointOnLine(const cv::Point &p3, Handle *&pt1, Handle *&pt2, int threshold=3) const {
@@ -90,6 +90,8 @@ public:
 
     template <typename _TP>
     void getPoints(vector<Point_<_TP>> &out);
+
+    static const char * type;
 
 private:
     virtual void reloadPointers(std::list<Shape*>::const_iterator &i)

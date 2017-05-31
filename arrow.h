@@ -3,7 +3,7 @@
 
 #include "line.h"
 
-namespace canvasvc
+namespace canvascv
 {
 
 class Arrow : public Line
@@ -16,8 +16,10 @@ public:
 
     virtual const char *getType() const
     {
-        return "Arrow";
+        return type;
     }
+
+    static const char * type;
 };
 
 }

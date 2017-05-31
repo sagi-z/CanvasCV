@@ -8,7 +8,7 @@
 #include <string>
 #include <memory>
 
-namespace canvasvc
+namespace canvascv
 {
 
 class TextBox : public Shape
@@ -29,7 +29,7 @@ public:
     virtual std::shared_ptr<Shape> getShape(int id);
     virtual const char *getType() const
     {
-        return "TextBox";
+        return type;
     }
 
     const std::string & getText() const
@@ -59,6 +59,7 @@ public:
     void setFontFace(int value)
     {
         fontFace = value;
+        recalcRect();
     }
 
     double getFontScale() const
@@ -69,7 +70,10 @@ public:
     void setFontScale(double value)
     {
         fontScale = value;
+        recalcRect();
     }
+
+    static const char * type;
 
 protected:
     virtual void writeInternals(cv::FileStorage &fs) const;
@@ -84,7 +88,7 @@ private:
                                     fontScale, thickness, &baseline);
         baseline += thickness;
         rect = cv::Rect((*topLeft)(),
-                        (*topLeft)() + cv::Point(textSize.width, +textSize.height+baseline*2));
+                        (*topLeft)() + cv::Point(textSize.width, textSize.height+baseline*2));
     }
 
     std::string text;

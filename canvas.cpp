@@ -4,10 +4,13 @@
 #include "shapesconnector.h"
 #include <algorithm>
 
-namespace canvasvc
+namespace canvascv
 {
 
 Canvas::Canvas()
+    : hasScreenText(false),
+      hasStatusMsg(false),
+      screenText("", Point(5,5))
 {
 }
 
@@ -26,6 +29,16 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
     {
         shape->draw(dst);
     }
+    if (hasScreenText)
+    {
+        screenText.draw(dst);
+    }
+    if (hasStatusMsg)
+    {
+        // reserve ~ 2 lines for the status msg at screen bottom left
+        statusMsg.setTopLeft(Point(5, dst.rows - statusMsg.getFontHeight() * 3));
+        statusMsg.draw(dst);
+    }
 }
 
 void Canvas::onMousePress(const cv::Point &pos)
@@ -38,6 +51,7 @@ void Canvas::onMousePress(const cv::Point &pos)
             active->lostFocus();
             broadcastModify(active.get());
             active.reset();
+            setStatusMsg("");
         }
         return;
     }
@@ -48,19 +62,29 @@ void Canvas::onMousePress(const cv::Point &pos)
         if (shape->mousePressed(pos))
         {
             active = shape;
+            if (hasStatusMsg)
+            {
+                if (active->getLocked())
+                {
+                    setStatusMsg("Shape is locked.");
+                }
+                else
+                {
+                    setStatusMsg(active->getStatusMsg());
+                }
+            }
             return;
         }
     }
 
-    // create a new shape
+    // create a new shape and set it as active
     shapes.push_back(std::shared_ptr<Shape>(ShapeFactory::newShape(shapeType,pos)));
-    active = shapes.back();
-    active->setCanvas(*this);
-    broadcastCreate(active.get());
+    processNewShape();
     if (! active->mousePressed(pos, true))
     {
         active->lostFocus();
         active.reset();
+        setStatusMsg("");
     }
 }
 
@@ -73,6 +97,7 @@ void Canvas::onMouseRelease(const cv::Point &pos)
             active->lostFocus();
             broadcastModify(active.get());
             active.reset();
+            setStatusMsg("");
         }
     }
 }
@@ -85,6 +110,14 @@ void Canvas::onMouseMove(const cv::Point &pos)
     }
 }
 
+std::shared_ptr<Shape> Canvas::createShape(const Point &pos, string type)
+{
+    shapes.push_back(std::shared_ptr<Shape>(ShapeFactory::newShape(type,pos)));
+    processNewShape();
+    active->lostFocus();
+    return active;
+}
+
 void Canvas::consumeKey(int &key)
 {
     if (key != -1)
@@ -95,6 +128,7 @@ void Canvas::consumeKey(int &key)
             {
                 active->lostFocus();
                 active.reset();
+                setStatusMsg("");
             }
         }
     }
@@ -114,6 +148,7 @@ void Canvas::deleteActive()
             connector->disconnectShape(active->getId());
         }
         active.reset();
+        setStatusMsg("");
     }
 }
 
@@ -135,6 +170,7 @@ void Canvas::notifyOnDelete(Canvas::CBType cb)
 void Canvas::clear()
 {
     active.reset();
+    setStatusMsg("");
     for (auto &shape : shapes)
     {
         broadcastDelete(shape.get());
@@ -171,6 +207,34 @@ void Canvas::getShapes(const Point &pos, std::list<std::shared_ptr<Shape> > &res
     }
 }
 
+void Canvas::enableScreenText(Scalar color, Scalar bgColor, double scale, int thickness, double alpha, int fontFace)
+{
+    hasScreenText = true;
+    screenText = FloatingText(screenText.getMsg(), screenText.getTopLeft(), color, bgColor, scale, thickness, alpha, fontFace);
+}
+
+void Canvas::enableStatusMsg(Scalar color, Scalar bgColor, double scale, int thickness, double alpha, int fontFace)
+{
+    hasStatusMsg = true;
+    statusMsg = FloatingText(statusMsg.getMsg(), statusMsg.getTopLeft(), color, bgColor, scale, thickness, alpha, fontFace);
+}
+
+void Canvas::setStatusMsg(const string &msg)
+{
+    if (hasStatusMsg)
+    {
+        statusMsg.setMsg(msg);
+    }
+}
+
+void Canvas::setScreenText(const string &msg)
+{
+    if (hasScreenText)
+    {
+        screenText.setMsg(msg);
+    }
+}
+
 void Canvas::broadcastCreate(Shape *shape)
 {
     for (auto &cb : createNotifs)
@@ -192,6 +256,24 @@ void Canvas::broadcastDelete(Shape *shape)
     for (auto &cb : deleteNotifs)
     {
         cb(shape);
+    }
+}
+
+void Canvas::processNewShape()
+{
+    active = shapes.back();
+    active->setCanvas(*this);
+    broadcastCreate(active.get());
+    if (hasStatusMsg)
+    {
+        if (active->getLocked())
+        {
+            setStatusMsg("Shape is locked.");
+        }
+        else
+        {
+            setStatusMsg(active->getStatusMsg());
+        }
     }
 }
 

@@ -4,7 +4,7 @@
 #include "compoundshape.h"
 #include "handle.h"
 
-namespace canvasvc
+namespace canvascv
 {
 
 class Rectangle : public CompoundShape
@@ -40,12 +40,21 @@ public:
 
     virtual std::list<Handle *> getConnectionTargets();
     virtual const char *getType() const {
-        return "Rectangle";
+        return type;
     }
 
     cv::RotatedRect getRect() const
     {
         return cv::RotatedRect((*center)(), cv::Size(width, height), angle * 180 / CV_PI);
+    }
+
+    void setRect(const cv::RotatedRect &rect)
+    {
+        center->setPos(rect.center);
+        width = rect.size.width;
+        height = rect.size.height;
+        angle = rect.angle * CV_PI / 180;
+        updatePoints();
     }
 
     bool isPointInRectangle(cv::Point pos)
@@ -57,6 +66,8 @@ public:
         pts[3] = (*pt4)();
         return cv::pointPolygonTest(pts, pos, false) >= 0;
     }
+
+    static const char * type;
 
 private:
     void recalcRect(const cv::Point &pos, bool rotated = false, float offset = 0)

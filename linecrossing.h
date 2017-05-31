@@ -7,27 +7,20 @@
 #include "shapefactory.h"
 #include <memory>
 
-namespace canvasvc
+namespace canvascv
 {
 
 class LineCrossing : public CompoundShape
 {
 public:
     LineCrossing(const cv::Point& pos)
-        : direction(1)
+        : direction(1), arrowMagnitude(60)
     {
         line = addShape<Line>(pos);
-        line->setOutlineColor(Colors::P1_LBLUE);
-        line->setThickness(3);
         arrow = addShape<Arrow>(pos);
-        arrow->setOutlineColor(Colors::P1_PINK);
         arrow->setVisible(false);
         arrow->setLocked(true);
-        arrow->setThickness(5);
         textBox = addShape<TextBox>(pos);
-        textBox->setFontScale(2);
-        textBox->setThickness(2);
-        textBox->setOutlineColor(Colors::P1_RED);
         textBox->setLocked(true);
         registerCBs();
     }
@@ -41,7 +34,7 @@ public:
     virtual std::list<Handle *> getConnectionTargets();
     virtual const char *getType() const
     {
-        return "LineCrossing";
+        return type;
     }
 
     int getDirection() const
@@ -59,6 +52,16 @@ public:
         textBox->setText(value);
     }
 
+    int getArrowMagnitude() const
+    {
+        return arrowMagnitude;
+    }
+
+    int setArrowMagnitude(int mag)
+    {
+        arrowMagnitude = mag;
+    }
+
     const cv::Point &getTail() const
     {
         return line->getTail();
@@ -68,6 +71,26 @@ public:
     {
         return line->getHead();
     }
+
+    /// getter to internal TextBox
+    TextBox *getTextBox()
+    {
+        return textBox;
+    }
+
+    /// getter to internal Line
+    Line *getLine()
+    {
+        return line;
+    }
+
+    /// getter to internal Arrow
+    Arrow *getArrow()
+    {
+        return arrow;
+    }
+
+    static const char * type;
 
 protected:
     void registerCBs()
@@ -117,7 +140,7 @@ protected:
                 abs(pos.y - middle.y) <= threshold;
     }
 
-    void arrowTailHead(cv::Point &tail, cv::Point &head, int mag=60)
+    void arrowTailHead(cv::Point &tail, cv::Point &head)
     {
         double len = line->length()/2.;
         if (len > 0)
@@ -129,8 +152,8 @@ protected:
             double y = direction*(p2.x-head.x)/len;
             head.x=head.x+x*10;
             head.y=head.y+y*10;
-            tail.x=head.x+x*mag;
-            tail.y=head.y+y*mag;
+            tail.x=head.x+x*arrowMagnitude;
+            tail.y=head.y+y*arrowMagnitude;
         }
     }
 
@@ -145,11 +168,14 @@ protected:
         textBox = dynamic_cast<TextBox*>(*i++);
     }
 
+    virtual const std::string &getStatusMsg() const;
+
 private:
     Line* line;
     Arrow* arrow;
     TextBox* textBox;
     int direction;
+    int arrowMagnitude;
 };
 
 }

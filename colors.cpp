@@ -1,6 +1,6 @@
 #include "colors.h"
 
-namespace canvasvc {
+namespace canvascv {
 
 // Middle colors colors (middle
 //  in RGB color codes chart)
