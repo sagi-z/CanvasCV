@@ -4,13 +4,22 @@
 #include <opencv2/opencv.hpp>
 #include <list>
 #include "colors.h"
+#include "widget.h"
 
 namespace canvascv
 {
 
-class FloatingText
+class FloatingText : public Widget
 {
 public:
+    enum FlowDirection
+    {
+        TOP_DOWN,
+        BOTTOM_UP
+    };
+
+    FloatingText(cv::Point pos);
+
     FloatingText(const std::string msgVal = "",
                  cv::Point topLeftVal = cv::Point(),
                  cv::Scalar colorVal = Colors::BLACK,
@@ -20,14 +29,12 @@ public:
                  double alphaVal = 0.3,
                  int fontFaceVal = cv::FONT_HERSHEY_COMPLEX_SMALL);
 
+    virtual bool isAtPos(const cv::Point &pos);
+
+    virtual const char *getType() const;
+
     double getAlpha() const;
     void setAlpha(double value);
-
-    cv::Scalar getColor() const;
-    void setColor(const cv::Scalar &value);
-
-    cv::Scalar getBgColor() const;
-    void setBgColor(const cv::Scalar &value);
 
     std::string getMsg() const;
     void setMsg(const std::string &value);
@@ -48,7 +55,28 @@ public:
 
     int getFontHeight() const;
 
+    cv::Point getLeftPos() const;
+    void setLeftPos(const cv::Point &value);
+
+    FlowDirection getFlowDirection() const;
+    void setFlowDirection(const FlowDirection &value);
+
+    static const char *type;
+
+protected:
+    virtual void writeInternals(cv::FileStorage &fs) const
+    {
+    }
+    virtual void readInternals(const cv::FileNode &node)
+    {
+    }
+
 private:
+
+    virtual void mousePressed() {}
+    virtual void mouseReleased() {}
+    virtual void mouseEnter() {}
+    virtual void mouseLeave() {}
 
     struct LineData
     {
@@ -59,15 +87,15 @@ private:
     void prepareMsgParts();
 
     std::string msg;
-    cv::Point topLeft;
-    cv::Scalar color;
-    cv::Scalar bgColor;
+    cv::Point leftPos;
     double alpha;
     std::list<LineData> msgParts;
     int fontHeight;
     int fontFace;
     double fontScale;
     int fontThickness;
+    FlowDirection flowDirection;
+    cv::Rect rect;
 };
 
 }

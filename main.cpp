@@ -46,6 +46,7 @@ static string gHelpMsg =
 "8: ShapesConnector\n"
 "9: LabeledShapesConnector\n"
 "h: toggle usage message\n"
+"*: toggle canvas on/off\n"
 "c: clear the canvas\n"
 "s: save to config.xml\n"
 "l: load from config.xml\n"
@@ -68,11 +69,11 @@ void help(Canvas &c)
 }
 
 /*
- * Create a shape like this (ellipse is locked):
+ * Create a shape like this:
  *
- *                +----+
- *                |text|
- *                +----+
+ *                +------------+
+ *                |locked shape|
+ *                +------------+
  *               /
  *              /
  *             O
@@ -84,10 +85,12 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
     shared_ptr<TextBox> textBox = c.createShape<TextBox>(Point());
     shared_ptr<ShapesConnector> connector = c.createShape<ShapesConnector>(Point());
     shared_ptr<Ellipse> ellipse = c.createShape<Ellipse>(Point());
+
+    textBox->setTL({int(center.x * 1.5), int(center.y * 0.5)});
+    textBox->setText("locked shape");
     ellipse->setRect(RotatedRect(center,
                                  Size2f(40,60), // width and height
                                  0));     // angle in degrees
-    textBox->setTL({int(center.x * 1.5), int(center.y * 0.5)});
     Handle *head = *(std::next(ellipse->getConnectionTargets().begin(),3)); // 4th rotation handle
     Handle *tail = *textBox->getConnectionTargets().begin();
     connector->connectHead(*ellipse, *head);
@@ -102,8 +105,30 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
     connector->setOutlineColor(Colors::P1_GRAY);
     connector->setFillColor(Colors::P1_GRAY);
 
-    // Don't allow to move the ellipse
+    // Lock them all
+    textBox->setLocked(true);
     ellipse->setLocked(true);
+    connector->setLocked(true);
+
+    static shared_ptr<FloatingText> popup = c.createWidget<FloatingText>((*head)());
+    popup->setVisible(false);
+    popup->setFlowDirection(FloatingText::BOTTOM_UP);
+    popup->setMsg(
+                "These 3 objects are locked.\n"
+                "They are an Ellipse, ShapesConnector and a TextBox.\n"
+                "You can still select them and delete them.");
+    ellipse->notifyOnSelect([&](Shape *shape, bool isSelected)
+    {
+        cout << "ellipse selection state is "   << isSelected << endl;
+        if (isSelected)
+        {
+            popup->setVisible(true);
+        }
+        else
+        {
+            popup->setVisible(false);
+        }
+    });
 }
 
 int main(int argc, char **argv)
@@ -112,10 +137,19 @@ int main(int argc, char **argv)
     ++argv;
     Mat image;
     if (argc) {
-        image = imread(argv[0]);
-        if (image.empty()) {
+        Mat orig = imread(argv[0]);
+        if (orig.empty()) {
             cerr << "Cannot load image " << argv[0] << endl;
             return -1;
+        }
+        if (orig.cols > 1024)
+        {
+            double ratio = 1024. / orig.cols;
+            cv::resize(orig, image, Size(), ratio, ratio);
+        }
+        else
+        {
+            image = orig;
         }
     } else {
         image.create(640,480,CV_8UC3);
@@ -164,6 +198,7 @@ int main(int argc, char **argv)
 
     int delay = 1000/24;
     int key = 0;
+    bool canvasOn = true;
     do {
         switch (key) {
         case '1':
@@ -196,6 +231,9 @@ int main(int argc, char **argv)
         case 'h':
             help(c);
             break;
+        case '*':
+            canvasOn = ! canvasOn;
+            break;
         case 'c':
             c.clear();
             break;
@@ -217,7 +255,14 @@ int main(int argc, char **argv)
         }
 
         Mat out;
-        c.redrawOn(image, out);
+        if (canvasOn)
+        {
+            c.redrawOn(image, out);
+        }
+        else
+        {
+            out = image;
+        }
         imshow("Canvas", out);
         key = waitKeyEx(delay);
         c.consumeKey(key);

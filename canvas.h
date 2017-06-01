@@ -2,7 +2,9 @@
 #define CANVAS_H
 
 #include "shape.h"
+#include "widget.h"
 #include "shapefactory.h"
+#include "widgetfactory.h"
 #include "floatingtext.h"
 
 #include <list>
@@ -40,6 +42,12 @@ public:
     template <class T>
     std::shared_ptr<T> createShape(const cv::Point &pos);
 
+    /// Create widget on the canvas directly from code
+    std::shared_ptr<Widget> createWidget(const cv::Point &pos, std::string type);
+
+    template <class T>
+    std::shared_ptr<T> createWidget(const cv::Point &pos);
+
     /**
      * @brief consumeKey takes a key value and tries to use it
      * @param key is the key value received from the user. It will change to -1 if it was consumed by a shape.
@@ -68,6 +76,16 @@ public:
      * @brief delete shape currenty selected
      */
     void deleteActive();
+
+    /**
+     * @brief delete specific shape
+     */
+    void deleteShape(std::shared_ptr<Shape> shape);
+
+    /**
+     * @brief delete specific widget
+     */
+    void deleteWidget(std::shared_ptr<Widget> widget);
 
     /**
      * @brief used to register for notifications on shape creation
@@ -157,7 +175,9 @@ private:
     FloatingText statusMsg;
     std::string shapeType;
     std::list<std::shared_ptr<Shape>> shapes;
+    std::list<std::shared_ptr<Widget>> widgets;
     std::shared_ptr<Shape> active;
+    std::shared_ptr<Widget> activeWidget;
     std::list<CBType> createNotifs;
     std::list<CBType> modifyNotifs;
     std::list<CBType> deleteNotifs;
@@ -174,6 +194,15 @@ std::shared_ptr<T> Canvas::createShape(const cv::Point &pos)
     processNewShape();
     shape->lostFocus();
     return shape;
+}
+
+template <class T>
+std::shared_ptr<T> Canvas::createWidget(const cv::Point &pos)
+{
+    std::shared_ptr<T> widget(WidgetFactoryT<T>::newWidget(pos));
+    widget->setCanvas(*this);
+    widgets.push_back(widget);
+    return widget;
 }
 
 template <class T>

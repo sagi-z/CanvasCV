@@ -104,6 +104,7 @@ bool TextBox::mouseReleased(const cv::Point &pos)
 
 bool TextBox::keyPressed(int &key)
 {
+    if (locked) return true;
     bool keepFocus = true;
     if (key < 128 || key == 65288)
     {

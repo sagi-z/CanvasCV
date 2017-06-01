@@ -1,16 +1,16 @@
-#include "shape.h"
-#include "shapefactory.h"
+#include "widget.h"
+#include "widgetfactory.h"
 #include "canvas.h"
 
 namespace canvascv
 {
 
-void write(cv::FileStorage& fs, const std::string&, const Shape& x)
+void write(cv::FileStorage& fs, const std::string&, const Widget& x)
 {
     x.write(fs);
 }
 
-void read(const cv::FileNode& node, Shape*& x, const Shape *default_value)
+void read(const cv::FileNode& node, Widget*& x, const Widget *default_value)
 {
     (void)default_value; // avoid unused compilation warning
     if(node.empty())
@@ -18,52 +18,73 @@ void read(const cv::FileNode& node, Shape*& x, const Shape *default_value)
         x = 0;
     } else {
         std::string type = (std::string)node["XXXconcreteTypeXXX"];
-        x = ShapeFactory::newShape(type,cv::Point(0,0));
+        x = WidgetFactory::newWidget(type,cv::Point(0,0));
         x->read(node);
     }
 }
 
-Shape::~Shape()
+Widget::~Widget()
 {
 }
 
-void Shape::notifyOnSelect(Shape::CBType cb)
+void Widget::notifyOnChange(Widget::CBType cb)
 {
-    selectNotifs.push_back(cb);
+    changeNotifs.push_back(cb);
 }
 
-void Shape::setCanvas(Canvas &value)
+void Widget::setCanvas(Canvas &value)
 {
     canvas = &value;
 }
 
-const string &Shape::getStatusMsg() const
+const string &Widget::getStatusMsg() const
 {
-   static const string emptyStr;
-   return emptyStr;
+   return statusMsg;
 }
 
-void Shape::broadcastSelectChange(bool selected)
+void Widget::setStatusMsg(const std::string &value)
 {
-    for (auto &cb : selectNotifs)
+    statusMsg = value;
+}
+
+void Widget::broadcastChange(State status)
+{
+    state = status;
+    switch (state)
     {
-        cb(this, selected);
+    case LEAVE:
+        mouseLeave();
+        break;
+    case ENTER:
+        mouseEnter();
+        break;
+    case PRESS:
+        mousePressed();
+        break;
+    case RELEASE:
+        mouseReleased();
+        break;
+    }
+
+    for (auto &cb : changeNotifs)
+    {
+        cb(this, status);
     }
 }
 
-void Shape::write(cv::FileStorage& fs) const
+void Widget::write(cv::FileStorage& fs) const
 {
     fs << "{";
     writeInternals(fs);
     fs << "}";
 }
 
-void Shape::read(const cv::FileNode& node)
+void Widget::read(const cv::FileNode& node)
 {
     readInternals(node);
 }
 
-void Shape::readInternals(const cv::FileNode &node)
+void Widget::readInternals(const cv::FileNode &node)
 {
     node["id"] >> id;
     node["outlineColor"] >> outlineColor;
@@ -72,7 +93,8 @@ void Shape::readInternals(const cv::FileNode &node)
     node["visible"] >> visible;
     node["thickness"] >> thickness;
     node["lineType"] >> lineType;
-    editing = false;
+    node["statusMsg"] >> statusMsg;
+    state = LEAVE;
     if (id == 0)
     {
         // backward compatible for olde config files
@@ -86,7 +108,7 @@ void Shape::readInternals(const cv::FileNode &node)
     }
 }
 
-void Shape::writeInternals(cv::FileStorage &fs) const
+void Widget::writeInternals(cv::FileStorage &fs) const
 {
     fs << "XXXconcreteTypeXXX" << getType() <<
           "id" << id <<
@@ -95,10 +117,11 @@ void Shape::writeInternals(cv::FileStorage &fs) const
           "locked" << locked <<
           "visible" << visible <<
           "thickness" << thickness <<
-          "lineType" << lineType;
+          "lineType" << lineType <<
+          "statusMsg" << statusMsg;
 }
 
-std::ostream &operator<<(std::ostream &o, const Shape &shape)
+std::ostream &operator<<(std::ostream &o, const Widget &shape)
 {
     cv::FileStorage fs("ignore.xml", cv::FileStorage::WRITE | cv::FileStorage::MEMORY);
     fs << shape.getType() << shape;

@@ -6,20 +6,53 @@ using namespace std;
 namespace canvascv
 {
 
-FloatingText::FloatingText(const string msgVal, Point topLeftVal, Scalar colorVal,
+const char *FloatingText::type = "FloatingText";
+
+FloatingText::FloatingText(Point pos)
+    : Widget(),
+      msg(),
+      leftPos(pos),
+      fontScale(0.5),
+      fontThickness(1),
+      alpha(0.3),
+      fontFace(FONT_HERSHEY_COMPLEX_SMALL),
+      fontHeight(0),
+      flowDirection(TOP_DOWN)
+{
+    outlineColor = Colors::BLACK;
+    fillColor = Colors::P1_GRAY;
+}
+
+FloatingText::FloatingText(const string msgVal, Point leftPosVal, Scalar colorVal,
                            Scalar bgColorVal, double fontScaleVal, int fontThicknessVal,
                            double alphaVal, int fontFaceVal)
-    : msg(msgVal),
-      topLeft(topLeftVal),
-      color(colorVal),
-      bgColor(bgColorVal),
+    : Widget(),
+      msg(msgVal),
+      leftPos(leftPosVal),
       fontScale(fontScaleVal),
       fontThickness(fontThicknessVal),
       alpha(alphaVal),
       fontFace(fontFaceVal),
-      fontHeight(0)
+      fontHeight(0),
+      flowDirection(TOP_DOWN)
 {
+    outlineColor = colorVal;
+    fillColor = bgColorVal;
     prepareMsgParts();
+}
+
+bool FloatingText::isAtPos(const Point &pos)
+{
+    if (rect.contains(pos))
+    {
+        return true;
+    }
+    return false;
+}
+
+const char *FloatingText::getType() const
+{
+   return type;
 }
 
 double FloatingText::getAlpha() const
@@ -30,26 +63,6 @@ double FloatingText::getAlpha() const
 void FloatingText::setAlpha(double value)
 {
     alpha = value;
-}
-
-Scalar FloatingText::getColor() const
-{
-    return color;
-}
-
-void FloatingText::setColor(const Scalar &value)
-{
-    color = value;
-}
-
-Scalar FloatingText::getBgColor() const
-{
-    return bgColor;
-}
-
-void FloatingText::setBgColor(const Scalar &value)
-{
-    bgColor = value;
 }
 
 string FloatingText::getMsg() const
@@ -107,14 +120,27 @@ void FloatingText::draw(Mat &dst)
     }
     if (totalRows)
     {
-        int yStart = topLeft.y + fontHeight;
-        rectWidth = min(dst.cols - topLeft.x - 10, rectWidth);
-        int rectHeight = min((int) floor(fontHeight * totalRows + fontHeight), dst.rows - (yStart - fontHeight) - 1);
-        Rect rect = Rect(topLeft.x, topLeft.y, rectWidth, rectHeight);
+        int yStart, yRectStart;
+        if (flowDirection == TOP_DOWN)
+        {
+            yStart = leftPos.y + fontHeight;
+            if (yStart < 0) yStart = 0;
+            yRectStart = leftPos.y;
+        }
+        else
+        {
+            yStart = leftPos.y - fontHeight * totalRows;
+            if (yStart < 0) yStart = 0;
+            yRectStart = yStart - fontHeight;
+        }
+        int rectHeight = min((int) floor(fontHeight * totalRows + fontHeight), dst.rows - yRectStart - 1);
+        rectWidth = min(dst.cols - leftPos.x - 10, rectWidth);
+        rect = Rect(leftPos.x, yRectStart, rectWidth, rectHeight);
+        int yRectEnd = yRectStart + rectHeight;
         Mat roi = dst(rect);
-        Mat rectColor(roi.size(), CV_8UC3, bgColor);
+        Mat rectColor(roi.size(), CV_8UC3, fillColor);
         cv::addWeighted(rectColor, alpha, roi, 1.0 - alpha , 0.0, roi);
-        cv::rectangle(dst, rect, bgColor);
+        cv::rectangle(dst, rect, fillColor);
         for (LineData &lineData : msgParts)
         {
             int numRows=1;
@@ -128,14 +154,15 @@ void FloatingText::draw(Mat &dst)
             int stringPartsLen = floor(lineData.str.length() / ratio);
             int y = yStart;
             for (int i = 0;
-                 i < numRows;
+                 i < numRows && y < yRectEnd;
                  ++i, y += fontHeight)
             {
                 int start = i * stringPartsLen;
                 int left = lineData.str.length() - start;
                 int len = left > stringPartsLen ? stringPartsLen : left;
-                putText(dst, lineData.str.substr(start, len), Point(topLeft.x+5, y),
-                        fontFace, fontScale, color, fontThickness, LINE_AA);
+                Point textPos(leftPos.x + 5, y);
+                putText(dst, lineData.str.substr(start, len), textPos,
+                        fontFace, fontScale, outlineColor, fontThickness, LINE_AA);
             }
             yStart = y;
         }
@@ -163,19 +190,29 @@ void FloatingText::prepareMsgParts()
     }
 }
 
+FloatingText::FlowDirection FloatingText::getFlowDirection() const
+{
+    return flowDirection;
+}
+
+void FloatingText::setFlowDirection(const FlowDirection &value)
+{
+    flowDirection = value;
+}
+
+cv::Point FloatingText::getLeftPos() const
+{
+    return leftPos;
+}
+
+void FloatingText::setLeftPos(const cv::Point &value)
+{
+    leftPos = value;
+}
+
 int FloatingText::getFontHeight() const
 {
     return fontHeight;
-}
-
-cv::Point FloatingText::getTopLeft() const
-{
-    return topLeft;
-}
-
-void FloatingText::setTopLeft(const cv::Point &value)
-{
-    topLeft = value;
 }
 
 }

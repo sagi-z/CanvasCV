@@ -8,6 +8,7 @@
 #include <list>
 #include <iostream>
 #include <memory>
+#include <functional>
 
 namespace canvascv
 {
@@ -15,9 +16,16 @@ namespace canvascv
 class Handle;
 class Canvas;
 
+/**
+ * @brief The Shape class
+ * Code from outside of this namespace should only use members marked as PUBLIC.
+ * INTERNAL api usage might cause instability and compatibility issues.
+ */
 class Shape
 {
 public:
+    // your cb is called with the shape pointer and a 'true'/'false' for selected/unselected,
+    typedef std::function<void(Shape*, bool)> CBType;
 
     Shape()
         : id(genId()),
@@ -46,13 +54,19 @@ public:
     virtual ~Shape();
 
     /**
-     * @brief draw shape on the canvas
+     * @brief PUBLIC: used to register for notifications on shape seletion by user
+     * @param cb to invoke on shape creation
+     */
+    void notifyOnSelect(CBType cb);
+
+    /**
+     * @brief INTERNAL: draw shape on the canvas
      * @param canvas
      */
     virtual void draw(cv::Mat &canvas) = 0;
 
     /**
-     * @brief mousePressed
+     * @brief INTERNAL: mousePressed
      * @param pos
      * @param onCreate is true if this is the mouse press which cerated this shape
      * @return true for keep in focus, false for leave focus
@@ -60,7 +74,7 @@ public:
     virtual bool mousePressed(const cv::Point &pos, bool onCreate = false) = 0;
 
     /**
-     * @brief mouseMoved
+     * @brief INTERNAL: mouseMoved
      *
      * 1. Was a mouse moved over this shape?
      * 2. If shape is during edit, then these are the mouse position.
@@ -70,14 +84,14 @@ public:
     virtual bool mouseMoved(const cv::Point &pos) = 0;
 
     /**
-     * @brief getConnectionTargets
+     * @brief PUBLIC: getConnectionTargets
      * Return a list of Handles this shape allows to connect to from other shapes - mainly from ShapesConnector
      * @return list of Handle pointers we ShapesConnector can use to connect
      */
     virtual std::list<Handle*> getConnectionTargets() = 0;
 
     /**
-     * @brief getShape
+     * @brief INTERNAL: getShape
      * Get internal shapes, which Canvas doesn't know of.
      * @param id
      * @return internal sub shape with requested id
@@ -88,7 +102,7 @@ public:
     }
 
     /**
-     * @brief keyPressed will be called by Canvas for active shapes
+     * @brief INTERNAL: keyPressed will be called by Canvas for active shapes
      * @param key was pressed. You must set it to -1 if you consumed it.
      * @return true if we want to stay in focus and false otherwise
      */
@@ -100,7 +114,7 @@ public:
     }
 
     /**
-     * @brief lostFocus is called by Canvas if we're in it and just became non-active
+     * @brief INTERNAL: lostFocus is called by Canvas if we're in it and just became non-active
      */
     virtual void lostFocus()
     {
@@ -108,98 +122,114 @@ public:
     }
 
     /**
-     * @brief mouseReleased
+     * @brief INTERNAL: mouseReleased
      * @param pos
      * @return true for keep in focus, false for leave focus
      */
     virtual bool mouseReleased(const cv::Point &pos) = 0;
 
+    /// INTERNAL
     virtual bool isAtPos(const cv::Point &pos) = 0;
 
+    /// PUBLIC
     cv::Scalar getOutlineColor() const
     {
         return outlineColor;
     }
 
+    /// PUBLIC
     virtual void setOutlineColor(const cv::Scalar &value)
     {
         outlineColor = value;
     }
 
+    /// PUBLIC
     cv::Scalar getFillColor() const
     {
         return fillColor;
     }
 
+    /// PUBLIC
     virtual void setFillColor(const cv::Scalar &value)
     {
         fillColor = value;
     }
 
+    /// PUBLIC
     bool getLocked() const
     {
         return locked;
     }
 
+    /// PUBLIC
     virtual void setLocked(bool value)
     {
         locked = value;
     }
 
+    /// PUBLIC
     bool getVisible() const
     {
         return visible;
     }
 
+    /// PUBLIC
     virtual void setVisible(bool value)
     {
         visible = value;
     }
 
+    /// INTERNAL
     bool isEditing()
     {
         return editing;
     }
 
     /**
-     * @brief getType should be implemented by derived.
+     * @brief PUBLIC: getType should be implemented by derived.
      * @return std::string of type
      */
     virtual const char *getType() const = 0;
 
+    /// PUBLIC
     int getThickness() const
     {
         return thickness;
     }
 
+    /// PUBLIC
     virtual void setThickness(int value)
     {
         thickness = value;
     }
 
+    /// PUBLIC
     int getLineType() const
     {
         return lineType;
     }
 
+    /// PUBLIC
     virtual void setLineType(int value)
     {
         lineType = value;
     }
 
+    /// PUBLIC
     int getId()
     {
         return id;
     }
 
     /**
-     * @brief setCanvas
+     * @brief INTERNAL: setCanvas
      * Called when canvas is creating a shape.
      * Only realy used by specific shapes.
      * @param value
      */
     void setCanvas(Canvas &value);
 
+    /// INTERNAL
     virtual const std::string &getStatusMsg() const;
 
 protected:
@@ -217,6 +247,11 @@ protected:
     Canvas *canvas;
 
 private:
+    friend class Canvas;
+
+    /// called by the canvas when the shape is (un)selected
+    void broadcastSelectChange(bool selected);
+
     int genId()
     {
         static int idGenerator;
@@ -228,6 +263,8 @@ private:
 
     void write(cv::FileStorage& fs) const;
     void read(const cv::FileNode& node);
+
+    std::list<CBType> selectNotifs;
 };
 
 // These write and read functions must be defined for the serialization in cv::FileStorage to work

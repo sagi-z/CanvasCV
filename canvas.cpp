@@ -12,6 +12,7 @@ Canvas::Canvas()
       hasStatusMsg(false),
       screenText("", Point(5,5))
 {
+    statusMsg.setFlowDirection(FloatingText::BOTTOM_UP);
 }
 
 Canvas::~Canvas()
@@ -27,7 +28,17 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
     }
     for (auto &shape : shapes)
     {
-        shape->draw(dst);
+        if (shape->getVisible())
+        {
+            shape->draw(dst);
+        }
+    }
+    for (auto &widget : widgets)
+    {
+        if (widget->getVisible())
+        {
+            widget->draw(dst);
+        }
     }
     if (hasScreenText)
     {
@@ -36,19 +47,35 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
     if (hasStatusMsg)
     {
         // reserve ~ 2 lines for the status msg at screen bottom left
-        statusMsg.setTopLeft(Point(5, dst.rows - statusMsg.getFontHeight() * 3));
+        statusMsg.setLeftPos(Point(5, dst.rows - statusMsg.getFontHeight()));
         statusMsg.draw(dst);
     }
 }
 
 void Canvas::onMousePress(const cv::Point &pos)
 {
+    // widgets have preference over shapes
+    if (activeWidget.get())
+    {
+        if (activeWidget->isAtPos(pos))
+        {
+            activeWidget->broadcastChange(Widget::PRESS);
+            return;
+        }
+        else
+        {
+            activeWidget->broadcastChange(Widget::LEAVE);
+            activeWidget.reset();
+        }
+    }
+
     // delegate to active
     if (active.get())
     {
         if (! active->mousePressed(pos))
         {
             active->lostFocus();
+            active->broadcastSelectChange(false);
             broadcastModify(active.get());
             active.reset();
             setStatusMsg("");
@@ -73,6 +100,7 @@ void Canvas::onMousePress(const cv::Point &pos)
                     setStatusMsg(active->getStatusMsg());
                 }
             }
+            active->broadcastSelectChange(true);
             return;
         }
     }
@@ -86,15 +114,35 @@ void Canvas::onMousePress(const cv::Point &pos)
         active.reset();
         setStatusMsg("");
     }
+    else
+    {
+        active->broadcastSelectChange(true);
+    }
 }
 
 void Canvas::onMouseRelease(const cv::Point &pos)
 {
+    // widgets have preference over shapes
+    if (activeWidget.get())
+    {
+        if (activeWidget->isAtPos(pos))
+        {
+            activeWidget->broadcastChange(Widget::RELEASE);
+            return;
+        }
+        else
+        {
+            activeWidget->broadcastChange(Widget::LEAVE);
+            activeWidget.reset();
+        }
+    }
+
     if (active.get())
     {
         if (! active->mouseReleased(pos))
         {
             active->lostFocus();
+            active->broadcastSelectChange(false);
             broadcastModify(active.get());
             active.reset();
             setStatusMsg("");
@@ -104,6 +152,32 @@ void Canvas::onMouseRelease(const cv::Point &pos)
 
 void Canvas::onMouseMove(const cv::Point &pos)
 {
+    // widgets have preference over shapes
+    if (activeWidget.get())
+    {
+        if (! activeWidget->isAtPos(pos))
+        {
+            activeWidget->broadcastChange(Widget::LEAVE);
+            activeWidget.reset();
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    // try to set active widget
+    for (auto &widget : widgets)
+    {
+        if (widget->isAtPos(pos))
+        {
+            activeWidget = widget;
+            activeWidget->broadcastChange(Widget::ENTER);
+            return;
+        }
+    }
+
+    // shapes
     if (active.get())
     {
         active->mouseMoved(pos);
@@ -118,6 +192,14 @@ std::shared_ptr<Shape> Canvas::createShape(const Point &pos, string type)
     return active;
 }
 
+std::shared_ptr<Widget> Canvas::createWidget(const Point &pos, string type)
+{
+    std::shared_ptr<Widget> widget(WidgetFactory::newWidget(type, pos));
+    widget->setCanvas(*this);
+    widgets.push_back(widget);
+    return widget;
+}
+
 void Canvas::consumeKey(int &key)
 {
     if (key != -1)
@@ -127,6 +209,7 @@ void Canvas::consumeKey(int &key)
             if (! active->keyPressed(key))
             {
                 active->lostFocus();
+                active->broadcastSelectChange(false);
                 active.reset();
                 setStatusMsg("");
             }
@@ -138,18 +221,29 @@ void Canvas::deleteActive()
 {
     if (active.get())
     {
-        shapes.erase(find(shapes.begin(),shapes.end(),active));
-        active->lostFocus();
-        broadcastDelete(active.get());
-        std::list<std::shared_ptr<ShapesConnector>> connectors;
-        getShapes(connectors);
-        for (auto &connector : connectors)
-        {
-            connector->disconnectShape(active->getId());
-        }
+        deleteShape(active);
         active.reset();
         setStatusMsg("");
     }
+}
+
+void Canvas::deleteShape(std::shared_ptr<Shape> shape)
+{
+    shapes.erase(find(shapes.begin(),shapes.end(),shape));
+    shape->lostFocus();
+    shape->broadcastSelectChange(false);
+    broadcastDelete(shape.get());
+    std::list<std::shared_ptr<ShapesConnector>> connectors;
+    getShapes(connectors);
+    for (auto &connector : connectors)
+    {
+        connector->disconnectShape(shape->getId());
+    }
+}
+
+void Canvas::deleteWidget(std::shared_ptr<Widget> widget)
+{
+    widgets.erase(find(widgets.begin(),widgets.end(),widget));
 }
 
 void Canvas::notifyOnCreate(Canvas::CBType cb)
@@ -210,13 +304,19 @@ void Canvas::getShapes(const Point &pos, std::list<std::shared_ptr<Shape> > &res
 void Canvas::enableScreenText(Scalar color, Scalar bgColor, double scale, int thickness, double alpha, int fontFace)
 {
     hasScreenText = true;
-    screenText = FloatingText(screenText.getMsg(), screenText.getTopLeft(), color, bgColor, scale, thickness, alpha, fontFace);
+    FloatingText::FlowDirection flowDirection = screenText.getFlowDirection();
+    screenText = FloatingText(screenText.getMsg(), screenText.getLeftPos(),
+                              color, bgColor, scale, thickness, alpha, fontFace);
+    screenText.setFlowDirection(flowDirection);
 }
 
 void Canvas::enableStatusMsg(Scalar color, Scalar bgColor, double scale, int thickness, double alpha, int fontFace)
 {
     hasStatusMsg = true;
-    statusMsg = FloatingText(statusMsg.getMsg(), statusMsg.getTopLeft(), color, bgColor, scale, thickness, alpha, fontFace);
+    FloatingText::FlowDirection flowDirection = statusMsg.getFlowDirection();
+    statusMsg = FloatingText(statusMsg.getMsg(), statusMsg.getLeftPos(),
+                             color, bgColor, scale, thickness, alpha, fontFace);
+    statusMsg.setFlowDirection(flowDirection);
 }
 
 void Canvas::setStatusMsg(const string &msg)
