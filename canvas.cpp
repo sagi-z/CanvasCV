@@ -169,7 +169,7 @@ void Canvas::onMouseMove(const cv::Point &pos)
     // try to set active widget
     for (auto &widget : widgets)
     {
-        if (widget->isAtPos(pos))
+        if (widget->getVisible() && widget->isAtPos(pos))
         {
             activeWidget = widget;
             activeWidget->broadcastChange(Widget::ENTER);

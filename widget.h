@@ -167,6 +167,8 @@ public:
     void setStatusMsg(const std::string &value);
 
 protected:
+    State getState() const;
+
     virtual void writeInternals(cv::FileStorage& fs) const = 0;
     virtual void readInternals(const cv::FileNode& node) = 0;
 
@@ -182,6 +184,7 @@ protected:
 
 private:
     friend class Canvas;
+    friend class CompoundWidget;
 
     /**
      * @brief setCanvas
@@ -192,8 +195,7 @@ private:
     void setCanvas(Canvas &value);
 
     /// called by the canvas when the shape is (un)selected
-    void broadcastChange(State status);
-
+    virtual void broadcastChange(State status);
 
     /**
      * @brief INTERNAL: mousePressed

@@ -1,4 +1,5 @@
 #include "floatingtext.h"
+#include "canvas.h"
 
 using namespace cv;
 using namespace std;
@@ -10,11 +11,11 @@ const char *FloatingText::type = "FloatingText";
 
 FloatingText::FloatingText(Point pos)
     : Widget(),
+      alpha(0.5),
       msg(),
       leftPos(pos),
       fontScale(0.5),
       fontThickness(1),
-      alpha(0.3),
       fontFace(FONT_HERSHEY_COMPLEX_SMALL),
       fontHeight(0),
       flowDirection(TOP_DOWN)
@@ -27,11 +28,11 @@ FloatingText::FloatingText(const string msgVal, Point leftPosVal, Scalar colorVa
                            Scalar bgColorVal, double fontScaleVal, int fontThicknessVal,
                            double alphaVal, int fontFaceVal)
     : Widget(),
+      alpha(alphaVal),
       msg(msgVal),
       leftPos(leftPosVal),
       fontScale(fontScaleVal),
       fontThickness(fontThicknessVal),
-      alpha(alphaVal),
       fontFace(fontFaceVal),
       fontHeight(0),
       flowDirection(TOP_DOWN)
@@ -39,6 +40,17 @@ FloatingText::FloatingText(const string msgVal, Point leftPosVal, Scalar colorVa
     outlineColor = colorVal;
     fillColor = bgColorVal;
     prepareMsgParts();
+}
+
+std::shared_ptr<FloatingText> FloatingText::newFloatingText(Canvas &c, Point pos,
+                                                            const string &text,
+                                                            FloatingText::FlowDirection flow)
+{
+
+    shared_ptr<FloatingText> widget = c.createWidget<FloatingText>(pos);
+    widget->setMsg(text);
+    widget->setFlowDirection(flow);
+    return widget;
 }
 
 bool FloatingText::isAtPos(const Point &pos)

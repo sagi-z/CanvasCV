@@ -57,7 +57,7 @@ public:
         return arrowMagnitude;
     }
 
-    int setArrowMagnitude(int mag)
+    void setArrowMagnitude(int mag)
     {
         arrowMagnitude = mag;
     }

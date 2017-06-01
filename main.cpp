@@ -6,6 +6,7 @@
 #include "textbox.h"
 #include "shapesconnector.h"
 #include "ellipse.h"
+#include "button.h"
 
 #include <iostream>
 #include <iterator>
@@ -110,23 +111,33 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
     ellipse->setLocked(true);
     connector->setLocked(true);
 
-    static shared_ptr<FloatingText> popup = c.createWidget<FloatingText>((*head)());
-    popup->setVisible(false);
-    popup->setFlowDirection(FloatingText::BOTTOM_UP);
-    popup->setMsg(
-                "These 3 objects are locked.\n"
-                "They are an Ellipse, ShapesConnector and a TextBox.\n"
-                "You can still select them and delete them.");
+    // create 2 invisible widgets
+    static shared_ptr<FloatingText> floatingText =
+            FloatingText::newFloatingText(c, (*head)(),
+                                          "These 3 objects are locked.\n"
+                                          "They are an Ellipse, ShapesConnector and a TextBox.\n"
+                                          "You can still select them and delete them.",
+                                          FloatingText::BOTTOM_UP);
+    floatingText->setVisible(false);
+
+    static shared_ptr<Button> button = Button::newButton(c, (*head)(),
+                                                         "Single button",
+                                                         "Hover with mouse.\n"
+                                                         "Press with mouse.");
+    button->setVisible(false);
+
     ellipse->notifyOnSelect([&](Shape *shape, bool isSelected)
     {
         cout << "ellipse selection state is "   << isSelected << endl;
         if (isSelected)
         {
-            popup->setVisible(true);
+            button->setVisible(false);
+            floatingText->setVisible(true);
         }
         else
         {
-            popup->setVisible(false);
+            button->setVisible(true);
+            floatingText->setVisible(false);
         }
     });
 }
@@ -196,7 +207,7 @@ int main(int argc, char **argv)
     namedWindow("Canvas", WINDOW_AUTOSIZE);
     setMouseCallback("Canvas", mouseCB, &c);
 
-    int delay = 1000/24;
+    int delay = 1000/15;
     int key = 0;
     bool canvasOn = true;
     do {

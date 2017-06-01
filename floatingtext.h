@@ -26,8 +26,13 @@ public:
                  cv::Scalar bgColorVal = Colors::P1_GRAY,
                  double fontScaleVal = 0.5,
                  int fontThicknessVal = 1,
-                 double alphaVal = 0.3,
+                 double alphaVal = 0.5,
                  int fontFaceVal = cv::FONT_HERSHEY_COMPLEX_SMALL);
+
+    static std::shared_ptr<FloatingText> newFloatingText(Canvas &c,
+                                                         cv::Point pos,
+                                                         const std::string &text,
+                                                         FlowDirection flow = TOP_DOWN);
 
     virtual bool isAtPos(const cv::Point &pos);
 
@@ -64,13 +69,16 @@ public:
     static const char *type;
 
 protected:
+    // TODO
     virtual void writeInternals(cv::FileStorage &fs) const
     {
     }
+    // TODO
     virtual void readInternals(const cv::FileNode &node)
     {
     }
 
+    double alpha;
 private:
 
     virtual void mousePressed() {}
@@ -88,7 +96,6 @@ private:
 
     std::string msg;
     cv::Point leftPos;
-    double alpha;
     std::list<LineData> msgParts;
     int fontHeight;
     int fontFace;

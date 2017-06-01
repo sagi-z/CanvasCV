@@ -4,7 +4,7 @@ project (canvascv)
 
 find_package(OpenCV 3.1.0 REQUIRED)
 
-add_definitions(-std=c++11)
+add_definitions(-std=c++11 -Werror=return-type)
 
 file(GLOB CanvasCV_INCLUDES
     "*.h"

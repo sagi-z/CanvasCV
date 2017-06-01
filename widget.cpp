@@ -84,6 +84,11 @@ void Widget::read(const cv::FileNode& node)
     readInternals(node);
 }
 
+Widget::State Widget::getState() const
+{
+    return state;
+}
+
 void Widget::readInternals(const cv::FileNode &node)
 {
     node["id"] >> id;
