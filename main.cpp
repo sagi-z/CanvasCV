@@ -121,7 +121,7 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
     floatingText->setVisible(false);
 
     static shared_ptr<Button> button = Button::newButton(c, (*head)(),
-                                                         "Single button",
+                                                         "Single button", 0,
                                                          "Hover with mouse.\n"
                                                          "Press with mouse.");
     button->setVisible(false);

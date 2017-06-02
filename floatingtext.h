@@ -22,6 +22,7 @@ public:
 
     FloatingText(const std::string msgVal = "",
                  cv::Point topLeftVal = cv::Point(),
+                 int maxWidthVal = 0,
                  cv::Scalar colorVal = Colors::BLACK,
                  cv::Scalar bgColorVal = Colors::P1_GRAY,
                  double fontScaleVal = 0.5,
@@ -32,6 +33,7 @@ public:
     static std::shared_ptr<FloatingText> newFloatingText(Canvas &c,
                                                          cv::Point pos,
                                                          const std::string &text,
+                                                         int maxWidthVal = 0,
                                                          FlowDirection flow = TOP_DOWN);
 
     virtual bool isAtPos(const cv::Point &pos);
@@ -66,6 +68,9 @@ public:
     FlowDirection getFlowDirection() const;
     void setFlowDirection(const FlowDirection &value);
 
+    int getMaxWidth() const;
+    void setMaxWidth(int value);
+
     static const char *type;
 
 protected:
@@ -97,6 +102,7 @@ private:
     double fontScale;
     int fontThickness;
     FlowDirection flowDirection;
+    int maxWidth;
     int yStart;
     cv::Rect rect;
     cv::Mat rectColor;

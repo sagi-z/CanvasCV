@@ -16,10 +16,10 @@ Button::Button(Point pos)
 {
 }
 
-Button::Button(const string msgVal, Point leftPosVal, Scalar colorVal,
+Button::Button(const string msgVal, Point leftPosVal, int maxWidthVal, Scalar colorVal,
                Scalar bgColorVal, double fontScaleVal, int fontThicknessVal,
                double alphaVal, int fontFaceVal)
-    : FloatingText(msgVal, leftPosVal, colorVal,
+    : FloatingText(msgVal, leftPosVal, maxWidthVal, colorVal,
                    bgColorVal, fontScaleVal, fontThicknessVal,
                    alphaVal, fontFaceVal),
       origAlpha(alpha)
@@ -31,10 +31,11 @@ const char *Button::getType() const
     return type;
 }
 
-std::shared_ptr<Button> Button::newButton(Canvas &c, Point pos, const string &buttonText, const string &statusMsg)
+std::shared_ptr<Button> Button::newButton(Canvas &c, Point pos, const string &buttonText, int maxWidthVal, const string &statusMsg)
 {
     shared_ptr<Button> widget = c.createWidget<Button>(pos);
     widget->setMsg(buttonText);
+    widget->setMaxWidth(maxWidthVal);
     widget->setStatusMsg(statusMsg);
     return widget;
 }

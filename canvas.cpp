@@ -69,6 +69,7 @@ void Canvas::onMousePress(const cv::Point &pos)
         else
         {
             activeWidget->broadcastChange(Widget::LEAVE);
+            setStatusMsg("");
             activeWidget.reset();
         }
     }
@@ -137,6 +138,7 @@ void Canvas::onMouseRelease(const cv::Point &pos)
         else
         {
             activeWidget->broadcastChange(Widget::LEAVE);
+            setStatusMsg("");
             activeWidget.reset();
         }
     }
@@ -162,6 +164,7 @@ void Canvas::onMouseMove(const cv::Point &pos)
         if (! activeWidget->isAtPos(pos))
         {
             activeWidget->broadcastChange(Widget::LEAVE);
+            setStatusMsg("");
             activeWidget.reset();
         }
         else
@@ -177,6 +180,7 @@ void Canvas::onMouseMove(const cv::Point &pos)
         {
             activeWidget = widget;
             activeWidget->broadcastChange(Widget::ENTER);
+            setStatusMsg(widget->getStatusMsg());
             return;
         }
     }

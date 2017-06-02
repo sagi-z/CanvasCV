@@ -14,6 +14,7 @@ FloatingText::FloatingText(Point pos)
       alpha(0.5),
       msg(),
       leftPos(pos),
+      maxWidth(0),
       fontScale(0.5),
       fontThickness(1),
       fontFace(FONT_HERSHEY_COMPLEX_SMALL),
@@ -24,13 +25,14 @@ FloatingText::FloatingText(Point pos)
     fillColor = Colors::P1_GRAY;
 }
 
-FloatingText::FloatingText(const string msgVal, Point leftPosVal, Scalar colorVal,
+FloatingText::FloatingText(const string msgVal, Point leftPosVal, int maxWidthVal, Scalar colorVal,
                            Scalar bgColorVal, double fontScaleVal, int fontThicknessVal,
                            double alphaVal, int fontFaceVal)
     : Widget(),
       alpha(alphaVal),
       msg(msgVal),
       leftPos(leftPosVal),
+      maxWidth(maxWidthVal),
       fontScale(fontScaleVal),
       fontThickness(fontThicknessVal),
       fontFace(fontFaceVal),
@@ -43,11 +45,13 @@ FloatingText::FloatingText(const string msgVal, Point leftPosVal, Scalar colorVa
 
 std::shared_ptr<FloatingText> FloatingText::newFloatingText(Canvas &c, Point pos,
                                                             const string &text,
+                                                            int maxWidthVal,
                                                             FloatingText::FlowDirection flow)
 {
 
     shared_ptr<FloatingText> widget = c.createWidget<FloatingText>(pos);
     widget->setMsg(text);
+    widget->setMaxWidth(maxWidthVal);
     widget->setFlowDirection(flow);
     return widget;
 }
@@ -150,6 +154,8 @@ void FloatingText::prepareMsgParts()
     {
         if (! canvas) return;
         Size canvasSize = canvas->getSize();
+        int localMaxWidth = canvasSize.width - leftPos.x;
+        if (maxWidth && maxWidth < localMaxWidth) localMaxWidth = maxWidth;
         struct LineData
         {
             std::string str;
@@ -158,7 +164,7 @@ void FloatingText::prepareMsgParts()
 
         std::list<LineData> msgParts;
         int totalRows=0;
-        int rectWidth = 0;
+        int maxNeededWidth = 0;
         int pos = 0;
         int prevPos = 0;
         while (pos < msg.length())
@@ -173,8 +179,8 @@ void FloatingText::prepareMsgParts()
             baseline += fontThickness;
             int width = 10 + textSize.width; // 5 pixels at start & end = 10
             fontHeight = textSize.height+baseline*2;
-            totalRows += width / canvasSize.width + 1;
-            rectWidth = max(rectWidth, width);
+            totalRows += width / localMaxWidth + 1;
+            maxNeededWidth = max(maxNeededWidth, width);
             msgParts.push_back({line, width});
         }
         if (totalRows)
@@ -194,14 +200,16 @@ void FloatingText::prepareMsgParts()
             }
             int rectHeight = min((int) floor(fontHeight * totalRows + fontHeight),
                                  canvasSize.height - yRectStart - 1);
-            rectWidth = min(canvasSize.width - leftPos.x - 10, rectWidth);
+            int rectWidth = min(localMaxWidth - 5, // "absolute limit width (5 pixels from right of canvas)" vs.
+                                maxNeededWidth);   // "width which is realy needed"
             rect = Rect(leftPos.x, yRectStart, rectWidth, rectHeight);
             rectColor = Mat(rect.size(), CV_8UC3, fillColor);
             for (LineData &lineData : msgParts)
             {
                 int numRows=1;
                 double ratio = 1.;
-                if (lineData.width > rectWidth)
+                if (lineData.width   // has +10 pixels for padding
+                        > rectWidth) // actual boundaries
                 {
                     // wrap a long line to numRows lines
                     numRows = lineData.width / rectWidth + 1;
@@ -218,6 +226,17 @@ void FloatingText::prepareMsgParts()
             }
         }
     }
+}
+
+int FloatingText::getMaxWidth() const
+{
+    return maxWidth;
+}
+
+void FloatingText::setMaxWidth(int value)
+{
+    maxWidth = value;
+    rows.clear();
 }
 
 FloatingText::FlowDirection FloatingText::getFlowDirection() const

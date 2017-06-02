@@ -16,6 +16,7 @@ public:
 
     Button(const std::string msgVal = "",
            cv::Point topLeftVal = cv::Point(),
+           int maxWidthVal = 0,
            cv::Scalar colorVal = Colors::BLACK,
            cv::Scalar bgColorVal = Colors::P1_GRAY,
            double fontScaleVal = 0.5,
@@ -28,6 +29,7 @@ public:
     static std::shared_ptr<Button> newButton(Canvas &c,
                                              cv::Point pos,
                                              const std::string &buttonText,
+                                             int maxWidthVal = 0,
                                              const std::string &statusMsg="");
 
     static const char *type;
