@@ -9,6 +9,12 @@ namespace canvascv
 class ButtonArray : public CompoundWidget
 {
 public:
+    enum Orientation
+    {
+        VERTICAL,
+        HORIZONTAL
+    };
+
     ButtonArray();
 
 private:

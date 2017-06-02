@@ -19,7 +19,7 @@ class Canvas
 public:
     typedef std::function<void(Shape*)> CBType;
 
-    Canvas();
+    Canvas(cv::Size sizeVal = cv::Size());
 
     ~Canvas();
 
@@ -161,6 +161,9 @@ public:
 
     void setScreenText(const std::string &msg);
 
+    cv::Size getSize() const;
+    void setSize(const cv::Size &value);
+
 private:
 
     void broadcastCreate(Shape *shape);
@@ -169,6 +172,7 @@ private:
 
     void processNewShape();
 
+    cv::Size size;
     bool hasScreenText;
     bool hasStatusMsg;
     FloatingText screenText;

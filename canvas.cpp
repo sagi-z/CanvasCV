@@ -7,11 +7,15 @@
 namespace canvascv
 {
 
-Canvas::Canvas()
-    : hasScreenText(false),
+Canvas::Canvas(Size sizeVal)
+    : size(sizeVal),
+      hasScreenText(false),
       hasStatusMsg(false),
-      screenText("", Point(5,5))
+      screenText(Point(5,5)),
+      statusMsg(Point(0,0)) // will be moved during enableStatusMsg
 {
+    screenText.setCanvas(*this);
+    statusMsg.setCanvas(*this);
     statusMsg.setFlowDirection(FloatingText::BOTTOM_UP);
 }
 
@@ -304,19 +308,21 @@ void Canvas::getShapes(const Point &pos, std::list<std::shared_ptr<Shape> > &res
 void Canvas::enableScreenText(Scalar color, Scalar bgColor, double scale, int thickness, double alpha, int fontFace)
 {
     hasScreenText = true;
-    FloatingText::FlowDirection flowDirection = screenText.getFlowDirection();
-    screenText = FloatingText(screenText.getMsg(), screenText.getLeftPos(),
-                              color, bgColor, scale, thickness, alpha, fontFace);
-    screenText.setFlowDirection(flowDirection);
+    screenText.setOutlineColor(color);
+    screenText.setFillColor(bgColor);
+    screenText.setFontScale(scale);
+    screenText.setAlpha(alpha);
+    screenText.setFontFace(fontFace);
 }
 
 void Canvas::enableStatusMsg(Scalar color, Scalar bgColor, double scale, int thickness, double alpha, int fontFace)
 {
     hasStatusMsg = true;
-    FloatingText::FlowDirection flowDirection = statusMsg.getFlowDirection();
-    statusMsg = FloatingText(statusMsg.getMsg(), statusMsg.getLeftPos(),
-                             color, bgColor, scale, thickness, alpha, fontFace);
-    statusMsg.setFlowDirection(flowDirection);
+    statusMsg.setOutlineColor(color);
+    statusMsg.setFillColor(bgColor);
+    statusMsg.setFontScale(scale);
+    statusMsg.setAlpha(alpha);
+    statusMsg.setFontFace(fontFace);
 }
 
 void Canvas::setStatusMsg(const string &msg)
@@ -374,6 +380,20 @@ void Canvas::processNewShape()
         {
             setStatusMsg(active->getStatusMsg());
         }
+    }
+}
+
+cv::Size Canvas::getSize() const
+{
+    return size;
+}
+
+void Canvas::setSize(const cv::Size &value)
+{
+    size = value;
+    for (auto &widget : widgets)
+    {
+        widget->canvasResized(value);
     }
 }
 

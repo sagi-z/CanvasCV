@@ -81,28 +81,25 @@ protected:
     double alpha;
 private:
 
+    virtual void canvasResized(const cv::Size &size);
     virtual void mousePressed() {}
     virtual void mouseReleased() {}
     virtual void mouseEnter() {}
     virtual void mouseLeave() {}
 
-    struct LineData
-    {
-        std::string str;
-        int width;
-    };
-
     void prepareMsgParts();
 
     std::string msg;
     cv::Point leftPos;
-    std::list<LineData> msgParts;
+    std::list<std::string> rows;
     int fontHeight;
     int fontFace;
     double fontScale;
     int fontThickness;
     FlowDirection flowDirection;
+    int yStart;
     cv::Rect rect;
+    cv::Mat rectColor;
 };
 
 }

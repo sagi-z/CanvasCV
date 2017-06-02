@@ -149,4 +149,12 @@ void CompoundWidget::broadcastChange(canvascv::Widget::State status)
     }
 }
 
+void CompoundWidget::canvasResized(const Size &size)
+{
+    for (auto &widget : widgets)
+    {
+        widget->canvasResized(size);
+    }
+}
+
 }

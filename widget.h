@@ -194,6 +194,8 @@ private:
      */
     void setCanvas(Canvas &value);
 
+    virtual void canvasResized(const cv::Size &size) {}
+
     /// called by the canvas when the shape is (un)selected
     virtual void broadcastChange(State status);
 

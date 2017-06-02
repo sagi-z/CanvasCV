@@ -167,7 +167,7 @@ int main(int argc, char **argv)
         image = Scalar::all(255);
     }
 
-    Canvas c;
+    Canvas c(image.size());
     c.setShapeType("Line"); // default shape type for direct GUI creation
     c.enableScreenText();
     c.enableStatusMsg();

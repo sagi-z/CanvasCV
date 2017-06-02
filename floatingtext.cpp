@@ -39,7 +39,6 @@ FloatingText::FloatingText(const string msgVal, Point leftPosVal, Scalar colorVa
 {
     outlineColor = colorVal;
     fillColor = bgColorVal;
-    prepareMsgParts();
 }
 
 std::shared_ptr<FloatingText> FloatingText::newFloatingText(Canvas &c, Point pos,
@@ -85,7 +84,7 @@ string FloatingText::getMsg() const
 void FloatingText::setMsg(const string &value)
 {
     msg = value;
-    prepareMsgParts();
+    rows.clear();
 }
 
 int FloatingText::getFontFace() const
@@ -96,7 +95,7 @@ int FloatingText::getFontFace() const
 void FloatingText::setFontFace(int value)
 {
     fontFace = value;
-    prepareMsgParts();
+    rows.clear();
 }
 
 double FloatingText::getFontScale() const
@@ -107,7 +106,7 @@ double FloatingText::getFontScale() const
 void FloatingText::setFontScale(double value)
 {
     fontScale = value;
-    prepareMsgParts();
+    rows.clear();
 }
 
 int FloatingText::getFontThickness() const
@@ -118,87 +117,106 @@ int FloatingText::getFontThickness() const
 void FloatingText::setFontThickness(int value)
 {
     fontThickness = value;
-    prepareMsgParts();
+    rows.clear();
 }
 
 void FloatingText::draw(Mat &dst)
 {
-    int totalRows=0;
-    int rectWidth = 0;
-    for (LineData &lineData : msgParts)
+    if (msg.length())
     {
-        totalRows += lineData.width / dst.cols + 1;
-        rectWidth = max(rectWidth, lineData.width);
-    }
-    if (totalRows)
-    {
-        int yStart, yRectStart;
-        if (flowDirection == TOP_DOWN)
-        {
-            yStart = leftPos.y + fontHeight;
-            if (yStart < 0) yStart = 0;
-            yRectStart = leftPos.y;
-        }
-        else
-        {
-            yStart = leftPos.y - fontHeight * totalRows;
-            if (yStart < 0) yStart = 0;
-            yRectStart = yStart - fontHeight;
-        }
-        int rectHeight = min((int) floor(fontHeight * totalRows + fontHeight), dst.rows - yRectStart - 1);
-        rectWidth = min(dst.cols - leftPos.x - 10, rectWidth);
-        rect = Rect(leftPos.x, yRectStart, rectWidth, rectHeight);
-        int yRectEnd = yRectStart + rectHeight;
+        if (! rows.size())
+            prepareMsgParts();
+
+        int yEnd = rect.tl().y + rect.height;
         Mat roi = dst(rect);
-        Mat rectColor(roi.size(), CV_8UC3, fillColor);
         cv::addWeighted(rectColor, alpha, roi, 1.0 - alpha , 0.0, roi);
         cv::rectangle(dst, rect, fillColor);
-        for (LineData &lineData : msgParts)
+        int y = yStart;
+        for (auto &str : rows)
         {
-            int numRows=1;
-            double ratio = 1.;
-            if (lineData.width > rectWidth)
-            {
-                // wrap a long line to numRows lines
-                numRows = lineData.width / rectWidth + 1;
-                ratio = (double) lineData.width / rectWidth;
-            }
-            int stringPartsLen = floor(lineData.str.length() / ratio);
-            int y = yStart;
-            for (int i = 0;
-                 i < numRows && y < yRectEnd;
-                 ++i, y += fontHeight)
-            {
-                int start = i * stringPartsLen;
-                int left = lineData.str.length() - start;
-                int len = left > stringPartsLen ? stringPartsLen : left;
-                Point textPos(leftPos.x + 5, y);
-                putText(dst, lineData.str.substr(start, len), textPos,
-                        fontFace, fontScale, outlineColor, fontThickness, LINE_AA);
-            }
-            yStart = y;
+            Point textPos(leftPos.x + 5, y);
+            putText(dst, str, textPos,
+                    fontFace, fontScale, outlineColor, fontThickness, LINE_AA);
+            y += fontHeight;
+            if (y > yEnd) break;
         }
     }
 }
 
 void FloatingText::prepareMsgParts()
 {
-    msgParts.clear();
-    int pos = 0;
-    int prevPos = 0;
-    while (pos < msg.length())
+    rows.clear();
+    if (msg.length())
     {
-        while(pos++ < msg.length() && msg[pos-1] != '\n');
-        string line(msg, prevPos, pos - prevPos - 1);
-        prevPos = pos;
-        int baseline=0;
-        Size textSize = getTextSize(line, fontFace,
-                                    fontScale, fontThickness,
-                                    &baseline);
-        baseline += fontThickness;
-        int width = 10 + textSize.width; // 5 pixels at start & end = 10
-        fontHeight = textSize.height+baseline*2;
-        msgParts.push_back({line, width});
+        if (! canvas) return;
+        Size canvasSize = canvas->getSize();
+        struct LineData
+        {
+            std::string str;
+            int width;
+        };
+
+        std::list<LineData> msgParts;
+        int totalRows=0;
+        int rectWidth = 0;
+        int pos = 0;
+        int prevPos = 0;
+        while (pos < msg.length())
+        {
+            while(pos++ < msg.length() && msg[pos-1] != '\n');
+            string line(msg, prevPos, pos - prevPos - 1);
+            prevPos = pos;
+            int baseline=0;
+            Size textSize = getTextSize(line, fontFace,
+                                        fontScale, fontThickness,
+                                        &baseline);
+            baseline += fontThickness;
+            int width = 10 + textSize.width; // 5 pixels at start & end = 10
+            fontHeight = textSize.height+baseline*2;
+            totalRows += width / canvasSize.width + 1;
+            rectWidth = max(rectWidth, width);
+            msgParts.push_back({line, width});
+        }
+        if (totalRows)
+        {
+            int yRectStart;
+            if (flowDirection == TOP_DOWN)
+            {
+                yStart = leftPos.y + fontHeight;
+                if (yStart < 0) yStart = 0;
+                yRectStart = leftPos.y;
+            }
+            else
+            {
+                yStart = leftPos.y - fontHeight * totalRows;
+                if (yStart < 0) yStart = 0;
+                yRectStart = yStart - fontHeight;
+            }
+            int rectHeight = min((int) floor(fontHeight * totalRows + fontHeight),
+                                 canvasSize.height - yRectStart - 1);
+            rectWidth = min(canvasSize.width - leftPos.x - 10, rectWidth);
+            rect = Rect(leftPos.x, yRectStart, rectWidth, rectHeight);
+            rectColor = Mat(rect.size(), CV_8UC3, fillColor);
+            for (LineData &lineData : msgParts)
+            {
+                int numRows=1;
+                double ratio = 1.;
+                if (lineData.width > rectWidth)
+                {
+                    // wrap a long line to numRows lines
+                    numRows = lineData.width / rectWidth + 1;
+                    ratio = (double) lineData.width / rectWidth;
+                }
+                int stringPartsLen = floor(lineData.str.length() / ratio);
+                for (int i = 0; i < numRows; ++i)
+                {
+                    int start = i * stringPartsLen;
+                    int left = lineData.str.length() - start;
+                    int len = left > stringPartsLen ? stringPartsLen : left;
+                    rows.push_back(lineData.str.substr(start, len));
+                }
+            }
+        }
     }
 }
 
@@ -210,6 +228,12 @@ FloatingText::FlowDirection FloatingText::getFlowDirection() const
 void FloatingText::setFlowDirection(const FlowDirection &value)
 {
     flowDirection = value;
+    rows.clear();
+}
+
+void FloatingText::canvasResized(const Size &size)
+{
+    rows.clear();
 }
 
 cv::Point FloatingText::getLeftPos() const
@@ -220,6 +244,7 @@ cv::Point FloatingText::getLeftPos() const
 void FloatingText::setLeftPos(const cv::Point &value)
 {
     leftPos = value;
+    rows.clear();
 }
 
 int FloatingText::getFontHeight() const
