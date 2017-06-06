@@ -83,11 +83,11 @@ void VerticalLayout::addWidget(const shared_ptr<Widget> &widget)
     if (prevLayout) prevLayout->rmvWidget(widget);
     widget->setLayout(*this);
     Point pos = location;
-    if (anchor == TOP_LEFT)
+    if (layoutAnchor == TOP_LEFT)
     {
         pos.y = rect.y + rect.height + spacing;
     }
-    else if (anchor == BOTTOM_LEFT)
+    else if (layoutAnchor == BOTTOM_LEFT)
     {
         pos.y = rect.y - spacing;
     }
@@ -143,23 +143,39 @@ void VerticalLayout::recalc()
         maxHeight = max(maxHeight, minRect.height);
     }
     Point pos = location;
+    // Try to avoid opencv aborts
     for (auto &widget : vertWidgets)
     {
+        Widget::ImmediateUpdateGrd grd(*widget);
+        Anchor widgetLayoutAnchor = widget->getLayoutAnchor();
+        if (widgetLayoutAnchor & RIGHT)
+        {
+            // Align to the right - location.x is rightmost position
+            pos.x = location.x + maxWidth - widget->getRect().width;
+        }
+        else if (widgetLayoutAnchor & CENTER)
+        {
+            pos.x = location.x + maxWidth / 2. - widget->getRect().width / 2.;
+        }
+        else
+        {   // default is LEFT, pos.x unchanged
+            pos.x = location.x;
+        }
         widget->setLocation(pos);
         if (stretchX) widget->stretchWidth(maxWidth);
         if (stretchY) widget->stretchHeight(maxHeight);
-        if (anchor == TOP_LEFT)
-        {
-            pos.y += (widget->getRect().height + spacing);
-        }
-        else if (anchor == BOTTOM_LEFT)
+
+        // Next row is either below us or above us
+        if (flowAnchor & BOTTOM)
         {
             pos.y -= (widget->getRect().height + spacing);
         }
-        else
+        else // default is TOP
         {
-            abort();
+            pos.y += (widget->getRect().height + spacing);
         }
+        // Try to avoid opencv aborts
+        if (pos.y < 0) pos.y = 0;
     }
 
     CompoundWidget::recalc();

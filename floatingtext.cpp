@@ -40,12 +40,14 @@ FloatingText::FloatingText(const string msgVal, Point locationVal, int maxWidthV
 
 shared_ptr<FloatingText> FloatingText::newFloatingText(Canvas &c, Point pos,
                                                        const string &text,
-                                                       Widget::Anchor anchor)
+                                                       Widget::Anchor flowAnchor,
+                                                       Widget::Anchor layoutAnchor)
 {
 
     shared_ptr<FloatingText> widget = c.createWidget<FloatingText>(pos);
     widget->setMsg(text);
-    widget->setAnchor(anchor);
+    widget->setFlowAnchor(flowAnchor);
+    widget->setLayoutAnchor(layoutAnchor);
     return widget;
 }
 
@@ -174,13 +176,13 @@ void FloatingText::prepareMsgParts()
         if (totalRows)
         {
             int yRectStart;
-            if (anchor == TOP_LEFT)
+            if (flowAnchor == TOP_LEFT)
             {
                 yStart = location.y + fontHeight;
                 if (yStart < 0) yStart = 0;
                 yRectStart = location.y;
             }
-            else if (anchor == BOTTOM_LEFT)
+            else if (flowAnchor == BOTTOM_LEFT)
             {
                 yStart = location.y - fontHeight * totalRows;
                 if (yStart < 0) yStart = 0;
@@ -188,7 +190,7 @@ void FloatingText::prepareMsgParts()
             }
             else
             {
-                cerr << "anchor type not supported" << endl;
+                cerr << "flow anchor type not supported" << endl;
                 abort();
             }
             int rectHeight = min((int) floor(fontHeight * totalRows + fontHeight),

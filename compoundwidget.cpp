@@ -182,11 +182,19 @@ void CompoundWidget::layoutResized(const Rect &boundaries)
     }
 }
 
-void CompoundWidget::setAnchor(const Widget::Anchor &value)
+void CompoundWidget::setLayoutAnchor(const Widget::Anchor &value)
 {
     for (auto &widget : widgets)
     {
-        widget->setAnchor(value);
+        widget->setLayoutAnchor(value);
+    }
+}
+
+void CompoundWidget::setFlowAnchor(const Widget::Anchor &value)
+{
+    for (auto &widget : widgets)
+    {
+        widget->setFlowAnchor(value);
     }
 }
 

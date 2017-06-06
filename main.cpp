@@ -117,7 +117,7 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
                                                                           "These 3 objects are locked.\n"
                                                                           "They are an Ellipse, ShapesConnector and a TextBox.\n"
                                                                           "You can still select them and delete them.",
-                                                                          FloatingText::BOTTOM_LEFT);
+                                                                          Widget::BOTTOM_LEFT);
     floatingText->setVisible(false);
 
     shared_ptr<VerticalLayout> buttons = VerticalLayout::newVerticalLayout(c, (*head)());
@@ -130,6 +130,7 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
                                          "Hover with mouse (2).\n"
                                          "Press with mouse (2)."));
 
+//    buttons->at(0)->setLayoutAnchor(Widget::CENTER);
     buttons->at(0)->notifyOnChange([](Widget *w, Widget::State state)
     {
         cout << "widget " << w << " at(0) got state " << state << endl;

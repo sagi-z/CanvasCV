@@ -16,7 +16,7 @@ Canvas::Canvas(Size sizeVal)
 {
     screenText.setLayout(*this);
     statusMsg.setLayout(*this);
-    statusMsg.setAnchor(Widget::BOTTOM_LEFT);
+    statusMsg.setLayoutAnchor(Widget::BOTTOM_LEFT);
 }
 
 Canvas::~Canvas()

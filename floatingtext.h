@@ -30,7 +30,8 @@ public:
     static std::shared_ptr<FloatingText> newFloatingText(Canvas &c,
                                                          cv::Point pos,
                                                          const std::string &text,
-                                                         Anchor anchor = TOP_LEFT);
+                                                         Anchor flowAnchor = TOP_LEFT,
+                                                         Anchor layoutAnchor = TOP_LEFT);
 
     virtual const char *getType() const;
 

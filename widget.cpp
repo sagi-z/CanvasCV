@@ -34,10 +34,12 @@ Widget::Widget(const Point &pos)
       lineType(cv::LINE_AA),
       forcedWidth(0),
       forcedHeight(0),
-      anchor(TOP_LEFT),
+      layoutAnchor(TOP_LEFT),
+      flowAnchor(TOP_LEFT),
       layout(nullptr),
       state(LEAVE),
-      isDirty(false)
+      isDirty(false),
+      delayedUpdate(true)
 {}
 
 Widget::Widget(const Widget &other)
@@ -51,10 +53,11 @@ Widget::Widget(const Widget &other)
       lineType(other.lineType),
       forcedWidth(other.forcedWidth),
       forcedHeight(other.forcedHeight),
-      anchor(other.anchor),
+      flowAnchor(other.layoutAnchor),
       layout(other.layout),
       state(LEAVE),
-      isDirty(other.isDirty)
+      isDirty(other.isDirty),
+      delayedUpdate(true)
 {}
 
 Widget::~Widget()
@@ -134,16 +137,13 @@ void Widget::setLineType(int value)
     }
 }
 
-Widget::Anchor Widget::getAnchor() const
-{
-    return anchor;
-}
 
-void Widget::setAnchor(const Widget::Anchor &value)
+
+void Widget::setLayoutAnchor(const Widget::Anchor &value)
 {
-    if (anchor != value)
+    if (layoutAnchor != value)
     {
-        anchor = value;
+        layoutAnchor = value;
         setDirty();
     }
 }
@@ -229,7 +229,7 @@ Widget::State Widget::getState() const
 
 void Widget::stretchWidth(int width)
 {
-   if (width != forcedWidth)
+    if (width != forcedWidth)
    {
        forcedWidth = width;
        setDirty();
@@ -243,6 +243,13 @@ void Widget::stretchHeight(int height)
        forcedHeight = height;
        setDirty();
    }
+}
+
+
+
+void Widget::setFlowAnchor(const Anchor &value)
+{
+    flowAnchor = value;
 }
 
 int Widget::genId()
@@ -268,13 +275,22 @@ void Widget::translate(const Point &translation)
 
 void Widget::setDirty()
 {
-    if (! isDirty)
+    if (delayedUpdate)
     {
-        if (layout)
+        if (! isDirty)
         {
-            isDirty = true;
-            layout->addDirtyWidget(this);
+            if (layout)
+            {
+                isDirty = true;
+                layout->addDirtyWidget(this);
+            }
         }
+    }
+    else
+    {
+        isDirty = false;
+        recalc();
+        return;
     }
 }
 
@@ -282,8 +298,10 @@ void Widget::update()
 {
    if (isDirty)
    {
+       delayedUpdate = false;
        isDirty = false;
        recalc();
+       delayedUpdate = true;
    }
 }
 
@@ -303,7 +321,8 @@ void Widget::readInternals(const cv::FileNode &node)
     node["visible"] >> visible;
     node["thickness"] >> thickness;
     node["lineType"] >> lineType;
-    node["anchor"] >> (int) anchor;
+    node["layoutAnchor"] >> (int) layoutAnchor;
+    node["flowAnchor"] >> (int) flowAnchor;
     node["statusMsg"] >> statusMsg;
     state = LEAVE;
     if (id == 0)
@@ -331,7 +350,8 @@ void Widget::writeInternals(cv::FileStorage &fs) const
           "visible" << visible <<
           "thickness" << thickness <<
           "lineType" << lineType <<
-          "anchor" << anchor <<
+          "layoutAnchor" << layoutAnchor <<
+          "flowAnchor" << flowAnchor <<
           "statusMsg" << statusMsg;
 }
 

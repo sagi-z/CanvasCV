@@ -29,15 +29,13 @@ public:
         RELEASE
     };
 
-    // Used both for internal widget alignments and in Layout managers
+    // Used both for internal widget flow and in Layout managers
     enum Anchor
     {
-        TOP    = 0b00000001, // unusable alone
-        BOTTOM = 0b00000010, // unusable alone
-        LEFT   = 0b00000100, // unusable alone
-        RIGHT  = 0b00001000, // unusable alone
-
-        // Any of these is a valid anchor
+        TOP    = 0b00000001,
+        BOTTOM = 0b00000010,
+        LEFT   = 0b00000100,
+        RIGHT  = 0b00001000,
         CENTER = 0b00010000,
         TOP_LEFT      = TOP | LEFT,
         TOP_RIGHT     = TOP | RIGHT,
@@ -91,9 +89,18 @@ public:
 
     virtual void setLineType(int value);
 
-    virtual Anchor getAnchor() const;
+    Anchor getLayoutAnchor() const
+    {
+        return layoutAnchor;
+    }
 
-    virtual void setAnchor(const Anchor &value);
+    Anchor getFlowAnchor() const
+    {
+        return flowAnchor;
+    }
+
+    virtual void setLayoutAnchor(const Anchor &value);
+    virtual void setFlowAnchor(const Anchor &value);
 
     int getId()
     {
@@ -158,7 +165,8 @@ protected:
     int lineType;
     int forcedWidth;
     int forcedHeight;
-    Anchor anchor;
+    Anchor layoutAnchor;
+    Anchor flowAnchor;
     std::string statusMsg;
     Layout *layout;
 
@@ -210,8 +218,20 @@ private:
     void write(cv::FileStorage& fs) const;
     void read(const cv::FileNode& node);
 
+    class ImmediateUpdateGrd
+    {
+    public:
+        ImmediateUpdateGrd(Widget &w) :_w(w), _delayedUpdate(_w.delayedUpdate)
+        {_w.delayedUpdate = false;}
+        ~ImmediateUpdateGrd() {_w.delayedUpdate = _delayedUpdate;}
+    private:
+        Widget &_w;
+        bool _delayedUpdate;
+    };
+
     State state;
     bool isDirty;
+    bool delayedUpdate;
     std::list<CBType> changeNotifs;
 };
 
