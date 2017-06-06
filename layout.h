@@ -13,13 +13,17 @@ class Layout
 public:
     virtual ~Layout();
 
-    // A Layout is also a widget and its 'recalc' method will update the dirty widgets
     virtual void addDirtyWidget(Widget *widget) = 0;
+    virtual void rmvDirtyWidget(Widget *widget) = 0;
 
     virtual cv::Size getAllowedSize() const = 0;
 
     virtual void addWidget(const std::shared_ptr<Widget> &widget) = 0;
     virtual bool rmvWidget(const std::shared_ptr<Widget> &widget) = 0;
+
+protected:
+
+    virtual void upodateDirtyWidgets() = 0;
 };
 
 }

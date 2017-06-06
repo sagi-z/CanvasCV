@@ -24,8 +24,7 @@ VerticalLayout::VerticalLayout(const Point &pos)
     : CompoundWidget(pos),
       spacing(5),
       stretchX(false),
-      stretchY(false),
-      duringDirtyHandling(false)
+      stretchY(false)
 {
 }
 
@@ -122,10 +121,7 @@ bool VerticalLayout::rmvWidget(const shared_ptr<Widget> &widget)
 {
     if (CompoundWidget::rmvWidget(widget))
     {
-        auto pos = find(dirtyWidgets.begin(),
-                        dirtyWidgets.end(),
-                        widget.get());
-        if (pos != dirtyWidgets.end()) dirtyWidgets.erase(pos);
+        rmvDirtyWidget(widget.get());
         vertWidgets.erase(find(vertWidgets.begin(),
                                vertWidgets.end(),
                                widget));
@@ -137,13 +133,7 @@ bool VerticalLayout::rmvWidget(const shared_ptr<Widget> &widget)
 
 void VerticalLayout::recalc()
 {
-    duringDirtyHandling = true;
-    while (dirtyWidgets.size())
-    {
-        dirtyWidgets.front()->update();
-        dirtyWidgets.pop_front();
-    }
-    duringDirtyHandling = false;
+    upodateDirtyWidgets();
     int maxWidth = 0;
     int maxHeight = 0;
     for (auto &widget : vertWidgets)
@@ -175,20 +165,6 @@ void VerticalLayout::recalc()
     CompoundWidget::recalc();
 }
 
-void VerticalLayout::addDirtyWidget(Widget *widget)
-{
-    if (! duringDirtyHandling)
-    {
-        dirtyWidgets.push_back(widget);
-        setDirty();
-    }
-    else
-    {
-        // apply change immediatly
-        widget->update();
-    }
-}
-
 Size VerticalLayout::getAllowedSize() const
 {
     if (layout)
@@ -199,6 +175,11 @@ Size VerticalLayout::getAllowedSize() const
     {
         return rect.size();
     }
+}
+
+void VerticalLayout::setDirtyLayout()
+{
+    setDirty();
 }
 
 }

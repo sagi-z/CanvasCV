@@ -6,7 +6,7 @@
 #include "shapefactory.h"
 #include "widgetfactory.h"
 #include "floatingtext.h"
-#include "layout.h"
+#include "layoutbase.h"
 
 #include <list>
 #include <memory>
@@ -15,7 +15,7 @@
 namespace canvascv
 {
 
-class Canvas : public Layout
+class Canvas : public LayoutBase
 {
 public:
     typedef std::function<void(Shape*)> CBType;
@@ -167,12 +167,13 @@ public:
     virtual cv::Size getAllowedSize() const;
     void setSize(const cv::Size &value);
 
-    virtual void addDirtyWidget(Widget *widget);
     virtual void addWidget(const std::shared_ptr<Widget> &widget);
     virtual bool rmvWidget(const std::shared_ptr<Widget> &widget);
 
     virtual bool rmvWidget(Widget *widget);
 private:
+
+    virtual void setDirtyLayout();
 
     void broadcastCreate(Shape *shape);
     void broadcastModify(Shape *shape);
@@ -193,8 +194,6 @@ private:
     std::list<CBType> createNotifs;
     std::list<CBType> modifyNotifs;
     std::list<CBType> deleteNotifs;
-    bool duringDirtyHandling;
-    std::list<Widget*> dirtyWidgets;
 
     friend void write(cv::FileStorage& fs, const std::string&, const Canvas& x);
     friend void read(const cv::FileNode& node, Canvas& x, const Canvas&);

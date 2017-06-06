@@ -12,12 +12,11 @@ Canvas::Canvas(Size sizeVal)
       hasScreenText(false),
       hasStatusMsg(false),
       screenText(Point(5,5)),
-      statusMsg(Point(0,0)), // will be moved during enableStatusMsg
-      duringDirtyHandling(false)
+      statusMsg(Point(0,0))  // will be set during enableStatusMsg
 {
     screenText.setLayout(*this);
     statusMsg.setLayout(*this);
-    statusMsg.setAnchor(FloatingText::BOTTOM_LEFT);
+    statusMsg.setAnchor(Widget::BOTTOM_LEFT);
 }
 
 Canvas::~Canvas()
@@ -40,13 +39,7 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
     }
 
     // Updating dirty widgets before drawing them
-    duringDirtyHandling = true;
-    while (dirtyWidgets.size())
-    {
-        dirtyWidgets.front()->update();
-        dirtyWidgets.pop_front();
-    }
-    duringDirtyHandling = false;
+    upodateDirtyWidgets();
 
     // widgets are drawn on top of shapes
     for (auto &widget : widgets)
@@ -64,8 +57,7 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
     }
     if (hasStatusMsg)
     {
-        // reserve ~ 2 lines for the status msg at screen bottom left
-        statusMsg.setLeftPos(Point(5, dst.rows - statusMsg.getFontHeight()));
+        statusMsg.setLeftPos(Point(5, dst.rows - 5));
         static_cast<Widget&>(statusMsg).draw(dst);
     }
 }
@@ -477,19 +469,6 @@ bool Canvas::rmvWidget(canvascv::Widget *widget)
     return false;
 }
 
-void Canvas::addDirtyWidget(canvascv::Widget *widget)
-{
-    if (! duringDirtyHandling)
-    {
-        dirtyWidgets.push_back(widget);
-    }
-    else
-    {
-        // apply change immediatly
-        widget->update();
-    }
-}
-
 void Canvas::addWidget(const shared_ptr<Widget> &widget)
 {
     Layout* prevLayout = widget->getLayout();
@@ -502,13 +481,16 @@ bool Canvas::rmvWidget(const shared_ptr<Widget> &widget)
 {
     if (rmvWidget(widget.get()))
     {
-        auto pos = find(dirtyWidgets.begin(),
-                        dirtyWidgets.end(),
-                        widget.get());
-        if (pos != dirtyWidgets.end()) dirtyWidgets.erase(pos);
+        rmvDirtyWidget(widget.get());
         return true;
     }
     return false;
+}
+
+void Canvas::setDirtyLayout()
+{
+    // TODO: if canvas is also a comound widget, then uncomment this:
+    // setDirty();
 }
 
 }

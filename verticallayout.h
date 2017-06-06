@@ -2,14 +2,14 @@
 #define VERTICALLAYOUT_H
 
 #include "compoundwidget.h"
-#include "layout.h"
+#include "layoutbase.h"
 
 namespace canvascv
 {
 
 class Canvas;
 
-class VerticalLayout : public CompoundWidget, public Layout
+class VerticalLayout : public CompoundWidget, public LayoutBase
 {
 public:
 
@@ -23,7 +23,6 @@ public:
     void setSpacing(int value);
 
     virtual void recalc();
-    virtual void addDirtyWidget(Widget *widget);
     virtual void addWidget(const std::shared_ptr<Widget> &widget);
     virtual bool rmvWidget(const std::shared_ptr<Widget> &widget);
     virtual Size getAllowedSize() const;
@@ -45,12 +44,13 @@ protected:
     virtual void readInternals(const FileNode &node);
 
 private:
+
+    virtual void setDirtyLayout();
+
     int spacing;
     bool stretchX;
     bool stretchY;
     std::vector<std::shared_ptr<Widget>> vertWidgets;
-    bool duringDirtyHandling;
-    std::list<Widget*> dirtyWidgets;
 };
 
 }
