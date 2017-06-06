@@ -24,8 +24,15 @@ class Canvas;
 class Shape
 {
 public:
-    // your cb is called with the shape pointer and a 'true'/'false' for selected/unselected,
-    typedef std::function<void(Shape*, bool)> CBType;
+
+    enum CBEvent
+    {
+        SELECT,
+        UNSELECT,
+        REMOVED
+    };
+
+    typedef std::function<void(Shape*, CBEvent)> CBType;
 
     Shape()
         : id(genId()),
@@ -54,10 +61,10 @@ public:
     virtual ~Shape();
 
     /**
-     * @brief PUBLIC: used to register for notifications on shape seletion by user
-     * @param cb to invoke on shape creation
+     * @brief PUBLIC: used to register for notifications on shape
+     * @param cb to invoke on shape event
      */
-    void notifyOnSelect(CBType cb);
+    void notifyOnEvent(CBType cb);
 
     /**
      * @brief INTERNAL: draw shape on the canvas
@@ -249,8 +256,8 @@ protected:
 private:
     friend class Canvas;
 
-    /// called by the canvas when the shape is (un)selected
-    void broadcastSelectChange(bool selected);
+    /// called when events happen
+    void broadcastEvent(CBEvent event);
 
     int genId()
     {
@@ -264,7 +271,7 @@ private:
     void write(cv::FileStorage& fs) const;
     void read(const cv::FileNode& node);
 
-    std::list<CBType> selectNotifs;
+    std::list<CBType> cbs;
 };
 
 // These write and read functions must be defined for the serialization in cv::FileStorage to work

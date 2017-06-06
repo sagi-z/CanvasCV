@@ -12,11 +12,12 @@ Canvas::Canvas(Size sizeVal)
       hasScreenText(false),
       hasStatusMsg(false),
       screenText(Point(5,5)),
-      statusMsg(Point(0,0)) // will be moved during enableStatusMsg
+      statusMsg(Point(0,0)), // will be moved during enableStatusMsg
+      duringDirtyHandling(false)
 {
-    screenText.setCanvas(*this);
-    statusMsg.setCanvas(*this);
-    statusMsg.setFlowDirection(FloatingText::BOTTOM_UP);
+    screenText.setLayout(*this);
+    statusMsg.setLayout(*this);
+    statusMsg.setAnchor(FloatingText::BOTTOM_LEFT);
 }
 
 Canvas::~Canvas()
@@ -37,6 +38,17 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
             shape->draw(dst);
         }
     }
+
+    // Updating dirty widgets before drawing them
+    duringDirtyHandling = true;
+    while (dirtyWidgets.size())
+    {
+        dirtyWidgets.front()->update();
+        dirtyWidgets.pop_front();
+    }
+    duringDirtyHandling = false;
+
+    // widgets are drawn on top of shapes
     for (auto &widget : widgets)
     {
         if (widget->getVisible())
@@ -44,15 +56,17 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
             widget->draw(dst);
         }
     }
+
+    // These go on top of everything
     if (hasScreenText)
     {
-        screenText.draw(dst);
+        static_cast<Widget&>(screenText).draw(dst);
     }
     if (hasStatusMsg)
     {
         // reserve ~ 2 lines for the status msg at screen bottom left
         statusMsg.setLeftPos(Point(5, dst.rows - statusMsg.getFontHeight()));
-        statusMsg.draw(dst);
+        static_cast<Widget&>(statusMsg).draw(dst);
     }
 }
 
@@ -74,13 +88,13 @@ void Canvas::onMousePress(const cv::Point &pos)
         }
     }
 
-    // delegate to active
+    // delegate to active shape
     if (active.get())
     {
         if (! active->mousePressed(pos))
         {
             active->lostFocus();
-            active->broadcastSelectChange(false);
+            active->broadcastEvent(Shape::UNSELECT);
             broadcastModify(active.get());
             active.reset();
             setStatusMsg("");
@@ -88,7 +102,7 @@ void Canvas::onMousePress(const cv::Point &pos)
         return;
     }
 
-    // try to set active
+    // try to set active shape
     for (auto &shape : shapes)
     {
         if (shape->mousePressed(pos))
@@ -105,23 +119,26 @@ void Canvas::onMousePress(const cv::Point &pos)
                     setStatusMsg(active->getStatusMsg());
                 }
             }
-            active->broadcastSelectChange(true);
+            active->broadcastEvent(Shape::SELECT);
             return;
         }
     }
 
     // create a new shape and set it as active
-    shapes.push_back(std::shared_ptr<Shape>(ShapeFactory::newShape(shapeType,pos)));
-    processNewShape();
-    if (! active->mousePressed(pos, true))
+    if (shapeType.length())
     {
-        active->lostFocus();
-        active.reset();
-        setStatusMsg("");
-    }
-    else
-    {
-        active->broadcastSelectChange(true);
+        shapes.push_back(std::shared_ptr<Shape>(ShapeFactory::newShape(shapeType,pos)));
+        processNewShape();
+        if (! active->mousePressed(pos, true))
+        {
+            active->lostFocus();
+            active.reset();
+            setStatusMsg("");
+        }
+        else
+        {
+            active->broadcastEvent(Shape::SELECT);
+        }
     }
 }
 
@@ -148,7 +165,7 @@ void Canvas::onMouseRelease(const cv::Point &pos)
         if (! active->mouseReleased(pos))
         {
             active->lostFocus();
-            active->broadcastSelectChange(false);
+            active->broadcastEvent(Shape::UNSELECT);
             broadcastModify(active.get());
             active.reset();
             setStatusMsg("");
@@ -192,7 +209,7 @@ void Canvas::onMouseMove(const cv::Point &pos)
     }
 }
 
-std::shared_ptr<Shape> Canvas::createShape(const Point &pos, string type)
+std::shared_ptr<Shape> Canvas::createShape(string type, const Point &pos)
 {
     shapes.push_back(std::shared_ptr<Shape>(ShapeFactory::newShape(type,pos)));
     processNewShape();
@@ -203,7 +220,7 @@ std::shared_ptr<Shape> Canvas::createShape(const Point &pos, string type)
 std::shared_ptr<Widget> Canvas::createWidget(const Point &pos, string type)
 {
     std::shared_ptr<Widget> widget(WidgetFactory::newWidget(type, pos));
-    widget->setCanvas(*this);
+    widget->setLayout(*this);
     widgets.push_back(widget);
     return widget;
 }
@@ -217,7 +234,7 @@ void Canvas::consumeKey(int &key)
             if (! active->keyPressed(key))
             {
                 active->lostFocus();
-                active->broadcastSelectChange(false);
+                active->broadcastEvent(Shape::UNSELECT);
                 active.reset();
                 setStatusMsg("");
             }
@@ -235,11 +252,11 @@ void Canvas::deleteActive()
     }
 }
 
-void Canvas::deleteShape(std::shared_ptr<Shape> shape)
+void Canvas::deleteShape(const std::shared_ptr<Shape> &shape)
 {
     shapes.erase(find(shapes.begin(),shapes.end(),shape));
     shape->lostFocus();
-    shape->broadcastSelectChange(false);
+    active->broadcastEvent(Shape::REMOVED);
     broadcastDelete(shape.get());
     std::list<std::shared_ptr<ShapesConnector>> connectors;
     getShapes(connectors);
@@ -249,7 +266,7 @@ void Canvas::deleteShape(std::shared_ptr<Shape> shape)
     }
 }
 
-void Canvas::deleteWidget(std::shared_ptr<Widget> widget)
+void Canvas::deleteWidget(const std::shared_ptr<Widget> &widget)
 {
     widgets.erase(find(widgets.begin(),widgets.end(),widget));
 }
@@ -387,7 +404,7 @@ void Canvas::processNewShape()
     }
 }
 
-cv::Size Canvas::getSize() const
+cv::Size Canvas::getAllowedSize() const
 {
     return size;
 }
@@ -397,7 +414,7 @@ void Canvas::setSize(const cv::Size &value)
     size = value;
     for (auto &widget : widgets)
     {
-        widget->canvasResized(value);
+        widget->layoutResized(value);
     }
 }
 
@@ -442,6 +459,56 @@ void read(const cv::FileNode& node, Canvas& x, const Canvas&)
     {
         x.broadcastCreate(shape.get());
     }
+}
+
+bool Canvas::rmvWidget(canvascv::Widget *widget)
+{
+    list<shared_ptr<Widget>>::iterator i = find_if(widgets.begin(),
+                                                   widgets.end(),
+                                                   [widget](const shared_ptr<Widget> &item)->bool
+    {
+        return item.get() == widget;
+    });
+    if (i != widgets.end())
+    {
+        widgets.erase(i);
+        return true;
+    }
+    return false;
+}
+
+void Canvas::addDirtyWidget(canvascv::Widget *widget)
+{
+    if (! duringDirtyHandling)
+    {
+        dirtyWidgets.push_back(widget);
+    }
+    else
+    {
+        // apply change immediatly
+        widget->update();
+    }
+}
+
+void Canvas::addWidget(const shared_ptr<Widget> &widget)
+{
+    Layout* prevLayout = widget->getLayout();
+    if (prevLayout) prevLayout->rmvWidget(widget);
+    widget->setLayout(*this);
+    widgets.push_back(widget);
+}
+
+bool Canvas::rmvWidget(const shared_ptr<Widget> &widget)
+{
+    if (rmvWidget(widget.get()))
+    {
+        auto pos = find(dirtyWidgets.begin(),
+                        dirtyWidgets.end(),
+                        widget.get());
+        if (pos != dirtyWidgets.end()) dirtyWidgets.erase(pos);
+        return true;
+    }
+    return false;
 }
 
 }

@@ -27,9 +27,9 @@ Shape::~Shape()
 {
 }
 
-void Shape::notifyOnSelect(Shape::CBType cb)
+void Shape::notifyOnEvent(Shape::CBType cb)
 {
-    selectNotifs.push_back(cb);
+    cbs.push_back(cb);
 }
 
 void Shape::setCanvas(Canvas &value)
@@ -43,11 +43,11 @@ const string &Shape::getStatusMsg() const
    return emptyStr;
 }
 
-void Shape::broadcastSelectChange(bool selected)
+void Shape::broadcastEvent(CBEvent event)
 {
-    for (auto &cb : selectNotifs)
+    for (auto &cb : cbs)
     {
-        cb(this, selected);
+        cb(this, event);
     }
 }
 

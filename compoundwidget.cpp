@@ -3,10 +3,13 @@
 
 #include <algorithm>
 
+using namespace std;
+using namespace cv;
+
 namespace canvascv
 {
 
-void CompoundWidget::draw(cv::Mat &canvas)
+void CompoundWidget::draw(Mat &dst)
 {
     if (visible)
     {
@@ -14,13 +17,13 @@ void CompoundWidget::draw(cv::Mat &canvas)
         {
             if (widget->getVisible())
             {
-                widget->draw(canvas);
+                widget->draw(dst);
             }
         }
     }
 }
 
-void CompoundWidget::setOutlineColor(const cv::Scalar &value)
+void CompoundWidget::setOutlineColor(const Scalar &value)
 {
     Widget::setOutlineColor(value);
     for (auto &widget : widgets)
@@ -29,7 +32,7 @@ void CompoundWidget::setOutlineColor(const cv::Scalar &value)
     }
 }
 
-void CompoundWidget::setFillColor(const cv::Scalar &value)
+void CompoundWidget::setFillColor(const Scalar &value)
 {
     Widget::setFillColor(value);
     for (auto &widget : widgets)
@@ -74,9 +77,14 @@ void CompoundWidget::setVisible(bool value)
     }
 }
 
-bool CompoundWidget::rmvWidget(std::shared_ptr<Widget> &widget)
+bool CompoundWidget::rmvWidget(Widget *widget)
 {
-    std::list<std::shared_ptr<Widget>>::iterator i = find(widgets.begin(),widgets.end(),widget);
+    list<shared_ptr<Widget>>::iterator i = find_if(widgets.begin(),
+                                                   widgets.end(),
+                                                   [widget](const shared_ptr<Widget> &item)->bool
+    {
+        return item.get() == widget;
+    });
     if (i != widgets.end())
     {
         widgets.erase(i);
@@ -85,7 +93,24 @@ bool CompoundWidget::rmvWidget(std::shared_ptr<Widget> &widget)
     return false;
 }
 
-void CompoundWidget::writeInternals(cv::FileStorage &fs) const
+bool CompoundWidget::rmvWidget(const std::shared_ptr<Widget> &widget)
+{
+    list<shared_ptr<Widget>>::iterator i = find_if(widgets.begin(),
+                                                   widgets.end(),
+                                                   [widget](const shared_ptr<Widget> &item)->bool
+    {
+        return item.get() == widget.get();
+    });
+    if (i != widgets.end())
+    {
+        widgets.erase(i);
+        CompoundWidget::recalc();
+        return true;
+    }
+    return false;
+}
+
+void CompoundWidget::writeInternals(FileStorage &fs) const
 {
     Widget::writeInternals(fs);
     fs << "widgets" << "[";
@@ -96,12 +121,12 @@ void CompoundWidget::writeInternals(cv::FileStorage &fs) const
     fs << "]";
 }
 
-void CompoundWidget::readInternals(const cv::FileNode &node)
+void CompoundWidget::readInternals(const FileNode &node)
 {
     Widget::readInternals(node);
     active.reset();
     widgets.clear();
-    cv::FileNode n = node["widgets"];
+    FileNode n = node["widgets"];
     FileNodeIterator it = n.begin(), it_end = n.end();
     std::list<Widget*> widgetsTmp;
     for (; it != it_end; )
@@ -116,7 +141,7 @@ void CompoundWidget::readInternals(const cv::FileNode &node)
     reloadPointers(i);
 }
 
-bool CompoundWidget::isAtPos(const cv::Point &pos)
+bool CompoundWidget::isAtPos(const Point &pos)
 {
     if (active.get())
     {
@@ -141,7 +166,7 @@ bool CompoundWidget::isAtPos(const cv::Point &pos)
     return false;
 }
 
-void CompoundWidget::broadcastChange(canvascv::Widget::State status)
+void CompoundWidget::broadcastChange(Widget::State status)
 {
     if (active.get())
     {
@@ -149,12 +174,98 @@ void CompoundWidget::broadcastChange(canvascv::Widget::State status)
     }
 }
 
-void CompoundWidget::canvasResized(const Size &size)
+void CompoundWidget::layoutResized(const Size &size)
 {
     for (auto &widget : widgets)
     {
-        widget->canvasResized(size);
+        widget->layoutResized(size);
     }
+}
+
+void CompoundWidget::setAnchor(const Widget::Anchor &value)
+{
+    for (auto &widget : widgets)
+    {
+        widget->setAnchor(value);
+    }
+}
+
+const string &CompoundWidget::getStatusMsg() const
+{
+   if (active.get())
+   {
+       return active->getStatusMsg();
+   }
+   else
+   {
+       return Widget::getStatusMsg();
+   }
+}
+
+void CompoundWidget::recalc()
+{
+    int xMin = INT_MAX;
+    int yMin = INT_MAX;
+    int xMax = 0;
+    int yMax = 0;
+    for (auto &widget : widgets)
+    {
+        const Rect & subRect = widget->getRect();
+        if (subRect.width && subRect.height)
+        {
+            xMin = min(xMin, subRect.x);
+            yMin = min(yMin, subRect.y);
+            xMax = max(xMax, subRect.x + subRect.width);
+            yMax = max(yMax, subRect.y + subRect.height);
+        }
+    }
+    if (xMax)
+    {   // there was a calculation
+        rect.x = xMin;
+        rect.y = yMin;
+        rect.width = xMax - xMin;
+        rect.height = yMax - yMin;
+    }
+}
+
+CompoundWidget::CompoundWidget(const Point &pos)
+    :Widget(pos)
+{
+    rect.x = leftPos.x;
+    rect.y = leftPos.y;
+}
+
+const Rect &CompoundWidget::getRect()
+{
+    return rect;
+}
+
+const Rect &CompoundWidget::getMinimalRect()
+{
+    return rect;
+}
+
+void CompoundWidget::addWidget(const shared_ptr<Widget> &widget)
+{
+    rmvWidget(widget);
+    widgets.push_back(widget);
+    CompoundWidget::recalc();
+}
+
+void CompoundWidget::translate(const Point &translation)
+{
+    leftPos += translation;
+    for (auto &widget : widgets)
+    {
+        widget->translate(translation);
+    }
+    setDirty();
+}
+
+void CompoundWidget::setLeftPos(const Point &value)
+{
+    Widget::setLeftPos(value);
+    setDirty();
 }
 
 }

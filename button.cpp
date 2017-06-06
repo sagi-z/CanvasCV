@@ -10,7 +10,7 @@ namespace canvascv
 
 const char *Button::type = "Button";
 
-Button::Button(Point pos)
+Button::Button(const Point &pos)
     : FloatingText(pos),
       origAlpha(alpha)
 {
@@ -31,13 +31,18 @@ const char *Button::getType() const
     return type;
 }
 
-std::shared_ptr<Button> Button::newButton(Canvas &c, Point pos, const string &buttonText, int maxWidthVal, const string &statusMsg)
+shared_ptr<Button> Button::newButton(Canvas &c, Point pos, const string &buttonText, const string &statusMsg, int maxWidthVal)
 {
     shared_ptr<Button> widget = c.createWidget<Button>(pos);
     widget->setMsg(buttonText);
     widget->setMaxWidth(maxWidthVal);
     widget->setStatusMsg(statusMsg);
     return widget;
+}
+
+std::shared_ptr<Button> Button::newButton(Canvas &c, const string &buttonText, const string &statusMsg, int maxWidthVal)
+{
+   return newButton(c, Point(0, 0), buttonText, statusMsg, maxWidthVal);
 }
 
 void Button::mousePressed()

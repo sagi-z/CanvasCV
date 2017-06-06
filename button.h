@@ -12,10 +12,10 @@ namespace canvascv
 class Button : public FloatingText
 {
 public:
-    Button(cv::Point pos);
+    Button(const cv::Point &pos);
 
     Button(const std::string msgVal = "",
-           cv::Point topLeftVal = cv::Point(),
+           cv::Point topLeftVal = cv::Point(0, 0),
            int maxWidthVal = 0,
            cv::Scalar colorVal = Colors::BLACK,
            cv::Scalar bgColorVal = Colors::P1_GRAY,
@@ -27,10 +27,15 @@ public:
     virtual const char *getType() const;
 
     static std::shared_ptr<Button> newButton(Canvas &c,
-                                             cv::Point pos,
-                                             const std::string &buttonText,
-                                             int maxWidthVal = 0,
-                                             const std::string &statusMsg="");
+                             cv::Point pos,
+                             const std::string &buttonText,
+                             const std::string &statusMsg="",
+                             int maxWidthVal = 0);
+
+    static std::shared_ptr<Button> newButton(Canvas &c,
+                             const std::string &buttonText,
+                             const std::string &statusMsg="",
+                             int maxWidthVal = 0);
 
     static const char *type;
 

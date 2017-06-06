@@ -9,19 +9,16 @@
 namespace canvascv
 {
 
+class Canvas;
+
 class FloatingText : public Widget
 {
 public:
-    enum FlowDirection
-    {
-        TOP_DOWN,
-        BOTTOM_UP
-    };
 
-    FloatingText(cv::Point pos);
+    FloatingText(const cv::Point &pos);
 
     FloatingText(const std::string msgVal = "",
-                 cv::Point topLeftVal = cv::Point(),
+                 cv::Point topLeftVal = cv::Point(0, 0),
                  int maxWidthVal = 0,
                  cv::Scalar colorVal = Colors::BLACK,
                  cv::Scalar bgColorVal = Colors::P1_GRAY,
@@ -33,10 +30,7 @@ public:
     static std::shared_ptr<FloatingText> newFloatingText(Canvas &c,
                                                          cv::Point pos,
                                                          const std::string &text,
-                                                         int maxWidthVal = 0,
-                                                         FlowDirection flow = TOP_DOWN);
-
-    virtual bool isAtPos(const cv::Point &pos);
+                                                         Anchor anchor = TOP_LEFT);
 
     virtual const char *getType() const;
 
@@ -52,28 +46,23 @@ public:
     double getFontScale() const;
     void setFontScale(double value);
 
-    int getFontThickness() const;
-    void setFontThickness(int value);
-
-    void draw(cv::Mat &dst);
-
-    cv::Point getTopLeft() const;
-    void setTopLeft(const cv::Point &value);
-
     int getFontHeight() const;
-
-    cv::Point getLeftPos() const;
-    void setLeftPos(const cv::Point &value);
-
-    FlowDirection getFlowDirection() const;
-    void setFlowDirection(const FlowDirection &value);
 
     int getMaxWidth() const;
     void setMaxWidth(int value);
 
+    virtual const cv::Rect &getRect();
+    virtual const cv::Rect &getMinimalRect();
+
+    virtual void translate(const cv::Point &translation);
+
     static const char *type;
 
 protected:
+    virtual void recalc();
+
+    virtual void draw(cv::Mat &dst);
+
     // TODO
     virtual void writeInternals(cv::FileStorage &fs) const
     {
@@ -86,7 +75,7 @@ protected:
     double alpha;
 private:
 
-    virtual void canvasResized(const cv::Size &size);
+    virtual void layoutResized(const cv::Size &size);
     virtual void mousePressed() {}
     virtual void mouseReleased() {}
     virtual void mouseEnter() {}
@@ -95,16 +84,14 @@ private:
     void prepareMsgParts();
 
     std::string msg;
-    cv::Point leftPos;
     std::list<std::string> rows;
     int fontHeight;
     int fontFace;
     double fontScale;
-    int fontThickness;
-    FlowDirection flowDirection;
     int maxWidth;
-    int yStart;
-    cv::Rect rect;
+    int yStart; // TODO: update during setLeftPos
+    cv::Rect rect; // TODO: update during setLeftPos
+    cv::Rect minimalRect; // TODO: update during setLeftPos
     cv::Mat rectColor;
 };
 

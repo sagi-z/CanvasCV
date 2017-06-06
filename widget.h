@@ -13,13 +13,10 @@
 namespace canvascv
 {
 
-class Handle;
-class Canvas;
+class Layout;
 
 /**
  * @brief The Widget class
- * Code from outside of this namespace should only use members marked as PUBLIC.
- * INTERNAL api usage might cause instability and compatibility issues.
  */
 class Widget
 {
@@ -32,202 +29,174 @@ public:
         RELEASE
     };
 
+    // Is the widget pos is TopLeft or TopBottom
+    enum Anchor
+    {
+        TOP    = 0b00000001,
+        BOTTOM = 0b00000010,
+        LEFT   = 0b00000100,
+        RIGHT  = 0b00001000,
+        CENTER = 0b00010000,
+        TOP_LEFT     = TOP | LEFT,
+        TOP_RIGHT    = TOP | RIGHT,
+        BOTTOM_LEFT  = BOTTOM | LEFT,
+        BOTTOM_RIGHT = BOTTOM | RIGHT
+    };
+
     typedef std::function<void(Widget*, State)> CBType;
 
-    Widget()
-        : id(genId()),
-          outlineColor(Colors::GREEN),
-          fillColor(outlineColor),
-          locked(false),
-          visible(true),
-          thickness(1),
-          lineType(cv::LINE_AA),
-          canvas(nullptr),
-          state(LEAVE)
-    {}
+    Widget(const cv::Point &pos = cv::Point(0,0));
 
-    Widget(const Widget &other)
-        : id(genId()),
-          outlineColor(other.outlineColor),
-          fillColor(other.fillColor),
-          locked(other.locked),
-          visible(other.visible),
-          thickness(other.thickness),
-          lineType(other.lineType),
-          canvas(other.canvas),
-          state(LEAVE)
-    {}
+    Widget(const Widget &other);
 
     virtual ~Widget();
 
-    /**
-     * @brief PUBLIC: used to register for notifications on shape seletion by user
-     * @param cb to invoke on shape creation
-     */
+    virtual const char *getType() const = 0;
+
     void notifyOnChange(CBType cb);
 
-    /**
-     * @brief INTERNAL: draw shape on the canvas
-     * @param canvas
-     */
-    virtual void draw(cv::Mat &canvas) = 0;
+    cv::Scalar getOutlineColor() const;
 
-    /**
-     * @brief INTERNAL: isAtPos
-     * @param pos
-     * @return true or false if at location
-     */
-    virtual bool isAtPos(const cv::Point &pos) = 0;
+    virtual void setOutlineColor(const cv::Scalar &value);
 
-    /// PUBLIC
-    cv::Scalar getOutlineColor() const
-    {
-        return outlineColor;
-    }
+    cv::Scalar getFillColor() const;
 
-    /// PUBLIC
-    virtual void setOutlineColor(const cv::Scalar &value)
-    {
-        outlineColor = value;
-    }
+    virtual void setFillColor(const cv::Scalar &value);
 
-    /// PUBLIC
-    cv::Scalar getFillColor() const
-    {
-        return fillColor;
-    }
-
-    /// PUBLIC
-    virtual void setFillColor(const cv::Scalar &value)
-    {
-        fillColor = value;
-    }
-
-    /// PUBLIC
     bool getLocked() const
     {
         return locked;
     }
 
-    /// PUBLIC
-    virtual void setLocked(bool value)
-    {
-        locked = value;
-    }
+    virtual void setLocked(bool value);
 
-    /// PUBLIC
     bool getVisible() const
     {
         return visible;
     }
 
-    /// PUBLIC
-    virtual void setVisible(bool value)
-    {
-        visible = value;
-    }
+    virtual void setVisible(bool value);
 
-    /**
-     * @brief PUBLIC: getType should be implemented by derived.
-     * @return c str of type
-     */
-    virtual const char *getType() const = 0;
+    int getThickness() const;
 
-    /// PUBLIC
-    int getThickness() const
-    {
-        return thickness;
-    }
+    virtual void setThickness(int value);
 
-    /// PUBLIC
-    virtual void setThickness(int value)
-    {
-        thickness = value;
-    }
+    int getLineType() const;
 
-    /// PUBLIC
-    int getLineType() const
-    {
-        return lineType;
-    }
+    virtual void setLineType(int value);
 
-    /// PUBLIC
-    virtual void setLineType(int value)
-    {
-        lineType = value;
-    }
+    virtual Anchor getAnchor() const;
 
-    /// PUBLIC
+    virtual void setAnchor(const Anchor &value);
+
     int getId()
     {
         return id;
     }
 
-    const std::string &getStatusMsg() const;
+    virtual const std::string &getStatusMsg() const;
     void setStatusMsg(const std::string &value);
 
+    cv::Point getLeftPos() const;
+    virtual void setLeftPos(const cv::Point &value);
+
+    virtual void translate(const cv::Point &translation);
+
 protected:
-    State getState() const;
+
+    /// update self so next call to 'draw' will display correctly
+    virtual void recalc() = 0;
+
+    /**
+     * @brief draw the widget
+     * @param dst
+     */
+    virtual void draw(cv::Mat &dst) = 0;
+
+    /// Actual size the widget is occupying due to Layout manager
+    virtual const cv::Rect &getRect() = 0;
+
+    /// Minimal size the widget coould have occupy
+    virtual const cv::Rect &getMinimalRect() = 0;
 
     virtual void writeInternals(cv::FileStorage& fs) const = 0;
     virtual void readInternals(const cv::FileNode& node) = 0;
 
+    /// Mark us as 'dirty' so before the next draw, our 'update' will be called
+    void setDirty();
+
+    /// Removes 'dirty' state and invokes the user defined 'recalc'
+    void update();
+
+    /**
+     * @brief isAtPos
+     * @param pos
+     * @return true or false if at location
+     */
+    virtual bool isAtPos(const cv::Point &pos);
+
+    State getState() const;
+
+    /// Used by Layout managers
+    void stretchWidth(int width);
+    void stretchHeight(int height);
+
+
     int id;
+    cv::Point leftPos;
     cv::Scalar outlineColor;
     cv::Scalar fillColor;
     bool locked;
     bool visible;
     int thickness;
     int lineType;
+    int forcedWidth;
+    int forcedHeight;
+    Anchor anchor;
     std::string statusMsg;
-    Canvas *canvas;
+    Layout *layout;
 
 private:
     friend class Canvas;
     friend class CompoundWidget;
+    friend class LayoutBase;
+    friend class VerticalLayout;
 
     /**
-     * @brief setCanvas
-     * Called when canvas is creating a shape.
-     * Only realy used by specific shapes.
-     * @param value
-     */
-    void setCanvas(Canvas &value);
-
-    virtual void canvasResized(const cv::Size &size) {}
-
-    /// called by the canvas when the shape is (un)selected
-    virtual void broadcastChange(State status);
-
-    /**
-     * @brief INTERNAL: mousePressed
-     * Called by canvas when mouse pressed on us
+     * @brief mousePressed
+     * Called by layout when mouse pressed on us
      */
     virtual void mousePressed() = 0;
 
     /**
-     * @brief INTERNAL: mouseReleased
-     * Called by canvas when mouse released from us
+     * @brief mouseReleased
+     * Called by layout when mouse released from us
      */
     virtual void mouseReleased() = 0;
 
     /**
-     * @brief INTERNAL: mouseEnter
-     * Called by canvas when mouse entered
+     * @brief mouseEnter
+     * Called by layout when mouse entered
      */
     virtual void mouseEnter() = 0;
 
     /**
-     * @brief INTERNAL: mouseEnter
-     * Called by canvas when mouse left
+     * @brief mouseEnter
+     * Called by layout when mouse left
      */
     virtual void mouseLeave() = 0;
 
-    int genId()
-    {
-        static int idGenerator;
-        return ++idGenerator;
-    }
+    int genId();
+
+    bool getIsDirty() const;
+
+    void setLayout(Layout &value);
+    Layout* getLayout();
+
+    virtual void layoutResized(const cv::Size &size) {}
+
+    /// called by the canvas when the widget changes state
+    virtual void broadcastChange(State status);
 
     friend void write(cv::FileStorage& fs, const std::string&, const Widget& x);
     friend void read(const cv::FileNode& node, Widget*& x, const Widget* default_value);
@@ -236,6 +205,7 @@ private:
     void read(const cv::FileNode& node);
 
     State state;
+    bool isDirty;
     std::list<CBType> changeNotifs;
 };
 

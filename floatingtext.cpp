@@ -9,60 +9,44 @@ namespace canvascv
 
 const char *FloatingText::type = "FloatingText";
 
-FloatingText::FloatingText(Point pos)
-    : Widget(),
+FloatingText::FloatingText(const Point &pos)
+    : Widget(pos),
       alpha(0.5),
       msg(),
-      leftPos(pos),
       maxWidth(0),
       fontScale(0.5),
-      fontThickness(1),
       fontFace(FONT_HERSHEY_COMPLEX_SMALL),
-      fontHeight(0),
-      flowDirection(TOP_DOWN)
+      fontHeight(0)
 {
     outlineColor = Colors::BLACK;
     fillColor = Colors::P1_GRAY;
 }
 
 FloatingText::FloatingText(const string msgVal, Point leftPosVal, int maxWidthVal, Scalar colorVal,
-                           Scalar bgColorVal, double fontScaleVal, int fontThicknessVal,
+                           Scalar bgColorVal, double fontScaleVal, int thicknessVal,
                            double alphaVal, int fontFaceVal)
-    : Widget(),
+    : Widget(leftPosVal),
       alpha(alphaVal),
       msg(msgVal),
-      leftPos(leftPosVal),
       maxWidth(maxWidthVal),
       fontScale(fontScaleVal),
-      fontThickness(fontThicknessVal),
       fontFace(fontFaceVal),
-      fontHeight(0),
-      flowDirection(TOP_DOWN)
+      fontHeight(0)
 {
     outlineColor = colorVal;
     fillColor = bgColorVal;
+    thickness = thicknessVal;
 }
 
-std::shared_ptr<FloatingText> FloatingText::newFloatingText(Canvas &c, Point pos,
-                                                            const string &text,
-                                                            int maxWidthVal,
-                                                            FloatingText::FlowDirection flow)
+shared_ptr<FloatingText> FloatingText::newFloatingText(Canvas &c, Point pos,
+                                                       const string &text,
+                                                       Widget::Anchor anchor)
 {
 
     shared_ptr<FloatingText> widget = c.createWidget<FloatingText>(pos);
     widget->setMsg(text);
-    widget->setMaxWidth(maxWidthVal);
-    widget->setFlowDirection(flow);
+    widget->setAnchor(anchor);
     return widget;
-}
-
-bool FloatingText::isAtPos(const Point &pos)
-{
-    if (rect.contains(pos))
-    {
-        return true;
-    }
-    return false;
 }
 
 const char *FloatingText::getType() const
@@ -87,8 +71,11 @@ string FloatingText::getMsg() const
 
 void FloatingText::setMsg(const string &value)
 {
-    msg = value;
-    rows.clear();
+    if (msg != value)
+    {
+        msg = value;
+        setDirty();
+    }
 }
 
 int FloatingText::getFontFace() const
@@ -98,8 +85,11 @@ int FloatingText::getFontFace() const
 
 void FloatingText::setFontFace(int value)
 {
-    fontFace = value;
-    rows.clear();
+    if (fontFace != value)
+    {
+        fontFace = value;
+        setDirty();
+    }
 }
 
 double FloatingText::getFontScale() const
@@ -109,19 +99,11 @@ double FloatingText::getFontScale() const
 
 void FloatingText::setFontScale(double value)
 {
-    fontScale = value;
-    rows.clear();
-}
-
-int FloatingText::getFontThickness() const
-{
-    return fontThickness;
-}
-
-void FloatingText::setFontThickness(int value)
-{
-    fontThickness = value;
-    rows.clear();
+    if (fontScale != value)
+    {
+        fontScale = value;
+        setDirty();
+    }
 }
 
 void FloatingText::draw(Mat &dst)
@@ -136,11 +118,16 @@ void FloatingText::draw(Mat &dst)
         cv::addWeighted(rectColor, alpha, roi, 1.0 - alpha , 0.0, roi);
         cv::rectangle(dst, rect, fillColor);
         int y = yStart;
+        int padding = (rect.width - minimalRect.width) / 2.;
         for (auto &str : rows)
         {
             Point textPos(leftPos.x + 5, y);
+            if (padding > 0)
+            {  // FIXME: centering the text as a whole and not per line
+                textPos.x += padding;
+            }
             putText(dst, str, textPos,
-                    fontFace, fontScale, outlineColor, fontThickness, LINE_AA);
+                    fontFace, fontScale, outlineColor, thickness, LINE_AA);
             y += fontHeight;
             if (y > yEnd) break;
         }
@@ -152,10 +139,11 @@ void FloatingText::prepareMsgParts()
     rows.clear();
     if (msg.length())
     {
-        if (! canvas) return;
-        Size canvasSize = canvas->getSize();
-        int localMaxWidth = canvasSize.width - leftPos.x;
+        if (! layout) return;
+        Size layoutSize = layout->getAllowedSize();
+        int localMaxWidth = layoutSize.width - leftPos.x;
         if (maxWidth && maxWidth < localMaxWidth) localMaxWidth = maxWidth;
+        if (localMaxWidth < 10) localMaxWidth = 10;
         struct LineData
         {
             std::string str;
@@ -174,9 +162,9 @@ void FloatingText::prepareMsgParts()
             prevPos = pos;
             int baseline=0;
             Size textSize = getTextSize(line, fontFace,
-                                        fontScale, fontThickness,
+                                        fontScale, thickness,
                                         &baseline);
-            baseline += fontThickness;
+            baseline += thickness;
             int width = 10 + textSize.width; // 5 pixels at start & end = 10
             fontHeight = textSize.height+baseline*2;
             totalRows += width / localMaxWidth + 1;
@@ -186,22 +174,30 @@ void FloatingText::prepareMsgParts()
         if (totalRows)
         {
             int yRectStart;
-            if (flowDirection == TOP_DOWN)
+            if (anchor == TOP_LEFT)
             {
                 yStart = leftPos.y + fontHeight;
                 if (yStart < 0) yStart = 0;
                 yRectStart = leftPos.y;
             }
-            else
+            else if (anchor == BOTTOM_LEFT)
             {
                 yStart = leftPos.y - fontHeight * totalRows;
                 if (yStart < 0) yStart = 0;
                 yRectStart = yStart - fontHeight;
             }
+            else
+            {
+                cerr << "anchor type not supported" << endl;
+                abort();
+            }
             int rectHeight = min((int) floor(fontHeight * totalRows + fontHeight),
-                                 canvasSize.height - yRectStart - 1);
-            int rectWidth = min(localMaxWidth - 5, // "absolute limit width (5 pixels from right of canvas)" vs.
+                                 layoutSize.height - yRectStart - 1);
+            int rectWidth = min(localMaxWidth - 5, // "absolute limit width (5 pixels from right of layout)" vs.
                                 maxNeededWidth);   // "width which is realy needed"
+            minimalRect = Rect(leftPos.x, yRectStart, rectWidth, rectHeight);
+            if (forcedWidth > rectWidth) rectWidth = forcedWidth;
+            if (forcedHeight > rectHeight) rectHeight = forcedHeight;
             rect = Rect(leftPos.x, yRectStart, rectWidth, rectHeight);
             rectColor = Mat(rect.size(), CV_8UC3, fillColor);
             for (LineData &lineData : msgParts)
@@ -235,40 +231,45 @@ int FloatingText::getMaxWidth() const
 
 void FloatingText::setMaxWidth(int value)
 {
-    maxWidth = value;
-    rows.clear();
+    if (maxWidth != value)
+    {
+        maxWidth = value;
+        setDirty();
+    }
 }
 
-FloatingText::FlowDirection FloatingText::getFlowDirection() const
+void FloatingText::layoutResized(const Size &size)
 {
-    return flowDirection;
-}
-
-void FloatingText::setFlowDirection(const FlowDirection &value)
-{
-    flowDirection = value;
-    rows.clear();
-}
-
-void FloatingText::canvasResized(const Size &size)
-{
-    rows.clear();
-}
-
-cv::Point FloatingText::getLeftPos() const
-{
-    return leftPos;
-}
-
-void FloatingText::setLeftPos(const cv::Point &value)
-{
-    leftPos = value;
-    rows.clear();
+    setDirty();
 }
 
 int FloatingText::getFontHeight() const
 {
     return fontHeight;
+}
+
+const Rect &FloatingText::getRect()
+{
+    return rect;
+}
+
+const Rect &FloatingText::getMinimalRect()
+{
+    return minimalRect;
+}
+
+void FloatingText::translate(const Point &translation)
+{
+    if (translation.x != 0 || translation.y != 0)
+    {
+        Widget::translate(translation);
+        setDirty();
+    }
+}
+
+void FloatingText::recalc()
+{
+    prepareMsgParts();
 }
 
 }

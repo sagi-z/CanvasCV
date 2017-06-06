@@ -7,6 +7,7 @@
 #include "shapesconnector.h"
 #include "ellipse.h"
 #include "button.h"
+#include "verticallayout.h"
 
 #include <iostream>
 #include <iterator>
@@ -70,7 +71,7 @@ void help(Canvas &c)
 }
 
 /*
- * Create a shape like this:
+ * Create a selectable ellipse with a text-box like this:
  *
  *                +------------+
  *                |locked shape|
@@ -83,9 +84,9 @@ void help(Canvas &c)
 static void createShapesFromCodeExample(Canvas &c, Point center)
 {
     // Add some shapes to the canvas as an example.
-    shared_ptr<TextBox> textBox = c.createShape<TextBox>(Point());
-    shared_ptr<ShapesConnector> connector = c.createShape<ShapesConnector>(Point());
-    shared_ptr<Ellipse> ellipse = c.createShape<Ellipse>(Point());
+    shared_ptr<TextBox> textBox = c.createShape<TextBox>();
+    shared_ptr<ShapesConnector> connector = c.createShape<ShapesConnector>();
+    shared_ptr<Ellipse> ellipse = c.createShape<Ellipse>();
 
     textBox->setTL({int(center.x * 1.5), int(center.y * 0.5)});
     textBox->setText("locked shape");
@@ -112,32 +113,50 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
     connector->setLocked(true);
 
     // create 2 invisible widgets
-    static shared_ptr<FloatingText> floatingText =
-            FloatingText::newFloatingText(c, (*head)(),
-                                          "These 3 objects are locked.\n"
-                                          "They are an Ellipse, ShapesConnector and a TextBox.\n"
-                                          "You can still select them and delete them.",
-                                          FloatingText::BOTTOM_UP);
+    shared_ptr<FloatingText> floatingText = FloatingText::newFloatingText(c, (*head)(),
+                                                                          "These 3 objects are locked.\n"
+                                                                          "They are an Ellipse, ShapesConnector and a TextBox.\n"
+                                                                          "You can still select them and delete them.",
+                                                                          FloatingText::BOTTOM_LEFT);
     floatingText->setVisible(false);
 
-    static shared_ptr<Button> button = Button::newButton(c, (*head)(),
-                                                         "Single button", 0,
-                                                         "Hover with mouse.\n"
-                                                         "Press with mouse.");
-    button->setVisible(false);
+    shared_ptr<VerticalLayout> buttons = VerticalLayout::newVerticalLayout(c, (*head)());
+    buttons->setSpacing(10);
+    buttons->setVisible(false);
+    buttons->addWidget(Button::newButton(c, "shortTxt\n2 lines",
+                                         "Hover with mouse (1).\n"
+                                         "Press with mouse (1)."));
+    buttons->addWidget(Button::newButton(c, "this is a long text",
+                                         "Hover with mouse (2).\n"
+                                         "Press with mouse (2)."));
 
-    ellipse->notifyOnSelect([&](Shape *shape, bool isSelected)
+    buttons->at(0)->notifyOnChange([](Widget *w, Widget::State state)
     {
-        cout << "ellipse selection state is "   << isSelected << endl;
-        if (isSelected)
+        cout << "widget " << w << " at(0) got state " << state << endl;
+    });
+
+    buttons->at(1)->notifyOnChange([](Widget *w, Widget::State state)
+    {
+        cout << "widget " << w << " at(1) got state " << state << endl;
+    });
+
+    ellipse->notifyOnEvent([buttons, &c, floatingText](Shape *shape, Shape::CBEvent event)
+    {
+        cout << "ellipse event is "   << event << endl;
+        if (event == Shape::SELECT)
         {
-            button->setVisible(false);
+            buttons->setVisible(false);
             floatingText->setVisible(true);
         }
-        else
+        else if (event == Shape::UNSELECT)
         {
-            button->setVisible(true);
+            buttons->setVisible(true);
             floatingText->setVisible(false);
+        }
+        else if (event == Shape::REMOVED)
+        {
+            c.rmvWidget(buttons);
+            c.rmvWidget(floatingText);
         }
     });
 }

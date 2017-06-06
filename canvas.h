@@ -6,6 +6,7 @@
 #include "shapefactory.h"
 #include "widgetfactory.h"
 #include "floatingtext.h"
+#include "layout.h"
 
 #include <list>
 #include <memory>
@@ -14,7 +15,7 @@
 namespace canvascv
 {
 
-class Canvas
+class Canvas : public Layout
 {
 public:
     typedef std::function<void(Shape*)> CBType;
@@ -37,16 +38,16 @@ public:
     void onMouseMove(const cv::Point &pos);
 
     /// Create shape on the canvas directly from code
-    std::shared_ptr<Shape> createShape(const cv::Point &pos, std::string type);
+    std::shared_ptr<Shape> createShape(std::string type, const cv::Point &pos = cv::Point(0,0));
 
     template <class T>
-    std::shared_ptr<T> createShape(const cv::Point &pos);
+    std::shared_ptr<T> createShape(const cv::Point &pos = cv::Point(0,0));
 
     /// Create widget on the canvas directly from code
     std::shared_ptr<Widget> createWidget(const cv::Point &pos, std::string type);
 
     template <class T>
-    std::shared_ptr<T> createWidget(const cv::Point &pos);
+    std::shared_ptr<T> createWidget(const cv::Point &pos = cv::Point(0,0));
 
     /**
      * @brief consumeKey takes a key value and tries to use it
@@ -64,7 +65,7 @@ public:
     }
 
     /**
-     * @brief set default shape type to draw
+     * @brief set default shape type to draw (could be "")
      * @param value will be the default current shape to create on mouse press
      */
     void setShapeType(std::string value)
@@ -80,12 +81,12 @@ public:
     /**
      * @brief delete specific shape
      */
-    void deleteShape(std::shared_ptr<Shape> shape);
+    void deleteShape(const std::shared_ptr<Shape> &shape);
 
     /**
      * @brief delete specific widget
      */
-    void deleteWidget(std::shared_ptr<Widget> widget);
+    void deleteWidget(const std::shared_ptr<Widget> &widget);
 
     /**
      * @brief used to register for notifications on shape creation
@@ -161,9 +162,16 @@ public:
 
     void setScreenText(const std::string &msg);
 
-    cv::Size getSize() const;
+    virtual void recalc() {}
+
+    virtual cv::Size getAllowedSize() const;
     void setSize(const cv::Size &value);
 
+    virtual void addDirtyWidget(Widget *widget);
+    virtual void addWidget(const std::shared_ptr<Widget> &widget);
+    virtual bool rmvWidget(const std::shared_ptr<Widget> &widget);
+
+    virtual bool rmvWidget(Widget *widget);
 private:
 
     void broadcastCreate(Shape *shape);
@@ -185,6 +193,8 @@ private:
     std::list<CBType> createNotifs;
     std::list<CBType> modifyNotifs;
     std::list<CBType> deleteNotifs;
+    bool duringDirtyHandling;
+    std::list<Widget*> dirtyWidgets;
 
     friend void write(cv::FileStorage& fs, const std::string&, const Canvas& x);
     friend void read(const cv::FileNode& node, Canvas& x, const Canvas&);
@@ -204,7 +214,7 @@ template <class T>
 std::shared_ptr<T> Canvas::createWidget(const cv::Point &pos)
 {
     std::shared_ptr<T> widget(WidgetFactoryT<T>::newWidget(pos));
-    widget->setCanvas(*this);
+    widget->setLayout(*this);
     widgets.push_back(widget);
     return widget;
 }
