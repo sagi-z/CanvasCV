@@ -16,10 +16,10 @@ Button::Button(const Point &pos)
 {
 }
 
-Button::Button(const string msgVal, Point leftPosVal, int maxWidthVal, Scalar colorVal,
+Button::Button(const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,
                Scalar bgColorVal, double fontScaleVal, int fontThicknessVal,
                double alphaVal, int fontFaceVal)
-    : FloatingText(msgVal, leftPosVal, maxWidthVal, colorVal,
+    : FloatingText(msgVal, locationVal, maxWidthVal, colorVal,
                    bgColorVal, fontScaleVal, fontThicknessVal,
                    alphaVal, fontFaceVal),
       origAlpha(alpha)

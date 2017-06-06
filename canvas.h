@@ -92,19 +92,19 @@ public:
      * @brief used to register for notifications on shape creation
      * @param cb to invoke on shape creation
      */
-    void notifyOnCreate(CBType cb);
+    void notifyOnShapeCreate(CBType cb);
 
     /**
      * @brief used to register for notifications on shape modification (actually when it is deselected)
      * @param cb to invoke on shape modification
      */
-    void notifyOnModify(CBType cb);
+    void notifyOnShapeModify(CBType cb);
 
     /**
      * @brief used to register for notifications on shape deletion
      * @param cb to invoke on shape deletion
      */
-    void notifyOnDelete(CBType cb);
+    void notifyOnShapeDelete(CBType cb);
 
     /**
      * @brief clear all shapes from Canvas

@@ -15,7 +15,7 @@ public:
     Button(const cv::Point &pos);
 
     Button(const std::string msgVal = "",
-           cv::Point topLeftVal = cv::Point(0, 0),
+           cv::Point locationVal = cv::Point(0, 0),
            int maxWidthVal = 0,
            cv::Scalar colorVal = Colors::BLACK,
            cv::Scalar bgColorVal = Colors::P1_GRAY,

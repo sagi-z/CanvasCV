@@ -25,7 +25,7 @@ void read(const cv::FileNode& node, Widget*& x, const Widget *default_value)
 
 Widget::Widget(const Point &pos)
     : id(genId()),
-      leftPos(pos),
+      location(pos),
       outlineColor(Colors::GREEN),
       fillColor(outlineColor),
       locked(false),
@@ -42,7 +42,7 @@ Widget::Widget(const Point &pos)
 
 Widget::Widget(const Widget &other)
     : id(genId()),
-      leftPos(other.leftPos),
+      location(other.location),
       outlineColor(other.outlineColor),
       fillColor(other.fillColor),
       locked(other.locked),
@@ -251,14 +251,14 @@ bool Widget::getIsDirty() const
     return isDirty;
 }
 
-cv::Point Widget::getLeftPos() const
+cv::Point Widget::getLocation() const
 {
-    return leftPos;
+    return location;
 }
 
 void Widget::translate(const Point &translation)
 {
-    leftPos += translation;
+    location += translation;
 }
 
 void Widget::setDirty()
@@ -282,16 +282,16 @@ void Widget::update()
    }
 }
 
-void Widget::setLeftPos(const Point &value)
+void Widget::setLocation(const Point &value)
 {
-    Point translation = value - leftPos;
+    Point translation = value - location;
     translate(translation);
 }
 
 void Widget::readInternals(const cv::FileNode &node)
 {
     node["id"] >> id;
-    node["leftPos"] >> leftPos;
+    node["leftPos"] >> location;
     node["outlineColor"] >> outlineColor;
     node["fillColor"] >> fillColor;
     node["locked"] >> locked;
@@ -319,7 +319,7 @@ void Widget::writeInternals(cv::FileStorage &fs) const
 {
     fs << "XXXconcreteTypeXXX" << getType() <<
           "id" << id <<
-          "leftPos" << leftPos <<
+          "leftPos" << location <<
           "outlineColor" << outlineColor <<
           "fillColor" << fillColor <<
           "locked" << locked <<

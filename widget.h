@@ -29,18 +29,24 @@ public:
         RELEASE
     };
 
-    // Is the widget pos is TopLeft or TopBottom
+    // Used both for internal widget alignments and in Layout managers
     enum Anchor
     {
-        TOP    = 0b00000001,
-        BOTTOM = 0b00000010,
-        LEFT   = 0b00000100,
-        RIGHT  = 0b00001000,
+        TOP    = 0b00000001, // unusable alone
+        BOTTOM = 0b00000010, // unusable alone
+        LEFT   = 0b00000100, // unusable alone
+        RIGHT  = 0b00001000, // unusable alone
+
+        // Any of these is a valid anchor
         CENTER = 0b00010000,
-        TOP_LEFT     = TOP | LEFT,
-        TOP_RIGHT    = TOP | RIGHT,
-        BOTTOM_LEFT  = BOTTOM | LEFT,
-        BOTTOM_RIGHT = BOTTOM | RIGHT
+        TOP_LEFT      = TOP | LEFT,
+        TOP_RIGHT     = TOP | RIGHT,
+        BOTTOM_LEFT   = BOTTOM | LEFT,
+        BOTTOM_RIGHT  = BOTTOM | RIGHT,
+        CENTER_TOP    = CENTER | TOP,
+        CENTER_BOTTOM = CENTER | BOTTOM,
+        CENTER_LEFT   = CENTER | LEFT,
+        CENTER_RIGHT  = CENTER | RIGHT
     };
 
     typedef std::function<void(Widget*, State)> CBType;
@@ -97,8 +103,8 @@ public:
     virtual const std::string &getStatusMsg() const;
     void setStatusMsg(const std::string &value);
 
-    cv::Point getLeftPos() const;
-    virtual void setLeftPos(const cv::Point &value);
+    cv::Point getLocation() const;
+    virtual void setLocation(const cv::Point &value);
 
     virtual void translate(const cv::Point &translation);
 
@@ -143,7 +149,7 @@ protected:
 
 
     int id;
-    cv::Point leftPos;
+    cv::Point location;
     cv::Scalar outlineColor;
     cv::Scalar fillColor;
     bool locked;

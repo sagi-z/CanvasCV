@@ -194,7 +194,7 @@ int main(int argc, char **argv)
 
     // notifyOnCreate callbacks can be used for anything.
     // here we change default attributes in case of TextBox or LineCrossing
-    c.notifyOnCreate([](Shape *shape)
+    c.notifyOnShapeCreate([](Shape *shape)
     {
         if (shape->getType() == TextBox::type)
         {

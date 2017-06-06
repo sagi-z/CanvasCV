@@ -18,7 +18,7 @@ public:
     FloatingText(const cv::Point &pos);
 
     FloatingText(const std::string msgVal = "",
-                 cv::Point topLeftVal = cv::Point(0, 0),
+                 cv::Point locationVal = cv::Point(0, 0),
                  int maxWidthVal = 0,
                  cv::Scalar colorVal = Colors::BLACK,
                  cv::Scalar bgColorVal = Colors::P1_GRAY,
@@ -89,9 +89,9 @@ private:
     int fontFace;
     double fontScale;
     int maxWidth;
-    int yStart; // TODO: update during setLeftPos
-    cv::Rect rect; // TODO: update during setLeftPos
-    cv::Rect minimalRect; // TODO: update during setLeftPos
+    int yStart;
+    cv::Rect rect;
+    cv::Rect minimalRect;
     cv::Mat rectColor;
 };
 

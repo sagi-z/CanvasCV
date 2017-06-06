@@ -57,7 +57,7 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
     }
     if (hasStatusMsg)
     {
-        statusMsg.setLeftPos(Point(5, dst.rows - 5));
+        statusMsg.setLocation(Point(5, dst.rows - 5));
         static_cast<Widget&>(statusMsg).draw(dst);
     }
 }
@@ -263,17 +263,17 @@ void Canvas::deleteWidget(const std::shared_ptr<Widget> &widget)
     widgets.erase(find(widgets.begin(),widgets.end(),widget));
 }
 
-void Canvas::notifyOnCreate(Canvas::CBType cb)
+void Canvas::notifyOnShapeCreate(Canvas::CBType cb)
 {
     createNotifs.push_back(cb);
 }
 
-void Canvas::notifyOnModify(Canvas::CBType cb)
+void Canvas::notifyOnShapeModify(Canvas::CBType cb)
 {
     modifyNotifs.push_back(cb);
 }
 
-void Canvas::notifyOnDelete(Canvas::CBType cb)
+void Canvas::notifyOnShapeDelete(Canvas::CBType cb)
 {
     deleteNotifs.push_back(cb);
 }

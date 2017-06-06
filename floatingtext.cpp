@@ -22,10 +22,10 @@ FloatingText::FloatingText(const Point &pos)
     fillColor = Colors::P1_GRAY;
 }
 
-FloatingText::FloatingText(const string msgVal, Point leftPosVal, int maxWidthVal, Scalar colorVal,
+FloatingText::FloatingText(const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,
                            Scalar bgColorVal, double fontScaleVal, int thicknessVal,
                            double alphaVal, int fontFaceVal)
-    : Widget(leftPosVal),
+    : Widget(locationVal),
       alpha(alphaVal),
       msg(msgVal),
       maxWidth(maxWidthVal),
@@ -121,7 +121,7 @@ void FloatingText::draw(Mat &dst)
         int padding = (rect.width - minimalRect.width) / 2.;
         for (auto &str : rows)
         {
-            Point textPos(leftPos.x + 5, y);
+            Point textPos(location.x + 5, y);
             if (padding > 0)
             {  // FIXME: centering the text as a whole and not per line
                 textPos.x += padding;
@@ -141,7 +141,7 @@ void FloatingText::prepareMsgParts()
     {
         if (! layout) return;
         Size layoutSize = layout->getAllowedSize();
-        int localMaxWidth = layoutSize.width - leftPos.x;
+        int localMaxWidth = layoutSize.width - location.x;
         if (maxWidth && maxWidth < localMaxWidth) localMaxWidth = maxWidth;
         if (localMaxWidth < 10) localMaxWidth = 10;
         struct LineData
@@ -176,13 +176,13 @@ void FloatingText::prepareMsgParts()
             int yRectStart;
             if (anchor == TOP_LEFT)
             {
-                yStart = leftPos.y + fontHeight;
+                yStart = location.y + fontHeight;
                 if (yStart < 0) yStart = 0;
-                yRectStart = leftPos.y;
+                yRectStart = location.y;
             }
             else if (anchor == BOTTOM_LEFT)
             {
-                yStart = leftPos.y - fontHeight * totalRows;
+                yStart = location.y - fontHeight * totalRows;
                 if (yStart < 0) yStart = 0;
                 yRectStart = yStart - fontHeight;
             }
@@ -195,10 +195,10 @@ void FloatingText::prepareMsgParts()
                                  layoutSize.height - yRectStart - 1);
             int rectWidth = min(localMaxWidth - 5, // "absolute limit width (5 pixels from right of layout)" vs.
                                 maxNeededWidth);   // "width which is realy needed"
-            minimalRect = Rect(leftPos.x, yRectStart, rectWidth, rectHeight);
+            minimalRect = Rect(location.x, yRectStart, rectWidth, rectHeight);
             if (forcedWidth > rectWidth) rectWidth = forcedWidth;
             if (forcedHeight > rectHeight) rectHeight = forcedHeight;
-            rect = Rect(leftPos.x, yRectStart, rectWidth, rectHeight);
+            rect = Rect(location.x, yRectStart, rectWidth, rectHeight);
             rectColor = Mat(rect.size(), CV_8UC3, fillColor);
             for (LineData &lineData : msgParts)
             {

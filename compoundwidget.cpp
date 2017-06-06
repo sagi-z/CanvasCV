@@ -231,8 +231,8 @@ void CompoundWidget::recalc()
 CompoundWidget::CompoundWidget(const Point &pos)
     :Widget(pos)
 {
-    rect.x = leftPos.x;
-    rect.y = leftPos.y;
+    rect.x = location.x;
+    rect.y = location.y;
 }
 
 const Rect &CompoundWidget::getRect()
@@ -254,7 +254,7 @@ void CompoundWidget::addWidget(const shared_ptr<Widget> &widget)
 
 void CompoundWidget::translate(const Point &translation)
 {
-    leftPos += translation;
+    location += translation;
     for (auto &widget : widgets)
     {
         widget->translate(translation);
@@ -262,9 +262,9 @@ void CompoundWidget::translate(const Point &translation)
     setDirty();
 }
 
-void CompoundWidget::setLeftPos(const Point &value)
+void CompoundWidget::setLocation(const Point &value)
 {
-    Widget::setLeftPos(value);
+    Widget::setLocation(value);
     setDirty();
 }
 

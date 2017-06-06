@@ -82,7 +82,7 @@ void VerticalLayout::addWidget(const shared_ptr<Widget> &widget)
     Layout* prevLayout = widget->getLayout();
     if (prevLayout) prevLayout->rmvWidget(widget);
     widget->setLayout(*this);
-    Point pos = leftPos;
+    Point pos = location;
     if (anchor == TOP_LEFT)
     {
         pos.y = rect.y + rect.height + spacing;
@@ -95,7 +95,7 @@ void VerticalLayout::addWidget(const shared_ptr<Widget> &widget)
     {
         abort();
     }
-    widget->setLeftPos(pos);
+    widget->setLocation(pos);
     vertWidgets.push_back(widget);
     CompoundWidget::addWidget(widget);
     setDirty();
@@ -142,10 +142,10 @@ void VerticalLayout::recalc()
         maxWidth = max(maxWidth, minRect.width);
         maxHeight = max(maxHeight, minRect.height);
     }
-    Point pos = leftPos;
+    Point pos = location;
     for (auto &widget : vertWidgets)
     {
-        widget->setLeftPos(pos);
+        widget->setLocation(pos);
         if (stretchX) widget->stretchWidth(maxWidth);
         if (stretchY) widget->stretchHeight(maxHeight);
         if (anchor == TOP_LEFT)
