@@ -16,7 +16,7 @@ public:
     virtual void addDirtyWidget(Widget *widget) = 0;
     virtual void rmvDirtyWidget(Widget *widget) = 0;
 
-    virtual cv::Size getAllowedSize() const = 0;
+    virtual const cv::Rect getBoundaries() const = 0;
 
     virtual void addWidget(const std::shared_ptr<Widget> &widget) = 0;
     virtual bool rmvWidget(const std::shared_ptr<Widget> &widget) = 0;

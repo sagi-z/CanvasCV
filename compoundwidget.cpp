@@ -174,11 +174,11 @@ void CompoundWidget::broadcastChange(Widget::State status)
     }
 }
 
-void CompoundWidget::layoutResized(const Size &size)
+void CompoundWidget::layoutResized(const Rect &boundaries)
 {
     for (auto &widget : widgets)
     {
-        widget->layoutResized(size);
+        widget->layoutResized(boundaries);
     }
 }
 

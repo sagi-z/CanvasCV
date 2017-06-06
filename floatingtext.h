@@ -75,7 +75,6 @@ protected:
     double alpha;
 private:
 
-    virtual void layoutResized(const cv::Size &size);
     virtual void mousePressed() {}
     virtual void mouseReleased() {}
     virtual void mouseEnter() {}

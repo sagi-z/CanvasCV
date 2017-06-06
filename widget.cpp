@@ -170,6 +170,11 @@ Layout *Widget::getLayout()
     return layout;
 }
 
+void Widget::layoutResized(const cv::Rect &boundaries)
+{
+   setDirty();
+}
+
 const string &Widget::getStatusMsg() const
 {
     return statusMsg;

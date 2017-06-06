@@ -25,7 +25,7 @@ public:
     virtual void recalc();
     virtual void addWidget(const std::shared_ptr<Widget> &widget);
     virtual bool rmvWidget(const std::shared_ptr<Widget> &widget);
-    virtual Size getAllowedSize() const;
+    virtual const cv::Rect getBoundaries() const;
 
     void rmvWidget(int i);
 

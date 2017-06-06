@@ -164,7 +164,7 @@ public:
 
     virtual void recalc() {}
 
-    virtual cv::Size getAllowedSize() const;
+    virtual const cv::Rect getBoundaries() const;
     void setSize(const cv::Size &value);
 
     virtual void addWidget(const std::shared_ptr<Widget> &widget);
@@ -181,7 +181,7 @@ private:
 
     void processNewShape();
 
-    cv::Size size;
+    cv::Rect boundaries;
     bool hasScreenText;
     bool hasStatusMsg;
     FloatingText screenText;
@@ -231,8 +231,8 @@ void Canvas::getShapes(std::list<std::shared_ptr<T>> &result)
     }
 }
 
-void write(cv::FileStorage& fs, const std::string&, const Canvas& x);
-void read(const cv::FileNode& node, Canvas& x, const Canvas&);
+void writeShapes(cv::FileStorage& fs, const std::string&, const Canvas& x);
+void readShapes(const cv::FileNode& node, Canvas& x, const Canvas&);
 
 }
 

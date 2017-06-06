@@ -165,16 +165,16 @@ void VerticalLayout::recalc()
     CompoundWidget::recalc();
 }
 
-Size VerticalLayout::getAllowedSize() const
+const Rect VerticalLayout::getBoundaries() const
 {
+    Rect boundaries = rect;
     if (layout)
     {
-        return layout->getAllowedSize();
+        boundaries = layout->getBoundaries();
     }
-    else
-    {
-        return rect.size();
-    }
+    if (forcedWidth) boundaries.width = forcedWidth;
+    if (forcedHeight) boundaries.height = forcedHeight;
+    return boundaries;
 }
 
 void VerticalLayout::setDirtyLayout()

@@ -57,7 +57,7 @@ protected:
 private:
 
     virtual void broadcastChange(State status);
-    virtual void layoutResized(const cv::Size &size);
+    virtual void layoutResized(const cv::Rect &boundaries);
     virtual void mousePressed() final {}
     virtual void mouseReleased() final {}
     virtual void mouseEnter() final {}

@@ -199,7 +199,7 @@ private:
     void setLayout(Layout &value);
     Layout* getLayout();
 
-    virtual void layoutResized(const cv::Size &size) {}
+    virtual void layoutResized(const cv::Rect &boundaries);
 
     /// called by the canvas when the widget changes state
     virtual void broadcastChange(State status);

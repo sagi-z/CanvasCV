@@ -8,7 +8,7 @@ namespace canvascv
 {
 
 Canvas::Canvas(Size sizeVal)
-    : size(sizeVal),
+    : boundaries(Point(0,0), sizeVal),
       hasScreenText(false),
       hasStatusMsg(false),
       screenText(Point(5,5)),
@@ -396,17 +396,21 @@ void Canvas::processNewShape()
     }
 }
 
-cv::Size Canvas::getAllowedSize() const
+const Rect Canvas::getBoundaries() const
 {
-    return size;
+    return boundaries;
 }
 
 void Canvas::setSize(const cv::Size &value)
 {
-    size = value;
-    for (auto &widget : widgets)
+    if (boundaries.size() != value)
     {
-        widget->layoutResized(value);
+        boundaries.width = value.width;
+        boundaries.height = value.height;
+        for (auto &widget : widgets)
+        {
+            widget->layoutResized(boundaries);
+        }
     }
 }
 

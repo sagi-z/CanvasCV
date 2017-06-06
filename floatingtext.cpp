@@ -140,8 +140,8 @@ void FloatingText::prepareMsgParts()
     if (msg.length())
     {
         if (! layout) return;
-        Size layoutSize = layout->getAllowedSize();
-        int localMaxWidth = layoutSize.width - location.x;
+        const Rect &boundaries = layout->getBoundaries();
+        int localMaxWidth = boundaries.x + boundaries.width - location.x;
         if (maxWidth && maxWidth < localMaxWidth) localMaxWidth = maxWidth;
         if (localMaxWidth < 10) localMaxWidth = 10;
         struct LineData
@@ -192,7 +192,7 @@ void FloatingText::prepareMsgParts()
                 abort();
             }
             int rectHeight = min((int) floor(fontHeight * totalRows + fontHeight),
-                                 layoutSize.height - yRectStart - 1);
+                                 boundaries.height - yRectStart - 1);
             int rectWidth = min(localMaxWidth - 5, // "absolute limit width (5 pixels from right of layout)" vs.
                                 maxNeededWidth);   // "width which is realy needed"
             minimalRect = Rect(location.x, yRectStart, rectWidth, rectHeight);
@@ -236,11 +236,6 @@ void FloatingText::setMaxWidth(int value)
         maxWidth = value;
         setDirty();
     }
-}
-
-void FloatingText::layoutResized(const Size &size)
-{
-    setDirty();
 }
 
 int FloatingText::getFontHeight() const
