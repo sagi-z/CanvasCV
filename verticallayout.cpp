@@ -21,7 +21,7 @@ void VerticalLayout::setSpacing(int value)
 }
 
 VerticalLayout::VerticalLayout(const Point &pos)
-    : CompoundWidget(pos),
+    : LayoutBaseWidget(pos),
       spacing(5)
 {
 }
@@ -169,28 +169,6 @@ void VerticalLayout::recalc()
     }
 
     CompoundWidget::recalc();
-}
-
-bool VerticalLayout::isDuringUpdate() const
-{
-   return delayedUpdate == false;
-}
-
-const Rect VerticalLayout::getBoundaries() const
-{
-    Rect boundaries = rect;
-    if (layout)
-    {
-        boundaries = layout->getBoundaries();
-    }
-    if (forcedWidth) boundaries.width = forcedWidth;
-    if (forcedHeight) boundaries.height = forcedHeight;
-    return boundaries;
-}
-
-void VerticalLayout::setDirtyLayout()
-{
-    setDirty();
 }
 
 }

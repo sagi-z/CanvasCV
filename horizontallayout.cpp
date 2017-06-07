@@ -21,7 +21,7 @@ void HorizontalLayout::setSpacing(int value)
 }
 
 HorizontalLayout::HorizontalLayout(const Point &pos)
-    : CompoundWidget(pos),
+    : LayoutBaseWidget(pos),
       spacing(5)
 {
 }
@@ -169,28 +169,6 @@ void HorizontalLayout::recalc()
     }
 
     CompoundWidget::recalc();
-}
-
-bool HorizontalLayout::isDuringUpdate() const
-{
-   return delayedUpdate == false;
-}
-
-const Rect HorizontalLayout::getBoundaries() const
-{
-    Rect boundaries = rect;
-    if (layout)
-    {
-        boundaries = layout->getBoundaries();
-    }
-    if (forcedWidth) boundaries.width = forcedWidth;
-    if (forcedHeight) boundaries.height = forcedHeight;
-    return boundaries;
-}
-
-void HorizontalLayout::setDirtyLayout()
-{
-    setDirty();
 }
 
 }

@@ -150,11 +150,7 @@ double Widget::getAlpha() const
 
 void Widget::setAlpha(double value)
 {
-    if (alpha != value)
-    {
-        alpha = value;
-        setDirty();
-    }
+    alpha = value; // this is only used during draw()
 }
 
 void Widget::setLayoutAnchor(const Widget::Anchor &value)
