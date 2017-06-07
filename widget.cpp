@@ -137,8 +137,6 @@ void Widget::setLineType(int value)
     }
 }
 
-
-
 void Widget::setLayoutAnchor(const Widget::Anchor &value)
 {
     if (layoutAnchor != value)
@@ -245,11 +243,13 @@ void Widget::stretchHeight(int height)
    }
 }
 
-
-
 void Widget::setFlowAnchor(const Anchor &value)
 {
-    flowAnchor = value;
+    if (flowAnchor != value)
+    {
+        flowAnchor = value;
+        setDirty();
+    }
 }
 
 int Widget::genId()

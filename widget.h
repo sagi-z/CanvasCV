@@ -99,8 +99,9 @@ public:
         return flowAnchor;
     }
 
-    virtual void setLayoutAnchor(const Anchor &value);
-    virtual void setFlowAnchor(const Anchor &value);
+    void setLayoutAnchor(const Anchor &value);
+
+    void setFlowAnchor(const Anchor &value);
 
     int getId()
     {

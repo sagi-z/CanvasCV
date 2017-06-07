@@ -21,8 +21,6 @@ public:
     virtual void setLineType(int value);
     virtual void setLocked(bool value);
     virtual void setVisible(bool value);
-    virtual void setLayoutAnchor(const Anchor &value);
-    virtual void setFlowAnchor(const Anchor &value);
     virtual const std::string &getStatusMsg() const;
 
     virtual void recalc();

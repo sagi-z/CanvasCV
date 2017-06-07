@@ -40,18 +40,25 @@ FloatingText::FloatingText(const string msgVal, Point locationVal, int maxWidthV
 }
 
 shared_ptr<FloatingText> FloatingText::create(Layout &layout,
-                                              Point pos,
+                                              const cv::Point &pos,
                                               const string &text,
                                               Widget::Anchor flowAnchor,
                                               Widget::Anchor layoutAnchor)
 {
-
     shared_ptr<FloatingText> widget(WidgetFactoryT<FloatingText>::newWidget(pos));
     widget->setMsg(text);
     widget->setFlowAnchor(flowAnchor);
     widget->setLayoutAnchor(layoutAnchor);
     layout.addWidget(widget);
     return widget;
+}
+
+shared_ptr<FloatingText> FloatingText::create(Layout &layout,
+                                              const string &text,
+                                              Widget::Anchor flowAnchor,
+                                              Widget::Anchor layoutAnchor)
+{
+    return create(layout, Point(0,0), text, flowAnchor, layoutAnchor);
 }
 
 const char *FloatingText::getType() const

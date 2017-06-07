@@ -113,23 +113,28 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
     ellipse->setLocked(true);
     connector->setLocked(true);
 
-    // create 2 invisible widgets
-    auto floatingText = FloatingText::create(c, (*head)(),
-                                             "These 3 objects are locked.\n"
-                                             "They are an Ellipse, ShapesConnector and a TextBox.\n"
-                                             "You can still select them and delete them.",
-                                             Widget::BOTTOM_LEFT);
-    floatingText->setVisible(false);
+    // create some widgets
+    auto msgs = HorizontalLayout::create(c, (*head)());
+    FloatingText::create(*msgs,
+                         "These 3 objects are locked.\n"
+                         "They are an Ellipse, ShapesConnector and a TextBox.\n"
+                         "You can still select them and delete them.",
+                         Widget::BOTTOM_LEFT);
+    msgs->setVisible(false);
 
     auto buttons = VerticalLayout::create(c, (*head)());
+    buttons->setFlowAnchor(Widget::BOTTOM);
     buttons->setSpacing(10);
 
-    Button::create(*buttons, "shortTxt\n2 lines",
+    Button::create(*buttons, "right\naligned",
+                   "Hover with mouse (1).\n"
+                   "Press with mouse (1).");
+    Button::create(*buttons, "centered",
                    "Hover with mouse (1).\n"
                    "Press with mouse (1).");
     Button::create(*buttons, "this is a long text",
-                   "Hover with mouse (2).\n"
-                   "Press with mouse (2).");
+                   "Hover with mouse (3).\n"
+                   "Press with mouse (3).");
 
     buttons->at(0)->setLayoutAnchor(Widget::RIGHT);
     buttons->at(0)->notifyOnChange([](Widget *w, Widget::State state)
@@ -137,28 +142,29 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
         cout << "widget " << w << " at(0) got state " << state << endl;
     });
 
+    buttons->at(1)->setLayoutAnchor(Widget::CENTER);
     buttons->at(1)->notifyOnChange([](Widget *w, Widget::State state)
     {
         cout << "widget " << w << " at(1) got state " << state << endl;
     });
 
-    ellipse->notifyOnEvent([buttons, &c, floatingText](Shape *shape, Shape::CBEvent event)
+    ellipse->notifyOnEvent([buttons, msgs, &c](Shape *shape, Shape::CBEvent event)
     {
         cout << "ellipse event is "   << event << endl;
         if (event == Shape::SELECT)
         {
             buttons->setVisible(false);
-            floatingText->setVisible(true);
+            msgs->setVisible(true);
         }
         else if (event == Shape::UNSELECT)
         {
             buttons->setVisible(true);
-            floatingText->setVisible(false);
+            msgs->setVisible(false);
         }
         else if (event == Shape::REMOVED)
         {
             c.rmvWidget(buttons);
-            c.rmvWidget(floatingText);
+            c.rmvWidget(msgs);
         }
     });
 }

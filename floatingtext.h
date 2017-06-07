@@ -25,7 +25,12 @@ public:
                  double alphaVal = 0.5,
                  int fontFaceVal = cv::FONT_HERSHEY_COMPLEX_SMALL);
 
-    static std::shared_ptr<FloatingText> create(Layout &layout, cv::Point pos,
+    static std::shared_ptr<FloatingText> create(Layout &layout, const cv::Point &pos,
+                                                const std::string &text,
+                                                Anchor flowAnchor = TOP_LEFT,
+                                                Anchor layoutAnchor = TOP_LEFT);
+
+    static std::shared_ptr<FloatingText> create(Layout &layout,
                                                 const std::string &text,
                                                 Anchor flowAnchor = TOP_LEFT,
                                                 Anchor layoutAnchor = TOP_LEFT);

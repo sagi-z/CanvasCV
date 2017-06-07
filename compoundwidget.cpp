@@ -182,22 +182,6 @@ void CompoundWidget::layoutResized(const Rect &boundaries)
     }
 }
 
-void CompoundWidget::setLayoutAnchor(const Widget::Anchor &value)
-{
-    for (auto &widget : widgets)
-    {
-        widget->setLayoutAnchor(value);
-    }
-}
-
-void CompoundWidget::setFlowAnchor(const Widget::Anchor &value)
-{
-    for (auto &widget : widgets)
-    {
-        widget->setFlowAnchor(value);
-    }
-}
-
 const string &CompoundWidget::getStatusMsg() const
 {
    if (active.get())
