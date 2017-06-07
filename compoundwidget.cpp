@@ -254,10 +254,4 @@ void CompoundWidget::translate(const Point &translation)
     setDirty();
 }
 
-void CompoundWidget::setLocation(const Point &value)
-{
-    Widget::setLocation(value);
-    setDirty();
-}
-
 }

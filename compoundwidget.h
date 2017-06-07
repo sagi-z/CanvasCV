@@ -14,7 +14,6 @@ namespace canvascv
 class CompoundWidget : public Widget
 {
 public:
-    virtual void setLocation(const Point &value);
     virtual void setOutlineColor(const cv::Scalar &value);
     virtual void setFillColor(const cv::Scalar &value);
     virtual void setThickness(int value);
