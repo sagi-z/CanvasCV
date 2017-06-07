@@ -32,6 +32,7 @@ Widget::Widget(const Point &pos)
       visible(true),
       thickness(1),
       lineType(cv::LINE_AA),
+      alpha(0.5),
       forcedWidth(0),
       forcedHeight(0),
       layoutAnchor(TOP_LEFT),
@@ -53,6 +54,7 @@ Widget::Widget(const Widget &other)
       visible(other.visible),
       thickness(other.thickness),
       lineType(other.lineType),
+      alpha(other.alpha),
       forcedWidth(other.forcedWidth),
       forcedHeight(other.forcedHeight),
       flowAnchor(other.layoutAnchor),
@@ -137,6 +139,20 @@ void Widget::setLineType(int value)
     if (lineType != value)
     {
         lineType = value;
+        setDirty();
+    }
+}
+
+double Widget::getAlpha() const
+{
+    return alpha;
+}
+
+void Widget::setAlpha(double value)
+{
+    if (alpha != value)
+    {
+        alpha = value;
         setDirty();
     }
 }
@@ -361,6 +377,7 @@ void Widget::readInternals(const cv::FileNode &node)
     node["visible"] >> visible;
     node["thickness"] >> thickness;
     node["lineType"] >> lineType;
+    node["alpha"] >> alpha;
     node["layoutAnchor"] >> (int) layoutAnchor;
     node["flowAnchor"] >> (int) flowAnchor;
     node["stretchX"] >> stretchX;
@@ -392,6 +409,7 @@ void Widget::writeInternals(cv::FileStorage &fs) const
           "visible" << visible <<
           "thickness" << thickness <<
           "lineType" << lineType <<
+          "alpha" << alpha <<
           "layoutAnchor" << layoutAnchor <<
           "flowAnchor" << flowAnchor <<
           "stretchX" << stretchX <<

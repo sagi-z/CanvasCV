@@ -12,7 +12,6 @@ const char *FloatingText::type = "FloatingText";
 
 FloatingText::FloatingText(const Point &pos)
     : Widget(pos),
-      alpha(0.5),
       msg(),
       maxWidth(0),
       fontScale(0.5),
@@ -24,10 +23,8 @@ FloatingText::FloatingText(const Point &pos)
 }
 
 FloatingText::FloatingText(const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,
-                           Scalar bgColorVal, double fontScaleVal, int thicknessVal,
-                           double alphaVal, int fontFaceVal)
+                           Scalar bgColorVal, double fontScaleVal, int thicknessVal, int fontFaceVal)
     : Widget(locationVal),
-      alpha(alphaVal),
       msg(msgVal),
       maxWidth(maxWidthVal),
       fontScale(fontScaleVal),
@@ -64,16 +61,6 @@ shared_ptr<FloatingText> FloatingText::create(Layout &layout,
 const char *FloatingText::getType() const
 {
    return type;
-}
-
-double FloatingText::getAlpha() const
-{
-    return alpha;
-}
-
-void FloatingText::setAlpha(double value)
-{
-    alpha = value;
 }
 
 string FloatingText::getMsg() const

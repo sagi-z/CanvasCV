@@ -17,11 +17,10 @@ Button::Button(const Point &pos)
 }
 
 Button::Button(const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,
-               Scalar bgColorVal, double fontScaleVal, int fontThicknessVal,
-               double alphaVal, int fontFaceVal)
+               Scalar bgColorVal, double fontScaleVal, int fontThicknessVal, int fontFaceVal)
     : FloatingText(msgVal, locationVal, maxWidthVal, colorVal,
                    bgColorVal, fontScaleVal, fontThicknessVal,
-                   alphaVal, fontFaceVal),
+                   fontFaceVal),
       origAlpha(alpha)
 {
 }
@@ -47,7 +46,13 @@ shared_ptr<Button> Button::create(Layout &layout,
 
 std::shared_ptr<Button> Button::create(Layout &layout, const string &buttonText, const string &statusMsg, int maxWidthVal)
 {
-   return create(layout, Point(0, 0), buttonText, statusMsg, maxWidthVal);
+    return create(layout, Point(0, 0), buttonText, statusMsg, maxWidthVal);
+}
+
+void Button::setAlpha(double val)
+{
+    FloatingText::setAlpha(val);
+    origAlpha = alpha;
 }
 
 void Button::mousePressed()

@@ -18,6 +18,7 @@ public:
     virtual void setFillColor(const cv::Scalar &value);
     virtual void setThickness(int value);
     virtual void setLineType(int value);
+    virtual void setAlpha(double value);
     virtual void setLocked(bool value);
     virtual void setVisible(bool value);
     virtual const std::string &getStatusMsg() const;

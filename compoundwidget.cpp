@@ -59,6 +59,15 @@ void CompoundWidget::setLineType(int value)
     }
 }
 
+void CompoundWidget::setAlpha(double value)
+{
+    Widget::setAlpha(value);
+    for (auto &widget : widgets)
+    {
+        widget->setAlpha(value);
+    }
+}
+
 void CompoundWidget::setLocked(bool value)
 {
     Widget::setLocked(value);

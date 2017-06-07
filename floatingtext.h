@@ -22,7 +22,6 @@ public:
                  cv::Scalar bgColorVal = Colors::P1_GRAY,
                  double fontScaleVal = 0.5,
                  int fontThicknessVal = 1,
-                 double alphaVal = 0.5,
                  int fontFaceVal = cv::FONT_HERSHEY_COMPLEX_SMALL);
 
     static std::shared_ptr<FloatingText> create(Layout &layout, const cv::Point &pos,
@@ -36,9 +35,6 @@ public:
                                                 Anchor layoutAnchor = TOP);
 
     virtual const char *getType() const;
-
-    double getAlpha() const;
-    void setAlpha(double value);
 
     std::string getMsg() const;
     void setMsg(const std::string &value);
@@ -75,7 +71,6 @@ protected:
     {
     }
 
-    double alpha;
 private:
 
     virtual void mousePressed() {}

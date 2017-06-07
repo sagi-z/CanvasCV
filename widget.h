@@ -115,6 +115,13 @@ public:
 
     virtual void setLineType(int value);
 
+    double getAlpha() const;
+    virtual void setAlpha(double value);
+
+    std::string getMsg() const;
+    void setMsg(const std::string &value);
+
+
     Anchor getLayoutAnchor() const
     {
         return layoutAnchor;
@@ -196,6 +203,7 @@ protected:
     bool visible;
     int thickness;
     int lineType;
+    double alpha;
     int forcedWidth;
     int forcedHeight;
     Anchor layoutAnchor;

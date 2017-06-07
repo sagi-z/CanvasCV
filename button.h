@@ -21,7 +21,6 @@ public:
            cv::Scalar bgColorVal = Colors::P1_GRAY,
            double fontScaleVal = 0.5,
            int fontThicknessVal = 1,
-           double alphaVal = 0.5,
            int fontFaceVal = cv::FONT_HERSHEY_COMPLEX_SMALL);
 
     virtual const char *getType() const;
@@ -36,6 +35,8 @@ public:
                                           const std::string &buttonText,
                                           const std::string &statusMsg="",
                                           int maxWidthVal = 0);
+
+    virtual void setAlpha(double val);
 
     static const char *type;
 
