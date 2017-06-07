@@ -113,22 +113,22 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
     connector->setLocked(true);
 
     // create 2 invisible widgets
-    shared_ptr<FloatingText> floatingText = FloatingText::newFloatingText(c, (*head)(),
-                                                                          "These 3 objects are locked.\n"
-                                                                          "They are an Ellipse, ShapesConnector and a TextBox.\n"
-                                                                          "You can still select them and delete them.",
-                                                                          Widget::BOTTOM_LEFT);
+    auto floatingText = FloatingText::create(c, (*head)(),
+                                             "These 3 objects are locked.\n"
+                                             "They are an Ellipse, ShapesConnector and a TextBox.\n"
+                                             "You can still select them and delete them.",
+                                             Widget::BOTTOM_LEFT);
     floatingText->setVisible(false);
 
-    shared_ptr<VerticalLayout> buttons = VerticalLayout::newVerticalLayout(c, (*head)());
+    auto buttons = VerticalLayout::create(c, (*head)());
     buttons->setSpacing(10);
-    buttons->setVisible(false);
-    buttons->addWidget(Button::newButton(c, "shortTxt\n2 lines",
-                                         "Hover with mouse (1).\n"
-                                         "Press with mouse (1)."));
-    buttons->addWidget(Button::newButton(c, "this is a long text",
-                                         "Hover with mouse (2).\n"
-                                         "Press with mouse (2)."));
+
+    Button::create(*buttons, "shortTxt\n2 lines",
+                   "Hover with mouse (1).\n"
+                   "Press with mouse (1).");
+    Button::create(*buttons, "this is a long text",
+                   "Hover with mouse (2).\n"
+                   "Press with mouse (2).");
 
     buttons->at(0)->setLayoutAnchor(Widget::RIGHT);
     buttons->at(0)->notifyOnChange([](Widget *w, Widget::State state)

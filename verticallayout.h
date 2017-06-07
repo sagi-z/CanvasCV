@@ -7,15 +7,14 @@
 namespace canvascv
 {
 
-class Canvas;
-
 class VerticalLayout : public CompoundWidget, public LayoutBase
 {
 public:
 
     VerticalLayout(const cv::Point &pos);
 
-    static std::shared_ptr<VerticalLayout> newVerticalLayout(Canvas &c, cv::Point pos);
+    static std::shared_ptr<VerticalLayout> create(Layout &layout,
+                                                  const cv::Point &pos = cv::Point(0,0));
 
     virtual const char *getType() const;
 

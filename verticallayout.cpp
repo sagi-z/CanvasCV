@@ -1,5 +1,5 @@
 #include "verticallayout.h"
-#include "canvas.h"
+#include "widgetfactory.h"
 
 using namespace std;
 using namespace cv;
@@ -28,9 +28,10 @@ VerticalLayout::VerticalLayout(const Point &pos)
 {
 }
 
-shared_ptr<VerticalLayout> VerticalLayout::newVerticalLayout(Canvas &c, Point pos)
+shared_ptr<VerticalLayout> VerticalLayout::create(Layout &layout, const Point &pos)
 {
-    shared_ptr<VerticalLayout> widget = c.createWidget<VerticalLayout>(pos);
+    shared_ptr<VerticalLayout> widget(WidgetFactoryT<VerticalLayout>::newWidget(pos));
+    layout.addWidget(widget);
     return widget;
 }
 

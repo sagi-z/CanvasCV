@@ -1,6 +1,6 @@
 #include "button.h"
-#include "canvas.h"
 #include "widgetfactory.h"
+#include "layout.h"
 
 using namespace cv;
 using namespace std;
@@ -31,18 +31,19 @@ const char *Button::getType() const
     return type;
 }
 
-shared_ptr<Button> Button::newButton(Canvas &c, Point pos, const string &buttonText, const string &statusMsg, int maxWidthVal)
+shared_ptr<Button> Button::create(Layout &layout, const Point &pos, const string &buttonText, const string &statusMsg, int maxWidthVal)
 {
-    shared_ptr<Button> widget = c.createWidget<Button>(pos);
+    shared_ptr<Button> widget(WidgetFactoryT<Button>::newWidget(pos));
     widget->setMsg(buttonText);
     widget->setMaxWidth(maxWidthVal);
     widget->setStatusMsg(statusMsg);
+    layout.addWidget(widget);
     return widget;
 }
 
-std::shared_ptr<Button> Button::newButton(Canvas &c, const string &buttonText, const string &statusMsg, int maxWidthVal)
+std::shared_ptr<Button> Button::create(Layout &layout, const string &buttonText, const string &statusMsg, int maxWidthVal)
 {
-   return newButton(c, Point(0, 0), buttonText, statusMsg, maxWidthVal);
+   return create(layout, Point(0, 0), buttonText, statusMsg, maxWidthVal);
 }
 
 void Button::mousePressed()

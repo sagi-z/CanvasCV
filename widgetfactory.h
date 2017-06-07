@@ -32,7 +32,7 @@ class WidgetFactoryT : public WidgetFactory
 {
 public:
     static bool addType(std::string name);
-    static T *newWidget(const cv::Point &pos);
+    static T *newWidget(const cv::Point &pos = cv::Point(0,0));
 };
 
 template <class T>

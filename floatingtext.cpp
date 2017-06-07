@@ -1,5 +1,6 @@
 #include "floatingtext.h"
-#include "canvas.h"
+#include "widgetfactory.h"
+#include "layout.h"
 
 using namespace cv;
 using namespace std;
@@ -38,16 +39,18 @@ FloatingText::FloatingText(const string msgVal, Point locationVal, int maxWidthV
     thickness = thicknessVal;
 }
 
-shared_ptr<FloatingText> FloatingText::newFloatingText(Canvas &c, Point pos,
-                                                       const string &text,
-                                                       Widget::Anchor flowAnchor,
-                                                       Widget::Anchor layoutAnchor)
+shared_ptr<FloatingText> FloatingText::create(Layout &layout,
+                                              Point pos,
+                                              const string &text,
+                                              Widget::Anchor flowAnchor,
+                                              Widget::Anchor layoutAnchor)
 {
 
-    shared_ptr<FloatingText> widget = c.createWidget<FloatingText>(pos);
+    shared_ptr<FloatingText> widget(WidgetFactoryT<FloatingText>::newWidget(pos));
     widget->setMsg(text);
     widget->setFlowAnchor(flowAnchor);
     widget->setLayoutAnchor(layoutAnchor);
+    layout.addWidget(widget);
     return widget;
 }
 

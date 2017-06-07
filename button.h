@@ -26,16 +26,16 @@ public:
 
     virtual const char *getType() const;
 
-    static std::shared_ptr<Button> newButton(Canvas &c,
-                             cv::Point pos,
-                             const std::string &buttonText,
-                             const std::string &statusMsg="",
-                             int maxWidthVal = 0);
+    static std::shared_ptr<Button> create(Layout &layout,
+                                          const cv::Point &pos,
+                                          const std::string &buttonText,
+                                          const std::string &statusMsg="",
+                                          int maxWidthVal = 0);
 
-    static std::shared_ptr<Button> newButton(Canvas &c,
-                             const std::string &buttonText,
-                             const std::string &statusMsg="",
-                             int maxWidthVal = 0);
+    static std::shared_ptr<Button> create(Layout &layout,
+                                          const std::string &buttonText,
+                                          const std::string &statusMsg="",
+                                          int maxWidthVal = 0);
 
     static const char *type;
 

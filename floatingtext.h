@@ -9,8 +9,6 @@
 namespace canvascv
 {
 
-class Canvas;
-
 class FloatingText : public Widget
 {
 public:
@@ -27,11 +25,10 @@ public:
                  double alphaVal = 0.5,
                  int fontFaceVal = cv::FONT_HERSHEY_COMPLEX_SMALL);
 
-    static std::shared_ptr<FloatingText> newFloatingText(Canvas &c,
-                                                         cv::Point pos,
-                                                         const std::string &text,
-                                                         Anchor flowAnchor = TOP_LEFT,
-                                                         Anchor layoutAnchor = TOP_LEFT);
+    static std::shared_ptr<FloatingText> create(Layout &layout, cv::Point pos,
+                                                const std::string &text,
+                                                Anchor flowAnchor = TOP_LEFT,
+                                                Anchor layoutAnchor = TOP_LEFT);
 
     virtual const char *getType() const;
 
