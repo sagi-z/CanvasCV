@@ -218,17 +218,6 @@ private:
     void write(cv::FileStorage& fs) const;
     void read(const cv::FileNode& node);
 
-    class ImmediateUpdateGrd
-    {
-    public:
-        ImmediateUpdateGrd(Widget &w) :_w(w), _delayedUpdate(_w.delayedUpdate)
-        {_w.delayedUpdate = false;}
-        ~ImmediateUpdateGrd() {_w.delayedUpdate = _delayedUpdate;}
-    private:
-        Widget &_w;
-        bool _delayedUpdate;
-    };
-
     State state;
     bool isDirty;
     bool delayedUpdate;

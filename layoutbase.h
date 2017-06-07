@@ -11,11 +11,12 @@ class LayoutBase : public Layout
 public:
     LayoutBase();
 
-    virtual void addDirtyWidget(Widget *widget);
+    virtual bool addDirtyWidget(Widget *widget);
     virtual void rmvDirtyWidget(Widget *widget);
 
 protected:
     virtual void upodateDirtyWidgets();
+    virtual bool isDuringUpdate() const;
 
 private:
     virtual void setDirtyLayout() = 0;

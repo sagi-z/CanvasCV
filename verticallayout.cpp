@@ -146,7 +146,6 @@ void VerticalLayout::recalc()
     // Try to avoid opencv aborts
     for (auto &widget : vertWidgets)
     {
-        Widget::ImmediateUpdateGrd grd(*widget);
         Anchor widgetLayoutAnchor = widget->getLayoutAnchor();
         if (widgetLayoutAnchor & RIGHT)
         {
@@ -179,6 +178,11 @@ void VerticalLayout::recalc()
     }
 
     CompoundWidget::recalc();
+}
+
+bool VerticalLayout::isDuringUpdate() const
+{
+   return delayedUpdate == false;
 }
 
 const Rect VerticalLayout::getBoundaries() const

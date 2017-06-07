@@ -39,6 +39,7 @@ public:
     void setStretchY(bool value);
 
 protected:
+    virtual bool isDuringUpdate() const;
 
     virtual void writeInternals(FileStorage &fs) const;
     virtual void readInternals(const FileNode &node);

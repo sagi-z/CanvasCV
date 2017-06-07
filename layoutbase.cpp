@@ -9,18 +9,13 @@ LayoutBase::LayoutBase()
 {
 }
 
-void LayoutBase::addDirtyWidget(Widget *widget)
+bool LayoutBase::addDirtyWidget(Widget *widget)
 {
-    if (! duringDirtyHandling)
-    {
-        dirtyWidgets.push_back(widget);
-        setDirtyLayout();
-    }
-    else
-    {
-        // apply change immediatly
-        widget->update();
-    }
+    if (isDuringUpdate()) return false;
+
+    dirtyWidgets.push_back(widget);
+    setDirtyLayout();
+    return true;
 }
 
 void LayoutBase::rmvDirtyWidget(Widget *widget)
@@ -40,6 +35,11 @@ void LayoutBase::upodateDirtyWidgets()
         dirtyWidgets.pop_front();
     }
     duringDirtyHandling = false;
+}
+
+bool LayoutBase::isDuringUpdate() const
+{
+   return duringDirtyHandling;
 }
 
 }

@@ -13,7 +13,7 @@ class Layout
 public:
     virtual ~Layout();
 
-    virtual void addDirtyWidget(Widget *widget) = 0;
+    virtual bool addDirtyWidget(Widget *widget) = 0;
     virtual void rmvDirtyWidget(Widget *widget) = 0;
 
     virtual const cv::Rect getBoundaries() const = 0;

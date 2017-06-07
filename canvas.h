@@ -171,6 +171,7 @@ public:
     virtual bool rmvWidget(const std::shared_ptr<Widget> &widget);
 
     virtual bool rmvWidget(Widget *widget);
+
 private:
 
     virtual void setDirtyLayout();
