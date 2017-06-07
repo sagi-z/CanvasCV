@@ -8,6 +8,7 @@
 #include "ellipse.h"
 #include "button.h"
 #include "verticallayout.h"
+#include "horizontallayout.h"
 
 #include <iostream>
 #include <iterator>

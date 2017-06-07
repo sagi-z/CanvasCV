@@ -174,7 +174,10 @@ private:
     friend class Canvas;
     friend class CompoundWidget;
     friend class LayoutBase;
+
+    // All the layout implementations are friends
     friend class VerticalLayout;
+    friend class HorizontalLayout;
 
     /**
      * @brief mousePressed

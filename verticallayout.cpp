@@ -144,7 +144,6 @@ void VerticalLayout::recalc()
         maxHeight = max(maxHeight, minRect.height);
     }
     Point pos = location;
-    // Try to avoid opencv aborts
     for (auto &widget : vertWidgets)
     {
         Anchor widgetLayoutAnchor = widget->getLayoutAnchor();
@@ -169,13 +168,12 @@ void VerticalLayout::recalc()
         if (flowAnchor & BOTTOM)
         {
             pos.y -= (widget->getRect().height + spacing);
+            if (pos.y < 0) pos.y = 0; // try to avoid opencv aborts
         }
         else // default is TOP
         {
             pos.y += (widget->getRect().height + spacing);
         }
-        // Try to avoid opencv aborts
-        if (pos.y < 0) pos.y = 0;
     }
 
     CompoundWidget::recalc();
