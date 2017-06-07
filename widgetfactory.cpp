@@ -9,7 +9,9 @@ Widget *WidgetFactory::newWidget(std::string type, const cv::Point &pos)
 {
     AllocatorsMap::const_iterator i = allocators->find(type);
     assert (i != allocators->end());
-    return i->second(pos);
+    Widget *widget = i->second(pos);
+    ThemeRepository::applyCurrentTheme(widget);
+    return widget;
 }
 
 void WidgetFactory::addWidget(std::string name, WidgetFactory::Allocator a)

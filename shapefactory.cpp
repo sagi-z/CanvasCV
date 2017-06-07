@@ -9,7 +9,9 @@ Shape *ShapeFactory::newShape(std::string type, const cv::Point &pos)
 {
     AllocatorsMap::const_iterator i = allocators->find(type);
     assert (i != allocators->end());
-    return i->second(pos);
+    Shape *shape = i->second(pos);
+    ThemeRepository::applyCurrentTheme(shape);
+    return shape;
 }
 
 void ShapeFactory::addShape(std::string name, ShapeFactory::Allocator a)

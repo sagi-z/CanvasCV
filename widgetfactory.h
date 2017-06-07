@@ -4,6 +4,7 @@
 #include <opencv2/core.hpp>
 #include <map>
 #include <functional>
+#include "themerepository.h"
 
 namespace canvascv
 {
@@ -51,6 +52,7 @@ template <class T>
 T *WidgetFactoryT<T>::newWidget(const cv::Point &pos)
 {
    T *shape = new T(pos);
+   ThemeRepository::applyCurrentTheme(shape);
    return shape;
 }
 
