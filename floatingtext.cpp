@@ -113,9 +113,7 @@ void FloatingText::draw(Mat &dst)
             prepareMsgParts();
 
         int yEnd = rect.tl().y + rect.height;
-        Mat roi = dst(rect);
-        cv::addWeighted(rectColor, alpha, roi, 1.0 - alpha , 0.0, roi);
-        cv::rectangle(dst, rect, fillColor);
+        drawBG(dst, rect, rectColor);
         int y = yStart;
         int padding = (rect.width - minimalRect.width) / 2.;
         for (auto &str : rows)

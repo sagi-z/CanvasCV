@@ -119,6 +119,8 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
     msgs->setVisible(false);
 
     auto buttons = VerticalLayout::create(c, (*head)());
+    buttons->setFillColor(Colors::P1_BLUE);
+    buttons->setDrawFrame(true);
     buttons->setSpacing(10);
 
     FloatingText::create(*msgs,

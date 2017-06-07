@@ -168,7 +168,7 @@ void HorizontalLayout::recalc()
         }
     }
 
-    CompoundWidget::recalc();
+    LayoutBaseWidget::recalc();
 }
 
 }

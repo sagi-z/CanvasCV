@@ -6,6 +6,15 @@ using namespace std;
 namespace canvascv
 {
 
+void LayoutBaseWidget::draw(Mat &dst)
+{
+    if (drawFrame)
+    {
+        drawBG(dst, rect, colorRect);
+    }
+    CompoundWidget::draw(dst);
+}
+
 const Rect LayoutBaseWidget::getBoundaries() const
 {
     Rect boundaries = rect;
@@ -19,18 +28,42 @@ const Rect LayoutBaseWidget::getBoundaries() const
 }
 
 LayoutBaseWidget::LayoutBaseWidget(const Point &pos)
-    : CompoundWidget(pos)
+    : CompoundWidget(pos),
+      drawFrame(false)
 {
 }
 
 bool LayoutBaseWidget::isDuringUpdate() const
 {
-   return delayedUpdate == false;
+    return delayedUpdate == false;
+}
+
+void LayoutBaseWidget::recalc()
+{
+    CompoundWidget::recalc();
+   if (drawFrame)
+   {
+       colorRect = Mat(rect.size(), CV_8UC3, fillColor);
+   }
 }
 
 void LayoutBaseWidget::setDirtyLayout()
 {
     setDirty();
+}
+
+bool LayoutBaseWidget::getDrawFrame() const
+{
+    return drawFrame;
+}
+
+void LayoutBaseWidget::setDrawFrame(bool value)
+{
+    if (drawFrame != value)
+    {
+        drawFrame = value;
+        setDirty();
+    }
 }
 
 }

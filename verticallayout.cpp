@@ -168,7 +168,7 @@ void VerticalLayout::recalc()
         }
     }
 
-    CompoundWidget::recalc();
+    LayoutBaseWidget::recalc();
 }
 
 }

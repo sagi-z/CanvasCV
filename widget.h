@@ -157,6 +157,9 @@ public:
 
 protected:
 
+    /// handles copy of colorRect to roi of size rect on dst with alpha
+    void drawBG(cv::Mat &dst, const cv::Rect &rect, const cv::Mat &colorRect);
+
     /// update self so next call to 'draw' will display correctly
     virtual void recalc() = 0;
 

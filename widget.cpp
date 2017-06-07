@@ -273,6 +273,13 @@ void Widget::setStretchY(bool value)
     }
 }
 
+void Widget::drawBG(Mat &dst, const Rect &rect, const Mat &colorRect)
+{
+    Mat roi = dst(rect);
+    cv::addWeighted(colorRect, alpha, roi, 1.0 - alpha , 0.0, roi);
+    cv::rectangle(dst, rect, fillColor);
+}
+
 bool Widget::getStretchX() const
 {
     return stretchX;
