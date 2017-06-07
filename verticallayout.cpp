@@ -22,9 +22,7 @@ void VerticalLayout::setSpacing(int value)
 
 VerticalLayout::VerticalLayout(const Point &pos)
     : CompoundWidget(pos),
-      spacing(5),
-      stretchX(false),
-      stretchY(false)
+      spacing(5)
 {
 }
 
@@ -48,34 +46,6 @@ void VerticalLayout::writeInternals(FileStorage &fs) const
 // TODO
 void VerticalLayout::readInternals(const FileNode &node)
 {
-}
-
-bool VerticalLayout::getStretchY() const
-{
-    return stretchY;
-}
-
-void VerticalLayout::setStretchY(bool value)
-{
-    if (stretchY != value)
-    {
-        stretchY = value;
-        setDirty();
-    }
-}
-
-bool VerticalLayout::getStretchX() const
-{
-    return stretchX;
-}
-
-void VerticalLayout::setStretchX(bool value)
-{
-    if (stretchX != value)
-    {
-        stretchX = value;
-        setDirty();
-    }
 }
 
 void VerticalLayout::addWidget(const shared_ptr<Widget> &widget)
@@ -161,8 +131,8 @@ void VerticalLayout::recalc()
             pos.x = location.x;
         }
         widget->setLocation(pos);
-        if (stretchX) widget->stretchWidth(maxWidth);
-        if (stretchY) widget->stretchHeight(maxHeight);
+        if (widget->getStretchX()) widget->stretchWidth(maxWidth);
+        if (widget->getStretchY()) widget->stretchHeight(maxHeight);
 
         // Next row is either below us or above us
         if (flowAnchor & BOTTOM)

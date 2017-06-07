@@ -31,11 +31,6 @@ public:
     Widget *at(int index);
 
     static const char *type;
-    bool getStretchX() const;
-    void setStretchX(bool value);
-
-    bool getStretchY() const;
-    void setStretchY(bool value);
 
 protected:
     virtual bool isDuringUpdate() const;
@@ -48,8 +43,6 @@ private:
     virtual void setDirtyLayout();
 
     int spacing;
-    bool stretchX;
-    bool stretchY;
     std::vector<std::shared_ptr<Widget>> horzWidgets;
 };
 

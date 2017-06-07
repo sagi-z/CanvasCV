@@ -22,9 +22,7 @@ void HorizontalLayout::setSpacing(int value)
 
 HorizontalLayout::HorizontalLayout(const Point &pos)
     : CompoundWidget(pos),
-      spacing(5),
-      stretchX(false),
-      stretchY(false)
+      spacing(5)
 {
 }
 
@@ -48,34 +46,6 @@ void HorizontalLayout::writeInternals(FileStorage &fs) const
 // TODO
 void HorizontalLayout::readInternals(const FileNode &node)
 {
-}
-
-bool HorizontalLayout::getStretchY() const
-{
-    return stretchY;
-}
-
-void HorizontalLayout::setStretchY(bool value)
-{
-    if (stretchY != value)
-    {
-        stretchY = value;
-        setDirty();
-    }
-}
-
-bool HorizontalLayout::getStretchX() const
-{
-    return stretchX;
-}
-
-void HorizontalLayout::setStretchX(bool value)
-{
-    if (stretchX != value)
-    {
-        stretchX = value;
-        setDirty();
-    }
 }
 
 void HorizontalLayout::addWidget(const shared_ptr<Widget> &widget)
@@ -151,28 +121,50 @@ void HorizontalLayout::recalc()
         {
             // Align to the bottom - location.y is bottom-most position
             pos.y = location.y + maxHeight - widget->getRect().height;
+            if (flowAnchor & BOTTOM)
+            {
+                pos.y = location.y;
+            }
         }
         else if (widgetLayoutAnchor & CENTER)
         {
             pos.y = location.y + maxHeight / 2. - widget->getRect().height / 2.;
+            if (flowAnchor & BOTTOM)
+            {
+                pos.y = location.y - maxHeight / 2. + widget->getRect().height / 2.;
+            }
         }
         else
-        {   // default is TOP, pos.y unchanged
+        {   // default is TOP
             pos.y = location.y;
+            if (flowAnchor & BOTTOM)
+            {
+                pos.y = location.y - maxHeight + widget->getRect().height;
+            }
         }
-        widget->setLocation(pos);
-        if (stretchX) widget->stretchWidth(maxWidth);
-        if (stretchY) widget->stretchHeight(maxHeight);
 
-        // Next col is either to the left or right
         if (flowAnchor & RIGHT)
-        {
-            pos.x -= (widget->getRect().width + spacing);
+        {   // Next col is to the left of pos, so start at an offset there
+            pos.x -= widget->getRect().width;
             if (pos.x < 0) pos.x = 0; // try to avoid opencv aborts
         }
         else // default is LEFT
         {
-            pos.x += (widget->getRect().width + spacing);
+            // nothing to do
+        }
+        widget->setLocation(pos);
+        if (widget->getStretchX()) widget->stretchWidth(maxWidth);
+        if (widget->getStretchY()) widget->stretchHeight(maxHeight);
+
+        // prepare for the next iteration
+        if (flowAnchor & RIGHT)
+        {
+            pos.x -= spacing;
+            if (pos.x < 0) pos.x = 0; // try to avoid opencv aborts
+        }
+        else // default is LEFT
+        {
+            pos.x += widget->getRect().width + spacing;
         }
     }
 

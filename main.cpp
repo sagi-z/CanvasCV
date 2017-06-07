@@ -115,23 +115,33 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
 
     // create some widgets
     auto msgs = HorizontalLayout::create(c, (*head)());
-    FloatingText::create(*msgs,
-                         "These 3 objects are locked.\n"
-                         "They are an Ellipse, ShapesConnector and a TextBox.\n"
-                         "You can still select them and delete them.",
-                         Widget::BOTTOM_LEFT);
+    msgs->setFlowAnchor(Widget::BOTTOM_RIGHT);
     msgs->setVisible(false);
 
     auto buttons = VerticalLayout::create(c, (*head)());
-    buttons->setFlowAnchor(Widget::BOTTOM);
     buttons->setSpacing(10);
+
+    FloatingText::create(*msgs,
+                         "aligned to top",
+                         Widget::BOTTOM_LEFT)->setLayoutAnchor(Widget::TOP);
+    FloatingText::create(*msgs,
+                         "aligned to center",
+                         Widget::BOTTOM_LEFT)->setLayoutAnchor(Widget::CENTER);
+    FloatingText::create(*msgs,
+                         "These 3 objects are locked.\n"
+                         "They are an Ellipse,\n"
+                         " ShapesConnector and a TextBox.\n"
+                         "You can still select them and\n"
+                         "delete them.",
+                         Widget::BOTTOM_LEFT);
+
 
     Button::create(*buttons, "right\naligned",
                    "Hover with mouse (1).\n"
                    "Press with mouse (1).");
     Button::create(*buttons, "centered",
-                   "Hover with mouse (1).\n"
-                   "Press with mouse (1).");
+                   "Hover with mouse (2).\n"
+                   "Press with mouse (2).");
     Button::create(*buttons, "this is a long text",
                    "Hover with mouse (3).\n"
                    "Press with mouse (3).");

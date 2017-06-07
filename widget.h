@@ -116,6 +116,12 @@ public:
 
     virtual void translate(const cv::Point &translation);
 
+    bool getStretchX() const;
+    void setStretchX(bool value);
+
+    bool getStretchY() const;
+    void setStretchY(bool value);
+
 protected:
 
     /// update self so next call to 'draw' will display correctly
@@ -168,6 +174,8 @@ protected:
     int forcedHeight;
     Anchor layoutAnchor;
     Anchor flowAnchor;
+    bool stretchX;
+    bool stretchY;
     std::string statusMsg;
     Layout *layout;
 

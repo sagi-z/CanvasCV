@@ -36,6 +36,8 @@ Widget::Widget(const Point &pos)
       forcedHeight(0),
       layoutAnchor(TOP_LEFT),
       flowAnchor(TOP_LEFT),
+      stretchX(false),
+      stretchY(false),
       layout(nullptr),
       state(LEAVE),
       isDirty(false),
@@ -54,6 +56,8 @@ Widget::Widget(const Widget &other)
       forcedWidth(other.forcedWidth),
       forcedHeight(other.forcedHeight),
       flowAnchor(other.layoutAnchor),
+      stretchX(other.stretchX),
+      stretchY(other.stretchY),
       layout(other.layout),
       state(LEAVE),
       isDirty(other.isDirty),
@@ -243,6 +247,34 @@ void Widget::stretchHeight(int height)
    }
 }
 
+bool Widget::getStretchY() const
+{
+    return stretchY;
+}
+
+void Widget::setStretchY(bool value)
+{
+    if (stretchY != value)
+    {
+        stretchY = value;
+        setDirty();
+    }
+}
+
+bool Widget::getStretchX() const
+{
+    return stretchX;
+}
+
+void Widget::setStretchX(bool value)
+{
+    if (stretchX != value)
+    {
+        stretchX = value;
+        setDirty();
+    }
+}
+
 void Widget::setFlowAnchor(const Anchor &value)
 {
     if (flowAnchor != value)
@@ -331,6 +363,8 @@ void Widget::readInternals(const cv::FileNode &node)
     node["lineType"] >> lineType;
     node["layoutAnchor"] >> (int) layoutAnchor;
     node["flowAnchor"] >> (int) flowAnchor;
+    node["stretchX"] >> stretchX;
+    node["stretchY"] >> stretchY;
     node["statusMsg"] >> statusMsg;
     state = LEAVE;
     if (id == 0)
@@ -360,6 +394,8 @@ void Widget::writeInternals(cv::FileStorage &fs) const
           "lineType" << lineType <<
           "layoutAnchor" << layoutAnchor <<
           "flowAnchor" << flowAnchor <<
+          "stretchX" << stretchX <<
+          "stretchY" << stretchY <<
           "statusMsg" << statusMsg;
 }
 
