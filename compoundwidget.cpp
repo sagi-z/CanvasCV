@@ -68,6 +68,15 @@ void CompoundWidget::setAlpha(double value)
     }
 }
 
+void CompoundWidget::setFillBG(bool value)
+{
+    Widget::setFillBG(value);
+    for (auto &widget : widgets)
+    {
+        widget->setFillBG(value);
+    }
+}
+
 void CompoundWidget::setLocked(bool value)
 {
     Widget::setLocked(value);

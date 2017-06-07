@@ -33,6 +33,7 @@ Widget::Widget(const Point &pos)
       thickness(1),
       lineType(cv::LINE_AA),
       alpha(0.5),
+      fillBG(true),
       forcedWidth(0),
       forcedHeight(0),
       layoutAnchor(TOP_LEFT),
@@ -55,6 +56,7 @@ Widget::Widget(const Widget &other)
       thickness(other.thickness),
       lineType(other.lineType),
       alpha(other.alpha),
+      fillBG(other.fillBG),
       forcedWidth(other.forcedWidth),
       forcedHeight(other.forcedHeight),
       flowAnchor(other.layoutAnchor),
@@ -259,6 +261,20 @@ void Widget::stretchHeight(int height)
    }
 }
 
+bool Widget::getFillBG() const
+{
+    return fillBG;
+}
+
+void Widget::setFillBG(bool value)
+{
+    if (fillBG != value)
+    {
+        fillBG = value;
+        setDirty();
+    }
+}
+
 bool Widget::getStretchY() const
 {
     return stretchY;
@@ -275,8 +291,11 @@ void Widget::setStretchY(bool value)
 
 void Widget::drawBG(Mat &dst, const Rect &rect, const Mat &colorRect)
 {
-    Mat roi = dst(rect);
-    cv::addWeighted(colorRect, alpha, roi, 1.0 - alpha , 0.0, roi);
+    if (fillBG)
+    {
+        Mat roi = dst(rect);
+        cv::addWeighted(colorRect, alpha, roi, 1.0 - alpha , 0.0, roi);
+    }
     cv::rectangle(dst, rect, fillColor);
 }
 
@@ -381,6 +400,7 @@ void Widget::readInternals(const cv::FileNode &node)
     node["thickness"] >> thickness;
     node["lineType"] >> lineType;
     node["alpha"] >> alpha;
+    node["fillBG"] >> fillBG;
     node["layoutAnchor"] >> (int) layoutAnchor;
     node["flowAnchor"] >> (int) flowAnchor;
     node["stretchX"] >> stretchX;
@@ -413,6 +433,7 @@ void Widget::writeInternals(cv::FileStorage &fs) const
           "thickness" << thickness <<
           "lineType" << lineType <<
           "alpha" << alpha <<
+          "fillBG" << fillBG <<
           "layoutAnchor" << layoutAnchor <<
           "flowAnchor" << flowAnchor <<
           "stretchX" << stretchX <<

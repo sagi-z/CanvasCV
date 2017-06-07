@@ -115,11 +115,13 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
 
     // create some widgets
     auto msgs = HorizontalLayout::create(c, (*tail)());
+    msgs->setFillColor(Colors::BLUE);
+    msgs->setDrawFrame(true);
     msgs->setFlowAnchor(Widget::BOTTOM_RIGHT);
     msgs->setVisible(false);
 
     auto buttons = VerticalLayout::create(c, (*head)());
-    buttons->setFillColor(Colors::P1_BLUE);
+    buttons->setFillColor(Colors::BLUE);
     buttons->setDrawFrame(true);
     buttons->setSpacing(10);
 

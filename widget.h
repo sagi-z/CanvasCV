@@ -155,6 +155,9 @@ public:
     bool getStretchY() const;
     void setStretchY(bool value);
 
+    bool getFillBG() const;
+    virtual void setFillBG(bool value);
+
 protected:
 
     /// handles copy of colorRect to roi of size rect on dst with alpha
@@ -207,6 +210,7 @@ protected:
     int thickness;
     int lineType;
     double alpha;
+    bool fillBG;
     int forcedWidth;
     int forcedHeight;
     Anchor layoutAnchor;

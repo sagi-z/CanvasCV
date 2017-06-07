@@ -18,11 +18,16 @@ public:
     bool getDrawFrame() const;
     void setDrawFrame(bool value);
 
+    int getPadding() const;
+    void setPadding(int value);
+
 protected:
     LayoutBaseWidget(const cv::Point& pos);
 
     virtual bool isDuringUpdate() const;
     virtual void recalc();
+
+    int padding;
 
 private:
     virtual void setDirtyLayout();

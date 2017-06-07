@@ -29,8 +29,10 @@ const Rect LayoutBaseWidget::getBoundaries() const
 
 LayoutBaseWidget::LayoutBaseWidget(const Point &pos)
     : CompoundWidget(pos),
-      drawFrame(false)
+      drawFrame(false),
+      padding(2)
 {
+    fillBG = false;
 }
 
 bool LayoutBaseWidget::isDuringUpdate() const
@@ -43,6 +45,13 @@ void LayoutBaseWidget::recalc()
     CompoundWidget::recalc();
    if (drawFrame)
    {
+       if (padding)
+       {
+           rect.x -= padding;
+           rect.y -= padding;
+           rect.width += padding*2;
+           rect.height += padding*2;
+       }
        colorRect = Mat(rect.size(), CV_8UC3, fillColor);
    }
 }
@@ -50,6 +59,20 @@ void LayoutBaseWidget::recalc()
 void LayoutBaseWidget::setDirtyLayout()
 {
     setDirty();
+}
+
+int LayoutBaseWidget::getPadding() const
+{
+    return padding;
+}
+
+void LayoutBaseWidget::setPadding(int value)
+{
+    if (padding != value)
+    {
+        padding = value;
+        setDirty();
+    }
 }
 
 bool LayoutBaseWidget::getDrawFrame() const

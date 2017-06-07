@@ -113,33 +113,37 @@ void HorizontalLayout::recalc()
         maxWidth = max(maxWidth, minRect.width);
         maxHeight = max(maxHeight, minRect.height);
     }
+
     Point pos = location;
+    if (flowAnchor & RIGHT) pos.x -= padding;
+    else pos.x += padding;
+
     for (auto &widget : horzWidgets)
     {
         Anchor widgetLayoutAnchor = widget->getLayoutAnchor();
         if (widgetLayoutAnchor & BOTTOM)
         {
             // Align to the bottom - location.y is bottom-most position
-            pos.y = location.y + maxHeight - widget->getRect().height;
+            pos.y = location.y + padding + maxHeight - widget->getRect().height;
             if (flowAnchor & BOTTOM)
             {
-                pos.y = location.y;
+                pos.y = location.y - padding;
             }
         }
         else if (widgetLayoutAnchor & CENTER)
         {
-            pos.y = location.y + maxHeight / 2. - widget->getRect().height / 2.;
+            pos.y = location.y + padding + maxHeight / 2. - widget->getRect().height / 2.;
             if (flowAnchor & BOTTOM)
             {
-                pos.y = location.y - maxHeight / 2. + widget->getRect().height / 2.;
+                pos.y = location.y - padding - maxHeight / 2. + widget->getRect().height / 2.;
             }
         }
         else
         {   // default is TOP
-            pos.y = location.y;
+            pos.y = location.y + padding;
             if (flowAnchor & BOTTOM)
             {
-                pos.y = location.y - maxHeight + widget->getRect().height;
+                pos.y = location.y - padding - maxHeight + widget->getRect().height;
             }
         }
 
