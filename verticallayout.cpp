@@ -121,28 +121,50 @@ void VerticalLayout::recalc()
         {
             // Align to the right - location.x is rightmost position
             pos.x = location.x + maxWidth - widget->getRect().width;
+            if (flowAnchor & RIGHT)
+            {
+                pos.x = location.x;
+            }
         }
         else if (widgetLayoutAnchor & CENTER)
         {
             pos.x = location.x + maxWidth / 2. - widget->getRect().width / 2.;
+            if (flowAnchor & RIGHT)
+            {
+                pos.x = location.x - maxWidth / 2. + widget->getRect().width / 2.;
+            }
         }
         else
-        {   // default is LEFT, pos.x unchanged
+        {   // default is LEFT
             pos.x = location.x;
+            if (flowAnchor & RIGHT)
+            {
+                pos.x = location.x - maxWidth + widget->getRect().width;
+            }
+        }
+
+        if (flowAnchor & BOTTOM)
+        {
+            pos.y -= widget->getRect().height;
+            if (pos.y < 0) pos.y = 0; // try to avoid opencv aborts
+        }
+        else // default is TOP
+        {
+            // do nothing
         }
         widget->setLocation(pos);
         if (widget->getStretchX()) widget->stretchWidth(maxWidth);
         if (widget->getStretchY()) widget->stretchHeight(maxHeight);
 
-        // Next row is either below us or above us
+        // prepare for the next iteration
         if (flowAnchor & BOTTOM)
         {
-            pos.y -= (widget->getRect().height + spacing);
+            pos.y -=  spacing;
             if (pos.y < 0) pos.y = 0; // try to avoid opencv aborts
         }
         else // default is TOP
         {
-            pos.y += (widget->getRect().height + spacing);
+            pos.y += widget->getRect().height + spacing;
         }
     }
 

@@ -30,6 +30,32 @@ public:
     };
 
     // Used both for internal widget flow and in Layout managers
+    // Widget flow:
+    // ===========
+    // * TOP (default) - means the widget 'location' is the
+    //  top-left cv::Point of the widget cv::Rect. The contets are
+    //  filled downwards.
+    // * BOTTOM - means the widget 'location' is the bottom-left
+    //  cv::Point of the widget cv::Rect. The contets are filled
+    //  upwards.
+    // * For widgets that are also layout managers, you can control
+    //  the direction in which they progress by also anchoring them to
+    //  the opposite side -
+    //   - vertical layout can progress either up or down, so you
+    //    can anchor it also to TOP (default) / BOTTOM.
+    //   - horizontal layout can progress either left or right, so you
+    //    can anchor it also to LEFT (default) / RIGHT.
+    //
+    // Layout alignment:
+    // ================
+    // * For a vertical layout - if the stretchX is false, you can
+    //  align (anchor) the widget horizontally to the LEFT (default) / CENTER / RIGHT.
+    //   The layout manager will handle vetical layout according to its own
+    //  widget flow - anchored to the TOP (default) or BOTTOM.
+    // * For a horizontal layout - if the stretchY is false, you can
+    //  align (anchor) the widget vertically to the TOP (default) / CENTER / BOTTOM.
+    //   The layout manager will handle horizontal layout according to its own
+    //  widget flow - anchored to the LEFT (default) or RIGHT.
     enum Anchor
     {
         TOP    = 0b00000001,

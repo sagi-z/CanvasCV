@@ -31,7 +31,11 @@ const char *Button::getType() const
     return type;
 }
 
-shared_ptr<Button> Button::create(Layout &layout, const Point &pos, const string &buttonText, const string &statusMsg, int maxWidthVal)
+shared_ptr<Button> Button::create(Layout &layout,
+                                  const Point &pos,
+                                  const string &buttonText,
+                                  const string &statusMsg,
+                                  int maxWidthVal)
 {
     shared_ptr<Button> widget(WidgetFactoryT<Button>::newWidget(pos));
     widget->setMsg(buttonText);

@@ -186,22 +186,17 @@ void FloatingText::prepareMsgParts()
         if (totalRows)
         {
             int yRectStart;
-            if (flowAnchor == TOP_LEFT)
-            {
-                yStart = location.y + fontHeight;
-                if (yStart < 0) yStart = 0;
-                yRectStart = location.y;
-            }
-            else if (flowAnchor == BOTTOM_LEFT)
+            if (flowAnchor & BOTTOM)
             {
                 yStart = location.y - fontHeight * totalRows;
                 if (yStart < 0) yStart = 0;
                 yRectStart = yStart - fontHeight;
             }
-            else
+            else // TOP
             {
-                cerr << "flow anchor type not supported" << endl;
-                abort();
+                yStart = location.y + fontHeight;
+                if (yStart < 0) yStart = 0;
+                yRectStart = location.y;
             }
             int rectHeight = min((int) floor(fontHeight * totalRows + fontHeight),
                                  boundaries.height - yRectStart - 1);

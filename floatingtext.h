@@ -27,13 +27,13 @@ public:
 
     static std::shared_ptr<FloatingText> create(Layout &layout, const cv::Point &pos,
                                                 const std::string &text,
-                                                Anchor flowAnchor = TOP_LEFT,
-                                                Anchor layoutAnchor = TOP_LEFT);
+                                                Anchor flowAnchor = TOP,
+                                                Anchor layoutAnchor = TOP);
 
     static std::shared_ptr<FloatingText> create(Layout &layout,
                                                 const std::string &text,
-                                                Anchor flowAnchor = TOP_LEFT,
-                                                Anchor layoutAnchor = TOP_LEFT);
+                                                Anchor flowAnchor = TOP,
+                                                Anchor layoutAnchor = TOP);
 
     virtual const char *getType() const;
 

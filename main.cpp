@@ -114,7 +114,7 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
     connector->setLocked(true);
 
     // create some widgets
-    auto msgs = HorizontalLayout::create(c, (*head)());
+    auto msgs = HorizontalLayout::create(c, (*tail)());
     msgs->setFlowAnchor(Widget::BOTTOM_RIGHT);
     msgs->setVisible(false);
 
@@ -123,17 +123,17 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
 
     FloatingText::create(*msgs,
                          "aligned to top",
-                         Widget::BOTTOM_LEFT)->setLayoutAnchor(Widget::TOP);
+                         Widget::BOTTOM)->setLayoutAnchor(Widget::TOP);
     FloatingText::create(*msgs,
                          "aligned to center",
-                         Widget::BOTTOM_LEFT)->setLayoutAnchor(Widget::CENTER);
+                         Widget::BOTTOM)->setLayoutAnchor(Widget::CENTER);
     FloatingText::create(*msgs,
                          "These 3 objects are locked.\n"
                          "They are an Ellipse,\n"
                          " ShapesConnector and a TextBox.\n"
                          "You can still select them and\n"
                          "delete them.",
-                         Widget::BOTTOM_LEFT);
+                         Widget::BOTTOM);
 
 
     Button::create(*buttons, "right\naligned",
