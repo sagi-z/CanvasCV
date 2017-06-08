@@ -4,7 +4,7 @@
 #include <opencv2/core.hpp>
 #include <map>
 #include <functional>
-#include "themerepository.h"
+#include "themes/themerepository.h"
 
 namespace canvascv
 {

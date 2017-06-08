@@ -2,13 +2,13 @@
 
 // We don't need these includes for default creation of objects with the mouse.
 // We only need them if we want to customize or create shapes on canvas form the code.
-#include "linecrossing.h"
-#include "textbox.h"
-#include "shapesconnector.h"
-#include "ellipse.h"
-#include "button.h"
-#include "verticallayout.h"
-#include "horizontallayout.h"
+#include "shapes/linecrossing.h"
+#include "shapes/textbox.h"
+#include "shapes/shapesconnector.h"
+#include "shapes/ellipse.h"
+#include "widgets/button.h"
+#include "widgets/verticallayout.h"
+#include "widgets/horizontallayout.h"
 
 #include <iostream>
 #include <iterator>

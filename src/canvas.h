@@ -1,12 +1,12 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
-#include "shape.h"
-#include "widget.h"
-#include "shapefactory.h"
-#include "widgetfactory.h"
-#include "floatingtext.h"
-#include "layoutbase.h"
+#include "shapes/shape.h"
+#include "widgets/widget.h"
+#include "shapes/shapefactory.h"
+#include "widgets/widgetfactory.h"
+#include "widgets/floatingtext.h"
+#include "widgets/layoutbase.h"
 
 #include <list>
 #include <memory>

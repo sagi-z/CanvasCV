@@ -5,7 +5,7 @@
 #include <map>
 #include <functional>
 
-#include "themerepository.h"
+#include "themes/themerepository.h"
 
 namespace canvascv
 {

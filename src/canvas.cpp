@@ -1,8 +1,8 @@
 #include "canvas.h"
 #include "colors.h"
-#include "shapefactory.h"
-#include "shape.h"
-#include "shapesconnector.h"
+#include "shapes/shapefactory.h"
+#include "shapes/shape.h"
+#include "shapes/shapesconnector.h"
 #include <algorithm>
 
 namespace canvascv

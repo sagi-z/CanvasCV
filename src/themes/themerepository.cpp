@@ -72,10 +72,10 @@ void ThemeRepository::applyCurrentTheme(Widget *widget)
 
 // add include files here if needed
 #include "colors.h"
-#include "shape.h"
-#include "widget.h"
-#include "handle.h"
-#include "button.h"
+#include "shapes/shape.h"
+#include "widgets/widget.h"
+#include "shapes/handle.h"
+#include "widgets/button.h"
 
 namespace canvascv
 {
