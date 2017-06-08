@@ -17,14 +17,7 @@ public:
     typedef std::function<void(const cv::Point &)> PosChangedCB;
     typedef std::list<PosChangedCB>::iterator CBID;
 
-    Handle(const cv::Point &pos)
-        : pt(pos),
-          allowSetPos(true)
-    {
-        thickness = 3;
-        outlineColor = Colors::RED;
-        fillColor = Colors::RED;
-    }
+    Handle(const cv::Point &pos);
 
     // force compiler to generate default cctor inspite of the ctor
     //  we defined above
@@ -32,51 +25,26 @@ public:
 
     ~Handle();
 
-    virtual void draw(cv::Mat &canvas);
-    virtual bool mousePressed(const cv::Point &pos, bool = false);
-    virtual bool mouseMoved(const cv::Point &pos);
-    virtual bool mouseReleased(const cv::Point &pos);
     virtual bool isAtPos(const cv::Point &pos)
     {
         return isPoint(pos);
     }
+
     virtual std::list<Handle *> getConnectionTargets();
-    virtual const char *getType() const {
-        return type;
-    }
-    virtual void lostFocus();
+
+    virtual const char *getType() const;
 
     const cv::Point &operator()() const {
         return pt;
     }
 
-    void setPos(const cv::Point &pos, bool notify = true)
-    {
-        if (allowSetPos)
-        {
-            pt = pos;
-            if (notify)
-            {
-                broadcastPosChanged(pos);
-            }
-        }
-    }
+    void setPos(const cv::Point &pos, bool notify = true);
 
-    int getRadius() const
-    {
-        return thickness;
-    }
+    int getRadius() const;
 
-    CBID addPosChangedCB(PosChangedCB cb)
-    {
-        posChangedCBs.push_back(cb);
-        return --posChangedCBs.end();
-    }
+    CBID addPosChangedCB(PosChangedCB cb);
 
-    void delPosChangedCB(const CBID &id)
-    {
-        posChangedCBs.erase(id);
-    }
+    void delPosChangedCB(const CBID &id);
 
     void connect(Handle &other);
     void disconnect(Handle &other);
@@ -86,6 +54,12 @@ public:
 protected:
     virtual void writeInternals(cv::FileStorage &fs) const;
     virtual void readInternals(const cv::FileNode &node);
+
+    virtual void draw(cv::Mat &canvas);
+    virtual bool mousePressed(const cv::Point &pos, bool = false);
+    virtual bool mouseMoved(const cv::Point &pos);
+    virtual bool mouseReleased(const cv::Point &pos);
+    virtual void lostFocus();
 
 private:
 

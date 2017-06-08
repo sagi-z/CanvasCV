@@ -14,10 +14,6 @@ namespace canvascv
 class CompoundShape : public Shape
 {
 public:
-    virtual void draw(cv::Mat &canvas);
-    virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);
-    virtual bool mouseMoved(const cv::Point &pos);
-    virtual bool mouseReleased(const cv::Point &pos);
 
     virtual void setOutlineColor(const cv::Scalar &value);
     virtual void setFillColor(const cv::Scalar &value);
@@ -28,14 +24,21 @@ public:
 
     virtual std::shared_ptr<Shape> getShape(int id);
 
-    virtual bool keyPressed(int &key);
-    virtual void lostFocus();
-
 protected:
     virtual ~CompoundShape() {} // force inheritance
 
-    virtual void reloadPointers(std::list<Shape*>::const_iterator &)
+    virtual void reloadPointers(const std::list<Shape*> &, std::list<Shape*>::const_iterator &)
     {}
+
+    virtual void draw(cv::Mat &canvas);
+    virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);
+    virtual bool mouseMoved(const cv::Point &pos);
+    virtual bool mouseReleased(const cv::Point &pos);
+
+    virtual bool keyPressed(int &key);
+    virtual void lostFocus();
+
+    void setActive(Shape* shape);
 
     template <class T>
     T* addShape(cv::Point pos);

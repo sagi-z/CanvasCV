@@ -3,20 +3,32 @@
 
 #include <opencv2/imgproc.hpp>
 
+using namespace std;
+using namespace cv;
+
 namespace canvascv
 {
 
 const char * Handle::type = "Handle";
 
-Handle::~Handle()
+Handle::Handle(const Point &pos)
+    : pt(pos),
+      allowSetPos(true)
 {
-   for (auto &handlePair : connectedHandles)
-   {
-      handlePair.first->disconnectFrom(*this);
-   }
+    thickness = 3;
+    outlineColor = Colors::RED;
+    fillColor = Colors::RED;
 }
 
-void Handle::draw(cv::Mat &canvas)
+Handle::~Handle()
+{
+    for (auto &handlePair : connectedHandles)
+    {
+        handlePair.first->disconnectFrom(*this);
+    }
+}
+
+void Handle::draw(Mat &canvas)
 {
     if (visible)
     {
@@ -25,7 +37,7 @@ void Handle::draw(cv::Mat &canvas)
     }
 }
 
-bool Handle::mousePressed(const cv::Point &pos, bool)
+bool Handle::mousePressed(const Point &pos, bool)
 {
     if (visible && ! locked)
     {
@@ -38,7 +50,7 @@ bool Handle::mousePressed(const cv::Point &pos, bool)
     return false;
 }
 
-bool Handle::mouseMoved(const cv::Point &pos)
+bool Handle::mouseMoved(const Point &pos)
 {
     if (editing)
     {
@@ -49,7 +61,7 @@ bool Handle::mouseMoved(const cv::Point &pos)
     return false;
 }
 
-bool Handle::mouseReleased(const cv::Point &pos)
+bool Handle::mouseReleased(const Point &pos)
 {
     if (editing)
     {
@@ -60,13 +72,13 @@ bool Handle::mouseReleased(const cv::Point &pos)
     return false;
 }
 
-void Handle::writeInternals(cv::FileStorage &fs) const
+void Handle::writeInternals(FileStorage &fs) const
 {
     Shape::writeInternals(fs);
     fs << "pt" << pt;
 }
 
-void Handle::readInternals(const cv::FileNode &node)
+void Handle::readInternals(const FileNode &node)
 {
     Shape::readInternals(node);
     node["pt"] >> pt;
@@ -76,7 +88,7 @@ void Handle::readInternals(const cv::FileNode &node)
 // validation done on public method of peer Handle.
 void Handle::connectedFrom(Handle &other)
 {
-    CBID id = addPosChangedCB([this, &other](const cv::Point &pos)
+    CBID id = addPosChangedCB([this, &other](const Point &pos)
     {
         allowSetPos = false;
         other.setPos(pos);
@@ -94,7 +106,7 @@ void Handle::disconnectFrom(Handle &other)
     connectedHandles.erase(iter);
 }
 
-void Handle::broadcastPosChanged(const cv::Point &pos)
+void Handle::broadcastPosChanged(const Point &pos)
 {
     for (auto &cb : posChangedCBs)
     {
@@ -113,7 +125,7 @@ void Handle::connect(Handle &other)
    {
        if (connectedHandles.find(&other) == connectedHandles.end())
        {
-           CBID id = addPosChangedCB([this, &other](const cv::Point &pos)
+           CBID id = addPosChangedCB([this, &other](const Point &pos)
            {
                allowSetPos = false;
                other.setPos(pos);
@@ -139,9 +151,41 @@ void Handle::disconnect(Handle &other)
    }
 }
 
-std::list<Handle *> Handle::getConnectionTargets()
+list<Handle *> Handle::getConnectionTargets()
 {
-    return std::list<Handle *>();
+    return list<Handle *>();
+}
+
+const char *Handle::getType() const {
+    return type;
+}
+
+void Handle::setPos(const Point &pos, bool notify)
+{
+    if (allowSetPos)
+    {
+        pt = pos;
+        if (notify)
+        {
+            broadcastPosChanged(pos);
+        }
+    }
+}
+
+int Handle::getRadius() const
+{
+    return thickness;
+}
+
+Handle::CBID Handle::addPosChangedCB(Handle::PosChangedCB cb)
+{
+    posChangedCBs.push_back(cb);
+    return --posChangedCBs.end();
+}
+
+void Handle::delPosChangedCB(const Handle::CBID &id)
+{
+    posChangedCBs.erase(id);
 }
 
 }

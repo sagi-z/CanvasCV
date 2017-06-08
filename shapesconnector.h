@@ -11,13 +11,8 @@ class ShapesConnector : public Line
 public:
     ShapesConnector(const cv::Point &pos);
 
-    virtual void draw(Mat &canvas);
-    virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);
-    virtual bool mouseReleased(const cv::Point &pos);
     virtual std::list<Handle *> getConnectionTargets();
-    virtual const char *getType() const {
-        return type;
-    }
+    virtual const char *getType() const;
 
     int getSpacing() const;
     void setSpacing(int value);
@@ -48,15 +43,19 @@ public:
     static const char * type;
 
 protected:
+    virtual void draw(Mat &canvas);
+    virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);
+    virtual bool mouseReleased(const cv::Point &pos);
+
     Handle *center;
 
     virtual void writeInternals(cv::FileStorage &fs) const;
     virtual void readInternals(const cv::FileNode &node);
 
 
-    virtual void reloadPointers(std::list<Shape*>::const_iterator &i)
+    virtual void reloadPointers(const std::list<Shape*> &lst, std::list<Shape*>::const_iterator &i)
     {
-        Line::reloadPointers(i);
+        Line::reloadPointers(lst, i);
         center = dynamic_cast<Handle*>(*i++);
         registerCBs();
     }

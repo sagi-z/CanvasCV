@@ -57,7 +57,7 @@ void Button::setAlpha(double val)
 
 void Button::mousePressed()
 {
-   alpha = 0.2;
+   alpha = 0.8;
 }
 
 void Button::mouseReleased()
@@ -67,7 +67,7 @@ void Button::mouseReleased()
 
 void Button::mouseEnter()
 {
-    alpha = 0.8;
+    alpha = 0.2;
 }
 
 void Button::mouseLeave()

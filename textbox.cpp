@@ -3,12 +3,15 @@
 
 #include <opencv2/imgproc.hpp>
 
+using namespace std;
+using namespace cv;
+
 namespace canvascv
 {
 
 const char * TextBox::type = "TextBox";
 
-TextBox::TextBox(const cv::Point &pos) :
+TextBox::TextBox(const Point &pos) :
     Shape(),
     text("text"),
     prevText(text),
@@ -22,13 +25,13 @@ TextBox::TextBox(const cv::Point &pos) :
 }
 
 
-void TextBox::draw(cv::Mat &canvas)
+void TextBox::draw(Mat &canvas)
 {
     if (visible)
     {
         if (editing)
         {
-            cv::Rect rectSelected(rect);
+            Rect rectSelected(rect);
             rectSelected.x -= 2;
             rectSelected.y -= 2;
             rectSelected.width += 4;
@@ -36,13 +39,13 @@ void TextBox::draw(cv::Mat &canvas)
             rectangle(canvas, rectSelected, outlineColor, thickness);
         }
         rectangle(canvas, rect, outlineColor, thickness);
-        putText(canvas, text, cv::Point(rect.tl().x,rect.tl().y+baseline*2), fontFace, fontScale,
+        putText(canvas, text, Point(rect.tl().x,rect.tl().y+baseline*2), fontFace, fontScale,
                 outlineColor, thickness, LINE_AA);
-        topLeft->draw(canvas);
+        drawHelper(canvas, topLeft.get());
     }
 }
 
-bool TextBox::mousePressed(const cv::Point &pos, bool onCreate)
+bool TextBox::mousePressed(const Point &pos, bool onCreate)
 {
     if (visible)
     {
@@ -57,7 +60,7 @@ bool TextBox::mousePressed(const cv::Point &pos, bool onCreate)
             return true;
         }
 
-        // pos not in cv::rect
+        // pos not in rect
         if (editing)
         {
             editing = false;
@@ -67,11 +70,11 @@ bool TextBox::mousePressed(const cv::Point &pos, bool onCreate)
     return false;
 }
 
-bool TextBox::mouseMoved(const cv::Point &pos)
+bool TextBox::mouseMoved(const Point &pos)
 {
     if (dragPos.x || dragPos.y)
     {
-        cv::Point diff = dragPos - pos;
+        Point diff = dragPos - pos;
         setTL((*topLeft)() - diff);
         dragPos = pos;
         return true;
@@ -79,7 +82,7 @@ bool TextBox::mouseMoved(const cv::Point &pos)
     return false;
 }
 
-bool TextBox::mouseReleased(const cv::Point &pos)
+bool TextBox::mouseReleased(const Point &pos)
 {
     if (visible)
     {
@@ -150,7 +153,17 @@ void TextBox::lostFocus()
     topLeft->setVisible(false);
 }
 
-void TextBox::writeInternals(cv::FileStorage &fs) const
+void TextBox::recalcRect()
+{
+    baseline=0;
+    Size textSize = getTextSize(text, fontFace,
+                                fontScale, thickness, &baseline);
+    baseline += thickness;
+    rect = Rect((*topLeft)(),
+                    (*topLeft)() + Point(textSize.width, textSize.height+baseline*2));
+}
+
+void TextBox::writeInternals(FileStorage &fs) const
 {
     Shape::writeInternals(fs);
     fs << "text" << text;
@@ -159,7 +172,7 @@ void TextBox::writeInternals(cv::FileStorage &fs) const
     fs << "fontScale" << fontScale;
 }
 
-void TextBox::readInternals(const cv::FileNode &node)
+void TextBox::readInternals(const FileNode &node)
 {
     Shape::readInternals(node);
     node["text"] >> text;
@@ -174,24 +187,67 @@ void TextBox::readInternals(const cv::FileNode &node)
 
 void TextBox::registerCBs()
 {
-    topLeft->addPosChangedCB([this](const cv::Point &)
+    topLeft->addPosChangedCB([this](const Point &)
     {
         recalcRect();
     });
 }
 
-std::list<Handle *> TextBox::getConnectionTargets()
+list<Handle *> TextBox::getConnectionTargets()
 {
     return {topLeft.get()};
 }
 
-std::shared_ptr<Shape> TextBox::getShape(int id)
+shared_ptr<Shape> TextBox::getShape(int id)
 {
    if (id == topLeft->getId())
    {
        return topLeft;
    }
    return nullptr;
+}
+
+const char *TextBox::getType() const
+{
+    return type;
+}
+
+const string &TextBox::getText() const
+{
+    return text;
+}
+
+void TextBox::setText(const string &value)
+{
+    text = value;
+    recalcRect();
+}
+
+void TextBox::setTL(const Point &value)
+{
+    topLeft->setPos(value);
+}
+
+int TextBox::getFontFace() const
+{
+    return fontFace;
+}
+
+void TextBox::setFontFace(int value)
+{
+    fontFace = value;
+    recalcRect();
+}
+
+double TextBox::getFontScale() const
+{
+    return fontScale;
+}
+
+void TextBox::setFontScale(double value)
+{
+    fontScale = value;
+    recalcRect();
 }
 
 }

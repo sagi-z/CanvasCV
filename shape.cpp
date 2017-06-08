@@ -2,23 +2,26 @@
 #include "shapefactory.h"
 #include "canvas.h"
 
+using namespace std;
+using namespace cv;
+
 namespace canvascv
 {
 
-void write(cv::FileStorage& fs, const std::string&, const Shape& x)
+void write(FileStorage& fs, const string&, const Shape& x)
 {
     x.write(fs);
 }
 
-void read(const cv::FileNode& node, Shape*& x, const Shape *default_value)
+void read(const FileNode& node, Shape*& x, const Shape *default_value)
 {
     (void)default_value; // avoid unused compilation warning
     if(node.empty())
     {
         x = 0;
     } else {
-        std::string type = (std::string)node["XXXconcreteTypeXXX"];
-        x = ShapeFactory::newShape(type,cv::Point(0,0));
+        string type = (string)node["XXXconcreteTypeXXX"];
+        x = ShapeFactory::newShape(type,Point(0,0));
         x->read(node);
     }
 }
@@ -32,6 +35,11 @@ void Shape::notifyOnEvent(Shape::CBType cb)
     cbs.push_back(cb);
 }
 
+void Shape::drawHelper(Mat &canvas, Shape *other)
+{
+   other->draw(canvas);
+}
+
 void Shape::setCanvas(Canvas &value)
 {
     canvas = &value;
@@ -43,6 +51,16 @@ const string &Shape::getStatusMsg() const
    return emptyStr;
 }
 
+void Shape::setDeleted()
+{
+    deleted = true;
+}
+
+bool Shape::isDeleted()
+{
+   return deleted;
+}
+
 void Shape::broadcastEvent(CBEvent event)
 {
     for (auto &cb : cbs)
@@ -51,19 +69,19 @@ void Shape::broadcastEvent(CBEvent event)
     }
 }
 
-void Shape::write(cv::FileStorage& fs) const
+void Shape::write(FileStorage& fs) const
 {
     fs << "{";
     writeInternals(fs);
     fs << "}";
 }
 
-void Shape::read(const cv::FileNode& node)
+void Shape::read(const FileNode& node)
 {
     readInternals(node);
 }
 
-void Shape::readInternals(const cv::FileNode &node)
+void Shape::readInternals(const FileNode &node)
 {
     node["id"] >> id;
     node["outlineColor"] >> outlineColor;
@@ -86,7 +104,7 @@ void Shape::readInternals(const cv::FileNode &node)
     }
 }
 
-void Shape::writeInternals(cv::FileStorage &fs) const
+void Shape::writeInternals(FileStorage &fs) const
 {
     fs << "XXXconcreteTypeXXX" << getType() <<
           "id" << id <<
@@ -98,9 +116,9 @@ void Shape::writeInternals(cv::FileStorage &fs) const
           "lineType" << lineType;
 }
 
-std::ostream &operator<<(std::ostream &o, const Shape &shape)
+ostream &operator<<(ostream &o, const Shape &shape)
 {
-    cv::FileStorage fs("ignore.xml", cv::FileStorage::WRITE | cv::FileStorage::MEMORY);
+    FileStorage fs("ignore.xml", FileStorage::WRITE | FileStorage::MEMORY);
     fs << shape.getType() << shape;
     o << fs.releaseAndGetString().c_str();
     return o;

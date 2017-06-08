@@ -18,21 +18,12 @@ class Canvas;
 
 /**
  * @brief The Shape class
- * Code from outside of this namespace should only use members marked as PUBLIC.
- * INTERNAL api usage might cause instability and compatibility issues.
+ * @see ThemeRepository for using themes. The default theme will
+ * overide some CTOR values.
  */
 class Shape
 {
 public:
-
-    enum CBEvent
-    {
-        SELECT,
-        UNSELECT,
-        REMOVED
-    };
-
-    typedef std::function<void(Shape*, CBEvent)> CBType;
 
     Shape()
         : id(genId()),
@@ -43,7 +34,8 @@ public:
           editing(false),
           thickness(1),
           lineType(cv::LINE_AA),
-          canvas(nullptr)
+          canvas(nullptr),
+          deleted(false)
     {}
 
     Shape(const Shape &other)
@@ -55,25 +47,115 @@ public:
           editing(other.editing),
           thickness(other.thickness),
           lineType(other.lineType),
-          canvas(other.canvas)
+          canvas(other.canvas),
+          deleted(other.deleted)
     {}
 
     virtual ~Shape();
 
+    enum CBEvent
+    {
+        SELECT,    /// shape selected
+        UNSELECT,  /// shape unselected
+        REMOVED    /// shape removed
+    };
+    typedef std::function<void(Shape*, CBEvent)> CBType;
+
     /**
-     * @brief PUBLIC: used to register for notifications on shape
+     * @brief used to register for notifications on shape
      * @param cb to invoke on shape event
      */
     void notifyOnEvent(CBType cb);
 
-    /**
-     * @brief INTERNAL: draw shape on the canvas
-     * @param canvas
-     */
-    virtual void draw(cv::Mat &canvas) = 0;
 
     /**
-     * @brief INTERNAL: mousePressed
+     * @brief getConnectionTargets
+     * Return a list of Handles this shape allows to connect to from other shapes - mainly from ShapesConnector
+     * @return list of Handle pointers we ShapesConnector can use to connect
+     */
+    virtual std::list<Handle*> getConnectionTargets() = 0;
+
+
+    cv::Scalar getOutlineColor() const
+    {
+        return outlineColor;
+    }
+
+    virtual void setOutlineColor(const cv::Scalar &value)
+    {
+        outlineColor = value;
+    }
+
+    cv::Scalar getFillColor() const
+    {
+        return fillColor;
+    }
+
+    virtual void setFillColor(const cv::Scalar &value)
+    {
+        fillColor = value;
+    }
+
+    bool getLocked() const
+    {
+        return locked;
+    }
+
+    virtual void setLocked(bool value)
+    {
+        locked = value;
+    }
+
+    bool getVisible() const
+    {
+        return visible;
+    }
+
+    virtual void setVisible(bool value)
+    {
+        visible = value;
+    }
+
+    /**
+     * @brief getType should be implemented by derived.
+     * @return std::string of type
+     */
+    virtual const char *getType() const = 0;
+
+    int getThickness() const
+    {
+        return thickness;
+    }
+
+    virtual void setThickness(int value)
+    {
+        thickness = value;
+    }
+
+    int getLineType() const
+    {
+        return lineType;
+    }
+
+    virtual void setLineType(int value)
+    {
+        lineType = value;
+    }
+
+    virtual bool isAtPos(const cv::Point &pos) = 0;
+
+
+    int getId()
+    {
+        return id;
+    }
+
+protected:
+    virtual void writeInternals(cv::FileStorage& fs) const = 0;
+    virtual void readInternals(const cv::FileNode& node) = 0;
+
+    /**
+     * @brief mousePressed
      * @param pos
      * @param onCreate is true if this is the mouse press which cerated this shape
      * @return true for keep in focus, false for leave focus
@@ -81,7 +163,7 @@ public:
     virtual bool mousePressed(const cv::Point &pos, bool onCreate = false) = 0;
 
     /**
-     * @brief INTERNAL: mouseMoved
+     * @brief mouseMoved
      *
      * 1. Was a mouse moved over this shape?
      * 2. If shape is during edit, then these are the mouse position.
@@ -91,14 +173,7 @@ public:
     virtual bool mouseMoved(const cv::Point &pos) = 0;
 
     /**
-     * @brief PUBLIC: getConnectionTargets
-     * Return a list of Handles this shape allows to connect to from other shapes - mainly from ShapesConnector
-     * @return list of Handle pointers we ShapesConnector can use to connect
-     */
-    virtual std::list<Handle*> getConnectionTargets() = 0;
-
-    /**
-     * @brief INTERNAL: getShape
+     * @brief getShape
      * Get internal shapes, which Canvas doesn't know of.
      * @param id
      * @return internal sub shape with requested id
@@ -109,7 +184,7 @@ public:
     }
 
     /**
-     * @brief INTERNAL: keyPressed will be called by Canvas for active shapes
+     * @brief keyPressed will be called by Canvas for active shapes
      * @param key was pressed. You must set it to -1 if you consumed it.
      * @return true if we want to stay in focus and false otherwise
      */
@@ -121,7 +196,7 @@ public:
     }
 
     /**
-     * @brief INTERNAL: lostFocus is called by Canvas if we're in it and just became non-active
+     * @brief lostFocus is called by Canvas if we're in it and just became non-active
      */
     virtual void lostFocus()
     {
@@ -129,119 +204,33 @@ public:
     }
 
     /**
-     * @brief INTERNAL: mouseReleased
+     * @brief mouseReleased
      * @param pos
      * @return true for keep in focus, false for leave focus
      */
     virtual bool mouseReleased(const cv::Point &pos) = 0;
 
-    /// INTERNAL
-    virtual bool isAtPos(const cv::Point &pos) = 0;
-
-    /// PUBLIC
-    cv::Scalar getOutlineColor() const
-    {
-        return outlineColor;
-    }
-
-    /// PUBLIC
-    virtual void setOutlineColor(const cv::Scalar &value)
-    {
-        outlineColor = value;
-    }
-
-    /// PUBLIC
-    cv::Scalar getFillColor() const
-    {
-        return fillColor;
-    }
-
-    /// PUBLIC
-    virtual void setFillColor(const cv::Scalar &value)
-    {
-        fillColor = value;
-    }
-
-    /// PUBLIC
-    bool getLocked() const
-    {
-        return locked;
-    }
-
-    /// PUBLIC
-    virtual void setLocked(bool value)
-    {
-        locked = value;
-    }
-
-    /// PUBLIC
-    bool getVisible() const
-    {
-        return visible;
-    }
-
-    /// PUBLIC
-    virtual void setVisible(bool value)
-    {
-        visible = value;
-    }
-
-    /// INTERNAL
     bool isEditing()
     {
         return editing;
     }
 
     /**
-     * @brief PUBLIC: getType should be implemented by derived.
-     * @return std::string of type
+     * @brief draw shape on the canvas
+     * @param canvas
      */
-    virtual const char *getType() const = 0;
+    virtual void draw(cv::Mat &canvas) = 0;
 
-    /// PUBLIC
-    int getThickness() const
-    {
-        return thickness;
-    }
+    /// helper method for non compund shapes to draw their members
+    void drawHelper(cv::Mat &canvas, Shape *other);
 
-    /// PUBLIC
-    virtual void setThickness(int value)
-    {
-        thickness = value;
-    }
-
-    /// PUBLIC
-    int getLineType() const
-    {
-        return lineType;
-    }
-
-    /// PUBLIC
-    virtual void setLineType(int value)
-    {
-        lineType = value;
-    }
-
-    /// PUBLIC
-    int getId()
-    {
-        return id;
-    }
-
-    /**
-     * @brief INTERNAL: setCanvas
-     * Called when canvas is creating a shape.
-     * Only realy used by specific shapes.
-     * @param value
-     */
-    void setCanvas(Canvas &value);
-
-    /// INTERNAL
     virtual const std::string &getStatusMsg() const;
 
-protected:
-    virtual void writeInternals(cv::FileStorage& fs) const = 0;
-    virtual void readInternals(const cv::FileNode& node) = 0;
+    void setCanvas(Canvas &value);
+
+    void setDeleted();
+
+    bool isDeleted();
 
     int id;
     cv::Scalar outlineColor;
@@ -254,7 +243,9 @@ protected:
     Canvas *canvas;
 
 private:
+    friend void read(const cv::FileNode& node, Canvas& x, const Canvas&);
     friend class Canvas;
+    friend class CompoundShape;
 
     /// called when events happen
     void broadcastEvent(CBEvent event);
@@ -272,6 +263,7 @@ private:
     void read(const cv::FileNode& node);
 
     std::list<CBType> cbs;
+    bool deleted;
 };
 
 // These write and read functions must be defined for the serialization in cv::FileStorage to work

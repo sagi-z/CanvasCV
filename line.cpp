@@ -1,18 +1,28 @@
 #include "line.h"
 #include <opencv2/imgproc.hpp>
 
+using namespace std;
+using namespace cv;
+
 namespace canvascv
 {
 
 const char * Line::type = "Line";
 
-void Line::draw(cv::Mat &canvas)
+Line::Line(const Point &pos)
+{
+    pt1 = addShape<Handle>(pos);
+    pt2 = addShape<Handle>(pos);
+    dragDisabled = false;
+}
+
+void Line::draw(Mat &canvas)
 {
     line(canvas,(*pt1)(), (*pt2)(), outlineColor, thickness, lineType);
     CompoundShape::draw(canvas);
 }
 
-bool Line::mousePressed(const cv::Point &pos, bool onCreate)
+bool Line::mousePressed(const Point &pos, bool onCreate)
 {
     if (CompoundShape::mousePressed(pos, onCreate))
     {
@@ -39,11 +49,11 @@ bool Line::mousePressed(const cv::Point &pos, bool onCreate)
     return false;
 }
 
-bool Line::mouseMoved(const cv::Point &pos)
+bool Line::mouseMoved(const Point &pos)
 {
     if (dragPos.x || dragPos.y)
     {
-        cv::Point diff = dragPos - pos;
+        Point diff = dragPos - pos;
         pt1->setPos((*pt1)() - diff);
         pt2->setPos((*pt2)() - diff);
         dragPos = pos;
@@ -63,7 +73,7 @@ bool Line::mouseMoved(const cv::Point &pos)
     return false;
 }
 
-bool Line::mouseReleased(const cv::Point &pos)
+bool Line::mouseReleased(const Point &pos)
 {
     if (dragPos.x || dragPos.y)
     {
@@ -86,9 +96,57 @@ bool Line::mouseReleased(const cv::Point &pos)
     return false;
 }
 
-std::list<Handle *> Line::getConnectionTargets()
+list<Handle *> Line::getConnectionTargets()
 {
     return {pt1, pt2};
+}
+
+void Line::lockTail(bool isLocked)
+{
+    pt1->setLocked(isLocked);
+}
+
+void Line::lockHead(bool isLocked)
+{
+    pt2->setLocked(isLocked);
+}
+
+void Line::showTail(bool isVisible)
+{
+    pt1->setVisible(isVisible);
+}
+
+void Line::showHead(bool isVisible)
+{
+    pt2->setVisible(isVisible);
+}
+
+void Line::setTailPos(const Point &pos)
+{
+    pt1->setPos(pos);
+}
+
+void Line::setHeadPos(const Point &pos)
+{
+    pt2->setPos(pos);
+}
+
+Handle &Line::getPT1() {
+    return *pt1;
+}
+
+Handle &Line::getPT2() {
+    return *pt2;
+}
+
+const Point &Line::getTail() const
+{
+    return (*pt1)();
+}
+
+const Point &Line::getHead() const
+{
+    return (*pt2)();
 }
 
 }

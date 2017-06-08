@@ -172,6 +172,9 @@ public:
 
     virtual bool rmvWidget(Widget *widget);
 
+    bool getOn() const;
+    void setOn(bool value);
+
 private:
 
     virtual void setDirtyLayout();
@@ -182,6 +185,7 @@ private:
 
     void processNewShape();
 
+    bool on;
     cv::Rect boundaries;
     bool hasScreenText;
     bool hasStatusMsg;
@@ -206,7 +210,8 @@ std::shared_ptr<T> Canvas::createShape(const cv::Point &pos)
     std::shared_ptr<T> shape(ShapeFactoryT<T>::newShape(pos));
     shapes.push_back(shape);
     processNewShape();
-    shape->lostFocus();
+    ((Shape*)shape.get())->lostFocus();
+    active.reset();
     return shape;
 }
 

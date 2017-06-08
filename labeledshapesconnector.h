@@ -11,23 +11,19 @@ class LabeledShapesConnector : public ShapesConnector
 {
 public:
     LabeledShapesConnector(const cv::Point &pos);
-    virtual const char *getType() const {
-        return type;
-    }
 
-    TextBox &getTextBox()
-    {
-        return *label;
-    }
+    virtual const char *getType() const;
+
+    TextBox &getTextBox();
 
     static const char * type;
 
 private:
     TextBox *label;
 
-    virtual void reloadPointers(std::list<Shape*>::const_iterator &i)
+    virtual void reloadPointers(const std::list<Shape*> &lst, std::list<Shape*>::const_iterator &i)
     {
-        ShapesConnector::reloadPointers(i);
+        ShapesConnector::reloadPointers(lst, i);
         label = dynamic_cast<TextBox*>(*i++);
         center->connect(*label->getConnectionTargets().front());
     }

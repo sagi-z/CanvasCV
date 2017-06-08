@@ -11,14 +11,12 @@ class Ellipse : public Rectangle
 public:
     Ellipse(const cv::Point &pos);
 
-    virtual void draw(Mat &canvas);
-
-    virtual const char *getType() const
-    {
-        return type;
-    }
+    virtual const char *getType() const;
 
     static const char * type;
+
+protected:
+    virtual void draw(Mat &canvas);
 };
 
 }

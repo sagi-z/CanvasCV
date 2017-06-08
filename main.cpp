@@ -43,7 +43,7 @@ static string gHelpMsg =
 "2: Arrow\n"
 "3: TextBox\n"
 "4: LineCrossing\n"
-"5: Quadrilateral\n"
+"5: Polygon\n"
 "6: Rectangle\n"
 "7: Ellipse\n"
 "8: ShapesConnector\n"
@@ -250,7 +250,6 @@ int main(int argc, char **argv)
 
     int delay = 1000/15;
     int key = 0;
-    bool canvasOn = true;
     do {
         switch (key) {
         case '1':
@@ -266,7 +265,7 @@ int main(int argc, char **argv)
             c.setShapeType("LineCrossing");
             break;
         case '5':
-            c.setShapeType("Quadrilateral");
+            c.setShapeType("Polygon");
             break;
         case '6':
             c.setShapeType("Rectangle");
@@ -284,7 +283,7 @@ int main(int argc, char **argv)
             help(c);
             break;
         case '*':
-            canvasOn = ! canvasOn;
+            c.setOn(! c.getOn());
             break;
         case 'c':
             c.clear();
@@ -307,14 +306,7 @@ int main(int argc, char **argv)
         }
 
         Mat out;
-        if (canvasOn)
-        {
-            c.redrawOn(image, out);
-        }
-        else
-        {
-            out = image;
-        }
+        c.redrawOn(image, out);
         imshow("Canvas", out);
         key = waitKeyEx(delay);
         c.consumeKey(key);

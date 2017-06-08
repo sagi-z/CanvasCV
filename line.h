@@ -13,56 +13,25 @@ namespace canvascv
 class Line : public CompoundShape
 {
 public:
-    Line(const cv::Point &pos)
-    {
-        pt1 = addShape<Handle>(pos);
-        pt2 = addShape<Handle>(pos);
-        dragDisabled = false;
-    }
-
-    virtual void draw(cv::Mat &canvas);
-    virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);
-    virtual bool mouseMoved(const cv::Point &pos);
-    virtual bool mouseReleased(const cv::Point &pos);
-    virtual bool isAtPos(const cv::Point &pos)
-    {
-        return isPointOnLine(pos);
-    }
+    Line(const cv::Point &pos);
 
     virtual std::list<Handle *> getConnectionTargets();
+
     virtual const char *getType() const {
         return type;
     }
 
-    void lockTail(bool isLocked)
-    {
-        pt1->setLocked(isLocked);
-    }
+    void lockTail(bool isLocked);
 
-    void lockHead(bool isLocked)
-    {
-        pt2->setLocked(isLocked);
-    }
+    void lockHead(bool isLocked);
 
-    void showTail(bool isVisible)
-    {
-        pt1->setVisible(isVisible);
-    }
+    void showTail(bool isVisible);
 
-    void showHead(bool isVisible)
-    {
-        pt2->setVisible(isVisible);
-    }
+    void showHead(bool isVisible);
 
-    void setTailPos(const cv::Point& pos)
-    {
-        pt1->setPos(pos);
-    }
+    void setTailPos(const cv::Point& pos);
 
-    void setHeadPos(const cv::Point& pos)
-    {
-        pt2->setPos(pos);
-    }
+    void setHeadPos(const cv::Point& pos);
 
     int length() const {
         const cv::Point &p1 = (*pt1)();
@@ -99,35 +68,35 @@ public:
         return true;
     }
 
-    Handle &getPT1() {
-        return *pt1;
-    }
+    Handle &getPT1();
 
-    Handle &getPT2() {
-        return *pt2;
-    }
+    Handle &getPT2();
 
-    const cv::Point &getTail() const
+    const cv::Point &getTail() const;
+
+    const cv::Point &getHead() const;
+
+    virtual bool isAtPos(const cv::Point &pos)
     {
-        return (*pt1)();
-    }
-
-    const cv::Point &getHead() const
-    {
-        return (*pt2)();
+        return isPointOnLine(pos);
     }
 
     static const char * type;
 
 protected:
+    virtual void draw(cv::Mat &canvas);
+    virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);
+    virtual bool mouseMoved(const cv::Point &pos);
+    virtual bool mouseReleased(const cv::Point &pos);
+
     Handle* pt1;
     Handle* pt2;
     cv::Point dragPos;
     bool dragDisabled;
 
-    virtual void reloadPointers(std::list<Shape*>::const_iterator &i)
+    virtual void reloadPointers(const std::list<Shape*> &lst, std::list<Shape*>::const_iterator &i)
     {
-        CompoundShape::reloadPointers(i);
+        CompoundShape::reloadPointers(lst, i);
         pt1 = dynamic_cast<Handle*>(*i++);
         pt2 = dynamic_cast<Handle*>(*i++);
     }

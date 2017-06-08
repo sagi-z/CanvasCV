@@ -16,10 +16,6 @@ class TextBox : public Shape
 public:
     TextBox(const cv::Point &pos);
 
-    virtual void draw(cv::Mat &canvas);
-    virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);
-    virtual bool mouseMoved(const cv::Point &pos);
-    virtual bool mouseReleased(const cv::Point &pos);
     virtual bool isAtPos(const cv::Point &pos)
     {
         return rect.contains(pos);
@@ -27,51 +23,22 @@ public:
 
     virtual std::list<Handle *> getConnectionTargets();
     virtual std::shared_ptr<Shape> getShape(int id);
-    virtual const char *getType() const
-    {
-        return type;
-    }
 
-    const std::string & getText() const
-    {
-        return text;
-    }
+    virtual const char *getType() const;
 
-    void setText(const std::string &value)
-    {
-        text = value;
-        recalcRect();
-    }
+    const std::string & getText() const;
 
-    void setTL(const cv::Point &value)
-    {
-        topLeft->setPos(value);
-    }
+    void setText(const std::string &value);
 
-    virtual bool keyPressed(int &key);
-    virtual void lostFocus();
+    void setTL(const cv::Point &value);
 
-    int getFontFace() const
-    {
-        return fontFace;
-    }
+    int getFontFace() const;
 
-    void setFontFace(int value)
-    {
-        fontFace = value;
-        recalcRect();
-    }
+    void setFontFace(int value);
 
-    double getFontScale() const
-    {
-        return fontScale;
-    }
+    double getFontScale() const;
 
-    void setFontScale(double value)
-    {
-        fontScale = value;
-        recalcRect();
-    }
+    void setFontScale(double value);
 
     static const char * type;
 
@@ -80,16 +47,16 @@ protected:
     virtual void readInternals(const cv::FileNode &node);
     void registerCBs();
 
+    virtual void draw(cv::Mat &canvas);
+    virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);
+    virtual bool mouseMoved(const cv::Point &pos);
+    virtual bool mouseReleased(const cv::Point &pos);
+
+    virtual bool keyPressed(int &key);
+    virtual void lostFocus();
+
 private:
-    void recalcRect()
-    {
-        baseline=0;
-        Size textSize = getTextSize(text, fontFace,
-                                    fontScale, thickness, &baseline);
-        baseline += thickness;
-        rect = cv::Rect((*topLeft)(),
-                        (*topLeft)() + cv::Point(textSize.width, textSize.height+baseline*2));
-    }
+    void recalcRect();
 
     std::string text;
     std::string prevText;

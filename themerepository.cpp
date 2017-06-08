@@ -95,12 +95,12 @@ REGISTER_THEME(Default, [](Shape *shape) {
     if (widget->getType() == Button::type)
     {
         widget->setOutlineColor(Colors::BLACK);
-        widget->setFillColor(Colors::WHITE);
+        widget->setFillColor(Colors::BLACK);
     }
     else
     {
-        widget->setOutlineColor(Colors::P1_GRAY);
-        widget->setFillColor(Colors::BLACK);
+        widget->setOutlineColor(Colors::BLACK);
+        widget->setFillColor(Colors::P1_GRAY);
     }
 });
 

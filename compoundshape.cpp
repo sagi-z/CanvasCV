@@ -3,10 +3,13 @@
 
 #include <algorithm>
 
+using namespace std;
+using namespace cv;
+
 namespace canvascv
 {
 
-void CompoundShape::draw(cv::Mat &canvas)
+void CompoundShape::draw(Mat &canvas)
 {
     if (visible)
     {
@@ -20,7 +23,7 @@ void CompoundShape::draw(cv::Mat &canvas)
     }
 }
 
-bool CompoundShape::mousePressed(const cv::Point &pos, bool onCreate)
+bool CompoundShape::mousePressed(const Point &pos, bool onCreate)
 {
     if (visible)
     {
@@ -50,7 +53,7 @@ bool CompoundShape::mousePressed(const cv::Point &pos, bool onCreate)
     return false;
 }
 
-bool CompoundShape::mouseMoved(const cv::Point &pos)
+bool CompoundShape::mouseMoved(const Point &pos)
 {
     if (visible)
     {
@@ -62,7 +65,7 @@ bool CompoundShape::mouseMoved(const cv::Point &pos)
     return false;
 }
 
-bool CompoundShape::mouseReleased(const cv::Point &pos)
+bool CompoundShape::mouseReleased(const Point &pos)
 {
     if (visible)
     {
@@ -80,24 +83,24 @@ bool CompoundShape::mouseReleased(const cv::Point &pos)
     return false;
 }
 
-void CompoundShape::setOutlineColor(const cv::Scalar &value)
+void CompoundShape::setOutlineColor(const Scalar &value)
 {
     Shape::setOutlineColor(value);
     for (auto &shape : shapes)
     {
-        if (std::strncmp("Handle", shape->getType(),6))
+        if (strncmp("Handle", shape->getType(),6))
         {   // This is not a "Handle"
             shape->setOutlineColor(value);
         }
     }
 }
 
-void CompoundShape::setFillColor(const cv::Scalar &value)
+void CompoundShape::setFillColor(const Scalar &value)
 {
     Shape::setFillColor(value);
     for (auto &shape : shapes)
     {
-        if (std::strncmp("Handle", shape->getType(),6))
+        if (strncmp("Handle", shape->getType(),6))
         {   // This is not a "Handle"
             shape->setFillColor(value);
         }
@@ -140,7 +143,7 @@ void CompoundShape::setVisible(bool value)
     }
 }
 
-std::shared_ptr<Shape> CompoundShape::getShape(int id)
+shared_ptr<Shape> CompoundShape::getShape(int id)
 {
     for (auto &shape : shapes)
     {
@@ -148,7 +151,7 @@ std::shared_ptr<Shape> CompoundShape::getShape(int id)
         {
             return shape;
         }
-        std::shared_ptr<Shape> subShape = shape->getShape(id);
+        shared_ptr<Shape> subShape = shape->getShape(id);
         if (subShape.get())
         {
             return subShape;
@@ -157,9 +160,9 @@ std::shared_ptr<Shape> CompoundShape::getShape(int id)
     return nullptr;
 }
 
-bool CompoundShape::rmvShape(std::shared_ptr<Shape> &shape)
+bool CompoundShape::rmvShape(shared_ptr<Shape> &shape)
 {
-    std::list<std::shared_ptr<Shape>>::iterator i = find(shapes.begin(),shapes.end(),shape);
+    list<shared_ptr<Shape>>::iterator i = find(shapes.begin(),shapes.end(),shape);
     if (i != shapes.end())
     {
         shapes.erase(i);
@@ -178,7 +181,7 @@ void CompoundShape::delActiveShape()
     }
 }
 
-void CompoundShape::writeInternals(cv::FileStorage &fs) const
+void CompoundShape::writeInternals(FileStorage &fs) const
 {
     Shape::writeInternals(fs);
     fs << "shapes" << "[";
@@ -189,24 +192,24 @@ void CompoundShape::writeInternals(cv::FileStorage &fs) const
     fs << "]";
 }
 
-void CompoundShape::readInternals(const cv::FileNode &node)
+void CompoundShape::readInternals(const FileNode &node)
 {
     Shape::readInternals(node);
     active.reset();
     shapes.clear();
-    cv::FileNode n = node["shapes"];
+    FileNode n = node["shapes"];
     FileNodeIterator it = n.begin(), it_end = n.end();
-    std::list<Shape*> shapesTmp;
+    list<Shape*> shapesTmp;
     for (; it != it_end; )
     { // ++it is done automatically by "it >> shape"
         Shape *shape = 0;
         it >> shape;
         assert(shape != 0);
-        shapes.push_back(std::shared_ptr<Shape>(shape));
+        shapes.push_back(shared_ptr<Shape>(shape));
         shapesTmp.push_back(shape);
     }
-    std::list<Shape*>::const_iterator i = shapesTmp.begin();
-    reloadPointers(i);
+    list<Shape*>::const_iterator i = shapesTmp.begin();
+    reloadPointers(shapesTmp, i);
 }
 
 bool CompoundShape::keyPressed(int &key)
@@ -228,6 +231,24 @@ void CompoundShape::lostFocus()
     for (auto &shape : shapes)
     {
         shape->lostFocus();
+    }
+}
+
+void CompoundShape::setActive(Shape *shape)
+{
+    auto i = find_if(shapes.begin(),
+                     shapes.end(),
+                     [shape](const shared_ptr<Shape> &item)->bool
+    {
+        return item.get() == shape;
+    });
+    if (i != shapes.end())
+    {
+        if (active.get())
+        {
+            active->lostFocus();
+        }
+        active = *i;
     }
 }
 

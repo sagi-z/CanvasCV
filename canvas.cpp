@@ -1,6 +1,7 @@
 #include "canvas.h"
 #include "colors.h"
 #include "shapefactory.h"
+#include "shape.h"
 #include "shapesconnector.h"
 #include <algorithm>
 
@@ -8,7 +9,8 @@ namespace canvascv
 {
 
 Canvas::Canvas(Size sizeVal)
-    : boundaries(Point(0,0), sizeVal),
+    : on(true),
+      boundaries(Point(0,0), sizeVal),
       hasScreenText(false),
       hasStatusMsg(false),
       screenText(Point(5,5)),
@@ -26,6 +28,12 @@ Canvas::~Canvas()
 
 void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
 {
+    if (! on)
+    {
+        dst = src;
+        return;
+    }
+
     if (&src != &dst)
     {
         dst = src.clone();
@@ -64,6 +72,8 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
 
 void Canvas::onMousePress(const cv::Point &pos)
 {
+    if (! on) return;
+
     // widgets have preference over shapes
     if (activeWidget.get())
     {
@@ -88,7 +98,14 @@ void Canvas::onMousePress(const cv::Point &pos)
             active->lostFocus();
             active->broadcastEvent(Shape::UNSELECT);
             broadcastModify(active.get());
-            active.reset();
+            if (active->isDeleted())
+            {
+                deleteActive();
+            }
+            else
+            {
+                active.reset();
+            }
             setStatusMsg("");
         }
         return;
@@ -124,7 +141,14 @@ void Canvas::onMousePress(const cv::Point &pos)
         if (! active->mousePressed(pos, true))
         {
             active->lostFocus();
-            active.reset();
+            if (active->isDeleted())
+            {
+                deleteActive();
+            }
+            else
+            {
+                active.reset();
+            }
             setStatusMsg("");
         }
         else
@@ -136,6 +160,8 @@ void Canvas::onMousePress(const cv::Point &pos)
 
 void Canvas::onMouseRelease(const cv::Point &pos)
 {
+    if (! on) return;
+
     // widgets have preference over shapes
     if (activeWidget.get())
     {
@@ -159,7 +185,14 @@ void Canvas::onMouseRelease(const cv::Point &pos)
             active->lostFocus();
             active->broadcastEvent(Shape::UNSELECT);
             broadcastModify(active.get());
-            active.reset();
+            if (active->isDeleted())
+            {
+                deleteActive();
+            }
+            else
+            {
+                active.reset();
+            }
             setStatusMsg("");
         }
     }
@@ -167,6 +200,8 @@ void Canvas::onMouseRelease(const cv::Point &pos)
 
 void Canvas::onMouseMove(const cv::Point &pos)
 {
+    if (! on) return;
+
     // widgets have preference over shapes
     if (activeWidget.get())
     {
@@ -219,6 +254,8 @@ std::shared_ptr<Widget> Canvas::createWidget(const Point &pos, string type)
 
 void Canvas::consumeKey(int &key)
 {
+    if (! on) return;
+
     if (key != -1)
     {
         if (active.get())
@@ -227,7 +264,14 @@ void Canvas::consumeKey(int &key)
             {
                 active->lostFocus();
                 active->broadcastEvent(Shape::UNSELECT);
-                active.reset();
+                if (active->isDeleted())
+                {
+                    deleteActive();
+                }
+                else
+                {
+                    active.reset();
+                }
                 setStatusMsg("");
             }
         }
@@ -394,6 +438,16 @@ void Canvas::processNewShape()
             setStatusMsg(active->getStatusMsg());
         }
     }
+}
+
+bool Canvas::getOn() const
+{
+    return on;
+}
+
+void Canvas::setOn(bool value)
+{
+    on = value;
 }
 
 const Rect Canvas::getBoundaries() const

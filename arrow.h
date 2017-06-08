@@ -9,17 +9,15 @@ namespace canvascv
 class Arrow : public Line
 {
 public:
-    Arrow(const cv::Point &pos)
-        : Line(pos) {}
+    Arrow(const cv::Point &pos);
 
-    virtual void draw(cv::Mat &canvas);
-
-    virtual const char *getType() const
-    {
-        return type;
-    }
+    virtual const char *getType() const;
 
     static const char * type;
+
+protected:
+
+    virtual void draw(cv::Mat &canvas);
 };
 
 }

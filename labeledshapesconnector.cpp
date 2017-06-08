@@ -1,5 +1,8 @@
 #include "labeledshapesconnector.h"
 
+using namespace std;
+using namespace cv;
+
 namespace canvascv
 {
 
@@ -11,6 +14,15 @@ LabeledShapesConnector::LabeledShapesConnector(const Point &pos)
     label = addShape<TextBox>(pos);
     label->setOutlineColor(Colors::P1_RED);
     center->connect(*label->getConnectionTargets().front());
+}
+
+const char *LabeledShapesConnector::getType() const {
+    return type;
+}
+
+TextBox &LabeledShapesConnector::getTextBox()
+{
+    return *label;
 }
 
 }

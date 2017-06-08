@@ -1,6 +1,9 @@
 #include "shapesconnector.h"
 #include "canvas.h"
 
+using namespace std;
+using namespace cv;
+
 namespace canvascv
 {
 
@@ -65,7 +68,7 @@ bool ShapesConnector::mouseReleased(const Point &pos)
         {
             if (shape.get() != this)
             {
-                std::list<Handle*> handles = shape->getConnectionTargets();
+                list<Handle*> handles = shape->getConnectionTargets();
                 for (Handle *targetHandle : handles)
                 {
                     if (targetHandle->isAtPos(pos))
@@ -88,9 +91,14 @@ bool ShapesConnector::mouseReleased(const Point &pos)
     return Line::mouseReleased(pos);
 }
 
-std::list<Handle *> ShapesConnector::getConnectionTargets()
+list<Handle *> ShapesConnector::getConnectionTargets()
 {
-    return  std::list<Handle *>({center});
+    return  list<Handle *>({center});
+}
+
+const char *ShapesConnector::getType() const
+{
+    return type;
 }
 
 int ShapesConnector::getSpacing() const
@@ -159,8 +167,8 @@ void ShapesConnector::reconnect()
 {
    if (tailShape && tailHandle)
    {
-       std::shared_ptr<Shape> pShape = canvas->getShape(tailShape);
-       std::shared_ptr<Shape> pHandle = canvas->getShape(tailHandle);
+       shared_ptr<Shape> pShape = canvas->getShape(tailShape);
+       shared_ptr<Shape> pHandle = canvas->getShape(tailHandle);
        if (pShape.get() && pHandle.get())
        {
            Handle *handle = dynamic_cast<Handle*>(pHandle.get());
@@ -173,8 +181,8 @@ void ShapesConnector::reconnect()
 
    if (headShape && headHandle)
    {
-       std::shared_ptr<Shape> pShape = canvas->getShape(headShape);
-       std::shared_ptr<Shape> pHandle = canvas->getShape(headHandle);
+       shared_ptr<Shape> pShape = canvas->getShape(headShape);
+       shared_ptr<Shape> pHandle = canvas->getShape(headHandle);
        if (pShape.get() && pHandle.get())
        {
            Handle *handle = dynamic_cast<Handle*>(pHandle.get());
@@ -208,7 +216,7 @@ void ShapesConnector::disconnectShape(int id)
    }
 }
 
-void ShapesConnector::writeInternals(cv::FileStorage &fs) const
+void ShapesConnector::writeInternals(FileStorage &fs) const
 {
     Line::writeInternals(fs);
     fs << "tailShape" << tailShape;
@@ -218,7 +226,7 @@ void ShapesConnector::writeInternals(cv::FileStorage &fs) const
     fs << "space" << space;
 }
 
-void ShapesConnector::readInternals(const cv::FileNode &node)
+void ShapesConnector::readInternals(const FileNode &node)
 {
     Line::readInternals(node);
     node["tailShape"] >> tailShape;
@@ -239,8 +247,8 @@ Shape *ShapesConnector::getShapeFromCanvas(int id)
 
 bool ShapesConnector::connectToEndPoint(Shape &shape, Handle &handle, Handle &endPoint)
 {
-    std::list<Handle*> handles = shape.getConnectionTargets();
-    if (std::find(handles.begin(), handles.end(), &handle) != handles.end())
+    list<Handle*> handles = shape.getConnectionTargets();
+    if (find(handles.begin(), handles.end(), &handle) != handles.end())
     {
         handle.connect(endPoint);
         return true;
@@ -250,7 +258,7 @@ bool ShapesConnector::connectToEndPoint(Shape &shape, Handle &handle, Handle &en
 
 void ShapesConnector::DisconnectEndPoint(int handleId, Handle &endPoint)
 {
-    std::shared_ptr<Shape> pHandle = canvas->getShape(handleId);
+    shared_ptr<Shape> pHandle = canvas->getShape(handleId);
     if (pHandle.get())
     {
         Handle *handle = dynamic_cast<Handle*>(pHandle.get());
@@ -271,17 +279,17 @@ void ShapesConnector::registerCBs()
 
 Handle::CBID ShapesConnector::registerCenterUpdateCB(Handle *handle)
 {
-    return handle->addPosChangedCB([this](const cv::Point &)
+    return handle->addPosChangedCB([this](const Point &)
     {
-        const cv::Point &p1 = getTail();
-        const cv::Point &p2 = getHead();
+        const Point &p1 = getTail();
+        const Point &p2 = getHead();
         center->setPos(p1+(p2-p1)/2);
     });
 }
 
 Handle::CBID ShapesConnector::registerConnectCB(const int &shapeId, Handle *handle)
 {
-    return handle->addPosChangedCB([this, &shapeId](const cv::Point &pos)
+    return handle->addPosChangedCB([this, &shapeId](const Point &pos)
     {
         if (shapeId == 0)
         {
@@ -301,8 +309,8 @@ Handle::CBID ShapesConnector::registerConnectCB(const int &shapeId, Handle *hand
             {
                 if (shape.get() != this)
                 {
-                    std::list<Handle*> handles = shape->getConnectionTargets();
-                    std::move(handles.begin(), handles.end(), std::back_inserter(dragTargetHandles));
+                    list<Handle*> handles = shape->getConnectionTargets();
+                    move(handles.begin(), handles.end(), back_inserter(dragTargetHandles));
                 }
             }
             for (auto &targetHandle : dragTargetHandles)

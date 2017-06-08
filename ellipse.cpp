@@ -1,5 +1,8 @@
 #include "ellipse.h"
 
+using namespace std;
+using namespace cv;
+
 namespace canvascv
 {
 
@@ -10,9 +13,14 @@ Ellipse::Ellipse(const Point &pos)
 {
 }
 
+const char *Ellipse::getType() const
+{
+    return type;
+}
+
 void Ellipse::draw(Mat &canvas)
 {
-    cv::ellipse(canvas, getRect(), outlineColor, thickness, lineType);
+    ellipse(canvas, getRect(), outlineColor, thickness, lineType);
     CompoundShape::draw(canvas);
 }
 
