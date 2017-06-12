@@ -160,8 +160,14 @@ public:
 
 protected:
 
-    /// handles copy of colorRect to roi of size rect on dst with alpha
-    void drawBG(cv::Mat &dst, const cv::Rect &rect, const cv::Mat &colorRect);
+    /// widgets like buttons change bg on mouse events
+    void setStateChangesBG();
+
+    /// invokes Theme::allocateBG()
+    void prepareBG(const cv::Size &size, int type = CV_8UC3);
+
+    /// invokes Theme::drawBG()
+    void drawBG(cv::Mat &dst, const cv::Rect &rect);
 
     /// update self so next call to 'draw' will display correctly
     virtual void recalc() = 0;
@@ -272,6 +278,8 @@ private:
     void write(cv::FileStorage& fs) const;
     void read(const cv::FileNode& node);
 
+    bool stateChangesBG;
+    cv::Mat bg;
     State state;
     bool isDirty;
     bool delayedUpdate;

@@ -36,8 +36,6 @@ public:
                                           const std::string &statusMsg="",
                                           int maxWidthVal = 0);
 
-    virtual void setAlpha(double val);
-
     static const char *type;
 
 protected:
@@ -50,14 +48,6 @@ protected:
     {
     }
 
-private:
-
-    virtual void mousePressed();
-    virtual void mouseReleased();
-    virtual void mouseEnter();
-    virtual void mouseLeave();
-
-    double origAlpha;
 };
 
 }

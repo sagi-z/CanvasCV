@@ -1,4 +1,5 @@
 #include "colors.h"
+#include "handle.h"
 #include "compoundshape.h"
 
 #include <algorithm>
@@ -88,8 +89,8 @@ void CompoundShape::setOutlineColor(const Scalar &value)
     Shape::setOutlineColor(value);
     for (auto &shape : shapes)
     {
-        if (strncmp("Handle", shape->getType(),6))
-        {   // This is not a "Handle"
+        if (shape->getType() != Handle::type)
+        {
             shape->setOutlineColor(value);
         }
     }
@@ -100,8 +101,8 @@ void CompoundShape::setFillColor(const Scalar &value)
     Shape::setFillColor(value);
     for (auto &shape : shapes)
     {
-        if (strncmp("Handle", shape->getType(),6))
-        {   // This is not a "Handle"
+        if (shape->getType() != Handle::type)
+        {
             shape->setFillColor(value);
         }
     }
@@ -112,7 +113,10 @@ void CompoundShape::setThickness(int value)
     Shape::setThickness(value);
     for (auto &shape : shapes)
     {
-        shape->setThickness(value);
+        if (shape->getType() != Handle::type)
+        {
+            shape->setThickness(value);
+        }
     }
 }
 

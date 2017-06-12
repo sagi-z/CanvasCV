@@ -89,7 +89,6 @@ private:
     int yStart;
     cv::Rect rect;
     cv::Rect minimalRect;
-    cv::Mat rectColor;
 };
 
 }

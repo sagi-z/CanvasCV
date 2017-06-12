@@ -33,7 +33,6 @@ private:
     virtual void setDirtyLayout();
 
     bool drawFrame;
-    cv::Mat colorRect;
 };
 
 }

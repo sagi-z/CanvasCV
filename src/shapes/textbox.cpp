@@ -15,8 +15,8 @@ TextBox::TextBox(const Point &pos) :
     Shape(),
     text("text"),
     prevText(text),
-    fontFace(FONT_HERSHEY_PLAIN),
-    fontScale(1)
+    fontFace(FONT_HERSHEY_COMPLEX_SMALL),
+    fontScale(0.5)
 {
     topLeft.reset(dynamic_cast<Handle*>(ShapeFactoryT<Handle>::newShape(pos)));
     topLeft->setLocked(true);

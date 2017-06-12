@@ -10,7 +10,7 @@ void LayoutBaseWidget::draw(Mat &dst)
 {
     if (drawFrame)
     {
-        drawBG(dst, rect, colorRect);
+        drawBG(dst, rect);
     }
     CompoundWidget::draw(dst);
 }
@@ -32,7 +32,7 @@ LayoutBaseWidget::LayoutBaseWidget(const Point &pos)
       drawFrame(false),
       padding(2)
 {
-    fillBG = false;
+    fillBG = true;
 }
 
 bool LayoutBaseWidget::isDuringUpdate() const
@@ -52,7 +52,7 @@ void LayoutBaseWidget::recalc()
            rect.width += padding*2;
            rect.height += padding*2;
        }
-       colorRect = Mat(rect.size(), CV_8UC3, fillColor);
+       prepareBG(rect.size());
    }
 }
 

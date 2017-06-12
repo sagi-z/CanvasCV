@@ -32,6 +32,23 @@ public:
     static const cv::Scalar P1_YELLOW;
     static const cv::Scalar P1_ORANGE;
     static const cv::Scalar P1_RED;
+
+    // M3 colors are darger colors (Minus3 after middle
+    //  in RGB color codes chart)
+    static const cv::Scalar M3_GRAY;
+    static const cv::Scalar M3_PINK;
+    static const cv::Scalar M3_LPINK;
+    static const cv::Scalar M3_PURPLE;
+    static const cv::Scalar M3_BLUE;
+    static const cv::Scalar M3_LBLUE;
+    static const cv::Scalar M3_CYAN;
+    static const cv::Scalar M3_LCYAN;
+    static const cv::Scalar M3_GREEN;
+    static const cv::Scalar M3_LGREEN;
+    static const cv::Scalar M3_YELLOW;
+    static const cv::Scalar M3_ORANGE;
+    static const cv::Scalar M3_RED;
+
 };
 
 }

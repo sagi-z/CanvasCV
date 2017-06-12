@@ -113,7 +113,7 @@ void FloatingText::draw(Mat &dst)
             prepareMsgParts();
 
         int yEnd = rect.tl().y + rect.height;
-        drawBG(dst, rect, rectColor);
+        drawBG(dst, rect);
         int y = yStart;
         int padding = (rect.width - minimalRect.width) / 2.;
         for (auto &str : rows)
@@ -191,7 +191,7 @@ void FloatingText::prepareMsgParts()
             if (forcedWidth > rectWidth) rectWidth = forcedWidth;
             if (forcedHeight > rectHeight) rectHeight = forcedHeight;
             rect = Rect(location.x, yRectStart, rectWidth, rectHeight);
-            rectColor = Mat(rect.size(), CV_8UC3, fillColor);
+            prepareBG(rect.size());
             for (LineData &lineData : msgParts)
             {
                 int numRows=1;

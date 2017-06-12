@@ -1,6 +1,8 @@
 #include "widget.h"
 #include "widgetfactory.h"
 #include "layout.h"
+#include "themes/theme.h"
+#include "themes/themerepository.h"
 
 namespace canvascv
 {
@@ -41,6 +43,7 @@ Widget::Widget(const Point &pos)
       stretchX(false),
       stretchY(false),
       layout(nullptr),
+      stateChangesBG(false),
       state(LEAVE),
       isDirty(false),
       delayedUpdate(true)
@@ -63,6 +66,7 @@ Widget::Widget(const Widget &other)
       stretchX(other.stretchX),
       stretchY(other.stretchY),
       layout(other.layout),
+      stateChangesBG(other.stateChangesBG),
       state(LEAVE),
       isDirty(other.isDirty),
       delayedUpdate(true)
@@ -224,6 +228,11 @@ void Widget::broadcastChange(State status)
     {
         cb(this, status);
     }
+
+    if (stateChangesBG)
+    {
+        ThemeRepository::getCurrentTheme()->applyStateStyle(bg, state);
+    }
 }
 
 void Widget::write(cv::FileStorage& fs) const
@@ -236,6 +245,11 @@ void Widget::write(cv::FileStorage& fs) const
 void Widget::read(const cv::FileNode& node)
 {
     readInternals(node);
+}
+
+void Widget::setStateChangesBG()
+{
+    stateChangesBG = true;
 }
 
 Widget::State Widget::getState() const
@@ -275,6 +289,11 @@ void Widget::setFillBG(bool value)
     }
 }
 
+void Widget::prepareBG(const Size &size, int type)
+{
+    ThemeRepository::getCurrentTheme()->allocateBG(bg, size, fillColor, type);
+}
+
 bool Widget::getStretchY() const
 {
     return stretchY;
@@ -289,14 +308,9 @@ void Widget::setStretchY(bool value)
     }
 }
 
-void Widget::drawBG(Mat &dst, const Rect &rect, const Mat &colorRect)
+void Widget::drawBG(Mat &dst, const Rect &rect)
 {
-    if (fillBG)
-    {
-        Mat roi = dst(rect);
-        cv::addWeighted(colorRect, alpha, roi, 1.0 - alpha , 0.0, roi);
-    }
-    cv::rectangle(dst, rect, fillColor);
+    ThemeRepository::getCurrentTheme()->drawBG(dst, rect, bg, alpha, fillBG, fillColor);
 }
 
 bool Widget::getStretchX() const

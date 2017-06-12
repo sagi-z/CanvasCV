@@ -11,18 +11,18 @@ namespace canvascv
 const char *Button::type = "Button";
 
 Button::Button(const Point &pos)
-    : FloatingText(pos),
-      origAlpha(alpha)
+    : FloatingText(pos)
 {
+    setStateChangesBG();
 }
 
 Button::Button(const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,
                Scalar bgColorVal, double fontScaleVal, int fontThicknessVal, int fontFaceVal)
     : FloatingText(msgVal, locationVal, maxWidthVal, colorVal,
                    bgColorVal, fontScaleVal, fontThicknessVal,
-                   fontFaceVal),
-      origAlpha(alpha)
+                   fontFaceVal)
 {
+    setStateChangesBG();
 }
 
 const char *Button::getType() const
@@ -47,32 +47,6 @@ shared_ptr<Button> Button::create(Layout &layout,
 std::shared_ptr<Button> Button::create(Layout &layout, const string &buttonText, const string &statusMsg, int maxWidthVal)
 {
     return create(layout, Point(0, 0), buttonText, statusMsg, maxWidthVal);
-}
-
-void Button::setAlpha(double val)
-{
-    FloatingText::setAlpha(val);
-    origAlpha = alpha;
-}
-
-void Button::mousePressed()
-{
-   alpha = 0.8;
-}
-
-void Button::mouseReleased()
-{
-    mouseEnter();
-}
-
-void Button::mouseEnter()
-{
-    alpha = 0.2;
-}
-
-void Button::mouseLeave()
-{
-    alpha = origAlpha;
 }
 
 }

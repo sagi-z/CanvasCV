@@ -322,7 +322,7 @@ Handle::CBID ShapesConnector::registerConnectCB(const int &shapeId, Handle *hand
                     tmpDragTargetColor=tmpDragTarget->getOutlineColor();
                     tmpDragTargetThickness=tmpDragTarget->getThickness();
                     tmpDragTarget->setThickness(tmpDragTargetThickness*3);
-                    tmpDragTarget->setOutlineColor(Colors::BLUE);
+                    tmpDragTarget->setOutlineColor(Colors::RED);
                 }
             }
         }

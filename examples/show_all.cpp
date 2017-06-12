@@ -1,11 +1,16 @@
+// Mandator include file
 #include "canvas.h"
 
-// We don't need these includes for default creation of objects with the mouse.
-// We only need them if we want to customize or create shapes on canvas form the code.
+// **Optional
+// We don't need these includes for shape based interaction with the user.
+// We need these if we want to customize or create shapes on canvas form the code.
 #include "shapes/linecrossing.h"
 #include "shapes/textbox.h"
 #include "shapes/shapesconnector.h"
 #include "shapes/ellipse.h"
+
+// **Optional
+// These are used to create widgets
 #include "widgets/button.h"
 #include "widgets/verticallayout.h"
 #include "widgets/horizontallayout.h"
@@ -19,6 +24,10 @@ using namespace std;
 using namespace cv;
 using namespace canvascv;
 
+// **Optional
+// This is needed for user interaction - creating/editing choosing shapes.
+// Clicking on interactive widgets.
+// We don't need this code if we only want to display "on screen" messages and "status bar" messages.
 static void mouseCB(int event, int x, int y, int flags, void* userData) {
     (void)flags;
     Canvas *pCanvas=reinterpret_cast<Canvas*>(userData);
@@ -39,6 +48,10 @@ static void mouseCB(int event, int x, int y, int flags, void* userData) {
 static string gHelpMsg =
 "Usage:\n"
 "=====\n"
+"Use the mouse and keyboard.\n"
+"Hover over and click on widgets and shapes.\n"
+"Select/Unselect the center Ellipse.\n"
+"Use these keys:\n"
 "1: Line\n"
 "2: Arrow\n"
 "3: TextBox\n"
@@ -99,31 +112,17 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
     connector->connectHead(*ellipse, *head);
     connector->connectTail(*textBox, *tail);
 
-    // set a specific style for these shapes
-    ellipse->setOutlineColor(Colors::BLACK);
-    ellipse->setThickness(2);
-    textBox->setOutlineColor(Colors::BLACK);
-    textBox->setThickness(2);
-    textBox->setFontScale(2);
-    connector->setOutlineColor(Colors::P1_GRAY);
-    connector->setFillColor(Colors::P1_GRAY);
-
     // Lock them all
-    textBox->setLocked(true);
     ellipse->setLocked(true);
-    connector->setLocked(true);
 
     // create some widgets
     auto msgs = HorizontalLayout::create(c, (*tail)());
-    msgs->setFillColor(Colors::BLUE);
     msgs->setDrawFrame(true);
     msgs->setFlowAnchor(Widget::BOTTOM_RIGHT);
     msgs->setVisible(false);
 
     auto buttons = VerticalLayout::create(c, (*head)());
-    buttons->setFillColor(Colors::BLUE);
     buttons->setDrawFrame(true);
-    buttons->setSpacing(10);
 
     FloatingText::create(*msgs,
                          "aligned to top",
@@ -132,23 +131,29 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
                          "aligned to center",
                          Widget::BOTTOM)->setLayoutAnchor(Widget::CENTER);
     FloatingText::create(*msgs,
-                         "These 3 objects are locked.\n"
+                         "These 3 objects where precreated.\n"
                          "They are an Ellipse,\n"
                          " ShapesConnector and a TextBox.\n"
-                         "You can still select them and\n"
-                         "delete them.",
+                         "You select/edit/move/delete them.\n"
+                         "The Ellipse is locked.",
                          Widget::BOTTOM);
+    msgs->at(0)->setFillBG(false);
+    msgs->at(1)->setFillBG(false);
+    msgs->at(2)->setFillBG(false);
 
 
     Button::create(*buttons, "right\naligned",
-                   "Hover with mouse (1).\n"
-                   "Press with mouse (1).");
+                   "button 1\n"
+                   "Hover with mouse.\n"
+                   "Press with mouse.");
     Button::create(*buttons, "centered",
-                   "Hover with mouse (2).\n"
-                   "Press with mouse (2).");
+                   "button 2\n"
+                   "Hover with mouse.\n"
+                   "Press with mouse.");
     Button::create(*buttons, "this is a long text",
-                   "Hover with mouse (3).\n"
-                   "Press with mouse (3).");
+                   "button 3\n"
+                   "Hover with mouse.\n"
+                   "Press with mouse.");
 
     buttons->at(0)->setLayoutAnchor(Widget::RIGHT);
     buttons->at(0)->notifyOnChange([](Widget *w, Widget::State state)
@@ -215,24 +220,12 @@ int main(int argc, char **argv)
     help(c);
 
     // notifyOnCreate callbacks can be used for anything.
-    // here we overide the theme settings in case of TextBox or LineCrossing
+    // here we overide the theme settings in case of LineCrossing
     c.notifyOnShapeCreate([](Shape *shape)
     {
-        if (shape->getType() == TextBox::type)
-        {
-            ((TextBox*)shape)->setFontScale(2);
-            shape->setOutlineColor(Colors::P1_LBLUE);
-        }
-        else if (shape->getType() == LineCrossing::type)
+        if (shape->getType() == LineCrossing::type)
         {
             ((LineCrossing*)shape)->setArrowMagnitude(30);
-            ((LineCrossing*)shape)->getTextBox()->setOutlineColor(Colors::BLACK);
-            ((LineCrossing*)shape)->getTextBox()->setFontScale(2);
-            ((LineCrossing*)shape)->getTextBox()->setThickness(2);
-            ((LineCrossing*)shape)->getArrow()->setOutlineColor(Colors::P1_ORANGE);
-            ((LineCrossing*)shape)->getArrow()->setThickness(2);
-            ((LineCrossing*)shape)->getLine()->setOutlineColor(Colors::P1_GRAY);
-            ((LineCrossing*)shape)->getLine()->setThickness(3);
         }
     });
 
