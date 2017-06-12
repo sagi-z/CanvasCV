@@ -17,7 +17,8 @@ class Handle;
 class Canvas;
 
 /**
- * @brief The Shape class
+ * @brief The Shape class hierarchy is for geomertric user interaction.
+ * Use shapes to get on screen selections and landmark settings from your user.
  * @see ThemeRepository for using themes. The default theme will
  * overide some CTOR values.
  */
@@ -53,11 +54,14 @@ public:
 
     virtual ~Shape();
 
+    /**
+     * @brief The CBEvent enum will let you know what just happended to the shape
+     */
     enum CBEvent
     {
-        SELECT,    /// shape selected
-        UNSELECT,  /// shape unselected
-        REMOVED    /// shape removed
+        SELECT,
+        UNSELECT,
+        REMOVED
     };
     typedef std::function<void(Shape*, CBEvent)> CBType;
 
@@ -70,81 +74,95 @@ public:
 
     /**
      * @brief getConnectionTargets
-     * Return a list of Handles this shape allows to connect to from other shapes - mainly from ShapesConnector
+     * Return a list of Handles this shape allows to connect to from other shapes (mainly for ShapesConnector)
      * @return list of Handle pointers we ShapesConnector can use to connect
      */
     virtual std::list<Handle*> getConnectionTargets() = 0;
 
 
+    /// get the outline color
     cv::Scalar getOutlineColor() const
     {
         return outlineColor;
     }
 
+    /// set the outline color
     virtual void setOutlineColor(const cv::Scalar &value)
     {
         outlineColor = value;
     }
 
+    /// get the fill color (fill color is not very useful for shapes right now)
     cv::Scalar getFillColor() const
     {
         return fillColor;
     }
 
+    /// set the fill color (fill color is not very useful for shapes right now)
     virtual void setFillColor(const cv::Scalar &value)
     {
         fillColor = value;
     }
 
+    /// is the shape locked (can't be moved/edited)
     bool getLocked() const
     {
         return locked;
     }
 
+    /// set the shape lock state (can/can't be moved/edited)
     virtual void setLocked(bool value)
     {
         locked = value;
     }
 
+    /// is the shape visible
     bool getVisible() const
     {
         return visible;
     }
 
+    /// set the shape visible state
     virtual void setVisible(bool value)
     {
         visible = value;
     }
 
     /**
-     * @brief getType should be implemented by derived.
-     * @return std::string of type
+     * @brief getType is always implemented by derived to return the same static pointer per shape.
+     * @return const char * pointer to string with shape type name
      */
     virtual const char *getType() const = 0;
 
+    /// get line thickness to use when drawing
     int getThickness() const
     {
         return thickness;
     }
 
+    /// set line thickness to use when drawing
     virtual void setThickness(int value)
     {
         thickness = value;
     }
 
+    /// get the line type (LINE_4, LINE_8, LINE_AA)
     int getLineType() const
     {
         return lineType;
     }
 
+    /// set the line type (LINE_4, LINE_8, LINE_AA)
     virtual void setLineType(int value)
     {
         lineType = value;
     }
 
+    /// returns true if shape is at pos, false otherwise
     virtual bool isAtPos(const cv::Point &pos) = 0;
 
 
+    /// return a unique id for this shape
     int getId()
     {
         return id;
