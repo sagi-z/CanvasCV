@@ -80,8 +80,10 @@ void ThemeDark::drawOutline(Mat &dst, int state)
         cv::line(dst, {0,dst.rows - 1}, {0,0}, Colors::BLACK, 2, LINE_AA);
     }
     else if (state == Widget::ENTER)
-    {   // Button is raised a little more - only light from the right:
+    {   // got focus - just draw a rect
+        cv::rectangle(dst, {0, 0}, {dst.cols - 1, dst.rows - 1}, Colors::P1_ORANGE, 2, LINE_AA);
 
+        /*
         // dark top line first
         cv::line(dst, {0,0}, {dst.cols - 1,0}, Colors::BLACK, 2, LINE_AA);
 
@@ -93,6 +95,7 @@ void ThemeDark::drawOutline(Mat &dst, int state)
 
         // bright right line forth
         cv::line(dst, {dst.cols - 1,0}, {dst.cols - 1,dst.rows - 1}, Colors::P1_GRAY, 2, LINE_AA);
+        */
     }
     else // state == Widget::PRESS
     {   // Button is sunken - reverse light from raised

@@ -228,7 +228,6 @@ void Widget::broadcastChange(State status)
     {
         cb(this, status);
     }
-
     if (stateChangesBG)
     {
         ThemeRepository::getCurrentTheme()->applyStateStyle(bg, state);

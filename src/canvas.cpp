@@ -168,6 +168,7 @@ void Canvas::onMouseRelease(const cv::Point &pos)
         if (activeWidget->isAtPos(pos))
         {
             activeWidget->broadcastChange(Widget::RELEASE);
+            activeWidget->broadcastChange(Widget::ENTER);
             return;
         }
         else
