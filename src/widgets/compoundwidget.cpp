@@ -221,6 +221,8 @@ const string &CompoundWidget::getStatusMsg() const
    }
 }
 
+// Recalc should call internal parts, or maybe better - update should
+//  call other updates?
 void CompoundWidget::recalc()
 {
     int xMin = INT_MAX;

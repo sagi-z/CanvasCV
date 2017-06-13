@@ -28,17 +28,12 @@ Canvas::~Canvas()
 
 void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
 {
-    if (! on)
-    {
-        dst = src;
-        return;
-    }
-
     if (&src != &dst)
     {
         dst.create(src.size(), src.type());
         src.copyTo(dst);
     }
+    if (! on) return;
     for (auto &shape : shapes)
     {
         if (shape->getVisible())

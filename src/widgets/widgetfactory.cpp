@@ -29,6 +29,9 @@ void WidgetFactory::addWidget(std::string name, WidgetFactory::Allocator a)
 #include "button.h"
 #include "verticallayout.h"
 #include "horizontallayout.h"
+#include "vframe.h"
+#include "hframe.h"
+#include "msgbox.h"
 
 namespace canvascv
 {
@@ -37,5 +40,8 @@ REGISTER_WIDGET(FloatingText);
 REGISTER_WIDGET(Button);
 REGISTER_WIDGET(VerticalLayout);
 REGISTER_WIDGET(HorizontalLayout);
+REGISTER_WIDGET(VFrame);
+REGISTER_WIDGET(HFrame);
+REGISTER_WIDGET(MsgBox);
 
 }

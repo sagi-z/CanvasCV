@@ -43,17 +43,17 @@ bool LayoutBaseWidget::isDuringUpdate() const
 void LayoutBaseWidget::recalc()
 {
     CompoundWidget::recalc();
-   if (drawFrame)
-   {
-       if (padding)
-       {
-           rect.x -= padding;
-           rect.y -= padding;
-           rect.width += padding*2;
-           rect.height += padding*2;
-       }
-       prepareBG(rect.size());
-   }
+    if (drawFrame)
+    {
+        if (padding)
+        {
+            rect.x -= padding;
+            rect.y -= padding;
+            rect.width += padding*2;
+            rect.height += padding*2;
+        }
+        prepareBG(rect.size());
+    }
 }
 
 void LayoutBaseWidget::setDirtyLayout()

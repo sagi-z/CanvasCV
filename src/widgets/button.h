@@ -39,7 +39,6 @@ public:
     static const char *type;
 
 protected:
-    virtual void recalc();
 
     // TODO
     virtual void writeInternals(cv::FileStorage &fs) const

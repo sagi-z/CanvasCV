@@ -21,6 +21,13 @@ class Layout;
 class Widget
 {
 public:
+    enum Relief
+    {
+        FLAT,
+        RAISED,
+        SUNKEN
+    };
+
     enum State
     {
         ENTER,
@@ -161,7 +168,11 @@ public:
     cv::Scalar getSelectColor() const;
     virtual void setSelectColor(const cv::Scalar &value);
 
+
 protected:
+
+    Relief getRelief() const;
+    void setRelief(const Relief &value);
 
     /// widgets like buttons change bg on mouse events
     void setStateChangesBG();
@@ -227,6 +238,7 @@ protected:
     cv::Scalar outlineColor;
     cv::Scalar fillColor;
     cv::Scalar selectColor;
+    Relief relief;
     bool locked;
     bool visible;
     int thickness;

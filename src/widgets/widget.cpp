@@ -31,6 +31,7 @@ Widget::Widget(const Point &pos)
       outlineColor(Colors::GREEN),
       fillColor(outlineColor),
       selectColor(Colors::P1_ORANGE),
+      relief(FLAT),
       locked(false),
       visible(true),
       thickness(1),
@@ -55,6 +56,7 @@ Widget::Widget(const Widget &other)
       outlineColor(other.outlineColor),
       fillColor(other.fillColor),
       selectColor(other.selectColor),
+      relief(other.relief),
       locked(other.locked),
       visible(other.visible),
       thickness(other.thickness),
@@ -266,6 +268,20 @@ void Widget::stretchHeight(int height)
    }
 }
 
+Widget::Relief Widget::getRelief() const
+{
+    return relief;
+}
+
+void Widget::setRelief(const Relief &value)
+{
+    if (relief != value)
+    {
+        relief = value;
+        setDirty();
+    }
+}
+
 cv::Scalar Widget::getSelectColor() const
 {
     return selectColor;
@@ -313,6 +329,18 @@ void Widget::setFillBG(bool value)
 void Widget::prepareBG(const Size &size, int type)
 {
     ThemeRepository::getCurrentTheme()->allocateBG(bg, size, fillColor, type);
+    switch (relief)
+    {
+    case FLAT:
+        ThemeRepository::getCurrentTheme()->flat(bg, fillColor);
+        break;
+    case RAISED:
+        ThemeRepository::getCurrentTheme()->raised(bg, fillColor);
+        break;
+    case SUNKEN:
+        ThemeRepository::getCurrentTheme()->sunken(bg, fillColor);
+        break;
+    }
 }
 
 bool Widget::getStretchY() const
@@ -331,7 +359,15 @@ void Widget::setStretchY(bool value)
 
 void Widget::drawBG(Mat &dst, const Rect &rect)
 {
-    ThemeRepository::getCurrentTheme()->drawBG(dst, rect, bg, alpha, fillBG, fillColor);
+    ThemeRepository::getCurrentTheme()->drawBG(dst, rect, bg, alpha, fillBG);
+//    try
+//    {
+//        ThemeRepository::getCurrentTheme()->drawBG(dst, rect, bg, alpha, fillBG);
+//    }
+//    catch (const cv::Exception &e)
+//    {
+//        cout << e.what() << endl;
+//    }
 }
 
 void Widget::flatWidget()

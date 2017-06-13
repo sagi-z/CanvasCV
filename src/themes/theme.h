@@ -44,10 +44,9 @@ public:
      * @param bg was previously allocated by allocateBG()
      * @param alpha in the range of (0, 1) or assumed to be 1 (opaque)
      * @param fillBG is true to draw the full bg or false to draw only the sorrounding rect
-     * @param bgColor will be used when fillBG is false, but the theme is allowed to ignore it
      */
     virtual void drawBG(cv::Mat &dst, const cv::Rect &rect, const cv::Mat &bg,
-                        double alpha, bool fillBG, const cv::Scalar &bgColor) = 0;
+                        double alpha, bool fillBG) = 0;
 
     /**
      * @brief flat will cause bg to appear flat

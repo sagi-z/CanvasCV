@@ -12,8 +12,8 @@
 // **Optional
 // These are used to create widgets
 #include "widgets/button.h"
-#include "widgets/verticallayout.h"
-#include "widgets/horizontallayout.h"
+#include "widgets/vframe.h"
+#include "widgets/hframe.h"
 
 #include <iostream>
 #include <iterator>
@@ -116,13 +116,12 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
     ellipse->setLocked(true);
 
     // create some widgets
-    auto msgs = HorizontalLayout::create(c, (*tail)());
-    msgs->setDrawFrame(true);
+    auto msgs = HFrame::create(c, (*tail)());
+    msgs->setFrameRelief(Widget::SUNKEN);
     msgs->setFlowAnchor(Widget::BOTTOM_RIGHT);
     msgs->setVisible(false);
 
-    auto buttons = VerticalLayout::create(c, (*head)());
-    buttons->setDrawFrame(true);
+    auto buttons = VFrame::create(c, (*head)());
 
     FloatingText::create(*msgs,
                          "aligned to top",
@@ -210,7 +209,7 @@ int main(int argc, char **argv)
         }
     } else {
         image.create(640,480,CV_8UC3);
-        image = Scalar::all(255);
+        image = Colors::WHITE;
     }
 
     Canvas c(image.size());
@@ -244,8 +243,10 @@ int main(int argc, char **argv)
     int delay = 1000/15;
     int key = 0;
     Mat out; // keeping it out of the loop is a little more efficient
-    do {
-        switch (key) {
+    do
+    {
+        switch (key)
+        {
         case '1':
             c.setShapeType("Line");
             break;

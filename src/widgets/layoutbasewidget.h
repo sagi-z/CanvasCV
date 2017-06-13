@@ -15,13 +15,13 @@ public:
 
     virtual const Rect getBoundaries() const;
 
-    bool getDrawFrame() const;
-    void setDrawFrame(bool value);
-
     int getPadding() const;
     void setPadding(int value);
 
 protected:
+    bool getDrawFrame() const;
+    void setDrawFrame(bool value);
+
     LayoutBaseWidget(const cv::Point& pos);
 
     virtual bool isDuringUpdate() const;
