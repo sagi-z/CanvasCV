@@ -73,11 +73,6 @@ protected:
 
 private:
 
-    virtual void mousePressed() {}
-    virtual void mouseReleased() {}
-    virtual void mouseEnter() {}
-    virtual void mouseLeave() {}
-
     void prepareMsgParts();
 
     std::string msg;

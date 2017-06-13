@@ -61,7 +61,7 @@ sudo make install
 ### C++ Install option 2 for Linux - cleaner (from the build directory):
 ```
 cpack -G DEB
-sudo dpkg -i ./canvascv-0.9.0-Linux.deb
+sudo dpkg -i ./canvascv-1.0.0-Linux.deb
 ```
 
 C++ Usage
@@ -87,7 +87,4 @@ TARGET_LINK_LIBRARIES (myapp ${CanvasCV_LIB} ${OpenCV_LIBS})
 
 ### Windows
 make sure the include path and link path and library are set correctly.
-
-### C++ code example
-See main.cpp
 

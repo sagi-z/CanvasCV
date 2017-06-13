@@ -15,6 +15,16 @@
 namespace canvascv
 {
 
+/**
+ * @brief The Canvas class is the entry point into CanvasCV
+ * This is conceptually a canvas layer on top of your frame.
+ *  - It can be turned on and off.
+ *  - It can show your messages on screen with a semi transparent background.
+ *  - You can handle mouse and keyboard events:
+ *      -# To create/edit/delete shapes on screen for user selections and landmark configuration.
+ *      -# To handle widgets you put on the screen for user input.
+ * @example show_all.cpp
+ */
 class Canvas : public LayoutBase
 {
 public:

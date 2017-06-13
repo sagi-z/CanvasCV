@@ -243,6 +243,7 @@ int main(int argc, char **argv)
 
     int delay = 1000/15;
     int key = 0;
+    Mat out; // keeping it out of the loop is a little more efficient
     do {
         switch (key) {
         case '1':
@@ -298,7 +299,6 @@ int main(int argc, char **argv)
             break;
         }
 
-        Mat out;
         c.redrawOn(image, out);
         imshow("Canvas", out);
         key = waitKeyEx(delay);

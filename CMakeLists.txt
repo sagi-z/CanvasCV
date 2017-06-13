@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 project (canvascv)
 
 find_package(OpenCV 3.1.0 REQUIRED)
+SET(CMAKE_GIT_REPO "CanvasCV")
 
 add_definitions(-std=c++11 -Werror=return-type)
 SET( CMAKE_CXX_STANDARD_REQUIRED ON )
@@ -81,6 +82,34 @@ if(WIN32 AND NOT UNIX)
   set(CPACK_NSIS_MODIFY_PATH ON)
 else()
   set(CPACK_PACKAGING_INSTALL_PREFIX "/usr/local")
+endif()
+
+option(BUILD_DOCUMENTATION "Use Doxygen to create the HTML documentation for gh-pages" OFF)
+if(BUILD_DOCUMENTATION)
+  FIND_PACKAGE(Doxygen)
+  if (NOT DOXYGEN_FOUND)
+    message(FATAL_ERROR
+      "Doxygen is needed to build the documentation. Please install it correctly")
+  endif()
+
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
+
+  FILE(WRITE ${CMAKE_BINARY_DIR}/concat.cmake "
+      FILE(READ \${SRC1} S1)
+      FILE(READ \${SRC2} S2)
+      FILE(WRITE \${DST} \${S1}\${S2})
+      ")
+
+  add_custom_target (doc ALL
+      COMMAND ${DOXYGEN_EXECUTABLE} -w html ${CMAKE_BINARY_DIR}/doxygen_header_orig.html.in ${CMAKE_BINARY_DIR}/ignore_footer.html ${CMAKE_BINARY_DIR}/ignore_css.css
+      COMMAND ${CMAKE_COMMAND} -D SRC1=${CMAKE_CURRENT_SOURCE_DIR}/doxygen_header.html.in
+                                   -D SRC2=${CMAKE_BINARY_DIR}/doxygen_header_orig.html.in
+                                   -D DST=${CMAKE_SOURCE_DIR}/doxygen_header.html
+                                   -P ${CMAKE_BINARY_DIR}/concat.cmake
+      COMMAND ${CMAKE_COMMAND} -E remove_directory docs/doxygen
+      COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
+      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+      )
 endif()
 
 # This must always be last!

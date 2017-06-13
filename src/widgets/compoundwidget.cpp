@@ -41,6 +41,15 @@ void CompoundWidget::setFillColor(const Scalar &value)
     }
 }
 
+void CompoundWidget::setSelectColor(const Scalar &value)
+{
+    Widget::setSelectColor(value);
+    for (auto &widget : widgets)
+    {
+        widget->setSelectColor(value);
+    }
+}
+
 void CompoundWidget::setThickness(int value)
 {
     Widget::setThickness(value);

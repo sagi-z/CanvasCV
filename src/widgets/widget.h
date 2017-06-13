@@ -158,6 +158,9 @@ public:
     bool getFillBG() const;
     virtual void setFillBG(bool value);
 
+    cv::Scalar getSelectColor() const;
+    virtual void setSelectColor(const cv::Scalar &value);
+
 protected:
 
     /// widgets like buttons change bg on mouse events
@@ -171,6 +174,18 @@ protected:
 
     /// update self so next call to 'draw' will display correctly
     virtual void recalc() = 0;
+
+    /// delegate to Theme
+    void flatWidget();
+
+    /// delegate to Theme
+    void raisedWidget();
+
+    /// delegate to Theme
+    void sunkenWidget();
+
+    /// delegate to Theme
+    void selectedWidget();
 
     /**
      * @brief draw the widget
@@ -211,6 +226,7 @@ protected:
     cv::Point location;
     cv::Scalar outlineColor;
     cv::Scalar fillColor;
+    cv::Scalar selectColor;
     bool locked;
     bool visible;
     int thickness;
@@ -240,25 +256,25 @@ private:
      * @brief mousePressed
      * Called by layout when mouse pressed on us
      */
-    virtual void mousePressed() = 0;
+    virtual void mousePressed();
 
     /**
      * @brief mouseReleased
      * Called by layout when mouse released from us
      */
-    virtual void mouseReleased() = 0;
+    virtual void mouseReleased();
 
     /**
      * @brief mouseEnter
      * Called by layout when mouse entered
      */
-    virtual void mouseEnter() = 0;
+    virtual void mouseEnter();
 
     /**
      * @brief mouseEnter
      * Called by layout when mouse left
      */
-    virtual void mouseLeave() = 0;
+    virtual void mouseLeave();
 
     int genId();
 
@@ -278,7 +294,6 @@ private:
     void write(cv::FileStorage& fs) const;
     void read(const cv::FileNode& node);
 
-    bool stateChangesBG;
     cv::Mat bg;
     State state;
     bool isDirty;

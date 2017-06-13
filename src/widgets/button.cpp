@@ -13,7 +13,6 @@ const char *Button::type = "Button";
 Button::Button(const Point &pos)
     : FloatingText(pos)
 {
-    setStateChangesBG();
 }
 
 Button::Button(const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,
@@ -22,7 +21,6 @@ Button::Button(const string msgVal, Point locationVal, int maxWidthVal, Scalar c
                    bgColorVal, fontScaleVal, fontThicknessVal,
                    fontFaceVal)
 {
-    setStateChangesBG();
 }
 
 const char *Button::getType() const
@@ -47,6 +45,33 @@ shared_ptr<Button> Button::create(Layout &layout,
 std::shared_ptr<Button> Button::create(Layout &layout, const string &buttonText, const string &statusMsg, int maxWidthVal)
 {
     return create(layout, Point(0, 0), buttonText, statusMsg, maxWidthVal);
+}
+
+void Button::recalc()
+{
+   FloatingText::recalc();
+   raisedWidget();
+}
+
+void Button::mousePressed()
+{
+    sunkenWidget();
+}
+
+void Button::mouseReleased()
+{
+    raisedWidget();
+}
+
+void Button::mouseEnter()
+{
+    selectedWidget();
+}
+
+void Button::mouseLeave()
+{
+
+    raisedWidget();
 }
 
 }

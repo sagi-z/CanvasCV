@@ -14,18 +14,12 @@ void ThemeDark::allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar 
     (void) color; // unused in this theme
     dst.create(size, type);
     dst = Colors::M3_GRAY;
-    drawOutline(dst, Widget::LEAVE);
-}
-
-void ThemeDark::applyStateStyle(Mat &bg, int state)
-{
-    drawOutline(bg, state);
 }
 
 void ThemeDark::drawBG(cv::Mat &dst, const cv::Rect &rect, const cv::Mat &bg,
-                       double alpha, bool fillBG, Scalar bgOutline)
+                       double alpha, bool fillBG, const Scalar &bgColor)
 {
-    (void) bgOutline; // unused in this theme
+    (void) bgColor; // unused in this theme
     Mat roi = dst(rect);
     if (fillBG)
     {
@@ -40,11 +34,57 @@ void ThemeDark::drawBG(cv::Mat &dst, const cv::Rect &rect, const cv::Mat &bg,
     }
 }
 
+void ThemeDark::flat(Mat &bg, const Scalar &color)
+{
+    (void) color; // unused in this theme
+    cv::rectangle(bg, {0, 0}, {bg.cols - 1, bg.rows - 1}, Colors::M3_GRAY, 2, LINE_AA);
+}
+
+void ThemeDark::raised(Mat &bg, const Scalar &color)
+{
+    (void) color; // unused in this theme
+    // bright top line first
+    cv::line(bg, {0,0}, {bg.cols - 1,0}, Colors::P1_GRAY, 2, LINE_AA);
+
+    // dark bottom line second
+    cv::line(bg, {bg.cols - 1,bg.rows - 1}, {0,bg.rows - 1}, Colors::BLACK, 2, LINE_AA);
+
+    // bright right line third
+    cv::line(bg, {bg.cols - 1,0}, {bg.cols - 1,bg.rows - 1}, Colors::P1_GRAY, 2, LINE_AA);
+
+    // dark left line forth
+    cv::line(bg, {0,bg.rows - 1}, {0,0}, Colors::BLACK, 2, LINE_AA);
+}
+
+void ThemeDark::sunken(Mat &bg, const Scalar &color)
+{
+    (void) color; // unused in this theme
+    // reverse light from raised
+    // dark top line first
+    cv::line(bg, {0,0}, {bg.cols - 1,0}, Colors::BLACK, 2, LINE_AA);
+
+    // light bottom line second
+    cv::line(bg, {bg.cols - 1,bg.rows - 1}, {0,bg.rows - 1}, Colors::P1_GRAY, 2, LINE_AA);
+
+    // dark right line third
+    cv::line(bg, {bg.cols - 1,0}, {bg.cols - 1,bg.rows - 1}, Colors::BLACK, 2, LINE_AA);
+
+    // light left line forth
+    cv::line(bg, {0,bg.rows - 1}, {0,0}, Colors::P1_GRAY, 2, LINE_AA);
+}
+
+void ThemeDark::selected(Mat &bg, const Scalar &color)
+{
+    (void) color; // unused in this theme
+    cv::rectangle(bg, {0, 0}, {bg.cols - 1, bg.rows - 1}, Colors::P1_ORANGE, 2, LINE_AA);
+}
+
 void ThemeDark::applyStyle(Widget *widget)
 {
    widget->setOutlineColor(Colors::P1_ORANGE);
    widget->setFillColor(Colors::M3_GRAY);
    widget->setThickness(1);
+   widget->setSelectColor(Colors::P1_ORANGE);
 }
 
 void ThemeDark::applyStyle(Shape *shape)
@@ -61,57 +101,6 @@ void ThemeDark::applyStyle(Shape *shape)
    {
        shape->setThickness(3);
    }
-}
-
-void ThemeDark::drawOutline(Mat &dst, int state)
-{
-    if (state == Widget::LEAVE || state == Widget::RELEASE)
-    {   // Button is raised top-right gets the light, which comes from the right:
-        // bright top line first
-        cv::line(dst, {0,0}, {dst.cols - 1,0}, Colors::P1_GRAY, 2, LINE_AA);
-
-        // dark bottom line second
-        cv::line(dst, {dst.cols - 1,dst.rows - 1}, {0,dst.rows - 1}, Colors::BLACK, 2, LINE_AA);
-
-        // bright right line third
-        cv::line(dst, {dst.cols - 1,0}, {dst.cols - 1,dst.rows - 1}, Colors::P1_GRAY, 2, LINE_AA);
-
-        // dark left line forth
-        cv::line(dst, {0,dst.rows - 1}, {0,0}, Colors::BLACK, 2, LINE_AA);
-    }
-    else if (state == Widget::ENTER)
-    {   // got focus - just draw a rect
-        cv::rectangle(dst, {0, 0}, {dst.cols - 1, dst.rows - 1}, Colors::P1_ORANGE, 2, LINE_AA);
-
-        /*
-        // dark top line first
-        cv::line(dst, {0,0}, {dst.cols - 1,0}, Colors::BLACK, 2, LINE_AA);
-
-        // dark bottom line second
-        cv::line(dst, {dst.cols - 1,dst.rows - 1}, {0,dst.rows - 1}, Colors::BLACK, 2, LINE_AA);
-
-        // dark left line third
-        cv::line(dst, {0,dst.rows - 1}, {0,0}, Colors::BLACK, 2, LINE_AA);
-
-        // bright right line forth
-        cv::line(dst, {dst.cols - 1,0}, {dst.cols - 1,dst.rows - 1}, Colors::P1_GRAY, 2, LINE_AA);
-        */
-    }
-    else // state == Widget::PRESS
-    {   // Button is sunken - reverse light from raised
-        // dark top line first
-        cv::line(dst, {0,0}, {dst.cols - 1,0}, Colors::BLACK, 2, LINE_AA);
-
-        // light bottom line second
-        cv::line(dst, {dst.cols - 1,dst.rows - 1}, {0,dst.rows - 1}, Colors::P1_GRAY, 2, LINE_AA);
-
-        // dark right line third
-        cv::line(dst, {dst.cols - 1,0}, {dst.cols - 1,dst.rows - 1}, Colors::BLACK, 2, LINE_AA);
-
-        // light left line forth
-        cv::line(dst, {0,dst.rows - 1}, {0,0}, Colors::P1_GRAY, 2, LINE_AA);
-
-    }
 }
 
 }

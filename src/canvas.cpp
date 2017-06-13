@@ -36,7 +36,8 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
 
     if (&src != &dst)
     {
-        dst = src.clone();
+        dst.create(src.size(), src.type());
+        src.copyTo(dst);
     }
     for (auto &shape : shapes)
     {

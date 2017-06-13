@@ -30,6 +30,7 @@ Widget::Widget(const Point &pos)
       location(pos),
       outlineColor(Colors::GREEN),
       fillColor(outlineColor),
+      selectColor(Colors::P1_ORANGE),
       locked(false),
       visible(true),
       thickness(1),
@@ -43,7 +44,6 @@ Widget::Widget(const Point &pos)
       stretchX(false),
       stretchY(false),
       layout(nullptr),
-      stateChangesBG(false),
       state(LEAVE),
       isDirty(false),
       delayedUpdate(true)
@@ -54,6 +54,7 @@ Widget::Widget(const Widget &other)
       location(other.location),
       outlineColor(other.outlineColor),
       fillColor(other.fillColor),
+      selectColor(other.selectColor),
       locked(other.locked),
       visible(other.visible),
       thickness(other.thickness),
@@ -66,7 +67,6 @@ Widget::Widget(const Widget &other)
       stretchX(other.stretchX),
       stretchY(other.stretchY),
       layout(other.layout),
-      stateChangesBG(other.stateChangesBG),
       state(LEAVE),
       isDirty(other.isDirty),
       delayedUpdate(true)
@@ -228,10 +228,6 @@ void Widget::broadcastChange(State status)
     {
         cb(this, status);
     }
-    if (stateChangesBG)
-    {
-        ThemeRepository::getCurrentTheme()->applyStateStyle(bg, state);
-    }
 }
 
 void Widget::write(cv::FileStorage& fs) const
@@ -246,10 +242,6 @@ void Widget::read(const cv::FileNode& node)
     readInternals(node);
 }
 
-void Widget::setStateChangesBG()
-{
-    stateChangesBG = true;
-}
 
 Widget::State Widget::getState() const
 {
@@ -272,6 +264,36 @@ void Widget::stretchHeight(int height)
        forcedHeight = height;
        setDirty();
    }
+}
+
+cv::Scalar Widget::getSelectColor() const
+{
+    return selectColor;
+}
+
+void Widget::setSelectColor(const cv::Scalar &value)
+{
+    if (selectColor != value)
+    {
+        selectColor = value;
+        setDirty();
+    }
+}
+
+void Widget::mousePressed()
+{
+}
+
+void Widget::mouseReleased()
+{
+}
+
+void Widget::mouseEnter()
+{
+}
+
+void Widget::mouseLeave()
+{
 }
 
 bool Widget::getFillBG() const
@@ -310,6 +332,26 @@ void Widget::setStretchY(bool value)
 void Widget::drawBG(Mat &dst, const Rect &rect)
 {
     ThemeRepository::getCurrentTheme()->drawBG(dst, rect, bg, alpha, fillBG, fillColor);
+}
+
+void Widget::flatWidget()
+{
+    ThemeRepository::getCurrentTheme()->flat(bg, fillColor);
+}
+
+void Widget::raisedWidget()
+{
+    ThemeRepository::getCurrentTheme()->raised(bg, fillColor);
+}
+
+void Widget::sunkenWidget()
+{
+    ThemeRepository::getCurrentTheme()->sunken(bg, fillColor);
+}
+
+void Widget::selectedWidget()
+{
+    ThemeRepository::getCurrentTheme()->selected(bg, selectColor);
 }
 
 bool Widget::getStretchX() const

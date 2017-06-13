@@ -16,6 +16,7 @@ class CompoundWidget : public Widget
 public:
     virtual void setOutlineColor(const cv::Scalar &value);
     virtual void setFillColor(const cv::Scalar &value);
+    virtual void setSelectColor(const Scalar &value);
     virtual void setThickness(int value);
     virtual void setLineType(int value);
     virtual void setAlpha(double value);
@@ -58,10 +59,6 @@ private:
 
     virtual void broadcastChange(State status);
     virtual void layoutResized(const cv::Rect &boundaries);
-    virtual void mousePressed() final {}
-    virtual void mouseReleased() final {}
-    virtual void mouseEnter() final {}
-    virtual void mouseLeave() final {}
 
     std::shared_ptr<Widget> active;
     std::list<std::shared_ptr<Widget>> widgets;

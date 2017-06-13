@@ -39,6 +39,8 @@ public:
     static const char *type;
 
 protected:
+    virtual void recalc();
+
     // TODO
     virtual void writeInternals(cv::FileStorage &fs) const
     {
@@ -48,6 +50,12 @@ protected:
     {
     }
 
+
+private:
+    virtual void mousePressed();
+    virtual void mouseReleased();
+    virtual void mouseEnter();
+    virtual void mouseLeave();
 };
 
 }
