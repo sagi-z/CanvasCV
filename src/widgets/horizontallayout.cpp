@@ -53,11 +53,11 @@ void HorizontalLayout::addWidget(const shared_ptr<Widget> &widget)
     if (prevLayout) prevLayout->rmvWidget(widget);
     widget->setLayout(*this);
     Point pos = location;
-    if (layoutAnchor == TOP_LEFT)
+    if (flowAnchor & LEFT)
     {
         pos.x = rect.x + rect.width + spacing;
     }
-    else if (layoutAnchor == TOP_RIGHT)
+    else if (flowAnchor & RIGHT)
     {
         pos.x = rect.x - spacing;
     }

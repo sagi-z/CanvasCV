@@ -53,11 +53,11 @@ void VerticalLayout::addWidget(const shared_ptr<Widget> &widget)
     if (prevLayout) prevLayout->rmvWidget(widget);
     widget->setLayout(*this);
     Point pos = location;
-    if (layoutAnchor == TOP_LEFT)
+    if (flowAnchor & TOP)
     {
         pos.y = rect.y + rect.height + spacing;
     }
-    else if (layoutAnchor == BOTTOM_LEFT)
+    else if (flowAnchor & BOTTOM)
     {
         pos.y = rect.y - spacing;
     }

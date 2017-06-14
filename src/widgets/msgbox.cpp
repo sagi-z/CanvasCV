@@ -14,8 +14,9 @@ MsgBox::MsgBox(Layout &layoutVal, const Point &pos)
 {
     parts = VFrame::create(layoutVal, pos);
     addWidget(parts);
-    FloatingText::create(*parts, "");
+    FloatingText::create(*parts, "", TOP, CENTER);
     buttons = HorizontalLayout::create(*parts);
+    buttons->setLayoutAnchor(CENTER);
 }
 
 const char *MsgBox::getType() const
