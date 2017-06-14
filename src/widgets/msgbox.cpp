@@ -9,6 +9,15 @@ namespace canvascv
 
 const char *MsgBox::type = "MsgBox";
 
+/*
+ *  -> VFrame
+ *      -> FloatingText (CENTERED)
+ *      -> HorizontalLayout (CENTERED)
+ *          -> Button (stretchX/Y)
+ *          -> Button (stretchX/Y)
+ *          ...
+ */
+
 MsgBox::MsgBox(Layout &layoutVal, const Point &pos)
     :CompoundWidget(layoutVal, pos)
 {
