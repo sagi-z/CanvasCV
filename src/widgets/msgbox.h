@@ -15,8 +15,6 @@ class MsgBox : public CompoundWidget
 {
 public:
 
-    MsgBox(Layout &layoutVal, const cv::Point &pos);
-
     virtual const char *getType() const;
 
     static std::shared_ptr<MsgBox> create(Layout &layout,
@@ -27,6 +25,12 @@ public:
     void addButton(const std::string &buttonText, CBType cb);
 
     static const char *type;
+
+protected:
+    friend class WidgetFactory;
+    template <class T> friend class WidgetFactoryT;
+
+    MsgBox(Layout &layoutVal, const cv::Point &pos);
 
 private:
     std::shared_ptr<VFrame> parts;

@@ -10,8 +10,6 @@ class VFrame : public VerticalLayout
 {
 public:
 
-    VFrame(Layout &layoutVal, const cv::Point &pos);
-
     static std::shared_ptr<VFrame> create(Layout &layout,
                                           const cv::Point &pos = cv::Point(0,0));
 
@@ -20,6 +18,12 @@ public:
     virtual const char *getType() const;
 
     static const char *type;
+
+protected:
+    friend class WidgetFactory;
+    template <class T> friend class WidgetFactoryT;
+
+    VFrame(Layout &layoutVal, const cv::Point &pos);
 };
 
 }

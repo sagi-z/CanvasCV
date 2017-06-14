@@ -11,8 +11,6 @@ class VerticalLayout : public LayoutBaseWidget
 {
 public:
 
-    VerticalLayout(Layout &layoutVal, const cv::Point &pos);
-
     static std::shared_ptr<VerticalLayout> create(Layout &layout,
                                                   const cv::Point &pos = cv::Point(0,0));
 
@@ -32,6 +30,10 @@ public:
     static const char *type;
 
 protected:
+    friend class WidgetFactory;
+    template <class T> friend class WidgetFactoryT;
+
+    VerticalLayout(Layout &layoutVal, const cv::Point &pos);
 
     virtual bool replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget);
 

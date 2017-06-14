@@ -12,8 +12,6 @@ namespace canvascv
 class Button : public FloatingText
 {
 public:
-    Button(Layout &layoutVal, const cv::Point &pos);
-
     Button(Layout &layoutVal, const std::string msgVal = "",
            cv::Point locationVal = cv::Point(0, 0),
            int maxWidthVal = 0,
@@ -39,6 +37,10 @@ public:
     static const char *type;
 
 protected:
+
+    friend class WidgetFactory;
+    template <class T> friend class WidgetFactoryT;
+    Button(Layout &layoutVal, const cv::Point &pos);
 
     /* TODO - write/read widgets to file for a designer app
     virtual void writeInternals(cv::FileStorage &fs) const

@@ -10,9 +10,6 @@ namespace canvascv
 class HorizontalLayout : public LayoutBaseWidget
 {
 public:
-
-    HorizontalLayout(Layout &layoutVal, const cv::Point &pos);
-
     static std::shared_ptr<HorizontalLayout> create(Layout &layout,
                                                   const cv::Point &pos = cv::Point(0,0));
 
@@ -32,6 +29,10 @@ public:
     static const char *type;
 
 protected:
+    friend class WidgetFactory;
+    template <class T> friend class WidgetFactoryT;
+
+    HorizontalLayout(Layout &layoutVal, const cv::Point &pos);
 
     virtual bool replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget);
 
