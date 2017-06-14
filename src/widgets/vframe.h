@@ -10,7 +10,7 @@ class VFrame : public VerticalLayout
 {
 public:
 
-    VFrame(const cv::Point &pos);
+    VFrame(Layout &layoutVal, const cv::Point &pos);
 
     static std::shared_ptr<VFrame> create(Layout &layout,
                                           const cv::Point &pos = cv::Point(0,0));

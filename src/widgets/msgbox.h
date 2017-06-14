@@ -2,20 +2,20 @@
 #define MSGBOX_H
 
 #include "compoundwidget.h"
+#include "vframe.h"
+#include "horizontallayout.h"
 
 namespace canvascv
 {
 
 class VFrame;
 class HorizontalLayout;
-class FloatingText;
-class Button;
 
 class MsgBox : public CompoundWidget
 {
 public:
 
-    MsgBox(const cv::Point &pos);
+    MsgBox(Layout &layoutVal, const cv::Point &pos);
 
     virtual const char *getType() const;
 
@@ -29,8 +29,8 @@ public:
     static const char *type;
 
 private:
-    VFrame *parts;
-    HorizontalLayout * buttons;
+    std::shared_ptr<VFrame> parts;
+    std::shared_ptr<HorizontalLayout> buttons;
 };
 
 }

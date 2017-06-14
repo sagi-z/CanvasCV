@@ -20,16 +20,15 @@ void HorizontalLayout::setSpacing(int value)
     setDirty();
 }
 
-HorizontalLayout::HorizontalLayout(const Point &pos)
-    : LayoutBaseWidget(pos),
+HorizontalLayout::HorizontalLayout(Layout &layoutVal, const Point &pos)
+    : LayoutBaseWidget(layoutVal, pos),
       spacing(5)
 {
 }
 
 shared_ptr<HorizontalLayout> HorizontalLayout::create(Layout &layout, const Point &pos)
 {
-    shared_ptr<HorizontalLayout> widget(WidgetFactoryT<HorizontalLayout>::newWidget(pos));
-    layout.addWidget(widget);
+    shared_ptr<HorizontalLayout> widget(WidgetFactoryT<HorizontalLayout>::newWidget(layout, pos));
     return widget;
 }
 
@@ -38,15 +37,15 @@ const char *HorizontalLayout::getType() const
     return type;
 }
 
-// TODO
+/* TODO - write/read widgets to file for a designer app
 void HorizontalLayout::writeInternals(FileStorage &fs) const
 {
 }
 
-// TODO
 void HorizontalLayout::readInternals(const FileNode &node)
 {
 }
+*/
 
 void HorizontalLayout::addWidget(const shared_ptr<Widget> &widget)
 {
@@ -85,7 +84,25 @@ void HorizontalLayout::rmvWidget(int i)
 
 Widget *HorizontalLayout::at(int index)
 {
-   return horzWidgets.at(index).get();
+    return horzWidgets.at(index).get();
+}
+
+bool HorizontalLayout::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
+{
+    auto i = find_if(horzWidgets.begin(),
+                     horzWidgets.end(),
+                     [widget](const shared_ptr<Widget> &item)->bool
+    {
+        return item.get() == widget.get();
+    });
+    if (i != horzWidgets.end())
+    {
+        i->reset();
+        *i = widget;
+        CompoundWidget::replaceTmpSharedPtr(widget);
+        return true;
+    }
+    return false;
 }
 
 bool HorizontalLayout::rmvWidget(const shared_ptr<Widget> &widget)

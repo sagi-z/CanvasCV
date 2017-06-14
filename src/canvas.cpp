@@ -5,6 +5,8 @@
 #include "shapes/shapesconnector.h"
 #include <algorithm>
 
+using namespace std;
+
 namespace canvascv
 {
 
@@ -12,13 +14,8 @@ Canvas::Canvas(Size sizeVal)
     : on(true),
       boundaries(Point(0,0), sizeVal),
       hasScreenText(false),
-      hasStatusMsg(false),
-      screenText(Point(5,5)),
-      statusMsg(Point(0,0))  // will be set during enableStatusMsg
+      hasStatusMsg(false)
 {
-    screenText.setLayout(*this);
-    statusMsg.setLayout(*this);
-    statusMsg.setFlowAnchor(Widget::BOTTOM_LEFT);
 }
 
 Canvas::~Canvas()
@@ -57,12 +54,12 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
     // These go on top of everything
     if (hasScreenText)
     {
-        static_cast<Widget&>(screenText).draw(dst);
+        static_cast<Widget*>(screenText.get())->draw(dst);
     }
     if (hasStatusMsg)
     {
-        statusMsg.setLocation(Point(5, dst.rows - 5));
-        static_cast<Widget&>(statusMsg).draw(dst);
+        statusMsg->setLocation(Point(5, dst.rows - 5));
+        static_cast<Widget*>(statusMsg.get())->draw(dst);
     }
 }
 
@@ -241,14 +238,6 @@ std::shared_ptr<Shape> Canvas::createShape(string type, const Point &pos)
     return active;
 }
 
-std::shared_ptr<Widget> Canvas::createWidget(const Point &pos, string type)
-{
-    std::shared_ptr<Widget> widget(WidgetFactory::newWidget(type, pos));
-    widget->setLayout(*this);
-    widgets.push_back(widget);
-    return widget;
-}
-
 void Canvas::consumeKey(int &key)
 {
     if (! on) return;
@@ -362,28 +351,38 @@ void Canvas::getShapes(const Point &pos, std::list<std::shared_ptr<Shape> > &res
 void Canvas::enableScreenText(Scalar color, Scalar bgColor, double scale, int thickness, double alpha, int fontFace)
 {
     hasScreenText = true;
-    screenText.setOutlineColor(color);
-    screenText.setFillColor(bgColor);
-    screenText.setFontScale(scale);
-    screenText.setAlpha(alpha);
-    screenText.setFontFace(fontFace);
+    if (! screenText.get())
+    {
+        screenText = FloatingText::create(*this, Point(5,5));
+        screenText->setOutlineColor(color);
+    }
+    screenText->setFillColor(bgColor);
+    screenText->setFontScale(scale);
+    screenText->setAlpha(alpha);
+    screenText->setFontFace(fontFace);
 }
 
 void Canvas::enableStatusMsg(Scalar color, Scalar bgColor, double scale, int thickness, double alpha, int fontFace)
 {
     hasStatusMsg = true;
-    statusMsg.setOutlineColor(color);
-    statusMsg.setFillColor(bgColor);
-    statusMsg.setFontScale(scale);
-    statusMsg.setAlpha(alpha);
-    statusMsg.setFontFace(fontFace);
+    if (! statusMsg.get())
+    {
+        statusMsg = FloatingText::create(*this, Point(0,0));  // location, size dependent, is set during redrawOn
+        statusMsg->setFlowAnchor(Widget::BOTTOM_LEFT);
+    }
+    statusMsg->setOutlineColor(color);
+    statusMsg->setFillColor(bgColor);
+    statusMsg->setFontScale(scale);
+    statusMsg->setThickness(thickness);
+    statusMsg->setAlpha(alpha);
+    statusMsg->setFontFace(fontFace);
 }
 
 void Canvas::setStatusMsg(const string &msg)
 {
     if (hasStatusMsg)
     {
-        statusMsg.setMsg(msg);
+        statusMsg->setMsg(msg);
     }
 }
 
@@ -391,7 +390,7 @@ void Canvas::setScreenText(const string &msg)
 {
     if (hasScreenText)
     {
-        screenText.setMsg(msg);
+        screenText->setMsg(msg);
     }
 }
 
@@ -445,6 +444,23 @@ bool Canvas::getOn() const
 void Canvas::setOn(bool value)
 {
     on = value;
+}
+
+bool Canvas::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
+{
+    auto i = find_if(widgets.begin(),
+                     widgets.end(),
+                     [widget](const shared_ptr<Widget> &item)->bool
+    {
+        return item.get() == widget.get();
+    });
+    if (i != widgets.end())
+    {
+        i->reset();
+        *i = widget;
+        return true;
+    }
+    return false;
 }
 
 const Rect Canvas::getBoundaries() const
@@ -510,9 +526,9 @@ void read(const cv::FileNode& node, Canvas& x, const Canvas&)
 
 bool Canvas::rmvWidget(canvascv::Widget *widget)
 {
-    list<shared_ptr<Widget>>::iterator i = find_if(widgets.begin(),
-                                                   widgets.end(),
-                                                   [widget](const shared_ptr<Widget> &item)->bool
+    auto i = find_if(widgets.begin(),
+                     widgets.end(),
+                     [widget](const shared_ptr<Widget> &item)->bool
     {
         return item.get() == widget;
     });

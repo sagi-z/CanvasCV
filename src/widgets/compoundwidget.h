@@ -31,7 +31,7 @@ public:
 
 protected:
     // force inheritance
-    CompoundWidget(const cv::Point &pos);
+    CompoundWidget(Layout &layoutVal, const cv::Point &pos);
     virtual ~CompoundWidget() {}
 
     virtual void draw(cv::Mat &dst);
@@ -43,15 +43,18 @@ protected:
     virtual void reloadPointers(std::list<Widget*>::const_iterator &)
     {}
 
-    template <class T>
-    T* addWidget(const cv::Point &pos);
-
     void addWidget(const std::shared_ptr<Widget> &widget);
     bool rmvWidget(const std::shared_ptr<Widget> &widget);
     virtual bool rmvWidget(Widget* widget);
 
+    virtual void update();
+
+    bool replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget);
+
+    /* TODO - write/read widgets to file for a designer app
     virtual void writeInternals(cv::FileStorage &fs) const;
     virtual void readInternals(const cv::FileNode &node);
+    */
 
     cv::Rect rect;
 
@@ -64,14 +67,6 @@ private:
     std::list<std::shared_ptr<Widget>> widgets;
 
 };
-
-template <class T> inline
-T* CompoundWidget::addWidget(const cv::Point &pos)
-{
-    T *ret = dynamic_cast<T*>(WidgetFactoryT<T>::newWidget(pos));
-    widgets.push_back(std::shared_ptr<Widget>(ret));
-    return ret;
-}
 
 }
 

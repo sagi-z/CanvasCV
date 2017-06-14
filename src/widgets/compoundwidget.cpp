@@ -106,9 +106,9 @@ void CompoundWidget::setVisible(bool value)
 
 bool CompoundWidget::rmvWidget(Widget *widget)
 {
-    list<shared_ptr<Widget>>::iterator i = find_if(widgets.begin(),
-                                                   widgets.end(),
-                                                   [widget](const shared_ptr<Widget> &item)->bool
+    auto i = find_if(widgets.begin(),
+                     widgets.end(),
+                     [widget](const shared_ptr<Widget> &item)->bool
     {
         return item.get() == widget;
     });
@@ -120,23 +120,50 @@ bool CompoundWidget::rmvWidget(Widget *widget)
     return false;
 }
 
+void CompoundWidget::update()
+{
+    for (auto &widget : widgets)
+    {
+        widget->update();
+    }
+    Widget::update();
+}
+
+bool CompoundWidget::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
+{
+
+    auto i = find_if(widgets.begin(),
+                     widgets.end(),
+                     [widget](const shared_ptr<Widget> &item)->bool
+    {
+        return item.get() == widget.get();
+    });
+    if (i != widgets.end())
+    {
+        i->reset();
+        *i = widget;
+    }
+    return false;
+}
+
 bool CompoundWidget::rmvWidget(const std::shared_ptr<Widget> &widget)
 {
-    list<shared_ptr<Widget>>::iterator i = find_if(widgets.begin(),
-                                                   widgets.end(),
-                                                   [widget](const shared_ptr<Widget> &item)->bool
+    auto i = find_if(widgets.begin(),
+                     widgets.end(),
+                     [widget](const shared_ptr<Widget> &item)->bool
     {
         return item.get() == widget.get();
     });
     if (i != widgets.end())
     {
         widgets.erase(i);
-        CompoundWidget::recalc();
+        setDirty();
         return true;
     }
     return false;
 }
 
+/* TODO - write/read widgets to file for a designer app
 void CompoundWidget::writeInternals(FileStorage &fs) const
 {
     Widget::writeInternals(fs);
@@ -167,6 +194,7 @@ void CompoundWidget::readInternals(const FileNode &node)
     std::list<Widget*>::const_iterator i = widgetsTmp.begin();
     reloadPointers(i);
 }
+*/
 
 bool CompoundWidget::isAtPos(const Point &pos)
 {
@@ -221,8 +249,6 @@ const string &CompoundWidget::getStatusMsg() const
    }
 }
 
-// Recalc should call internal parts, or maybe better - update should
-//  call other updates?
 void CompoundWidget::recalc()
 {
     int xMin = INT_MAX;
@@ -249,8 +275,8 @@ void CompoundWidget::recalc()
     }
 }
 
-CompoundWidget::CompoundWidget(const Point &pos)
-    :Widget(pos)
+CompoundWidget::CompoundWidget(Layout &layoutVal, const Point &pos)
+    :Widget(layoutVal, pos)
 {
     rect.x = location.x;
     rect.y = location.y;
@@ -270,7 +296,7 @@ void CompoundWidget::addWidget(const shared_ptr<Widget> &widget)
 {
     rmvWidget(widget);
     widgets.push_back(widget);
-    CompoundWidget::recalc();
+    setDirty();
 }
 
 void CompoundWidget::translate(const Point &translation)

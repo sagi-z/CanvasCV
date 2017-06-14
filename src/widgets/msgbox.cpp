@@ -9,12 +9,13 @@ namespace canvascv
 
 const char *MsgBox::type = "MsgBox";
 
-MsgBox::MsgBox(const Point &pos)
-    : CompoundWidget(pos)
+MsgBox::MsgBox(Layout &layoutVal, const Point &pos)
+    :CompoundWidget(layoutVal, pos)
 {
-    parts = addWidget<VFrame>(pos);
+    parts = VFrame::create(layoutVal, pos);
+    addWidget(parts);
     FloatingText::create(*parts, "");
-    buttons = HorizontalLayout::create(*parts).get();
+    buttons = HorizontalLayout::create(*parts);
 }
 
 const char *MsgBox::getType() const
@@ -24,9 +25,8 @@ const char *MsgBox::getType() const
 
 std::shared_ptr<MsgBox> MsgBox::create(Layout &layout, const string &msg, const Point &pos)
 {
-    shared_ptr<MsgBox> widget(WidgetFactoryT<MsgBox>::newWidget(pos));
+    shared_ptr<MsgBox> widget(WidgetFactoryT<MsgBox>::newWidget(layout, pos));
     widget->setMsg(msg);
-    layout.addWidget(widget);
     return widget;
 }
 

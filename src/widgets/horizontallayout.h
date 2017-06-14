@@ -11,7 +11,7 @@ class HorizontalLayout : public LayoutBaseWidget
 {
 public:
 
-    HorizontalLayout(const cv::Point &pos);
+    HorizontalLayout(Layout &layoutVal, const cv::Point &pos);
 
     static std::shared_ptr<HorizontalLayout> create(Layout &layout,
                                                   const cv::Point &pos = cv::Point(0,0));
@@ -33,8 +33,12 @@ public:
 
 protected:
 
+    virtual bool replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget);
+
+    /* TODO - write/read widgets to file for a designer app
     virtual void writeInternals(FileStorage &fs) const;
     virtual void readInternals(const FileNode &node);
+    */
 
 private:
 

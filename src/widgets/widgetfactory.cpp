@@ -1,26 +1,37 @@
 #include "widgetfactory.h"
 
+using namespace std;
+using namespace cv;
+
 namespace canvascv
 {
 
 WidgetFactory::AllocatorsMap *WidgetFactory::allocators;
 
-Widget *WidgetFactory::newWidget(std::string type, const cv::Point &pos)
+shared_ptr<Widget> WidgetFactory::newWidget(string type, Layout &layoutVal, const Point &pos)
 {
     AllocatorsMap::const_iterator i = allocators->find(type);
     assert (i != allocators->end());
-    Widget *widget = i->second(pos);
-    ThemeRepository::applyCurrentTheme(widget);
+    shared_ptr<Widget> widget(i->second(layoutVal, pos));
+    postConstuct(layoutVal, widget);
+    ThemeRepository::applyCurrentTheme(widget.get());
     return widget;
 }
 
-void WidgetFactory::addWidget(std::string name, WidgetFactory::Allocator a)
+void WidgetFactory::addWidget(string name, WidgetFactory::Allocator a)
 {
     if (! allocators)
     {
         allocators = new AllocatorsMap;
     }
     (*allocators)[name] = a;
+}
+
+bool WidgetFactory::postConstuct(Layout &layout, const std::shared_ptr<Widget> &widget)
+{
+     bool mustBeTrue = layout.replaceTmpSharedPtr(widget);
+     assert(mustBeTrue);
+     return mustBeTrue;
 }
 
 }

@@ -7,6 +7,7 @@
 namespace canvascv
 {
 
+/* TODO - write/read widgets to file for a designer app
 void write(cv::FileStorage& fs, const std::string&, const Widget& x)
 {
     x.write(fs);
@@ -24,8 +25,9 @@ void read(const cv::FileNode& node, Widget*& x, const Widget *default_value)
         x->read(node);
     }
 }
+*/
 
-Widget::Widget(const Point &pos)
+Widget::Widget(Layout &layoutVal, const Point &pos)
     : id(genId()),
       location(pos),
       outlineColor(Colors::GREEN),
@@ -48,7 +50,10 @@ Widget::Widget(const Point &pos)
       state(LEAVE),
       isDirty(false),
       delayedUpdate(true)
-{}
+{
+    shared_ptr<Widget> toBeReplacedOnFactoryCall(this, [](Widget*){});
+    layoutVal.addWidget(toBeReplacedOnFactoryCall);
+}
 
 Widget::Widget(const Widget &other)
     : id(genId()),
@@ -68,11 +73,14 @@ Widget::Widget(const Widget &other)
       flowAnchor(other.layoutAnchor),
       stretchX(other.stretchX),
       stretchY(other.stretchY),
-      layout(other.layout),
+      layout(nullptr),
       state(LEAVE),
       isDirty(other.isDirty),
       delayedUpdate(true)
-{}
+{
+    shared_ptr<Widget> toBeReplacedOnFactoryCall(this, [](Widget*){});
+    other.layout->addWidget(toBeReplacedOnFactoryCall);
+}
 
 Widget::~Widget()
 {
@@ -232,6 +240,7 @@ void Widget::broadcastChange(State status)
     }
 }
 
+/* TODO - write/read widgets to file for a designer app
 void Widget::write(cv::FileStorage& fs) const
 {
     fs << "{";
@@ -243,6 +252,7 @@ void Widget::read(const cv::FileNode& node)
 {
     readInternals(node);
 }
+*/
 
 
 Widget::State Widget::getState() const
@@ -440,7 +450,7 @@ void Widget::setDirty()
     {
         if (! isDirty)
         {
-            if (layout && layout->addDirtyWidget(this))
+            if (layout->addDirtyWidget(this))
             {
                 isDirty = true;
                 return;
@@ -480,6 +490,7 @@ void Widget::setLocation(const Point &value)
     translate(translation);
 }
 
+/* TODO - write/read widgets to file for a designer app
 void Widget::readInternals(const cv::FileNode &node)
 {
     node["id"] >> id;
@@ -532,12 +543,13 @@ void Widget::writeInternals(cv::FileStorage &fs) const
           "statusMsg" << statusMsg;
 }
 
-std::ostream &operator<<(std::ostream &o, const Widget &shape)
+std::ostream &operator<<(std::ostream &o, const Widget &widget)
 {
     cv::FileStorage fs("ignore.xml", cv::FileStorage::WRITE | cv::FileStorage::MEMORY);
-    fs << shape.getType() << shape;
+    fs << widget.getType() << widget;
     o << fs.releaseAndGetString().c_str();
     return o;
 }
+*/
 
 }

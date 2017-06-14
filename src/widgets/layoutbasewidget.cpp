@@ -27,8 +27,8 @@ const Rect LayoutBaseWidget::getBoundaries() const
     return boundaries;
 }
 
-LayoutBaseWidget::LayoutBaseWidget(const Point &pos)
-    : CompoundWidget(pos),
+LayoutBaseWidget::LayoutBaseWidget(Layout &layoutVal, const Point &pos)
+    : CompoundWidget(layoutVal, pos),
       drawFrame(false),
       padding(2)
 {

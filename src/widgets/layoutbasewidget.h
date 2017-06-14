@@ -22,7 +22,7 @@ protected:
     bool getDrawFrame() const;
     void setDrawFrame(bool value);
 
-    LayoutBaseWidget(const cv::Point& pos);
+    LayoutBaseWidget(Layout &layoutVal, const cv::Point& pos);
 
     virtual bool isDuringUpdate() const;
     virtual void recalc();

@@ -82,7 +82,7 @@ public:
 
     typedef std::function<void(Widget*, State)> CBType;
 
-    Widget(const cv::Point &pos = cv::Point(0,0));
+    Widget(Layout &layoutVal, const cv::Point &pos = cv::Point(0,0));
 
     Widget(const Widget &other);
 
@@ -210,14 +210,17 @@ protected:
     /// Minimal size the widget coould have occupy
     virtual const cv::Rect &getMinimalRect() = 0;
 
+
+    /* TODO - write/read widgets to file for a designer app
     virtual void writeInternals(cv::FileStorage& fs) const = 0;
     virtual void readInternals(const cv::FileNode& node) = 0;
+    */
 
     /// Mark us as 'dirty' so before the next draw, our 'update' will be called
     void setDirty();
 
     /// Removes 'dirty' state and invokes the user defined 'recalc'
-    void update();
+    virtual void update();
 
     /**
      * @brief isAtPos
@@ -300,11 +303,13 @@ private:
     /// called by the canvas when the widget changes state
     virtual void broadcastChange(State status);
 
+    /* TODO - write/read widgets to file for a designer app
     friend void write(cv::FileStorage& fs, const std::string&, const Widget& x);
     friend void read(const cv::FileNode& node, Widget*& x, const Widget* default_value);
 
     void write(cv::FileStorage& fs) const;
     void read(const cv::FileNode& node);
+    */
 
     cv::Mat bg;
     State state;
@@ -313,12 +318,14 @@ private:
     std::list<CBType> changeNotifs;
 };
 
+/* TODO - write/read widgets to file for a designer app
 // These write and read functions must be defined for the serialization in cv::FileStorage to work
 void write(cv::FileStorage& fs, const std::string&, const Widget& x);
 void read(const cv::FileNode& node, Widget*& x, const Widget* default_value);
 
 // Will write the xml to memory and output it's std::string
-std::ostream & operator<<(std::ostream& o, const Widget &shape);
+std::ostream & operator<<(std::ostream& o, const Widget &widget);
+*/
 
 }
 

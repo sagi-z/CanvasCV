@@ -10,7 +10,7 @@ class HFrame : public HorizontalLayout
 {
 public:
 
-    HFrame(const cv::Point &pos);
+    HFrame(Layout &layoutVal, const cv::Point &pos);
 
     static std::shared_ptr<HFrame> create(Layout &layout,
                                           const cv::Point &pos = cv::Point(0,0));

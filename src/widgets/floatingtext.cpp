@@ -10,8 +10,8 @@ namespace canvascv
 
 const char *FloatingText::type = "FloatingText";
 
-FloatingText::FloatingText(const Point &pos)
-    : Widget(pos),
+FloatingText::FloatingText(Layout &layoutVal, const Point &pos)
+    : Widget(layoutVal, pos),
       msg(),
       maxWidth(0),
       fontScale(0.5),
@@ -22,9 +22,9 @@ FloatingText::FloatingText(const Point &pos)
     fillColor = Colors::P1_GRAY;
 }
 
-FloatingText::FloatingText(const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,
+FloatingText::FloatingText(Layout &layoutVal, const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,
                            Scalar bgColorVal, double fontScaleVal, int thicknessVal, int fontFaceVal)
-    : Widget(locationVal),
+    : Widget(layoutVal, locationVal),
       msg(msgVal),
       maxWidth(maxWidthVal),
       fontScale(fontScaleVal),
@@ -42,11 +42,10 @@ shared_ptr<FloatingText> FloatingText::create(Layout &layout,
                                               Widget::Anchor flowAnchor,
                                               Widget::Anchor layoutAnchor)
 {
-    shared_ptr<FloatingText> widget(WidgetFactoryT<FloatingText>::newWidget(pos));
+    shared_ptr<FloatingText> widget(WidgetFactoryT<FloatingText>::newWidget(layout, pos));
     widget->setMsg(text);
     widget->setFlowAnchor(flowAnchor);
     widget->setLayoutAnchor(layoutAnchor);
-    layout.addWidget(widget);
     return widget;
 }
 

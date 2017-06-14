@@ -3,7 +3,9 @@
 
 #include <opencv2/core.hpp>
 #include <map>
+#include <memory>
 #include <functional>
+#include "layout.h"
 #include "themes/themerepository.h"
 
 namespace canvascv
@@ -13,6 +15,7 @@ using namespace std;
 using namespace cv;
 
 class Widget;
+class Layout;
 
 /**
  * @brief The WidgetFactory class
@@ -27,18 +30,22 @@ public:
      * @brief newWidget
      * Use this to create widgets by name.
      * @param type is the name of the concrete Widget sub type.
+     * @param layoutVal is the parent layout
      * @param pos is an intial location for the Widget on the Layout
      * (if the layout supports specific positions).
      * @return a pointer to a newly allocated widget of type 'type' or nullptr if 'type' doesn't exist.
      */
-    static Widget *newWidget(std::string type, const cv::Point &pos);
+    static std::shared_ptr<Widget> newWidget(std::string type, Layout &layoutVal, const cv::Point &pos);
 
 protected:
-    typedef std::function<Widget*(const cv::Point &)> Allocator;
+    typedef std::function<Widget*(Layout &layoutVal, const cv::Point &)> Allocator;
     static void addWidget(std::string name, Allocator a);
 
 private:
-    typedef map<std::string,std::function<Widget*(const cv::Point &)>> AllocatorsMap;
+    template <class T> friend class WidgetFactoryT;
+
+    static bool postConstuct(Layout &layout, const std::shared_ptr<Widget> &widget);
+    typedef map<std::string,Allocator> AllocatorsMap;
     static AllocatorsMap *allocators;
 };
 
@@ -63,11 +70,12 @@ public:
     /**
      * @brief newWidget
      * Use this to create widgets by compile-time type.
+     * @param layoutVal is the parent layout
      * @param pos is an intial location for the Widget on the Layout
      * (if the layout supports specific positions).
      * @return a pointer to a newly allocated widget of type 'type'.
      */
-    static T *newWidget(const cv::Point &pos = cv::Point(0,0));
+    static std::shared_ptr<T> newWidget(Layout &layoutVal, const cv::Point &pos = cv::Point(0,0));
 };
 
 template <class T>
@@ -76,18 +84,19 @@ bool WidgetFactoryT<T>::addType(std::string name)
     static bool doneOnce;
     if (! doneOnce)
     {
-        addWidget(name, [](const cv::Point& pos)->Widget*{ return new T(pos);});
+        addWidget(name, [](Layout &layoutVal, const cv::Point& pos)->Widget*{ return new T(layoutVal, pos);});
         doneOnce = true;
     }
     return true;
 }
 
 template <class T>
-T *WidgetFactoryT<T>::newWidget(const cv::Point &pos)
+std::shared_ptr<T> WidgetFactoryT<T>::newWidget(Layout &layoutVal, const cv::Point &pos)
 {
-   T *shape = new T(pos);
-   ThemeRepository::applyCurrentTheme(shape);
-   return shape;
+   std::shared_ptr<T> widget(new T(layoutVal, pos));
+   WidgetFactory::postConstuct(layoutVal, widget);
+   ThemeRepository::applyCurrentTheme(widget.get());
+   return widget;
 }
 
 }

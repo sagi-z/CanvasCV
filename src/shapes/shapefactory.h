@@ -18,14 +18,13 @@ class Shape;
 class ShapeFactory
 {
 public:
-    typedef std::function<Shape*(const cv::Point &)> Allocator;
-    typedef map<std::string,std::function<Shape*(const cv::Point &)>> AllocatorsMap;
-
     static Shape *newShape(std::string type, const cv::Point &pos);
 protected:
+    typedef std::function<Shape*(const cv::Point &)> Allocator;
     static void addShape(std::string name, Allocator a);
 
 private:
+    typedef map<std::string,Allocator> AllocatorsMap;
     static AllocatorsMap *allocators;
 };
 

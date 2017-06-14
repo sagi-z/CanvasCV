@@ -13,9 +13,9 @@ class FloatingText : public Widget
 {
 public:
 
-    FloatingText(const cv::Point &pos);
+    FloatingText(Layout &layoutVal, const cv::Point &pos);
 
-    FloatingText(const std::string msgVal = "",
+    FloatingText(Layout &layoutVal, const std::string msgVal = "",
                  cv::Point locationVal = cv::Point(0, 0),
                  int maxWidthVal = 0,
                  cv::Scalar colorVal = Colors::BLACK,
@@ -25,12 +25,12 @@ public:
                  int fontFaceVal = cv::FONT_HERSHEY_COMPLEX_SMALL);
 
     static std::shared_ptr<FloatingText> create(Layout &layout, const cv::Point &pos,
-                                                const std::string &text,
+                                                const std::string &text = "",
                                                 Anchor flowAnchor = TOP,
                                                 Anchor layoutAnchor = TOP);
 
     static std::shared_ptr<FloatingText> create(Layout &layout,
-                                                const std::string &text,
+                                                const std::string &text = "",
                                                 Anchor flowAnchor = TOP,
                                                 Anchor layoutAnchor = TOP);
 
@@ -62,14 +62,14 @@ protected:
 
     virtual void draw(cv::Mat &dst);
 
-    // TODO
+    /* TODO - write/read widgets to file for a designer app
     virtual void writeInternals(cv::FileStorage &fs) const
     {
     }
-    // TODO
     virtual void readInternals(const cv::FileNode &node)
     {
     }
+    */
 
 private:
 

@@ -13,6 +13,7 @@ What is it?
 
 What makes it unique?
 --------------------
+* Easily extendable - create your own Shapes, Widgets and Themes and share them with others here if you want.
 * The X/Y coordination system is the same as the OpenCV coordination system. This way, if you detect someting at a position, you can start showing
 some FloatingText at that exact postion, Or if you want the user to mark someting on the image, you get back the exact coordinates.
 * No external dependencies - **your code is compatible to all OpenCV environments**.
@@ -35,9 +36,8 @@ some FloatingText at that exact postion, Or if you want the user to mark sometin
 * Button
 * RadioButton
 * SelectionBox
-* PopUp
-* VerticalLayout
-* HorizontalLayout
+* MsgBox
+* Layouts: VerticalLayout, HorizontalLayout, Canvas (actually canvas is not a widget, but it is a layout)
 * VFrame (VerticalLayout based Frame)
 * HFrame (HorizontalLayout based Frame)
 
@@ -47,9 +47,10 @@ some FloatingText at that exact postion, Or if you want the user to mark sometin
 * All shapes are editable.
 * Callbacks both for all shapes (create/change/delete).
 * Callbacks per shapes (selected/unselected/removed).
-* Callbacks for widget events (enter/leave/press/release).
+* Callbacks per widget events (enter/leave/press/release).
 * There is a a theme framework with a predefined theme. User external themes are supported.
 * Simple auto lower screen status msg for shapes, widgets and you.
 * Upper screen area user messages for you.
+* Can save shapes to file (if the user has set landmarks, we can save them).
 
 

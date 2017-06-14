@@ -5,16 +5,15 @@ namespace canvascv
 
 const char * HFrame::type = "HFrame";
 
-HFrame::HFrame(const Point &pos)
-    : HorizontalLayout(pos)
+HFrame::HFrame(Layout &layoutVal, const Point &pos)
+    : HorizontalLayout(layoutVal, pos)
 {
     setDrawFrame(true);
 }
 
 std::shared_ptr<HFrame> HFrame::create(Layout &layout, const Point &pos)
 {
-    shared_ptr<HFrame> widget(WidgetFactoryT<HFrame>::newWidget(pos));
-    layout.addWidget(widget);
+    shared_ptr<HFrame> widget(WidgetFactoryT<HFrame>::newWidget(layout, pos));
     return widget;
 }
 

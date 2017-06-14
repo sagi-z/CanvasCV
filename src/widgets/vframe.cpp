@@ -5,16 +5,15 @@ namespace canvascv
 
 const char * VFrame::type = "VFrame";
 
-VFrame::VFrame(const Point &pos)
-    : VerticalLayout(pos)
+VFrame::VFrame(Layout &layoutVal, const Point &pos)
+    : VerticalLayout(layoutVal, pos)
 {
     setDrawFrame(true);
 }
 
 std::shared_ptr<VFrame> VFrame::create(Layout &layout, const Point &pos)
 {
-    shared_ptr<VFrame> widget(WidgetFactoryT<VFrame>::newWidget(pos));
-    layout.addWidget(widget);
+    shared_ptr<VFrame> widget(WidgetFactoryT<VFrame>::newWidget(layout, pos));
     return widget;
 }
 

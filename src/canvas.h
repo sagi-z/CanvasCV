@@ -53,12 +53,6 @@ public:
     template <class T>
     std::shared_ptr<T> createShape(const cv::Point &pos = cv::Point(0,0));
 
-    /// Create widget on the canvas directly from code
-    std::shared_ptr<Widget> createWidget(const cv::Point &pos, std::string type);
-
-    template <class T>
-    std::shared_ptr<T> createWidget(const cv::Point &pos = cv::Point(0,0));
-
     /**
      * @brief consumeKey takes a key value and tries to use it
      * @param key is the key value received from the user. It will change to -1 if it was consumed by a shape.
@@ -185,6 +179,9 @@ public:
     bool getOn() const;
     void setOn(bool value);
 
+protected:
+    virtual bool replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget);
+
 private:
 
     virtual void setDirtyLayout();
@@ -199,8 +196,8 @@ private:
     cv::Rect boundaries;
     bool hasScreenText;
     bool hasStatusMsg;
-    FloatingText screenText;
-    FloatingText statusMsg;
+    std::shared_ptr<FloatingText> screenText;
+    std::shared_ptr<FloatingText> statusMsg;
     std::string shapeType;
     std::list<std::shared_ptr<Shape>> shapes;
     std::list<std::shared_ptr<Widget>> widgets;
@@ -223,15 +220,6 @@ std::shared_ptr<T> Canvas::createShape(const cv::Point &pos)
     ((Shape*)shape.get())->lostFocus();
     active.reset();
     return shape;
-}
-
-template <class T>
-std::shared_ptr<T> Canvas::createWidget(const cv::Point &pos)
-{
-    std::shared_ptr<T> widget(WidgetFactoryT<T>::newWidget(pos));
-    widget->setLayout(*this);
-    widgets.push_back(widget);
-    return widget;
 }
 
 template <class T>

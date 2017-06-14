@@ -22,6 +22,11 @@ public:
     virtual bool rmvWidget(const std::shared_ptr<Widget> &widget) = 0;
 
 protected:
+    friend class WidgetFactory;
+
+    // takes the shared_ptr added in the widget CTOR and replace it
+    // with the fully constructed one (doing nothing else)
+    virtual bool replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget) = 0;
 
     virtual void upodateDirtyWidgets() = 0;
 };

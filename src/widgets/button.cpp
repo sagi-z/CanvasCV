@@ -10,15 +10,15 @@ namespace canvascv
 
 const char *Button::type = "Button";
 
-Button::Button(const Point &pos)
-    : FloatingText(pos)
+Button::Button(Layout &layoutVal, const Point &pos)
+    : FloatingText(layoutVal, pos)
 {
     setRelief(Widget::RAISED);
 }
 
-Button::Button(const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,
+Button::Button(Layout &layoutVal, const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,
                Scalar bgColorVal, double fontScaleVal, int fontThicknessVal, int fontFaceVal)
-    : FloatingText(msgVal, locationVal, maxWidthVal, colorVal,
+    : FloatingText(layoutVal, msgVal, locationVal, maxWidthVal, colorVal,
                    bgColorVal, fontScaleVal, fontThicknessVal,
                    fontFaceVal)
 {
@@ -36,11 +36,10 @@ shared_ptr<Button> Button::create(Layout &layout,
                                   const string &statusMsg,
                                   int maxWidthVal)
 {
-    shared_ptr<Button> widget(WidgetFactoryT<Button>::newWidget(pos));
+    shared_ptr<Button> widget(WidgetFactoryT<Button>::newWidget(layout, pos));
     widget->setMsg(buttonText);
     widget->setMaxWidth(maxWidthVal);
     widget->setStatusMsg(statusMsg);
-    layout.addWidget(widget);
     return widget;
 }
 

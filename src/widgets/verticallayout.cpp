@@ -20,16 +20,15 @@ void VerticalLayout::setSpacing(int value)
     setDirty();
 }
 
-VerticalLayout::VerticalLayout(const Point &pos)
-    : LayoutBaseWidget(pos),
+VerticalLayout::VerticalLayout(Layout &layoutVal, const Point &pos)
+    : LayoutBaseWidget(layoutVal, pos),
       spacing(5)
 {
 }
 
 shared_ptr<VerticalLayout> VerticalLayout::create(Layout &layout, const Point &pos)
 {
-    shared_ptr<VerticalLayout> widget(WidgetFactoryT<VerticalLayout>::newWidget(pos));
-    layout.addWidget(widget);
+    shared_ptr<VerticalLayout> widget(WidgetFactoryT<VerticalLayout>::newWidget(layout, pos));
     return widget;
 }
 
@@ -38,15 +37,15 @@ const char *VerticalLayout::getType() const
     return type;
 }
 
-// TODO
+/* TODO - write/read widgets to file for a designer app
 void VerticalLayout::writeInternals(FileStorage &fs) const
 {
 }
 
-// TODO
 void VerticalLayout::readInternals(const FileNode &node)
 {
 }
+*/
 
 void VerticalLayout::addWidget(const shared_ptr<Widget> &widget)
 {
@@ -85,7 +84,25 @@ void VerticalLayout::rmvWidget(int i)
 
 Widget *VerticalLayout::at(int index)
 {
-   return vertWidgets.at(index).get();
+    return vertWidgets.at(index).get();
+}
+
+bool VerticalLayout::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
+{
+    auto i = find_if(vertWidgets.begin(),
+                     vertWidgets.end(),
+                     [widget](const shared_ptr<Widget> &item)->bool
+    {
+        return item.get() == widget.get();
+    });
+    if (i != vertWidgets.end())
+    {
+        i->reset();
+        *i = widget;
+        CompoundWidget::replaceTmpSharedPtr(widget);
+        return true;
+    }
+    return false;
 }
 
 bool VerticalLayout::rmvWidget(const shared_ptr<Widget> &widget)

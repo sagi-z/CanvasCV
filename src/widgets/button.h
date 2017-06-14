@@ -12,9 +12,9 @@ namespace canvascv
 class Button : public FloatingText
 {
 public:
-    Button(const cv::Point &pos);
+    Button(Layout &layoutVal, const cv::Point &pos);
 
-    Button(const std::string msgVal = "",
+    Button(Layout &layoutVal, const std::string msgVal = "",
            cv::Point locationVal = cv::Point(0, 0),
            int maxWidthVal = 0,
            cv::Scalar colorVal = Colors::BLACK,
@@ -40,7 +40,7 @@ public:
 
 protected:
 
-    // TODO
+    /* TODO - write/read widgets to file for a designer app
     virtual void writeInternals(cv::FileStorage &fs) const
     {
     }
@@ -48,6 +48,7 @@ protected:
     virtual void readInternals(const cv::FileNode &node)
     {
     }
+    */
 
 
 private:
