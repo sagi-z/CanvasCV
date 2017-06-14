@@ -13,7 +13,6 @@ void ThemeDark::allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar 
 {
     (void) color; // unused in this theme
     dst.create(size, type);
-//    dst = Colors::M3_GRAY;
     dst = color;
 }
 
