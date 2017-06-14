@@ -87,9 +87,9 @@ void help(Canvas &c)
 /*
  * Create a selectable ellipse with a text-box like this:
  *
- *                +------------+
- *                |locked shape|
- *                +------------+
+ *                +--------------+
+ *                |locked ellipse|
+ *                +--------------+
  *               /
  *              /
  *             O
@@ -103,7 +103,7 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
     shared_ptr<Ellipse> ellipse = c.createShape<Ellipse>();
 
     textBox->setTL({int(center.x * 1.5), int(center.y * 0.5)});
-    textBox->setText("locked shape");
+    textBox->setText("locked ellipse");
     ellipse->setRect(RotatedRect(center,
                                  Size2f(40,60), // width and height
                                  0));     // angle in degrees
@@ -112,7 +112,7 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
     connector->connectHead(*ellipse, *head);
     connector->connectTail(*textBox, *tail);
 
-    // Lock them all
+    // Lock just the ellipse
     ellipse->setLocked(true);
 
     // create some widgets
@@ -136,10 +136,6 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
                          "You select/edit/move/delete them.\n"
                          "The Ellipse is locked.",
                          Widget::BOTTOM);
-//    msgs->at(0)->setFillBG(false);
-//    msgs->at(1)->setFillBG(false);
-//    msgs->at(2)->setFillBG(false);
-
 
     Button::create(*buttons, "right\naligned",
                    "button 1\n"
@@ -285,14 +281,12 @@ int main(int argc, char **argv)
             break;
         case 's':
         {
-            FileStorage fs("config.xml", FileStorage::WRITE);
-            fs << "Canvas" << c;
+            c.writeShapesToFile("config.xml");
         }
             break;
         case 'l':
         {
-            FileStorage fs("config.xml", FileStorage::READ);
-            fs["Canvas"] >> c;
+            c.readShapesFromFile("config.xml");
         }
             break;
         case 65535:

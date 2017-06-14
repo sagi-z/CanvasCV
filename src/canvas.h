@@ -179,6 +179,9 @@ public:
     bool getOn() const;
     void setOn(bool value);
 
+    void writeShapesToFile(const std::string &filepath) const;
+    void readShapesFromFile(const std::string &filepath);
+
 protected:
     virtual bool replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget);
 

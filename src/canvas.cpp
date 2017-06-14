@@ -269,6 +269,7 @@ void Canvas::deleteActive()
     if (active.get())
     {
         deleteShape(active);
+        active->lostFocus();
         active.reset();
         setStatusMsg("");
     }
@@ -276,9 +277,7 @@ void Canvas::deleteActive()
 
 void Canvas::deleteShape(const std::shared_ptr<Shape> &shape)
 {
-    shapes.erase(find(shapes.begin(),shapes.end(),shape));
-    shape->lostFocus();
-    active->broadcastEvent(Shape::REMOVED);
+    shape->broadcastEvent(Shape::REMOVED);
     broadcastDelete(shape.get());
     std::list<std::shared_ptr<ShapesConnector>> connectors;
     getShapes(connectors);
@@ -286,6 +285,7 @@ void Canvas::deleteShape(const std::shared_ptr<Shape> &shape)
     {
         connector->disconnectShape(shape->getId());
     }
+    shapes.erase(find(shapes.begin(),shapes.end(),shape));
 }
 
 void Canvas::deleteWidget(const std::shared_ptr<Widget> &widget)
@@ -310,13 +310,12 @@ void Canvas::notifyOnShapeDelete(Canvas::CBType cb)
 
 void Canvas::clear()
 {
-    active.reset();
+    deleteActive();
     setStatusMsg("");
-    for (auto &shape : shapes)
+    while(shapes.size())
     {
-        broadcastDelete(shape.get());
+       deleteShape(shapes.back());
     }
-    shapes.clear();
 }
 
 std::shared_ptr<Shape> Canvas::getShape(int id)
@@ -444,6 +443,18 @@ bool Canvas::getOn() const
 void Canvas::setOn(bool value)
 {
     on = value;
+}
+
+void Canvas::writeShapesToFile(const string &filepath) const
+{
+    FileStorage fs(filepath, FileStorage::WRITE);
+    fs << "CanvasShapes" << *this;
+}
+
+void Canvas::readShapesFromFile(const string &filepath)
+{
+    FileStorage fs(filepath, FileStorage::READ);
+    fs["CanvasShapes"] >> *this;
 }
 
 bool Canvas::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
