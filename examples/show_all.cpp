@@ -136,9 +136,9 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
                          "You select/edit/move/delete them.\n"
                          "The Ellipse is locked.",
                          Widget::BOTTOM);
-    msgs->at(0)->setFillBG(false);
-    msgs->at(1)->setFillBG(false);
-    msgs->at(2)->setFillBG(false);
+//    msgs->at(0)->setFillBG(false);
+//    msgs->at(1)->setFillBG(false);
+//    msgs->at(2)->setFillBG(false);
 
 
     Button::create(*buttons, "right\naligned",

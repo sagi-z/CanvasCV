@@ -256,7 +256,6 @@ void FloatingText::translate(const Point &translation)
 void FloatingText::recalc()
 {
     prepareMsgParts();
-    raisedWidget();
 }
 
 }
