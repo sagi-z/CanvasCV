@@ -114,15 +114,18 @@ void FloatingText::draw(Mat &dst)
         int yEnd = rect.tl().y + rect.height;
         drawBG(dst, rect);
         int y = yStart;
-        int padding = (rect.width - minimalRect.width) / 2.;
-        for (auto &str : rows)
+        for (auto &strRow : rows)
         {
-            Point textPos(location.x + 5, y);
-            if (padding > 0)
-            {  // FIXME: centering the text as a whole and not per line
-                textPos.x += padding;
+            Point textPos(location.x + 5, y); // aligh to left by default
+            if (flowAnchor & CENTER)
+            {
+                textPos.x += (rect.width - strRow.width) / 2.;
             }
-            putText(dst, str, textPos,
+            else if (flowAnchor & RIGHT)
+            {
+                textPos.x = location.x + rect.width - 5 - strRow.width;
+            }
+            putText(dst, strRow.str, textPos,
                     fontFace, fontScale, outlineColor, thickness, LINE_AA);
             y += fontHeight;
             if (y > yEnd) break;
@@ -140,13 +143,8 @@ void FloatingText::prepareMsgParts()
         int localMaxWidth = boundaries.x + boundaries.width - location.x;
         if (maxWidth && maxWidth < localMaxWidth) localMaxWidth = maxWidth;
         if (localMaxWidth < 10) localMaxWidth = 10;
-        struct LineData
-        {
-            std::string str;
-            int width;
-        };
 
-        std::list<LineData> msgParts;
+        std::list<StringRow> msgParts;
         int totalRows=0;
         int maxNeededWidth = 0;
         int pos = 0;
@@ -191,16 +189,18 @@ void FloatingText::prepareMsgParts()
             if (forcedHeight > rectHeight) rectHeight = forcedHeight;
             rect = Rect(location.x, yRectStart, rectWidth, rectHeight);
             prepareBG(rect.size());
-            for (LineData &lineData : msgParts)
+            for (StringRow &lineData : msgParts)
             {
                 int numRows=1;
                 double ratio = 1.;
+                int realWidth = lineData.width;
                 if (lineData.width   // has +10 pixels for padding
                         > rectWidth) // actual boundaries
                 {
                     // wrap a long line to numRows lines
                     numRows = lineData.width / rectWidth + 1;
                     ratio = (double) lineData.width / rectWidth;
+                    realWidth = rectWidth;
                 }
                 int stringPartsLen = floor(lineData.str.length() / ratio);
                 for (int i = 0; i < numRows; ++i)
@@ -208,7 +208,7 @@ void FloatingText::prepareMsgParts()
                     int start = i * stringPartsLen;
                     int left = lineData.str.length() - start;
                     int len = left > stringPartsLen ? stringPartsLen : left;
-                    rows.push_back(lineData.str.substr(start, len));
+                    rows.push_back({lineData.str.substr(start, len), realWidth});
                 }
             }
         }

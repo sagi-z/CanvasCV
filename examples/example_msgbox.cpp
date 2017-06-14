@@ -73,14 +73,14 @@ int main(int argc, char **argv)
     {
         if (state == Widget::PRESS)
         {
-            cout << "Ok was pressed\n";
+            cout << "Ok was pressed" << endl;
         }
     });
     msgBox->addButton("Cancel", [](Widget *, Widget::State state)
     {
         if (state == Widget::PRESS)
         {
-            cout << "Cancel was pressed\n";
+            cout << "Cancel was pressed" << endl;
         }
     });
 

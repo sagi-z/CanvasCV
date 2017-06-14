@@ -14,6 +14,7 @@ Button::Button(Layout &layoutVal, const Point &pos)
     : FloatingText(layoutVal, pos)
 {
     setRelief(Widget::RAISED);
+    setFlowAnchor(CENTER_TOP);
 }
 
 Button::Button(Layout &layoutVal, const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,
@@ -23,6 +24,7 @@ Button::Button(Layout &layoutVal, const string msgVal, Point locationVal, int ma
                    fontFaceVal)
 {
     setRelief(Widget::RAISED);
+    setFlowAnchor(CENTER_TOP);
 }
 
 const char *Button::getType() const

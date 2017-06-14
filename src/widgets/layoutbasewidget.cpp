@@ -32,7 +32,6 @@ LayoutBaseWidget::LayoutBaseWidget(Layout &layoutVal, const Point &pos)
       drawFrame(false),
       padding(2)
 {
-    fillBG = true;
 }
 
 bool LayoutBaseWidget::isDuringUpdate() const
@@ -85,6 +84,14 @@ void LayoutBaseWidget::setDrawFrame(bool value)
     if (drawFrame != value)
     {
         drawFrame = value;
+        if (drawFrame)
+        {
+            fillBG = true;
+        }
+        else
+        {
+            fillBG = false;
+        }
         setDirty();
     }
 }

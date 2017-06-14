@@ -219,6 +219,8 @@ protected:
     /// Mark us as 'dirty' so before the next draw, our 'update' will be called
     void setDirty();
 
+    bool getIsDirty() const;
+
     /// Removes 'dirty' state and invokes the user defined 'recalc'
     virtual void update();
 
@@ -292,8 +294,6 @@ private:
     virtual void mouseLeave();
 
     int genId();
-
-    bool getIsDirty() const;
 
     void setLayout(Layout &value);
     Layout* getLayout();

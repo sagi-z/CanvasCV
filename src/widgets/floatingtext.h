@@ -77,8 +77,14 @@ private:
 
     void prepareMsgParts();
 
+    struct StringRow
+    {
+        std::string str;
+        int width;
+    };
+
     std::string msg;
-    std::list<std::string> rows;
+    std::list<StringRow> rows;
     int fontHeight;
     int fontFace;
     double fontScale;
