@@ -24,7 +24,8 @@ public:
 
     void rmvWidget(int i);
 
-    Widget *at(int index);
+    template <typename T=Widget>
+    T *at(int index);
 
     static const char *type;
 
@@ -46,6 +47,18 @@ private:
     int spacing;
     std::vector<std::shared_ptr<Widget>> horzWidgets;
 };
+
+// simplest case is the special case
+template<>
+Widget *HorizontalLayout::at(int index);
+
+template<typename T>
+T *HorizontalLayout::at(int index)
+{
+    Widget *pWidget = horzWidgets.at(index).get();
+    assert (pWidget->getType() == T::type);
+    return static_cast<T*>(pWidget);
+}
 
 }
 

@@ -82,11 +82,6 @@ void VerticalLayout::rmvWidget(int i)
     setDirty();
 }
 
-Widget *VerticalLayout::at(int index)
-{
-    return vertWidgets.at(index).get();
-}
-
 bool VerticalLayout::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
 {
     auto i = find_if(vertWidgets.begin(),
@@ -190,6 +185,13 @@ void VerticalLayout::recalc()
     }
 
     LayoutBaseWidget::recalc();
+}
+
+template<>
+Widget *VerticalLayout::at(int index)
+{
+    Widget *pWidget = vertWidgets.at(index).get();
+    return pWidget;
 }
 
 }

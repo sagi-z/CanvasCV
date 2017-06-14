@@ -42,7 +42,7 @@ std::shared_ptr<MsgBox> MsgBox::create(Layout &layout, const string &msg, const 
 
 void MsgBox::setMsg(const string &msg)
 {
-    ((FloatingText*)parts->at(0))->setMsg(msg);
+    parts->at<FloatingText>(0)->setMsg(msg);
     setDirty();
 }
 

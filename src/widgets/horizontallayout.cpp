@@ -82,11 +82,6 @@ void HorizontalLayout::rmvWidget(int i)
     setDirty();
 }
 
-Widget *HorizontalLayout::at(int index)
-{
-    return horzWidgets.at(index).get();
-}
-
 bool HorizontalLayout::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
 {
     auto i = find_if(horzWidgets.begin(),
@@ -190,6 +185,13 @@ void HorizontalLayout::recalc()
     }
 
     LayoutBaseWidget::recalc();
+}
+
+template<>
+Widget *HorizontalLayout::at(int index)
+{
+    Widget *pWidget = horzWidgets.at(index).get();
+    return pWidget;
 }
 
 }

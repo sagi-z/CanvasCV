@@ -25,7 +25,8 @@ public:
 
     void rmvWidget(int i);
 
-    Widget *at(int index);
+    template <typename T=Widget>
+    T *at(int index);
 
     static const char *type;
 
@@ -47,6 +48,18 @@ private:
     int spacing;
     std::vector<std::shared_ptr<Widget>> vertWidgets;
 };
+
+// simplest case is the special case
+template<>
+Widget *VerticalLayout::at(int index);
+
+template<typename T>
+T *VerticalLayout::at(int index)
+{
+    Widget *pWidget = vertWidgets.at(index).get();
+    assert (pWidget->getType() == T::type);
+    return static_cast<T*>(pWidget);
+}
 
 }
 
