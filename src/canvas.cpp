@@ -20,7 +20,7 @@ Canvas::Canvas(Size sizeVal)
 
 Canvas::~Canvas()
 {
-    clear();
+    clearShapes();
 }
 
 void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
@@ -308,7 +308,7 @@ void Canvas::notifyOnShapeDelete(Canvas::CBType cb)
     deleteNotifs.push_back(cb);
 }
 
-void Canvas::clear()
+void Canvas::clearShapes()
 {
     deleteActive();
     setStatusMsg("");
@@ -511,7 +511,7 @@ void write(cv::FileStorage& fs, const std::string&, const Canvas& x)
 
 void read(const cv::FileNode& node, Canvas& x, const Canvas&)
 {
-    x.clear();
+    x.clearShapes();
     cv::FileNode n = node["shapes"];
     FileNodeIterator it = n.begin(), it_end = n.end();
     for (; it != it_end; )

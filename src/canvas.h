@@ -113,7 +113,7 @@ public:
     /**
      * @brief clear all shapes from Canvas
      */
-    void clear();
+    void clearShapes();
 
     /**
      * @brief getShapes of a specific type

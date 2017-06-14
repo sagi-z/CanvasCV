@@ -63,9 +63,9 @@ static string gHelpMsg =
 "9: LabeledShapesConnector\n"
 "h: toggle usage message\n"
 "*: toggle canvas on/off\n"
-"c: clear the canvas\n"
-"s: save to config.xml\n"
-"l: load from config.xml\n"
+"c: clear the shapes from the canvas\n"
+"s: save shapes to config.xml\n"
+"l: load shapes from config.xml\n"
 "DEL: delete active shape\n"
 "q: exit";
 
@@ -277,7 +277,7 @@ int main(int argc, char **argv)
             c.setOn(! c.getOn());
             break;
         case 'c':
-            c.clear();
+            c.clearShapes();
             break;
         case 's':
         {
