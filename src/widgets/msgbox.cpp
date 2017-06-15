@@ -1,6 +1,4 @@
 #include "msgbox.h"
-#include "vframe.h"
-#include "horizontallayout.h"
 #include "floatingtext.h"
 #include "button.h"
 
