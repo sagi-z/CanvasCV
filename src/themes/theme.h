@@ -11,7 +11,7 @@ class Shape;
 
 /**
  * @brief The Theme controls appearance of widgets and shapes
- * Themes are added to the ThemeRepository
+ * Themes are added to the ThemeRepository. You can add your own external themes.
  */
 class Theme
 {
@@ -43,10 +43,8 @@ public:
      * @param rect it the roi inside the dst which will be drawn
      * @param bg was previously allocated by allocateBG()
      * @param alpha in the range of (0, 1) or assumed to be 1 (opaque)
-     * @param fillBG is true to draw the full bg or false to draw only the sorrounding rect
      */
-    virtual void drawBG(cv::Mat &dst, const cv::Rect &rect, const cv::Mat &bg,
-                        double alpha, bool fillBG) = 0;
+    virtual void drawBG(cv::Mat &dst, const cv::Rect &rect, const cv::Mat &bg, double alpha) = 0;
 
     /**
      * @brief flat will cause bg to appear flat

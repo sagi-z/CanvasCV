@@ -9,20 +9,6 @@ using namespace cv;
 namespace canvascv
 {
 
-void CompoundWidget::draw(Mat &dst)
-{
-    if (visible)
-    {
-        for (auto &widget : widgets)
-        {
-            if (widget->getVisible())
-            {
-                widget->draw(dst);
-            }
-        }
-    }
-}
-
 void CompoundWidget::setOutlineColor(const Scalar &value)
 {
     Widget::setOutlineColor(value);
@@ -221,7 +207,7 @@ bool CompoundWidget::isAtPos(const Point &pos)
     return false;
 }
 
-void CompoundWidget::broadcastChange(Widget::State status)
+void CompoundWidget::broadcastChange(State status)
 {
     if (active.get())
     {
@@ -251,6 +237,7 @@ const string &CompoundWidget::getStatusMsg() const
 
 void CompoundWidget::recalc()
 {
+//    Rect origRect = rect;
     int xMin = INT_MAX;
     int yMin = INT_MAX;
     int xMax = 0;
@@ -273,6 +260,11 @@ void CompoundWidget::recalc()
         rect.width = xMax - xMin;
         rect.height = yMax - yMin;
     }
+//    if (origRect != rect)
+//    {
+//        // FIXME: set only the parent layout as dirty
+//        setDirty();
+//    }
 }
 
 CompoundWidget::CompoundWidget(Layout &layoutVal, const Point &pos)
@@ -280,6 +272,22 @@ CompoundWidget::CompoundWidget(Layout &layoutVal, const Point &pos)
 {
     rect.x = location.x;
     rect.y = location.y;
+    fillBG = false;
+}
+
+void CompoundWidget::draw(Mat &dst)
+{
+    Widget::draw(dst);
+    if (visible)
+    {
+        for (auto &widget : widgets)
+        {
+            if (widget->getVisible())
+            {
+                widget->draw(dst);
+            }
+        }
+    }
 }
 
 const Rect &CompoundWidget::getRect()
@@ -301,12 +309,15 @@ void CompoundWidget::addWidget(const shared_ptr<Widget> &widget)
 
 void CompoundWidget::translate(const Point &translation)
 {
-    location += translation;
-    for (auto &widget : widgets)
+    if (translation.x != 0 || translation.y != 0)
     {
-        widget->translate(translation);
+        location += translation;
+        for (auto &widget : widgets)
+        {
+            widget->translate(translation);
+        }
+        setDirty();
     }
-    setDirty();
 }
 
 }

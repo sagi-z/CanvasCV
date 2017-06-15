@@ -11,8 +11,6 @@ class LayoutBaseWidget : public LayoutBase, public CompoundWidget
 {
 public:
 
-    virtual void draw(Mat &dst);
-
     virtual const Rect getBoundaries() const;
 
     int getPadding() const;
@@ -31,8 +29,6 @@ protected:
 
 private:
     virtual void setDirtyLayout();
-
-    bool drawFrame;
 };
 
 }

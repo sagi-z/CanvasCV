@@ -15,7 +15,7 @@ public:
     virtual void rmvDirtyWidget(Widget *widget);
 
 protected:
-    virtual void upodateDirtyWidgets();
+    virtual void updateDirtyWidgets();
     virtual bool isDuringUpdate() const;
 
 private:

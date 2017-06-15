@@ -78,8 +78,8 @@ void HorizontalLayout::rmvWidget(int i)
         shared_ptr<Widget> widget = horzWidgets[i];
         CompoundWidget::rmvWidget(widget);
         horzWidgets.erase(horzWidgets.begin() + i);
+        setDirty();
     }
-    setDirty();
 }
 
 bool HorizontalLayout::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
@@ -116,7 +116,7 @@ bool HorizontalLayout::rmvWidget(const shared_ptr<Widget> &widget)
 
 void HorizontalLayout::recalc()
 {
-    upodateDirtyWidgets();
+    updateDirtyWidgets();
     int maxWidth = 0;
     int maxHeight = 0;
     for (auto &widget : horzWidgets)

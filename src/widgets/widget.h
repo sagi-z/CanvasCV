@@ -21,20 +21,6 @@ class Layout;
 class Widget
 {
 public:
-    enum Relief
-    {
-        FLAT,
-        RAISED,
-        SUNKEN
-    };
-
-    enum State
-    {
-        ENTER,
-        LEAVE,
-        PRESS,
-        RELEASE
-    };
 
     // Used both for internal widget flow and in Layout managers
     // Widget flow:
@@ -63,6 +49,13 @@ public:
     //  align (anchor) the widget vertically to the TOP (default) / CENTER / BOTTOM.
     //   The layout manager will handle horizontal layout according to its own
     //  widget flow - anchored to the LEFT (default) or RIGHT.
+    enum Relief
+    {
+        FLAT,
+        RAISED,
+        SUNKEN
+    };
+
     enum Anchor
     {
         TOP    = 0b00000001,
@@ -78,6 +71,15 @@ public:
         CENTER_BOTTOM = CENTER | BOTTOM,
         CENTER_LEFT   = CENTER | LEFT,
         CENTER_RIGHT  = CENTER | RIGHT
+    };
+
+
+    enum State
+    {
+        ENTER,
+        LEAVE,
+        PRESS,
+        RELEASE
     };
 
     typedef std::function<void(Widget*, State)> CBType;
@@ -162,14 +164,14 @@ public:
     bool getStretchY() const;
     void setStretchY(bool value);
 
-    bool getFillBG() const;
-    virtual void setFillBG(bool value);
-
     cv::Scalar getSelectColor() const;
     virtual void setSelectColor(const cv::Scalar &value);
 
 
 protected:
+
+    bool getFillBG() const;
+    virtual void setFillBG(bool value);
 
     Relief getRelief() const;
     void setRelief(const Relief &value);
@@ -178,7 +180,7 @@ protected:
     void setStateChangesBG();
 
     /// invokes Theme::allocateBG()
-    void prepareBG(const cv::Size &size, int type = CV_8UC3);
+    void allocateBG(const cv::Size &size, int type = CV_8UC3);
 
     /// invokes Theme::drawBG()
     void drawBG(cv::Mat &dst, const cv::Rect &rect);
@@ -202,7 +204,10 @@ protected:
      * @brief draw the widget
      * @param dst
      */
-    virtual void draw(cv::Mat &dst) = 0;
+    virtual void draw(cv::Mat &dst);
+
+    /// dst is the roi of the widget and not full image
+    virtual void drawFG(cv::Mat &dst);
 
     /// Actual size the widget is occupying due to Layout manager
     virtual const cv::Rect &getRect() = 0;

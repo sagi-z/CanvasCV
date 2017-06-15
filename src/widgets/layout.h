@@ -28,7 +28,7 @@ protected:
     // with the fully constructed one (doing nothing else)
     virtual bool replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget) = 0;
 
-    virtual void upodateDirtyWidgets() = 0;
+    virtual void updateDirtyWidgets() = 0;
 };
 
 }

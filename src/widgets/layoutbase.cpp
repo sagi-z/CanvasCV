@@ -26,15 +26,19 @@ void LayoutBase::rmvDirtyWidget(Widget *widget)
     if (pos != dirtyWidgets.end()) dirtyWidgets.erase(pos);
 }
 
-void LayoutBase::upodateDirtyWidgets()
+void LayoutBase::updateDirtyWidgets()
 {
-    duringDirtyHandling = true;
-    while (dirtyWidgets.size())
+    if (! duringDirtyHandling)
     {
-        dirtyWidgets.front()->update();
-        dirtyWidgets.pop_front();
+        duringDirtyHandling = true;
+        while (dirtyWidgets.size())
+        {
+            auto widget = dirtyWidgets.front();
+            dirtyWidgets.pop_front();
+            widget->update();
+        }
+        duringDirtyHandling = false;
     }
-    duringDirtyHandling = false;
 }
 
 bool LayoutBase::isDuringUpdate() const

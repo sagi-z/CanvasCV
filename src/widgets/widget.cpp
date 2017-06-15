@@ -169,7 +169,7 @@ void Widget::setAlpha(double value)
     alpha = value; // this is only used during draw()
 }
 
-void Widget::setLayoutAnchor(const Widget::Anchor &value)
+void Widget::setLayoutAnchor(const Anchor &value)
 {
     if (layoutAnchor != value)
     {
@@ -263,19 +263,19 @@ Widget::State Widget::getState() const
 void Widget::stretchWidth(int width)
 {
     if (width != forcedWidth)
-   {
-       forcedWidth = width;
-       setDirty();
-   }
+    {
+        forcedWidth = width;
+        setDirty();
+    }
 }
 
 void Widget::stretchHeight(int height)
 {
-   if (height != forcedHeight)
-   {
-       forcedHeight = height;
-       setDirty();
-   }
+    if (height != forcedHeight)
+    {
+        forcedHeight = height;
+        setDirty();
+    }
 }
 
 Widget::Relief Widget::getRelief() const
@@ -336,7 +336,7 @@ void Widget::setFillBG(bool value)
     }
 }
 
-void Widget::prepareBG(const Size &size, int type)
+void Widget::allocateBG(const Size &size, int type)
 {
     ThemeRepository::getCurrentTheme()->allocateBG(bg, size, fillColor, type);
     switch (relief)
@@ -369,15 +369,14 @@ void Widget::setStretchY(bool value)
 
 void Widget::drawBG(Mat &dst, const Rect &rect)
 {
-    ThemeRepository::getCurrentTheme()->drawBG(dst, rect, bg, alpha, fillBG);
-//    try
-//    {
-//        ThemeRepository::getCurrentTheme()->drawBG(dst, rect, bg, alpha, fillBG);
-//    }
-//    catch (const cv::Exception &e)
-//    {
-//        cout << e.what() << endl;
-//    }
+    if (fillBG && ! bg.empty())
+    {
+        if (dst.type() != bg.type())
+        {
+            allocateBG(bg.size(), dst.type());
+        }
+        ThemeRepository::getCurrentTheme()->drawBG(dst, rect, bg, alpha);
+    }
 }
 
 void Widget::flatWidget()
@@ -398,6 +397,21 @@ void Widget::sunkenWidget()
 void Widget::selectedWidget()
 {
     ThemeRepository::getCurrentTheme()->selected(bg, selectColor);
+}
+
+void Widget::draw(Mat &dst)
+{
+    const Rect &rect = getRect();
+    if (rect.width && rect.height)
+    {
+        drawBG(dst, rect);
+        Mat roi = dst(rect);
+        drawFG(roi);
+    }
+}
+
+void Widget::drawFG(Mat &dst)
+{
 }
 
 bool Widget::getStretchX() const
@@ -441,7 +455,11 @@ cv::Point Widget::getLocation() const
 
 void Widget::translate(const Point &translation)
 {
-    location += translation;
+    if (translation.x != 0 || translation.y != 0)
+    {
+        location += translation;
+        setDirty();
+    }
 }
 
 void Widget::setDirty()

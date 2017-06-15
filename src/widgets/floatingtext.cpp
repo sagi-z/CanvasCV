@@ -39,8 +39,8 @@ FloatingText::FloatingText(Layout &layoutVal, const string msgVal, Point locatio
 shared_ptr<FloatingText> FloatingText::create(Layout &layout,
                                               const cv::Point &pos,
                                               const string &text,
-                                              Widget::Anchor flowAnchor,
-                                              Widget::Anchor layoutAnchor)
+                                              Anchor flowAnchor,
+                                              Anchor layoutAnchor)
 {
     shared_ptr<FloatingText> widget(WidgetFactoryT<FloatingText>::newWidget(layout, pos));
     widget->setMsg(text);
@@ -51,8 +51,8 @@ shared_ptr<FloatingText> FloatingText::create(Layout &layout,
 
 shared_ptr<FloatingText> FloatingText::create(Layout &layout,
                                               const string &text,
-                                              Widget::Anchor flowAnchor,
-                                              Widget::Anchor layoutAnchor)
+                                              Anchor flowAnchor,
+                                              Anchor layoutAnchor)
 {
     return create(layout, Point(0,0), text, flowAnchor, layoutAnchor);
 }
@@ -104,26 +104,22 @@ void FloatingText::setFontScale(double value)
     }
 }
 
-void FloatingText::draw(Mat &dst)
+void FloatingText::drawFG(Mat &dst)
 {
-    if (msg.length())
+    if (rows.size())
     {
-        if (! rows.size())
-            prepareMsgParts();
-
-        int yEnd = rect.tl().y + rect.height;
-        drawBG(dst, rect);
-        int y = yStart;
+        int yEnd = dst.rows;
+        int y = fontHeight;
         for (auto &strRow : rows)
         {
-            Point textPos(location.x + 5, y); // aligh to left by default
+            Point textPos(5, y); // aligh to left by default
             if (flowAnchor & CENTER)
             {
-                textPos.x += (rect.width - strRow.width) / 2.;
+                textPos.x += (dst.cols - strRow.width) / 2.;
             }
             else if (flowAnchor & RIGHT)
             {
-                textPos.x = location.x + rect.width - 5 - strRow.width;
+                textPos.x = location.x + dst.cols - 5 - strRow.width;
             }
             putText(dst, strRow.str, textPos,
                     fontFace, fontScale, outlineColor, thickness, LINE_AA);
@@ -170,14 +166,11 @@ void FloatingText::prepareMsgParts()
             int yRectStart;
             if (flowAnchor & BOTTOM)
             {
-                yStart = location.y - fontHeight * totalRows;
-                if (yStart < 0) yStart = 0;
-                yRectStart = yStart - fontHeight;
+                yRectStart = (location.y - fontHeight * totalRows) - fontHeight;
+                if (yRectStart < 0) yRectStart = 0;
             }
             else // TOP
             {
-                yStart = location.y + fontHeight;
-                if (yStart < 0) yStart = 0;
                 yRectStart = location.y;
             }
             int rectHeight = min((int) floor(fontHeight * totalRows + fontHeight),
@@ -188,7 +181,6 @@ void FloatingText::prepareMsgParts()
             if (forcedWidth > rectWidth) rectWidth = forcedWidth;
             if (forcedHeight > rectHeight) rectHeight = forcedHeight;
             rect = Rect(location.x, yRectStart, rectWidth, rectHeight);
-            prepareBG(rect.size());
             for (StringRow &lineData : msgParts)
             {
                 int numRows=1;
@@ -213,6 +205,11 @@ void FloatingText::prepareMsgParts()
             }
         }
     }
+    else
+    {
+        rect = minimalRect = Rect();
+    }
+    allocateBG(rect.size());
 }
 
 int FloatingText::getMaxWidth() const
@@ -244,13 +241,9 @@ const Rect &FloatingText::getMinimalRect()
     return minimalRect;
 }
 
-void FloatingText::translate(const Point &translation)
+void FloatingText::setFillBG(bool value)
 {
-    if (translation.x != 0 || translation.y != 0)
-    {
-        Widget::translate(translation);
-        setDirty();
-    }
+   Widget::setFillBG(value);
 }
 
 void FloatingText::recalc()

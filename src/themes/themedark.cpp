@@ -11,25 +11,27 @@ namespace canvascv
 
 void ThemeDark::allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar &color, int type)
 {
-    (void) color; // unused in this theme
-    dst.create(size, type);
-    dst = color;
+    if (size.width == 0 || size.height == 0)
+    {
+        dst = cv::Mat();
+    }
+    else
+    {
+        dst.create(size, type);
+        dst = color;
+    }
 }
 
-void ThemeDark::drawBG(cv::Mat &dst, const cv::Rect &rect, const cv::Mat &bg,
-                       double alpha, bool fillBG)
+void ThemeDark::drawBG(cv::Mat &dst, const cv::Rect &rect, const cv::Mat &bg, double alpha)
 {
     Mat roi = dst(rect);
-    if (fillBG)
+    if (alpha > 0. && alpha < 1.)
     {
-        if (alpha > 0. && alpha < 1.)
-        {
-            cv::addWeighted(bg, alpha, roi, 1.0 - alpha , 0.0, roi);
-        }
-        else
-        {
-            bg.copyTo(roi);
-        }
+        cv::addWeighted(bg, alpha, roi, 1.0 - alpha , 0.0, roi);
+    }
+    else
+    {
+        bg.copyTo(roi);
     }
 }
 

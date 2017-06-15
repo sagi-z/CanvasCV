@@ -78,8 +78,8 @@ void VerticalLayout::rmvWidget(int i)
         shared_ptr<Widget> widget = vertWidgets[i];
         CompoundWidget::rmvWidget(widget);
         vertWidgets.erase(vertWidgets.begin() + i);
+        setDirty();
     }
-    setDirty();
 }
 
 bool VerticalLayout::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
@@ -116,7 +116,7 @@ bool VerticalLayout::rmvWidget(const shared_ptr<Widget> &widget)
 
 void VerticalLayout::recalc()
 {
-    upodateDirtyWidgets();
+    updateDirtyWidgets();
     int maxWidth = 0;
     int maxHeight = 0;
     for (auto &widget : vertWidgets)

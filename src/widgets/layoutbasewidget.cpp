@@ -6,15 +6,6 @@ using namespace std;
 namespace canvascv
 {
 
-void LayoutBaseWidget::draw(Mat &dst)
-{
-    if (drawFrame)
-    {
-        drawBG(dst, rect);
-    }
-    CompoundWidget::draw(dst);
-}
-
 const Rect LayoutBaseWidget::getBoundaries() const
 {
     Rect boundaries = rect;
@@ -29,9 +20,9 @@ const Rect LayoutBaseWidget::getBoundaries() const
 
 LayoutBaseWidget::LayoutBaseWidget(Layout &layoutVal, const Point &pos)
     : CompoundWidget(layoutVal, pos),
-      drawFrame(false),
       padding(2)
 {
+    fillBG = false;
 }
 
 bool LayoutBaseWidget::isDuringUpdate() const
@@ -42,7 +33,7 @@ bool LayoutBaseWidget::isDuringUpdate() const
 void LayoutBaseWidget::recalc()
 {
     CompoundWidget::recalc();
-    if (drawFrame)
+    if (fillBG)
     {
         if (padding)
         {
@@ -51,7 +42,7 @@ void LayoutBaseWidget::recalc()
             rect.width += padding*2;
             rect.height += padding*2;
         }
-        prepareBG(rect.size());
+        allocateBG(rect.size());
     }
 }
 
@@ -76,22 +67,14 @@ void LayoutBaseWidget::setPadding(int value)
 
 bool LayoutBaseWidget::getDrawFrame() const
 {
-    return drawFrame;
+    return getFillBG();
 }
 
 void LayoutBaseWidget::setDrawFrame(bool value)
 {
-    if (drawFrame != value)
+    if (fillBG != value)
     {
-        drawFrame = value;
-        if (drawFrame)
-        {
-            fillBG = true;
-        }
-        else
-        {
-            fillBG = false;
-        }
+        fillBG = value;
         setDirty();
     }
 }

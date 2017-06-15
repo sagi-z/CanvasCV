@@ -40,7 +40,7 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
     }
 
     // Updating dirty widgets before drawing them
-    upodateDirtyWidgets();
+    updateDirtyWidgets();
 
     // widgets are drawn on top of shapes
     for (auto &widget : widgets)

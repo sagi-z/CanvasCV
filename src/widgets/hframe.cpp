@@ -17,7 +17,7 @@ std::shared_ptr<HFrame> HFrame::create(Layout &layout, const Point &pos)
     return widget;
 }
 
-void HFrame::setFrameRelief(Widget::Relief value)
+void HFrame::setFrameRelief(Relief value)
 {
     setRelief(value);
 }
