@@ -473,12 +473,8 @@ void Widget::setDirty()
     {
         if (! isDirty)
         {
-            if (layout->addDirtyWidget(this))
-            {
-                isDirty = true;
-                return;
-            }
-            else
+            isDirty = true;
+            if (! layout->addDirtyWidget(this))
             {
                 isDirty = false;
                 recalc();

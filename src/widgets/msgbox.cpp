@@ -19,11 +19,13 @@ const char *MsgBox::type = "MsgBox";
 MsgBox::MsgBox(Layout &layoutVal, const Point &pos)
     :CompoundWidget(layoutVal, pos)
 {
-    parts = VFrame::create(layoutVal, pos);
-    addWidget(parts);
-    auto ft = FloatingText::create(*parts, "", CENTER_TOP, CENTER);
+    frame = VFrame::create(layoutVal, pos);
+    frame->setFrameRelief(RAISED);
+    frame->setPadding(5);
+    addWidget(frame);
+    auto ft = FloatingText::create(*frame, "", CENTER_TOP, CENTER);
     ft->setFillBG(false); // no seperate background to the text
-    buttons = HorizontalLayout::create(*parts);
+    buttons = HorizontalLayout::create(*frame);
     buttons->setLayoutAnchor(CENTER);
 }
 
@@ -41,7 +43,7 @@ std::shared_ptr<MsgBox> MsgBox::create(Layout &layout, const string &msg, const 
 
 void MsgBox::setMsg(const string &msg)
 {
-    parts->at<FloatingText>(0)->setMsg(msg);
+    frame->at<FloatingText>(0)->setMsg(msg);
     setDirty();
 }
 

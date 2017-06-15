@@ -56,7 +56,7 @@ protected:
     MsgBox(Layout &layoutVal, const cv::Point &pos);
 
 private:
-    std::shared_ptr<VFrame> parts;
+    std::shared_ptr<VFrame> frame;
     std::shared_ptr<HorizontalLayout> buttons;
 };
 
