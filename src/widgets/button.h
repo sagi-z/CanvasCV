@@ -50,7 +50,7 @@ protected:
     Button(Layout &layoutVal, const std::string msgVal = "",
            cv::Point locationVal = cv::Point(0, 0),
            int maxWidthVal = 0,
-           cv::Scalar colorVal = Colors::BLACK,
+           cv::Scalar colorVal = Colors::Black,
            cv::Scalar bgColorVal = Colors::P1_GRAY,
            double fontScaleVal = 0.5,
            int fontThicknessVal = 1,

@@ -18,7 +18,7 @@ FloatingText::FloatingText(Layout &layoutVal, const Point &pos)
       fontFace(FONT_HERSHEY_COMPLEX_SMALL),
       fontHeight(0)
 {
-    outlineColor = Colors::BLACK;
+    outlineColor = Colors::Black;
     fillColor = Colors::P1_GRAY;
 }
 

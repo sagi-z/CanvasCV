@@ -205,7 +205,7 @@ int main(int argc, char **argv)
         }
     } else {
         image.create(640,480,CV_8UC3);
-        image = Colors::WHITE;
+        image = Colors::White;
     }
 
     Canvas c(image.size());

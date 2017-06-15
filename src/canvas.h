@@ -56,14 +56,15 @@ public:
     /// You should delegate OpenCV mouse callback events to this method
     void onMouseMove(const cv::Point &pos);
 
-    /// Create shape on the canvas directly from code
+    /// Create shape by name on the canvas directly from code (instead of by the user using the mouse)
     std::shared_ptr<Shape> createShape(std::string type, const cv::Point &pos = cv::Point(0,0));
 
+    /// Create shape by type on the canvas directly from code (instead of by the user using the mouse)
     template <class T>
     std::shared_ptr<T> createShape(const cv::Point &pos = cv::Point(0,0));
 
     /**
-     * @brief consumeKey takes a key value and tries to use it
+     * @brief consumeKey takes a key value and tries to use it in a shape or widget
      * @param key is the key value received from the user.
      * It will change to -1 if it was consumed by a shape or widget.
      */
@@ -148,50 +149,82 @@ public:
      */
     void getShapes(const cv::Point &pos, std::list<std::shared_ptr<Shape>> &result);
 
+    /// disable the top left text area for manual user messages
     void disableScreenText()
     {
         hasScreenText = false;
     }
 
+    /// disable the bottom left text area for auto status messages
     void disableStatusMsg()
     {
         hasStatusMsg = false;
     }
 
-    void enableScreenText(cv::Scalar color = Colors::BLACK,
+    /**
+     * @brief enableScreenText enables the top left text area for manual user messages
+     * During enable of this feature you can overide some default values
+     * @param color is font color
+     * @param bgColor is rect bg color
+     * @param scale is font scale
+     * @param thickness is font thickness
+     * @param alpha is the alpha value of the rect bg
+     * @param fontFace is the OpenCV fonr to use
+     */
+    void enableScreenText(cv::Scalar color = Colors::Black,
                           cv::Scalar bgColor = Colors::P1_GRAY,
                           double scale = 0.5,
                           int thickness = 1,
                           double alpha = 0.3,
                           int fontFace = FONT_HERSHEY_COMPLEX_SMALL);
 
-    void enableStatusMsg(cv::Scalar color = Colors::P1_ORANGE,
+    /**
+     * @brief enableStatusMsg enables the bottom left text area for auto status messages
+     * During enable of this feature you can overide some default values
+     * @param color is font color
+     * @param bgColor is rect bg color
+     * @param scale is font scale
+     * @param thickness is font thickness
+     * @param alpha is the alpha value of the rect bg
+     * @param fontFace is the OpenCV fonr to use
+     */
+    void enableStatusMsg(cv::Scalar color = Colors::Orange,
                          cv::Scalar bgColor = Colors::P1_GRAY,
                          double scale = 0.5,
                          int thickness = 1,
                          double alpha = 0.3,
                          int fontFace = FONT_HERSHEY_COMPLEX_SMALL);
 
+    /// Manually send a status message (it might be replaced automatically when using widgets and shapes with the mouse)
     void setStatusMsg(const std::string &msg);
 
+    /// Manually set the screen text message. It remains until disabled or changed.
     void setScreenText(const std::string &msg);
 
-    virtual void recalc() {}
-
+    /// Set the Canvas size if the Mat we're drawing on changed size
     void setSize(const cv::Size &value);
 
     virtual void addWidget(const std::shared_ptr<Widget> &widget);
     virtual bool rmvWidget(const std::shared_ptr<Widget> &widget);
 
-    virtual bool rmvWidget(Widget *widget);
-
+    /// is redrawOn() on/off?
     bool getOn() const;
+
+    /// redrawOn will do nothing if value is 'false'
     void setOn(bool value);
 
+    /// write all the shapes currently in the Canvas to a file
     void writeShapesToFile(const std::string &filepath) const;
+
+    /// load all the from a file into the canvas (removing all current shapes in the process)
     void readShapesFromFile(const std::string &filepath);
 
 protected:
+    virtual void recalc() {}
+
+    virtual bool rmvWidget(Widget *widget);
+
+
     virtual const cv::Rect getBoundaries() const;
     virtual bool replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget);
 

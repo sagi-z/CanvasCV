@@ -30,9 +30,9 @@ void read(const cv::FileNode& node, Widget*& x, const Widget *default_value)
 Widget::Widget(Layout &layoutVal, const Point &pos)
     : id(genId()),
       location(pos),
-      outlineColor(Colors::GREEN),
+      outlineColor(Colors::Green),
       fillColor(outlineColor),
-      selectColor(Colors::P1_ORANGE),
+      selectColor(Colors::Orange),
       relief(FLAT),
       locked(false),
       visible(true),

@@ -28,7 +28,7 @@ public:
 
     Shape()
         : id(genId()),
-          outlineColor(Colors::GREEN),
+          outlineColor(Colors::Green),
           fillColor(outlineColor),
           locked(false),
           visible(true),

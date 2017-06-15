@@ -65,8 +65,8 @@ int main(int argc, char **argv)
     // 4. CanvasCV: enabling screen text messages
 
     // Enabling on screen text with changes from defaults
-    c.enableScreenText(Colors::BLACK, // fg
-                       Colors::GREEN, // bg
+    c.enableScreenText(Colors::Black, // fg
+                       Colors::Green, // bg
                        0.6);          // font scale
     help(c);
 

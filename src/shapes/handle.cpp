@@ -16,8 +16,8 @@ Handle::Handle(const Point &pos)
       allowSetPos(true)
 {
     thickness = 3;
-    outlineColor = Colors::RED;
-    fillColor = Colors::RED;
+    outlineColor = Colors::Red;
+    fillColor = Colors::Red;
 }
 
 Handle::~Handle()

@@ -21,7 +21,7 @@ ShapesConnector::ShapesConnector(const Point &pos)
     dragDisabled = true;
     center = addShape<Handle>(pos);
     center->setLocked(true);
-    setOutlineColor(Colors::P1_ORANGE);
+    setOutlineColor(Colors::Orange);
     registerCBs();
 }
 
@@ -322,7 +322,7 @@ Handle::CBID ShapesConnector::registerConnectCB(const int &shapeId, Handle *hand
                     tmpDragTargetColor=tmpDragTarget->getOutlineColor();
                     tmpDragTargetThickness=tmpDragTarget->getThickness();
                     tmpDragTarget->setThickness(tmpDragTargetThickness*3);
-                    tmpDragTarget->setOutlineColor(Colors::RED);
+                    tmpDragTarget->setOutlineColor(Colors::Red);
                 }
             }
         }
