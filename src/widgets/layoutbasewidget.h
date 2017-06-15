@@ -18,18 +18,18 @@ public:
     /**
      * @brief getPadding get number of pixels to pad from Layout rect during layout
      * \verbatim
-     *  +----------------------+
-     *  |       PADDING        |
-     *  |   +--------------+   |
-     *  | P |   Widget     | P |
-     *  | A +--------------+ A |
-     *  | D     SPACING      D |
-     *  | D +--------------+ D |
-     *  | I |   Widget     | I |
-     *  | N +--------------+ N |
-     *  | G     PADDING      G |
-     *  +----------------------+
-     * \endverbatim
+        +----------------------+
+        |       PADDING        |
+        |   +--------------+   |
+        | P |   Widget     | P |
+        | A +--------------+ A |
+        | D     SPACING      D |
+        | D +--------------+ D |
+        | I |   Widget     | I |
+        | N +--------------+ N |
+        | G     PADDING      G |
+        +----------------------+
+     \endverbatim
      * @return padding in pixels
      */
     int getPadding() const;
@@ -37,18 +37,18 @@ public:
     /**
      * @brief setPadding set number of pixels to pad from Layout rect during layout
      * \verbatim
-     *  +----------------------+
-     *  |       PADDING        |
-     *  |   +--------------+   |
-     *  | P |   Widget     | P |
-     *  | A +--------------+ A |
-     *  | D     SPACING      D |
-     *  | D +--------------+ D |
-     *  | I |   Widget     | I |
-     *  | N +--------------+ N |
-     *  | G     PADDING      G |
-     *  +----------------------+
-     * \endverbatim
+        +----------------------+
+        |       PADDING        |
+        |   +--------------+   |
+        | P |   Widget     | P |
+        | A +--------------+ A |
+        | D     SPACING      D |
+        | D +--------------+ D |
+        | I |   Widget     | I |
+        | N +--------------+ N |
+        | G     PADDING      G |
+        +----------------------+
+     \endverbatim
      * @return
      */
     void setPadding(int value);

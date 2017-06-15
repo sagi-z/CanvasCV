@@ -14,7 +14,6 @@ class HorizontalLayout;
 /**
  * @brief The MsgBox class
  * Use a message box with any number of buttons on an OpenCV window
- * @example example_msgbox.cpp
  */
 class MsgBox : public CompoundWidget
 {
@@ -26,7 +25,6 @@ public:
      * @param msg what to display in the MsgBox
      * @param pos location in the Layout (Layouts can ignore that)
      * @return a smart pointer copy of the object kept in the Layout
-     * @example example_msgbox.cpp
      */
     static std::shared_ptr<MsgBox> create(Layout &layout,
                                           const std::string &msg = "",
@@ -44,7 +42,6 @@ public:
      * @param buttonTex will be displayed on the button
      * @param cb will be called on Button's ENTER/LEAVE/PRESS/RELEASE
      * @see Widget::notifyOnChange()
-     * @example example_msgbox.cpp
      */
     void addButton(const std::string &buttonText, CBType cb);
 
@@ -64,5 +61,9 @@ private:
 };
 
 }
+
+/** @example example_msgbox.cpp
+ * This is an example of how to use the MsgBox Widget.
+ */
 
 #endif // MSGBOX_H

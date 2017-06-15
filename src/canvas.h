@@ -23,15 +23,21 @@ namespace canvascv
  *  - You can handle mouse and keyboard events:
  *      -# To create/edit/delete shapes on screen for user selections and landmark configuration.
  *      -# To handle widgets you put on the screen for user input.
- * @example show_all.cpp
  */
 class Canvas : public LayoutBase
 {
 public:
     typedef std::function<void(Shape*)> CBType;
 
+    /**
+     * @brief Canvas
+     * This class is associated with an OpenCV window of a certain size.
+     * @param sizeVal is the size of the OpenCV window
+     * @see setSize()
+     */
     Canvas(cv::Size sizeVal = cv::Size());
 
+    /// release all shapes and widgets. Shape callbacks are invoked doe delete.
     ~Canvas();
 
     /**
@@ -41,10 +47,13 @@ public:
      */
     void redrawOn(const cv::Mat &src, cv::Mat &dst);
 
+    /// You should delegate OpenCV mouse callback events to this method
     void onMousePress(const cv::Point &pos);
 
+    /// You should delegate OpenCV mouse callback events to this method
     void onMouseRelease(const cv::Point &pos);
 
+    /// You should delegate OpenCV mouse callback events to this method
     void onMouseMove(const cv::Point &pos);
 
     /// Create shape on the canvas directly from code
@@ -55,7 +64,8 @@ public:
 
     /**
      * @brief consumeKey takes a key value and tries to use it
-     * @param key is the key value received from the user. It will change to -1 if it was consumed by a shape.
+     * @param key is the key value received from the user.
+     * It will change to -1 if it was consumed by a shape or widget.
      */
     void consumeKey(int &key);
 
@@ -242,5 +252,10 @@ void writeShapes(cv::FileStorage& fs, const std::string&, const Canvas& x);
 void readShapes(const cv::FileNode& node, Canvas& x, const Canvas&);
 
 }
+
+/** @example example_shapes_widgets.cpp
+ * This is an example of using shapes and widgets together.
+ */
+
 
 #endif // CANVAS_H

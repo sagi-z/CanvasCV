@@ -13,25 +13,27 @@ namespace canvascv
  * with a predefined spacing between widgets.
  * - Horizontal layout is automatic according to widget size and spacing.
  *  -# This layout can expand left (it's 'flowAnchor' is RIGHT), or left (it's 'flowAnchor' is RIGHT)
- * - Vertical layout per layed widget is determined according to the layed widget 'layoutAnchor':
- *  -# TOP will align the widget to the top (unless setStretchY() is true in the layed widget)
- *  -# CENTER will align the widget to the center (unless setStretchY() is true in the layed widget)
- *  -# BOTTOM will align the widget to the bottom (unless setStretchY() is true in the layed widget)
- *       WHATEVER
- *  (highest sets the standard for other)
- *          ^
- *          |
- *  +-------------------------------------------------------------------------------+
- *  |       PADDING            PADDING            PADDING            PADDING        |
- *  | P +--------------+ S +--------------+ S                  S                  P |
- *  | A |              | P |    Widget    | P +--------------+ P                  A |
- *  | D |    Widget    | A +--------------+ A |    Widget    | A                  D |
- *  | D |              | C                  C |              | C +--------------+ D |
- *  | I |              | I                  I +--------------+ I |    Widget    | I |
- *  | N +--------------+ N                  N                  N +--------------+ N |
- *  | G     PADDING      G     PADDING      G     PADDING      G     PADDING      G |
- *  +-------------------------------------------------------------------------------+
- *                        layoutAnchor=TOP   layoutAnchor=CENTER layoutAnchor=BOTTOM
+ * - Vertical layout per laid widget is determined according to the laid widget 'layoutAnchor':
+ *  -# TOP will align the widget to the top (unless setStretchY() is true in the laid widget)
+ *  -# CENTER will align the widget to the center (unless setStretchY() is true in the laid widget)
+ *  -# BOTTOM will align the widget to the bottom (unless setStretchY() is true in the laid widget)
+ * \verbatim
+         WHATEVER
+    (highest sets the standard for other)
+            ^
+            |
+    +-------------------------------------------------------------------------------+
+    |       PADDING            PADDING            PADDING            PADDING        |
+    | P +--------------+ S +--------------+ S                  S                  P |
+    | A |              | P |    Widget    | P +--------------+ P                  A |
+    | D |    Widget    | A +--------------+ A |    Widget    | A                  D |
+    | D |              | C                  C |              | C +--------------+ D |
+    | I |              | I                  I +--------------+ I |    Widget    | I |
+    | N +--------------+ N                  N                  N +--------------+ N |
+    | G     PADDING      G     PADDING      G     PADDING      G     PADDING      G |
+    +-------------------------------------------------------------------------------+
+                          layoutAnchor=TOP   layoutAnchor=CENTER layoutAnchor=BOTTOM
+ \endverbatim
  */
 class HorizontalLayout : public LayoutBaseWidget
 {

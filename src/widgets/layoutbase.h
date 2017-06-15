@@ -14,6 +14,7 @@ class LayoutBase : public Layout
 {
 protected:
     LayoutBase();
+    virtual ~LayoutBase();
 
     virtual bool addDirtyWidget(Widget *widget);
     virtual void rmvDirtyWidget(Widget *widget);
