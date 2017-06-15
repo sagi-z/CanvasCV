@@ -11,13 +11,31 @@ namespace canvascv
  * @brief The VerticalLayout class
  * A Layout implementation which lays it's internal widgets vertically
  * with a predefined spacing between widgets.
- * @note
  * - Vertical layout is automatic according to widget size and spacing.
  *  -# This layout can expand up (it's 'flowAnchor' is BOTTOM), or down (it's 'flowAnchor' is TOP)
  * - Horizontal layout per layed widget is determined according to the layed widget 'layoutAnchor':
  *  -# LEFT will align the widget to the left (unless setStretchX() is true in the layed widget)
  *  -# CENTER will align the widget to the center (unless setStretchX() is true in the layed widget)
  *  -# RIGHT will align the widget to the right (unless setStretchX() is true in the layed widget)
+ *  +----------------------+
+ *  |       PADDING        |
+ *  | P +--------+       P |
+ *  | A | Widget |       A |  layoutAnchor = LEFT
+ *  | D +--------+       D |
+ *  | D     SPACING      D |
+ *  | I   +----------+   I |
+ *  | N   |  Widget  |   N |  layoutAnchor = CENTER
+ *  | G   +----------+   G |
+ *  |       SPACING        |
+ *  |        +---------+   |
+ *  | P      | Widget  | P |  layoutAnchor = RIGHT
+ *  | A      +---------+ A |
+ *  | D     SPACING      D |
+ *  | D +--------------+ D |
+ *  | I |   Widget     | I |  WHATEVER (widest sets the standard for other)
+ *  | N +--------------+ N |
+ *  | G     PADDING      G |
+ *  +----------------------+
  */
 class VerticalLayout : public LayoutBaseWidget
 {
