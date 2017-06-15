@@ -292,6 +292,11 @@ void Widget::setRelief(const Relief &value)
     }
 }
 
+const Rect Widget::getLayoutBoundaries() const
+{
+   return layout->getBoundaries();
+}
+
 cv::Scalar Widget::getSelectColor() const
 {
     return selectColor;

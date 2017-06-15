@@ -168,7 +168,6 @@ public:
 
     virtual void recalc() {}
 
-    virtual const cv::Rect getBoundaries() const;
     void setSize(const cv::Size &value);
 
     virtual void addWidget(const std::shared_ptr<Widget> &widget);
@@ -183,6 +182,7 @@ public:
     void readShapesFromFile(const std::string &filepath);
 
 protected:
+    virtual const cv::Rect getBoundaries() const;
     virtual bool replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget);
 
 private:

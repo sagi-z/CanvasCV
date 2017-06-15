@@ -11,7 +11,7 @@ const Rect LayoutBaseWidget::getBoundaries() const
     Rect boundaries = rect;
     if (layout)
     {
-        boundaries = layout->getBoundaries();
+        boundaries = getLayoutBoundaries();
     }
     if (forcedWidth) boundaries.width = forcedWidth;
     if (forcedHeight) boundaries.height = forcedHeight;

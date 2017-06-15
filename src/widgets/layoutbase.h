@@ -6,15 +6,17 @@
 namespace canvascv
 {
 
+/**
+ * @brief The LayoutBase class
+ * Common base class for all Layout classes
+ */
 class LayoutBase : public Layout
 {
-public:
+protected:
     LayoutBase();
 
     virtual bool addDirtyWidget(Widget *widget);
     virtual void rmvDirtyWidget(Widget *widget);
-
-protected:
     virtual void updateDirtyWidgets();
     virtual bool isDuringUpdate() const;
 

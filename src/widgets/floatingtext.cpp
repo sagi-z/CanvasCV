@@ -135,7 +135,7 @@ void FloatingText::prepareMsgParts()
     if (msg.length())
     {
         if (! layout) return;
-        const Rect &boundaries = layout->getBoundaries();
+        const Rect &boundaries = getLayoutBoundaries();
         int localMaxWidth = boundaries.x + boundaries.width - location.x;
         if (maxWidth && maxWidth < localMaxWidth) localMaxWidth = maxWidth;
         if (localMaxWidth < 10) localMaxWidth = 10;

@@ -11,12 +11,13 @@ class LayoutBaseWidget : public LayoutBase, public CompoundWidget
 {
 public:
 
-    virtual const Rect getBoundaries() const;
-
     int getPadding() const;
     void setPadding(int value);
 
 protected:
+
+    virtual const Rect getBoundaries() const;
+
     bool getDrawFrame() const;
     void setDrawFrame(bool value);
 

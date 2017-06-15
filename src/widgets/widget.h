@@ -176,6 +176,8 @@ protected:
     Relief getRelief() const;
     void setRelief(const Relief &value);
 
+    const cv::Rect getLayoutBoundaries() const;
+
     /// widgets like buttons change bg on mouse events
     void setStateChangesBG();
 
