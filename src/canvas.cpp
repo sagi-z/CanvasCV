@@ -63,9 +63,9 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
     }
 }
 
-void Canvas::onMousePress(const cv::Point &pos)
+bool Canvas::onMousePress(const cv::Point &pos)
 {
-    if (! on) return;
+    if (! on) return false;
 
     // widgets have preference over shapes
     if (activeWidget.get())
@@ -73,7 +73,7 @@ void Canvas::onMousePress(const cv::Point &pos)
         if (activeWidget->isAtPos(pos))
         {
             activeWidget->broadcastChange(Widget::PRESS);
-            return;
+            return true;
         }
         else
         {
@@ -101,7 +101,7 @@ void Canvas::onMousePress(const cv::Point &pos)
             }
             setStatusMsg("");
         }
-        return;
+        return false;
     }
 
     // try to set active shape
@@ -122,7 +122,7 @@ void Canvas::onMousePress(const cv::Point &pos)
                 }
             }
             active->broadcastEvent(Shape::SELECT);
-            return;
+            return true;
         }
     }
 
@@ -147,8 +147,11 @@ void Canvas::onMousePress(const cv::Point &pos)
         else
         {
             active->broadcastEvent(Shape::SELECT);
+            return true;
         }
     }
+
+    return false;
 }
 
 void Canvas::onMouseRelease(const cv::Point &pos)

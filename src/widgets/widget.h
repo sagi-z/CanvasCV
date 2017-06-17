@@ -84,7 +84,7 @@ public:
 
     typedef std::function<void(Widget*, State)> CBWidgetState;
 
-    typedef std::function<void(int)> CBUserSelection;
+    typedef std::function<void(Widget*, int)> CBUserSelection;
 
     Widget(Layout &layoutVal, const cv::Point &pos = cv::Point(0,0));
 

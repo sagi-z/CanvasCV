@@ -39,6 +39,9 @@ public:
                                           const std::string &statusMsg="",
                                           int maxWidthVal = 0);
 
+    /// The button will always have a FLAT relief
+    void setFlatButton();
+
     static const char *type;
 
 protected:

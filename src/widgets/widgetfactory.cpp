@@ -43,6 +43,7 @@ bool WidgetFactory::postConstuct(Layout &layout, const std::shared_ptr<Widget> &
 #include "vframe.h"
 #include "hframe.h"
 #include "msgbox.h"
+#include "selectionbox.h"
 
 namespace canvascv
 {
@@ -54,5 +55,6 @@ REGISTER_WIDGET(HorizontalLayout);
 REGISTER_WIDGET(VFrame);
 REGISTER_WIDGET(HFrame);
 REGISTER_WIDGET(MsgBox);
+REGISTER_WIDGET(SelectionBox);
 
 }

@@ -2,6 +2,9 @@
 #include "floatingtext.h"
 #include "button.h"
 #include "canvas.h"
+using namespace std;
+
+using namespace cv;
 
 namespace canvascv
 {
@@ -40,7 +43,7 @@ const char *MsgBox::getType() const
     return type;
 }
 
-std::shared_ptr<MsgBox> MsgBox::create(Canvas &canvas, const string &msg, std::vector<string> buttonNames,
+shared_ptr<MsgBox> MsgBox::create(Canvas &canvas, const string &msg, vector<string> buttonNames,
                                        CBUserSelection cbUserSelection, const Point &pos)
 {
     shared_ptr<MsgBox> msgBox(WidgetFactoryT<MsgBox>::newWidget(canvas, pos));
@@ -51,11 +54,11 @@ std::shared_ptr<MsgBox> MsgBox::create(Canvas &canvas, const string &msg, std::v
         auto button = Button::create(*msgBox->buttons, buttonNames[i]);
         button->setStretchX(true);
         button->setStretchY(true);
-        button->notifyOnChange([msgBox, i, cbUserSelection](Widget *, Widget::State state) {
+        button->notifyOnChange([msgBox, i, cbUserSelection](Widget *w, Widget::State state) {
             if (state == Widget::PRESS) {
                 msgBox->userSelection = i;
+                if (cbUserSelection) cbUserSelection(w, i);
                 msgBox->rmvFromLayout();
-                if (cbUserSelection) cbUserSelection(i);
             }
         });
     }

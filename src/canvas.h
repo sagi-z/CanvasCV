@@ -47,8 +47,8 @@ public:
      */
     void redrawOn(const cv::Mat &src, cv::Mat &dst);
 
-    /// You should delegate OpenCV mouse callback events to this method
-    void onMousePress(const cv::Point &pos);
+    /// You should delegate OpenCV mouse callback events to this method - returns true if did something at pos
+    bool onMousePress(const cv::Point &pos);
 
     /// You should delegate OpenCV mouse callback events to this method
     void onMouseRelease(const cv::Point &pos);

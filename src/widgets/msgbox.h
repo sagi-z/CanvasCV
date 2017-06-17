@@ -10,8 +10,6 @@ namespace canvascv
 {
 
 class Canvas;
-class VFrame;
-class HorizontalLayout;
 
 /**
  * @brief The MsgBox class
@@ -51,7 +49,7 @@ public:
             key = waitKeyEx(...);
         }
      * @endcode
-     * Or you could use the callback version
+     * Or you could use the callback version (see the example)
      * @see getSelectedButton
      */
     static std::shared_ptr<MsgBox> create(Canvas &canvas,

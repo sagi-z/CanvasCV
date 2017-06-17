@@ -50,14 +50,33 @@ std::shared_ptr<Button> Button::create(Layout &layout, const string &buttonText,
     return create(layout, Point(0, 0), buttonText, statusMsg, maxWidthVal);
 }
 
+void Button::setFlatButton()
+{
+   setRelief(FLAT);
+}
+
 void Button::mousePressed()
 {
-    sunkenWidget();
+    if (relief == FLAT)
+    {
+        flatWidget();
+    }
+    else
+    {
+        sunkenWidget();
+    }
 }
 
 void Button::mouseReleased()
 {
-    raisedWidget();
+    if (relief == FLAT)
+    {
+        flatWidget();
+    }
+    else
+    {
+        raisedWidget();
+    }
 }
 
 void Button::mouseEnter()
@@ -67,8 +86,14 @@ void Button::mouseEnter()
 
 void Button::mouseLeave()
 {
-
-    raisedWidget();
+    if (relief == FLAT)
+    {
+        flatWidget();
+    }
+    else
+    {
+        raisedWidget();
+    }
 }
 
 }
