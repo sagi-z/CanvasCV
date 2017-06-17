@@ -21,7 +21,7 @@ void HorizontalLayout::setSpacing(int value)
 }
 
 HorizontalLayout::HorizontalLayout(Layout &layoutVal, const Point &pos)
-    : LayoutBaseWidget(layoutVal, pos),
+    : AutoLayout(layoutVal, pos),
       spacing(5)
 {
 }
@@ -47,79 +47,12 @@ void HorizontalLayout::readInternals(const FileNode &node)
 }
 */
 
-void HorizontalLayout::addWidget(const shared_ptr<Widget> &widget)
-{
-    Layout* prevLayout = widget->getLayout();
-    if (prevLayout) prevLayout->rmvWidget(widget);
-    widget->setLayout(*this);
-    Point pos = location;
-    if (flowAnchor & LEFT)
-    {
-        pos.x = rect.x + rect.width + spacing;
-    }
-    else if (flowAnchor & RIGHT)
-    {
-        pos.x = rect.x - spacing;
-    }
-    else
-    {
-        abort();
-    }
-    widget->setLocation(pos);
-    horzWidgets.push_back(widget);
-    CompoundWidget::addWidget(widget);
-    setDirty();
-}
-
-void HorizontalLayout::rmvWidget(int i)
-{
-    if (i < horzWidgets.size())
-    {
-        shared_ptr<Widget> widget = horzWidgets[i];
-        CompoundWidget::rmvWidget(widget);
-        horzWidgets.erase(horzWidgets.begin() + i);
-        setDirty();
-    }
-}
-
-bool HorizontalLayout::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
-{
-    auto i = find_if(horzWidgets.begin(),
-                     horzWidgets.end(),
-                     [widget](const shared_ptr<Widget> &item)->bool
-    {
-        return item.get() == widget.get();
-    });
-    if (i != horzWidgets.end())
-    {
-        i->reset();
-        *i = widget;
-        CompoundWidget::replaceTmpSharedPtr(widget);
-        return true;
-    }
-    return false;
-}
-
-bool HorizontalLayout::rmvWidget(const shared_ptr<Widget> &widget)
-{
-    if (CompoundWidget::rmvWidget(widget))
-    {
-        rmvDirtyWidget(widget.get());
-        horzWidgets.erase(find(horzWidgets.begin(),
-                               horzWidgets.end(),
-                               widget));
-        setDirty();
-        return true;
-    }
-    return false;
-}
-
 void HorizontalLayout::recalc()
 {
     updateDirtyWidgets();
     int maxWidth = 0;
     int maxHeight = 0;
-    for (auto &widget : horzWidgets)
+    for (auto &widget : widgets)
     {
         const Rect &minRect = widget->getMinimalRect();
         maxWidth = max(maxWidth, minRect.width);
@@ -130,7 +63,7 @@ void HorizontalLayout::recalc()
     if (flowAnchor & RIGHT) pos.x -= padding;
     else pos.x += padding;
 
-    for (auto &widget : horzWidgets)
+    for (auto &widget : widgets)
     {
         Anchor widgetLayoutAnchor = widget->getLayoutAnchor();
         if (widgetLayoutAnchor & BOTTOM)
@@ -184,14 +117,7 @@ void HorizontalLayout::recalc()
         }
     }
 
-    LayoutBaseWidget::recalc();
-}
-
-template<>
-Widget *HorizontalLayout::at(int index)
-{
-    Widget *pWidget = horzWidgets.at(index).get();
-    return pWidget;
+    AutoLayout::recalc();
 }
 
 }

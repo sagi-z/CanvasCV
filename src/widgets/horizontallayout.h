@@ -1,8 +1,7 @@
 #ifndef HORIZONTALLAYOUT_H
 #define HORIZONTALLAYOUT_H
 
-#include "compoundwidget.h"
-#include "layoutbasewidget.h"
+#include "autolayout.h"
 
 namespace canvascv
 {
@@ -35,7 +34,7 @@ namespace canvascv
                           layoutAnchor=TOP   layoutAnchor=CENTER layoutAnchor=BOTTOM
  \endverbatim
  */
-class HorizontalLayout : public LayoutBaseWidget
+class HorizontalLayout : public AutoLayout
 {
 public:
 
@@ -56,16 +55,6 @@ public:
     /// sets pixel spacing between items
     void setSpacing(int value);
 
-    virtual void addWidget(const std::shared_ptr<Widget> &widget);
-    virtual bool rmvWidget(const std::shared_ptr<Widget> &widget);
-
-    /// remove a widget at index 'i' (silently ignores 'i' too big)
-    void rmvWidget(int i);
-
-    /// return a widget at index 'i' (or 0 if type is wrong ot 'i' is too big)
-    template <typename T=Widget>
-    T *at(int index);
-
     static const char *type;
 
 protected:
@@ -76,8 +65,6 @@ protected:
 
     virtual void recalc();
 
-    virtual bool replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget);
-
     /* TODO - write/read widgets to file for a designer app
     virtual void writeInternals(FileStorage &fs) const;
     virtual void readInternals(const FileNode &node);
@@ -86,20 +73,7 @@ protected:
 private:
 
     int spacing;
-    std::vector<std::shared_ptr<Widget>> horzWidgets;
 };
-
-// simplest case is the special case
-template<>
-Widget *HorizontalLayout::at(int index);
-
-template<typename T>
-T *HorizontalLayout::at(int index)
-{
-    Widget *pWidget = horzWidgets.at(index).get();
-    assert (pWidget->getType() == T::type);
-    return static_cast<T*>(pWidget);
-}
 
 }
 

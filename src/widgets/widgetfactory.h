@@ -11,9 +11,6 @@
 namespace canvascv
 {
 
-using namespace std;
-using namespace cv;
-
 class Widget;
 class Layout;
 
@@ -45,7 +42,7 @@ private:
     template <class T> friend class WidgetFactoryT;
 
     static bool postConstuct(Layout &layout, const std::shared_ptr<Widget> &widget);
-    typedef map<std::string,Allocator> AllocatorsMap;
+    typedef std::map<std::string,Allocator> AllocatorsMap;
     static AllocatorsMap *allocators;
 };
 

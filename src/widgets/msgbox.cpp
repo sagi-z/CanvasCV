@@ -21,8 +21,7 @@ MsgBox::MsgBox(Layout &layoutVal, const Point &pos)
     :CompoundWidget(layoutVal, pos),
       userSelection(-1)
 {
-    frame = VFrame::create(layoutVal, pos);
-    addWidget(frame);
+    frame = VFrame::create(*this, pos);
     frame->setFrameRelief(RAISED);
     frame->setPadding(5);
     auto ft = FloatingText::create(*frame, "", CENTER_TOP, CENTER);
@@ -44,7 +43,6 @@ const char *MsgBox::getType() const
 std::shared_ptr<MsgBox> MsgBox::create(Canvas &canvas, const string &msg, std::vector<string> buttonNames, const Point &pos)
 {
     shared_ptr<MsgBox> msgBox(WidgetFactoryT<MsgBox>::newWidget(canvas, pos));
-    canvas.rmvWidget(msgBox->frame);
     msgBox->setMsg(msg);
 
     for (int i = 0; i < buttonNames.size(); ++i)

@@ -272,7 +272,7 @@ private:
 
     // All the layout implementations are friends
     friend class LayoutBase;
-    friend class LayoutBaseWidget;
+    friend class AutoLayout;
     friend class VerticalLayout;
     friend class HorizontalLayout;
 

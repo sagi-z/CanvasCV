@@ -1,5 +1,5 @@
-#ifndef LAYOUTBASEWIDGET_H
-#define LAYOUTBASEWIDGET_H
+#ifndef AUTOLAYOUT_H
+#define AUTOLAYOUT_H
 
 #include "layoutbase.h"
 #include "compoundwidget.h"
@@ -8,10 +8,10 @@ namespace canvascv
 {
 
 /**
- * @brief The LayoutBaseWidget class
+ * @brief The AutoLayout class
  * Base class for all Layout managers which are also widgets (not the Canvas class)
  */
-class LayoutBaseWidget : public LayoutBase, public CompoundWidget
+class AutoLayout : public CompoundWidget
 {
 public:
 
@@ -53,23 +53,43 @@ public:
      */
     void setPadding(int value);
 
-protected:
+    /// remove a widget at index 'i' (silently ignores 'i' too big)
+    void rmvWidget(int i);
 
-    virtual const Rect getBoundaries() const;
+    /// return a widget at index 'i' (or 0 if type is wrong ot 'i' is too big)
+    template <typename T=Widget>
+    T *at(int index);
+
+protected:
 
     bool getDrawFrame() const;
     void setDrawFrame(bool value);
 
-    LayoutBaseWidget(Layout &layoutVal, const cv::Point& pos);
+    AutoLayout(Layout &layoutVal, const cv::Point& pos);
 
     virtual bool isDuringUpdate() const;
     virtual void recalc();
 
     int padding;
-
-private:
-    virtual void setDirtyLayout();
 };
 
+// simplest case is the special case
+template<>
+Widget *AutoLayout::at(int index);
+
+template<typename T>
+T *AutoLayout::at(int index)
+{
+    Widget *pWidget = nullptr;
+    if (index < widgets.size())
+    {
+        auto i = widgets.begin();
+        std::advance(i, index);
+        pWidget = i->get();
+        assert (pWidget->getType() == T::type);
+    }
+    return static_cast<T*>(pWidget);
 }
-#endif // LAYOUTBASEWIDGET_H
+
+}
+#endif // AUTOLAYOUT_H

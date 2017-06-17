@@ -21,7 +21,7 @@ void VerticalLayout::setSpacing(int value)
 }
 
 VerticalLayout::VerticalLayout(Layout &layoutVal, const Point &pos)
-    : LayoutBaseWidget(layoutVal, pos),
+    : AutoLayout(layoutVal, pos),
       spacing(5)
 {
 }
@@ -47,79 +47,12 @@ void VerticalLayout::readInternals(const FileNode &node)
 }
 */
 
-void VerticalLayout::addWidget(const shared_ptr<Widget> &widget)
-{
-    Layout* prevLayout = widget->getLayout();
-    if (prevLayout) prevLayout->rmvWidget(widget);
-    widget->setLayout(*this);
-    Point pos = location;
-    if (flowAnchor & TOP)
-    {
-        pos.y = rect.y + rect.height + spacing;
-    }
-    else if (flowAnchor & BOTTOM)
-    {
-        pos.y = rect.y - spacing;
-    }
-    else
-    {
-        abort();
-    }
-    widget->setLocation(pos);
-    vertWidgets.push_back(widget);
-    CompoundWidget::addWidget(widget);
-    setDirty();
-}
-
-void VerticalLayout::rmvWidget(int i)
-{
-    if (i < vertWidgets.size())
-    {
-        shared_ptr<Widget> widget = vertWidgets[i];
-        CompoundWidget::rmvWidget(widget);
-        vertWidgets.erase(vertWidgets.begin() + i);
-        setDirty();
-    }
-}
-
-bool VerticalLayout::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
-{
-    auto i = find_if(vertWidgets.begin(),
-                     vertWidgets.end(),
-                     [widget](const shared_ptr<Widget> &item)->bool
-    {
-        return item.get() == widget.get();
-    });
-    if (i != vertWidgets.end())
-    {
-        i->reset();
-        *i = widget;
-        CompoundWidget::replaceTmpSharedPtr(widget);
-        return true;
-    }
-    return false;
-}
-
-bool VerticalLayout::rmvWidget(const shared_ptr<Widget> &widget)
-{
-    if (CompoundWidget::rmvWidget(widget))
-    {
-        rmvDirtyWidget(widget.get());
-        vertWidgets.erase(find(vertWidgets.begin(),
-                               vertWidgets.end(),
-                               widget));
-        setDirty();
-        return true;
-    }
-    return false;
-}
-
 void VerticalLayout::recalc()
 {
     updateDirtyWidgets();
     int maxWidth = 0;
     int maxHeight = 0;
-    for (auto &widget : vertWidgets)
+    for (auto &widget : widgets)
     {
         const Rect &minRect = widget->getMinimalRect();
         maxWidth = max(maxWidth, minRect.width);
@@ -130,7 +63,7 @@ void VerticalLayout::recalc()
     if (flowAnchor & BOTTOM) pos.y -= padding;
     else pos.y += padding;
 
-    for (auto &widget : vertWidgets)
+    for (auto &widget : widgets)
     {
         Anchor widgetLayoutAnchor = widget->getLayoutAnchor();
         if (widgetLayoutAnchor & RIGHT)
@@ -184,14 +117,7 @@ void VerticalLayout::recalc()
         }
     }
 
-    LayoutBaseWidget::recalc();
-}
-
-template<>
-Widget *VerticalLayout::at(int index)
-{
-    Widget *pWidget = vertWidgets.at(index).get();
-    return pWidget;
+    AutoLayout::recalc();
 }
 
 }

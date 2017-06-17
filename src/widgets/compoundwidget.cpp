@@ -101,6 +101,8 @@ bool CompoundWidget::rmvWidget(Widget *widget)
     if (i != widgets.end())
     {
         widgets.erase(i);
+        rmvDirtyWidget(widget);
+        setDirty();
         return true;
     }
     return false;
@@ -117,7 +119,6 @@ void CompoundWidget::update()
 
 bool CompoundWidget::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
 {
-
     auto i = find_if(widgets.begin(),
                      widgets.end(),
                      [widget](const shared_ptr<Widget> &item)->bool
@@ -128,8 +129,14 @@ bool CompoundWidget::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
     {
         i->reset();
         *i = widget;
+        return true;
     }
     return false;
+}
+
+void CompoundWidget::setDirtyLayout()
+{
+    setDirty();
 }
 
 bool CompoundWidget::rmvWidget(const std::shared_ptr<Widget> &widget)
@@ -143,6 +150,7 @@ bool CompoundWidget::rmvWidget(const std::shared_ptr<Widget> &widget)
     if (i != widgets.end())
     {
         widgets.erase(i);
+        rmvDirtyWidget(widget.get());
         setDirty();
         return true;
     }
@@ -237,7 +245,6 @@ const string &CompoundWidget::getStatusMsg() const
 
 void CompoundWidget::recalc()
 {
-//    Rect origRect = rect;
     int xMin = INT_MAX;
     int yMin = INT_MAX;
     int xMax = 0;
@@ -260,11 +267,6 @@ void CompoundWidget::recalc()
         rect.width = xMax - xMin;
         rect.height = yMax - yMin;
     }
-//    if (origRect != rect)
-//    {
-//        // FIXME: set only the parent layout as dirty
-//        setDirty();
-//    }
 }
 
 CompoundWidget::CompoundWidget(Layout &layoutVal, const Point &pos)
@@ -273,6 +275,18 @@ CompoundWidget::CompoundWidget(Layout &layoutVal, const Point &pos)
     rect.x = location.x;
     rect.y = location.y;
     fillBG = false;
+}
+
+const Rect CompoundWidget::getBoundaries() const
+{
+    Rect boundaries = rect;
+    if (layout)
+    {
+        boundaries = getLayoutBoundaries();
+    }
+    if (forcedWidth) boundaries.width = forcedWidth;
+    if (forcedHeight) boundaries.height = forcedHeight;
+    return boundaries;
 }
 
 void CompoundWidget::draw(Mat &dst)
@@ -302,7 +316,9 @@ const Rect &CompoundWidget::getMinimalRect()
 
 void CompoundWidget::addWidget(const shared_ptr<Widget> &widget)
 {
-    rmvWidget(widget);
+    Layout* prevLayout = widget->getLayout();
+    if (prevLayout) prevLayout->rmvWidget(widget);
+    widget->setLayout(*this);
     widgets.push_back(widget);
     setDirty();
 }

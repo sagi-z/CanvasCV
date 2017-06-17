@@ -1,4 +1,8 @@
 #include "hframe.h"
+#include "widgetfactory.h"
+
+using namespace cv;
+using namespace std;
 
 namespace canvascv
 {
@@ -11,7 +15,7 @@ HFrame::HFrame(Layout &layoutVal, const Point &pos)
     setDrawFrame(true);
 }
 
-std::shared_ptr<HFrame> HFrame::create(Layout &layout, const Point &pos)
+shared_ptr<HFrame> HFrame::create(Layout &layout, const Point &pos)
 {
     shared_ptr<HFrame> widget(WidgetFactoryT<HFrame>::newWidget(layout, pos));
     return widget;

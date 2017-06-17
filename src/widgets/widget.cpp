@@ -4,24 +4,27 @@
 #include "themes/theme.h"
 #include "themes/themerepository.h"
 
+using namespace std;
+using namespace cv;
+
 namespace canvascv
 {
 
 /* TODO - write/read widgets to file for a designer app
-void write(cv::FileStorage& fs, const std::string&, const Widget& x)
+void write(FileStorage& fs, const string&, const Widget& x)
 {
     x.write(fs);
 }
 
-void read(const cv::FileNode& node, Widget*& x, const Widget *default_value)
+void read(const FileNode& node, Widget*& x, const Widget *default_value)
 {
     (void)default_value; // avoid unused compilation warning
     if(node.empty())
     {
         x = 0;
     } else {
-        std::string type = (std::string)node["XXXconcreteTypeXXX"];
-        x = WidgetFactory::newWidget(type,cv::Point(0,0));
+        string type = (string)node["XXXconcreteTypeXXX"];
+        x = WidgetFactory::newWidget(type,Point(0,0));
         x->read(node);
     }
 }
@@ -37,7 +40,7 @@ Widget::Widget(Layout &layoutVal, const Point &pos)
       locked(false),
       visible(true),
       thickness(1),
-      lineType(cv::LINE_AA),
+      lineType(LINE_AA),
       alpha(0.5),
       fillBG(true),
       forcedWidth(0),
@@ -200,7 +203,7 @@ Layout *Widget::getLayout()
     return layout;
 }
 
-void Widget::layoutResized(const cv::Rect &boundaries)
+void Widget::layoutResized(const Rect &boundaries)
 {
    setDirty();
 }
@@ -210,7 +213,7 @@ const string &Widget::getStatusMsg() const
     return statusMsg;
 }
 
-void Widget::setStatusMsg(const std::string &value)
+void Widget::setStatusMsg(const string &value)
 {
     statusMsg = value;
 }
@@ -241,14 +244,14 @@ void Widget::broadcastChange(State status)
 }
 
 /* TODO - write/read widgets to file for a designer app
-void Widget::write(cv::FileStorage& fs) const
+void Widget::write(FileStorage& fs) const
 {
     fs << "{";
     writeInternals(fs);
     fs << "}";
 }
 
-void Widget::read(const cv::FileNode& node)
+void Widget::read(const FileNode& node)
 {
     readInternals(node);
 }
@@ -297,12 +300,12 @@ const Rect Widget::getLayoutBoundaries() const
    return layout->getBoundaries();
 }
 
-cv::Scalar Widget::getSelectColor() const
+Scalar Widget::getSelectColor() const
 {
     return selectColor;
 }
 
-void Widget::setSelectColor(const cv::Scalar &value)
+void Widget::setSelectColor(const Scalar &value)
 {
     if (selectColor != value)
     {
@@ -453,7 +456,7 @@ bool Widget::getIsDirty() const
     return isDirty;
 }
 
-cv::Point Widget::getLocation() const
+Point Widget::getLocation() const
 {
     return location;
 }
@@ -510,7 +513,7 @@ void Widget::setLocation(const Point &value)
 }
 
 /* TODO - write/read widgets to file for a designer app
-void Widget::readInternals(const cv::FileNode &node)
+void Widget::readInternals(const FileNode &node)
 {
     node["id"] >> id;
     node["leftPos"] >> location;
@@ -542,7 +545,7 @@ void Widget::readInternals(const cv::FileNode &node)
     setDirty();
 }
 
-void Widget::writeInternals(cv::FileStorage &fs) const
+void Widget::writeInternals(FileStorage &fs) const
 {
     fs << "XXXconcreteTypeXXX" << getType() <<
           "id" << id <<
@@ -562,9 +565,9 @@ void Widget::writeInternals(cv::FileStorage &fs) const
           "statusMsg" << statusMsg;
 }
 
-std::ostream &operator<<(std::ostream &o, const Widget &widget)
+ostream &operator<<(ostream &o, const Widget &widget)
 {
-    cv::FileStorage fs("ignore.xml", cv::FileStorage::WRITE | cv::FileStorage::MEMORY);
+    FileStorage fs("ignore.xml", FileStorage::WRITE | FileStorage::MEMORY);
     fs << widget.getType() << widget;
     o << fs.releaseAndGetString().c_str();
     return o;
