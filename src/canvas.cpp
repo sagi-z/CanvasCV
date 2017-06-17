@@ -551,6 +551,11 @@ bool Canvas::rmvWidget(Widget *widget)
     if (i != widgets.end())
     {
         widgets.erase(i);
+        rmvDirtyWidget(widget);
+        if (widget == activeWidget.get())
+        {
+            activeWidget.reset();
+        }
         return true;
     }
     return false;
@@ -565,12 +570,7 @@ void Canvas::addWidget(const shared_ptr<Widget> &widget)
 
 bool Canvas::rmvWidget(const shared_ptr<Widget> &widget)
 {
-    if (rmvWidget(widget.get()))
-    {
-        rmvDirtyWidget(widget.get());
-        return true;
-    }
-    return false;
+    return rmvWidget(widget.get());
 }
 
 void Canvas::setDirtyLayout()

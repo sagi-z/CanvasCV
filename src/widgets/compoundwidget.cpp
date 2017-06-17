@@ -90,24 +90,6 @@ void CompoundWidget::setVisible(bool value)
     }
 }
 
-bool CompoundWidget::rmvWidget(Widget *widget)
-{
-    auto i = find_if(widgets.begin(),
-                     widgets.end(),
-                     [widget](const shared_ptr<Widget> &item)->bool
-    {
-        return item.get() == widget;
-    });
-    if (i != widgets.end())
-    {
-        widgets.erase(i);
-        rmvDirtyWidget(widget);
-        setDirty();
-        return true;
-    }
-    return false;
-}
-
 void CompoundWidget::update()
 {
     for (auto &widget : widgets)
@@ -139,22 +121,31 @@ void CompoundWidget::setDirtyLayout()
     setDirty();
 }
 
-bool CompoundWidget::rmvWidget(const std::shared_ptr<Widget> &widget)
+bool CompoundWidget::rmvWidget(Widget *widget)
 {
     auto i = find_if(widgets.begin(),
                      widgets.end(),
                      [widget](const shared_ptr<Widget> &item)->bool
     {
-        return item.get() == widget.get();
+        return item.get() == widget;
     });
     if (i != widgets.end())
     {
         widgets.erase(i);
-        rmvDirtyWidget(widget.get());
+        rmvDirtyWidget(widget);
+        if (widget == active.get())
+        {
+            active.reset();
+        }
         setDirty();
         return true;
     }
     return false;
+}
+
+bool CompoundWidget::rmvWidget(const std::shared_ptr<Widget> &widget)
+{
+    return rmvWidget(widget.get());
 }
 
 /* TODO - write/read widgets to file for a designer app
