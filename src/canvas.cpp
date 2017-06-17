@@ -492,6 +492,11 @@ void Canvas::setSize(const cv::Size &value)
     }
 }
 
+Size Canvas::getSize()
+{
+   return boundaries.size();
+}
+
 void write(cv::FileStorage& fs, const std::string&, const Canvas& x)
 {
     if (x.active.get())

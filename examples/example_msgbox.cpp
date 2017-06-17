@@ -63,26 +63,13 @@ int main(int argc, char **argv)
     }
 
     Canvas c(image.size());
-
     auto msgBox = MsgBox::create(c,
                                  "This is a MsgBox example\n"
-                                 "with 2 lines",
-                                 Point(image.cols / 2, image.rows / 2));
-
-    msgBox->addButton("Ok", [](Widget *, Widget::State state)
-    {
-        if (state == Widget::PRESS)
-        {
-            cout << "Ok was pressed" << endl;
-        }
-    });
-    msgBox->addButton("Cancel", [](Widget *, Widget::State state)
-    {
-        if (state == Widget::PRESS)
-        {
-            cout << "Cancel was pressed" << endl;
-        }
-    });
+                                 "with 2 lines", {
+                                     "Ok",           // 0
+                                     "Cancel",       // 1
+                                     "Somthing else" // 2
+                                 });
 
     namedWindow("Canvas", WINDOW_AUTOSIZE);
     setMouseCallback("Canvas", mouseCB, &c);
@@ -92,6 +79,10 @@ int main(int argc, char **argv)
     Mat out; // keeping it out of the loop is a little more efficient
     do
     {
+        if (msgBox->getUserSelection() != -1)
+        {
+            cout << "MsgBox was pressed with key index " << msgBox->getUserSelection() << endl;
+        }
         c.redrawOn(image, out);
         imshow("Canvas", out);
         key = waitKeyEx(delay);

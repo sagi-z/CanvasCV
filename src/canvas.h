@@ -195,14 +195,17 @@ public:
                          double alpha = 0.3,
                          int fontFace = FONT_HERSHEY_COMPLEX_SMALL);
 
-    /// Manually send a status message (it might be replaced automatically when using widgets and shapes with the mouse)
+    /// manually send a status message (it might be replaced automatically when using widgets and shapes with the mouse)
     void setStatusMsg(const std::string &msg);
 
-    /// Manually set the screen text message. It remains until disabled or changed.
+    /// manually set the screen text message. It remains until disabled or changed.
     void setScreenText(const std::string &msg);
 
-    /// Set the Canvas size if the Mat we're drawing on changed size
+    /// set the Canvas size to match the cv::Mat we'll use in redrawOn;
     void setSize(const cv::Size &value);
+
+    /// get the Canvas size
+    cv::Size getSize();
 
     virtual void addWidget(const std::shared_ptr<Widget> &widget);
     virtual bool rmvWidget(const std::shared_ptr<Widget> &widget);
