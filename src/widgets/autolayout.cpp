@@ -48,6 +48,16 @@ void AutoLayout::setPadding(int value)
     }
 }
 
+void AutoLayout::addWidget(const std::shared_ptr<Widget> &widget)
+{
+    CompoundWidget::addWidget(widget);
+}
+
+bool AutoLayout::rmvWidget(const std::shared_ptr<Widget> &widget)
+{
+   return CompoundWidget::rmvWidget(widget);
+}
+
 void AutoLayout::rmvWidget(int i)
 {
     if (i < widgets.size())

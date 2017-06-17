@@ -89,7 +89,7 @@ Widget::~Widget()
 {
 }
 
-void Widget::notifyOnChange(Widget::CBType cb)
+void Widget::notifyOnChange(Widget::CBWidgetState cb)
 {
     changeNotifs.push_back(cb);
 }
@@ -449,6 +449,15 @@ int Widget::genId()
 {
     static int idGenerator;
     return ++idGenerator;
+}
+
+void Widget::rmvFromLayout()
+{
+   if (layout)
+   {
+       layout->rmvWidget(this);
+       layout = 0;
+   }
 }
 
 bool Widget::getIsDirty() const

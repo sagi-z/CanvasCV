@@ -316,8 +316,7 @@ const Rect &CompoundWidget::getMinimalRect()
 
 void CompoundWidget::addWidget(const shared_ptr<Widget> &widget)
 {
-    Layout* prevLayout = widget->getLayout();
-    if (prevLayout) prevLayout->rmvWidget(widget);
+    widget->rmvFromLayout();
     widget->setLayout(*this);
     widgets.push_back(widget);
     setDirty();

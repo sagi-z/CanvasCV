@@ -26,6 +26,7 @@ public:
      * @param layout must be a Canvas reference for a MsgBox
      * @param msg what to display in the MsgBox
      * @param buttonNames automatically create buttons with names of buttonNames
+     * @param cbUserSelection a callback to invoke with index of pressed button
      * @param pos location in the Canvas (the default is the center of the Canvas)
      * @return a smart pointer copy of the object kept in the Layout
      * @code
@@ -40,20 +41,23 @@ public:
 
         while(...)
         {
-            if (msgBox->getUserSelection() != -1)
+            if (msgBox && msgBox->getUserSelection() != -1)
             {
                 cout << "MsgBox was pressed with key index " << msgBox->getUserSelection() << endl;
+                msgBox.reset();
             }
             c.redrawOn(...);
             imshow(...);
             key = waitKeyEx(...);
         }
      * @endcode
+     * Or you could use the callback version
      * @see getSelectedButton
      */
     static std::shared_ptr<MsgBox> create(Canvas &canvas,
                                           const std::string &msg,
                                           std::vector<std::string> buttonNames = {"Ok"},
+                                          Widget::CBUserSelection cbUserSelection = Widget::CBUserSelection(),
                                           const cv::Point &pos = cv::Point(-1,-1));
 
     /// returns pressed button index or -1 if not pressed

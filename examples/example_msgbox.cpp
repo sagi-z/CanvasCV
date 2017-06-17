@@ -77,16 +77,23 @@ int main(int argc, char **argv)
     int delay = 1000/15;
     int key = 0;
     Mat out; // keeping it out of the loop is a little more efficient
-    do
+    while (msgBox && key != 'q')
     {
         if (msgBox->getUserSelection() != -1)
         {
             cout << "MsgBox was pressed with key index " << msgBox->getUserSelection() << endl;
+            msgBox = MsgBox::create(c,
+                                    "Do you really want to exit?",
+                                    {"Yes", "No"},
+                                    [&c, &key, &msgBox](int i) {
+                if (i == 0) msgBox.reset();
+                else msgBox = MsgBox::create(c, "Just another MsgBox\nWaiting for exit approval");
+            });
         }
         c.redrawOn(image, out);
         imshow("Canvas", out);
-        key = waitKeyEx(delay);
-    } while (key != 'q');
+        key = waitKeyEx(delay); // GUI and callbacks happen here
+    }
 
     destroyAllWindows();
     return 0;

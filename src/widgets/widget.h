@@ -82,7 +82,9 @@ public:
         RELEASE
     };
 
-    typedef std::function<void(Widget*, State)> CBType;
+    typedef std::function<void(Widget*, State)> CBWidgetState;
+
+    typedef std::function<void(int)> CBUserSelection;
 
     Widget(Layout &layoutVal, const cv::Point &pos = cv::Point(0,0));
 
@@ -92,7 +94,7 @@ public:
 
     virtual const char *getType() const = 0;
 
-    void notifyOnChange(CBType cb);
+    void notifyOnChange(CBWidgetState cb);
 
     cv::Scalar getOutlineColor() const;
 
@@ -167,6 +169,7 @@ public:
     cv::Scalar getSelectColor() const;
     virtual void setSelectColor(const cv::Scalar &value);
 
+    void rmvFromLayout();
 
 protected:
 
@@ -322,7 +325,7 @@ private:
     State state;
     bool isDirty;
     bool delayedUpdate;
-    std::list<CBType> changeNotifs;
+    std::list<CBWidgetState> changeNotifs;
 };
 
 /* TODO - write/read widgets to file for a designer app

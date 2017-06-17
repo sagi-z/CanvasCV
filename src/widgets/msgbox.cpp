@@ -24,8 +24,8 @@ MsgBox::MsgBox(Layout &layoutVal, const Point &pos)
     frame = VFrame::create(*this, pos);
     frame->setFrameRelief(RAISED);
     frame->setPadding(5);
-    auto ft = FloatingText::create(*frame, "", CENTER_TOP, CENTER);
-    ft->setFillBG(false); // no seperate background to the text
+    auto text = FloatingText::create(*frame, "", CENTER_TOP, CENTER);
+    text->setFillBG(false); // no seperate background to the text
     buttons = HorizontalLayout::create(*frame);
     buttons->setLayoutAnchor(CENTER);
 }
@@ -40,7 +40,8 @@ const char *MsgBox::getType() const
     return type;
 }
 
-std::shared_ptr<MsgBox> MsgBox::create(Canvas &canvas, const string &msg, std::vector<string> buttonNames, const Point &pos)
+std::shared_ptr<MsgBox> MsgBox::create(Canvas &canvas, const string &msg, std::vector<string> buttonNames,
+                                       CBUserSelection cbUserSelection, const Point &pos)
 {
     shared_ptr<MsgBox> msgBox(WidgetFactoryT<MsgBox>::newWidget(canvas, pos));
     msgBox->setMsg(msg);
@@ -50,10 +51,11 @@ std::shared_ptr<MsgBox> MsgBox::create(Canvas &canvas, const string &msg, std::v
         auto button = Button::create(*msgBox->buttons, buttonNames[i]);
         button->setStretchX(true);
         button->setStretchY(true);
-        button->notifyOnChange([&canvas, msgBox, i](Widget *, Widget::State state) {
+        button->notifyOnChange([msgBox, i, cbUserSelection](Widget *, Widget::State state) {
             if (state == Widget::PRESS) {
                 msgBox->userSelection = i;
-                canvas.rmvWidget(msgBox);
+                msgBox->rmvFromLayout();
+                if (cbUserSelection) cbUserSelection(i);
             }
         });
     }

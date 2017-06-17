@@ -540,7 +540,7 @@ void read(const cv::FileNode& node, Canvas& x, const Canvas&)
     }
 }
 
-bool Canvas::rmvWidget(canvascv::Widget *widget)
+bool Canvas::rmvWidget(Widget *widget)
 {
     auto i = find_if(widgets.begin(),
                      widgets.end(),
@@ -558,8 +558,7 @@ bool Canvas::rmvWidget(canvascv::Widget *widget)
 
 void Canvas::addWidget(const shared_ptr<Widget> &widget)
 {
-    Layout* prevLayout = widget->getLayout();
-    if (prevLayout) prevLayout->rmvWidget(widget);
+    widget->rmvFromLayout();
     widget->setLayout(*this);
     widgets.push_back(widget);
 }

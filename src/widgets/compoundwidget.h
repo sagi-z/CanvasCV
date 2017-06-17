@@ -54,13 +54,13 @@ public:
     /// delegate to internal Widget parts added by derived classes
     virtual void translate(const cv::Point &translation);
 
-    virtual void addWidget(const std::shared_ptr<Widget> &widget);
-    virtual bool rmvWidget(const std::shared_ptr<Widget> &widget);
-
 protected:
     // force inheritance
     CompoundWidget(Layout &layoutVal, const cv::Point &pos);
     virtual ~CompoundWidget() {}
+
+    virtual void addWidget(const std::shared_ptr<Widget> &widget);
+    virtual bool rmvWidget(const std::shared_ptr<Widget> &widget);
 
     virtual const cv::Rect getBoundaries() const;
 

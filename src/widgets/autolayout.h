@@ -53,6 +53,9 @@ public:
      */
     void setPadding(int value);
 
+    virtual void addWidget(const std::shared_ptr<Widget> &widget);
+    virtual bool rmvWidget(const std::shared_ptr<Widget> &widget);
+
     /// remove a widget at index 'i' (silently ignores 'i' too big)
     void rmvWidget(int i);
 
