@@ -282,9 +282,9 @@ const Rect CompoundWidget::getBoundaries() const
 
 void CompoundWidget::draw(Mat &dst)
 {
-    Widget::draw(dst);
     if (visible)
     {
+        if (fillBG) Widget::draw(dst); // only usable for frames
         for (auto &widget : widgets)
         {
             if (widget->getVisible())

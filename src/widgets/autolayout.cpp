@@ -32,6 +32,19 @@ void AutoLayout::recalc()
         }
         allocateBG(rect.size());
     }
+
+    Point rectTL = rect.tl();
+    Rect parentBoundaries = getLayoutBoundaries();
+    Point parentBoundariesTL = parentBoundaries.tl();
+    Point parentBoundariesBR = parentBoundaries.br();
+    if (rectTL.x < parentBoundariesTL.x) rectTL.x = parentBoundariesTL.x;
+    if (rectTL.y < parentBoundariesTL.y) rectTL.y = parentBoundariesTL.y;
+    if (rectTL.x + rect.width > parentBoundariesBR.x) rectTL.x = parentBoundariesBR.x - rect.width;
+    if (rectTL.y + rect.height > parentBoundariesBR.y) rectTL.y = parentBoundariesBR.y - rect.height;
+    if (rectTL.y != rect.y || rectTL.x != rect.x)
+    {
+        translate(rectTL - rect.tl());
+    }
 }
 
 int AutoLayout::getPadding() const
