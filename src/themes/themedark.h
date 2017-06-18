@@ -15,8 +15,7 @@ public:
     virtual void applyStyle(Widget *widget);
     virtual void applyStyle(Shape *shape);
 
-    virtual void allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar &color, int type = CV_8UC3);
-    virtual void drawBG(cv::Mat &dst, const cv::Rect &rect, const cv::Mat &bg, double alpha);
+    virtual void allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar &color);
     virtual void flat(cv::Mat &bg, const cv::Scalar &color);
     virtual void raised(cv::Mat &bg, const cv::Scalar &color);
     virtual void sunken(cv::Mat &bg, const cv::Scalar &color);

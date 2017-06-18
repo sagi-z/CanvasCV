@@ -12,7 +12,7 @@ const char * VFrame::type = "VFrame";
 VFrame::VFrame(Layout &layoutVal, const Point &pos)
     : VerticalLayout(layoutVal, pos)
 {
-    setDrawFrame(true);
+    fillBG = true;
 }
 
 shared_ptr<VFrame> VFrame::create(Layout &layout, const Point &pos)

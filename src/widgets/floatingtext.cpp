@@ -18,8 +18,8 @@ FloatingText::FloatingText(Layout &layoutVal, const Point &pos)
       fontFace(FONT_HERSHEY_COMPLEX_SMALL),
       fontHeight(0)
 {
-    outlineColor = Colors::Black;
-    fillColor = Colors::P1_GRAY;
+    setOutlineColor(Colors::Black);
+    setFillColor(Colors::P1_GRAY);
 }
 
 FloatingText::FloatingText(Layout &layoutVal, const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,
@@ -31,8 +31,8 @@ FloatingText::FloatingText(Layout &layoutVal, const string msgVal, Point locatio
       fontFace(fontFaceVal),
       fontHeight(0)
 {
-    outlineColor = colorVal;
-    fillColor = bgColorVal;
+    setOutlineColor(colorVal);
+    setFillColor(bgColorVal);
     thickness = thicknessVal;
 }
 
@@ -122,7 +122,7 @@ void FloatingText::drawFG(Mat &dst)
                 textPos.x = location.x + dst.cols - 5 - strRow.width;
             }
             putText(dst, strRow.str, textPos,
-                    fontFace, fontScale, outlineColor, thickness, LINE_AA);
+                    fontFace, fontScale, getOutlineColor(), thickness, LINE_AA);
             y += fontHeight;
             if (y > yEnd) break;
         }
@@ -135,9 +135,7 @@ void FloatingText::prepareMsgParts()
     if (msg.length())
     {
         if (! layout) return;
-        const Rect &boundaries = getLayoutBoundaries();
-        int localMaxWidth = boundaries.x + boundaries.width - location.x;
-        if (maxWidth && maxWidth < localMaxWidth) localMaxWidth = maxWidth;
+        int localMaxWidth = maxWidth;
         if (localMaxWidth < 10) localMaxWidth = 10;
 
         std::list<StringRow> msgParts;
@@ -157,7 +155,14 @@ void FloatingText::prepareMsgParts()
             baseline += thickness;
             int width = 10 + textSize.width; // 5 pixels at start & end = 10
             fontHeight = textSize.height+baseline*2;
-            totalRows += width / localMaxWidth + 1;
+            if (maxWidth)
+            {
+                totalRows += width / localMaxWidth + 1;
+            }
+            else
+            {
+                ++totalRows;
+            }
             maxNeededWidth = max(maxNeededWidth, width);
             msgParts.push_back({line, width});
         }
@@ -173,10 +178,13 @@ void FloatingText::prepareMsgParts()
             {
                 yRectStart = location.y;
             }
-            int rectHeight = min((int) floor(fontHeight * totalRows + fontHeight),
-                                 boundaries.height - yRectStart - 1);
-            int rectWidth = min(localMaxWidth - 5, // "absolute limit width (5 pixels from right of layout)" vs.
+            int rectHeight = fontHeight * totalRows + fontHeight;
+            int rectWidth = maxNeededWidth;
+            if (maxWidth)
+            {
+                rectWidth = min(localMaxWidth - 5, // "absolute limit width" vs.
                                 maxNeededWidth);   // "width which is realy needed"
+            }
             minimalRect = Rect(location.x, yRectStart, rectWidth, rectHeight);
             if (forcedWidth > rectWidth) rectWidth = forcedWidth;
             if (forcedHeight > rectHeight) rectHeight = forcedHeight;
@@ -241,14 +249,10 @@ const Rect &FloatingText::getMinimalRect()
     return minimalRect;
 }
 
-void FloatingText::setFillBG(bool value)
-{
-   Widget::setFillBG(value);
-}
-
 void FloatingText::recalc()
 {
     prepareMsgParts();
+    callDrawFG();
 }
 
 }

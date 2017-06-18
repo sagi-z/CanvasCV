@@ -72,9 +72,6 @@ public:
     virtual const cv::Rect &getRect();
     virtual const cv::Rect &getMinimalRect();
 
-    /// for FloatingText this method is public
-    virtual void setFillBG(bool value);
-
     static const char *type;
 
 protected:

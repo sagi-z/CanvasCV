@@ -168,14 +168,14 @@ public:
      * @param bgColor is rect bg color
      * @param scale is font scale
      * @param thickness is font thickness
-     * @param alpha is the alpha value of the rect bg
+     * @param alpha is the alpha value of the rect bg [0,255] => [transparent,opaque]
      * @param fontFace is the OpenCV fonr to use
      */
     void enableScreenText(cv::Scalar color = Colors::Black,
                           cv::Scalar bgColor = Colors::P1_GRAY,
                           double scale = 0.5,
                           int thickness = 1,
-                          double alpha = 0.3,
+                          uchar alpha = 80,
                           int fontFace = FONT_HERSHEY_COMPLEX_SMALL);
 
     /**
@@ -185,14 +185,14 @@ public:
      * @param bgColor is rect bg color
      * @param scale is font scale
      * @param thickness is font thickness
-     * @param alpha is the alpha value of the rect bg
+     * @param alpha is the alpha value of the rect bg [0,255] => [transparent,opaque]
      * @param fontFace is the OpenCV fonr to use
      */
     void enableStatusMsg(cv::Scalar color = Colors::Orange,
                          cv::Scalar bgColor = Colors::P1_GRAY,
                          double scale = 0.5,
                          int thickness = 1,
-                         double alpha = 0.3,
+                         uchar alpha = 80,
                          int fontFace = FONT_HERSHEY_COMPLEX_SMALL);
 
     /// manually send a status message (it might be replaced automatically when using widgets and shapes with the mouse)

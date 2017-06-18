@@ -31,8 +31,10 @@ void AutoLayout::recalc()
             rect.height += padding*2;
         }
         allocateBG(rect.size());
+        callDrawFG();
     }
 
+    /* This solution is currently replaced with Canvas ROI clipping
     Point rectTL = rect.tl();
     Rect parentBoundaries = getLayoutBoundaries();
     Point parentBoundariesTL = parentBoundaries.tl();
@@ -45,6 +47,7 @@ void AutoLayout::recalc()
     {
         translate(rectTL - rect.tl());
     }
+    */
 }
 
 int AutoLayout::getPadding() const
@@ -77,20 +80,6 @@ void AutoLayout::rmvWidget(int i)
     {
         Widget* pWidget = at(i);
         CompoundWidget::rmvWidget(pWidget);
-        setDirty();
-    }
-}
-
-bool AutoLayout::getDrawFrame() const
-{
-    return getFillBG();
-}
-
-void AutoLayout::setDrawFrame(bool value)
-{
-    if (fillBG != value)
-    {
-        fillBG = value;
         setDirty();
     }
 }

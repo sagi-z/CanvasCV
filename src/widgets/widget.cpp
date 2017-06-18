@@ -34,15 +34,13 @@ Widget::Widget(Layout &layoutVal, const Point &pos)
     : id(genId()),
       location(pos),
       outlineColor(Colors::Green),
-      fillColor(outlineColor),
+      fillColor(Colors::Black),
       selectColor(Colors::Orange),
       relief(FLAT),
       locked(false),
       visible(true),
       thickness(1),
       lineType(LINE_AA),
-      alpha(0.5),
-      fillBG(true),
       forcedWidth(0),
       forcedHeight(0),
       layoutAnchor(TOP_LEFT),
@@ -54,6 +52,9 @@ Widget::Widget(Layout &layoutVal, const Point &pos)
       isDirty(false),
       delayedUpdate(true)
 {
+    outlineColor[3] = 255; // FG is always opaque
+    selectColor[3] = 255; // select is opaque
+    fillColor[3] = 128; // BG is semi transparent by default
     shared_ptr<Widget> toBeReplacedOnFactoryCall(this, [](Widget*){});
     layoutVal.addWidget(toBeReplacedOnFactoryCall);
 }
@@ -69,8 +70,6 @@ Widget::Widget(const Widget &other)
       visible(other.visible),
       thickness(other.thickness),
       lineType(other.lineType),
-      alpha(other.alpha),
-      fillBG(other.fillBG),
       forcedWidth(other.forcedWidth),
       forcedHeight(other.forcedHeight),
       flowAnchor(other.layoutAnchor),
@@ -101,9 +100,12 @@ Scalar Widget::getOutlineColor() const
 
 void Widget::setOutlineColor(const Scalar &value)
 {
-    if (outlineColor != value)
+    if (outlineColor[0] != value[0] ||
+            outlineColor[1] != value[1] ||
+            outlineColor[2] != value[2])
     {
-        outlineColor = value;
+        outlineColor= value;
+        outlineColor[3] = 255;
         setDirty();
     }
 }
@@ -115,14 +117,16 @@ Scalar Widget::getFillColor() const
 
 void Widget::setFillColor(const Scalar &value)
 {
-    if (fillColor != value)
+    if (fillColor[0] != value[0] ||
+            fillColor[1] != value[1] ||
+            fillColor[2] != value[2])
     {
-        fillColor = value;
+        fillColor[0] = value[0];
+        fillColor[1] = value[1];
+        fillColor[2] = value[2];
         setDirty();
     }
 }
-
-
 
 void Widget::setLocked(bool value)
 {
@@ -162,14 +166,18 @@ void Widget::setLineType(int value)
     }
 }
 
-double Widget::getAlpha() const
+uchar Widget::getAlpha() const
 {
-    return alpha;
+    return fillColor[3];
 }
 
-void Widget::setAlpha(double value)
+void Widget::setAlpha(uchar value)
 {
-    alpha = value; // this is only used during draw()
+    if (fillColor[3] !=  value)
+    {
+        fillColor[3] = value;
+        setDirty();
+    }
 }
 
 void Widget::setLayoutAnchor(const Anchor &value)
@@ -307,9 +315,12 @@ Scalar Widget::getSelectColor() const
 
 void Widget::setSelectColor(const Scalar &value)
 {
-    if (selectColor != value)
+    if (selectColor[0] != value[0] ||
+            selectColor[1] != value[1] ||
+            selectColor[2] != value[2])
     {
         selectColor = value;
+        selectColor[3] = 255;
         setDirty();
     }
 }
@@ -330,33 +341,19 @@ void Widget::mouseLeave()
 {
 }
 
-bool Widget::getFillBG() const
+void Widget::allocateBG(const Size &size)
 {
-    return fillBG;
-}
-
-void Widget::setFillBG(bool value)
-{
-    if (fillBG != value)
-    {
-        fillBG = value;
-        setDirty();
-    }
-}
-
-void Widget::allocateBG(const Size &size, int type)
-{
-    ThemeRepository::getCurrentTheme()->allocateBG(bg, size, fillColor, type);
+    ThemeRepository::getCurrentTheme()->allocateBG(widgetPixels, size, fillColor);
     switch (relief)
     {
     case FLAT:
-        ThemeRepository::getCurrentTheme()->flat(bg, fillColor);
+        ThemeRepository::getCurrentTheme()->flat(widgetPixels, fillColor);
         break;
     case RAISED:
-        ThemeRepository::getCurrentTheme()->raised(bg, fillColor);
+        ThemeRepository::getCurrentTheme()->raised(widgetPixels, fillColor);
         break;
     case SUNKEN:
-        ThemeRepository::getCurrentTheme()->sunken(bg, fillColor);
+        ThemeRepository::getCurrentTheme()->sunken(widgetPixels, fillColor);
         break;
     }
 }
@@ -375,51 +372,87 @@ void Widget::setStretchY(bool value)
     }
 }
 
-void Widget::drawBG(Mat &dst, const Rect &rect)
-{
-    if (fillBG && ! bg.empty())
-    {
-        if (dst.type() != bg.type())
-        {
-            allocateBG(bg.size(), dst.type());
-        }
-        ThemeRepository::getCurrentTheme()->drawBG(dst, rect, bg, alpha);
-    }
-}
-
 void Widget::flatWidget()
 {
-    ThemeRepository::getCurrentTheme()->flat(bg, fillColor);
+    ThemeRepository::getCurrentTheme()->flat(widgetPixels, fillColor);
 }
 
 void Widget::raisedWidget()
 {
-    ThemeRepository::getCurrentTheme()->raised(bg, fillColor);
+    ThemeRepository::getCurrentTheme()->raised(widgetPixels, fillColor);
 }
 
 void Widget::sunkenWidget()
 {
-    ThemeRepository::getCurrentTheme()->sunken(bg, fillColor);
+    ThemeRepository::getCurrentTheme()->sunken(widgetPixels, fillColor);
 }
 
 void Widget::selectedWidget()
 {
-    ThemeRepository::getCurrentTheme()->selected(bg, selectColor);
+    ThemeRepository::getCurrentTheme()->selected(widgetPixels, selectColor);
 }
 
-void Widget::draw(Mat &dst)
+void Widget::renderOn(Mat &dst)
 {
     const Rect &rect = getRect();
     if (rect.width && rect.height)
     {
-        drawBG(dst, rect);
-        Mat roi = dst(rect);
-        drawFG(roi);
+        Rect dstRect({0,0}, dst.size());
+        Rect intersection = rect & dstRect;
+        if (intersection.width && intersection.height)
+        {
+            Mat roiDst(dst, intersection);
+            Mat roiSrc(widgetPixels, Rect(intersection.x - rect.x,
+                                          intersection.y - rect.y,
+                                          intersection.width, intersection.height));
+            if (dst.channels() == 4)
+            {
+                Vec4b *pSrcRow;
+                Vec4b *pDstRow;
+                double alpha, beta;
+                for (int i = 0; i < roiDst.rows; ++i)
+                {
+                    pSrcRow = roiSrc.ptr<Vec4b>(i);
+                    pDstRow = roiDst.ptr<Vec4b>(i);
+                    for (int c = 0; c < roiDst.cols; ++c)
+                    {
+                        alpha = pSrcRow[c][3] / 255.;
+                        beta = 1. - alpha;
+                        pDstRow[c][0] = pSrcRow[c][0]*alpha + pDstRow[c][0]*beta;
+                        pDstRow[c][1] = pSrcRow[c][1]*alpha + pDstRow[c][1]*beta;
+                        pDstRow[c][2] = pSrcRow[c][2]*alpha + pDstRow[c][2]*beta;
+                    }
+                }
+            }
+            else
+            {
+                Vec4b *pSrcRow;
+                Vec3b *pDstRow;
+                double alpha, beta;
+                for (int i = 0; i < roiDst.rows; ++i)
+                {
+                    pSrcRow = roiSrc.ptr<Vec4b>(i);
+                    pDstRow = roiDst.ptr<Vec3b>(i);
+                    for (int c = 0; c < roiDst.cols; ++c)
+                    {
+                        alpha = pSrcRow[c][3] / 255.;
+                        beta = 1. - alpha;
+                        pDstRow[c][0] = pSrcRow[c][0]*alpha + pDstRow[c][0]*beta;
+                        pDstRow[c][1] = pSrcRow[c][1]*alpha + pDstRow[c][1]*beta;
+                        pDstRow[c][2] = pSrcRow[c][2]*alpha + pDstRow[c][2]*beta;
+                    }
+                }
+            }
+        }
     }
 }
 
-void Widget::drawFG(Mat &dst)
+void Widget::callDrawFG()
 {
+    if (! widgetPixels.empty())
+    {
+        drawFG(widgetPixels);
+    }
 }
 
 bool Widget::getStretchX() const
@@ -532,8 +565,6 @@ void Widget::readInternals(const FileNode &node)
     node["visible"] >> visible;
     node["thickness"] >> thickness;
     node["lineType"] >> lineType;
-    node["alpha"] >> alpha;
-    node["fillBG"] >> fillBG;
     node["layoutAnchor"] >> (int) layoutAnchor;
     node["flowAnchor"] >> (int) flowAnchor;
     node["stretchX"] >> stretchX;
@@ -565,8 +596,6 @@ void Widget::writeInternals(FileStorage &fs) const
           "visible" << visible <<
           "thickness" << thickness <<
           "lineType" << lineType <<
-          "alpha" << alpha <<
-          "fillBG" << fillBG <<
           "layoutAnchor" << layoutAnchor <<
           "flowAnchor" << flowAnchor <<
           "stretchX" << stretchX <<

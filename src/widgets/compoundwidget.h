@@ -34,10 +34,7 @@ public:
     virtual void setLineType(int value);
 
     /// delegate to internal Widget parts added by derived classes
-    virtual void setAlpha(double value);
-
-    /// delegate to internal Widget parts added by derived classes
-    virtual void setFillBG(bool value);
+    virtual void setAlpha(uchar value);
 
     /// delegate to internal Widget parts added by derived classes
     virtual void setLocked(bool value);
@@ -64,7 +61,8 @@ protected:
 
     virtual const cv::Rect getBoundaries() const;
 
-    virtual void draw(cv::Mat &dst);
+    virtual void renderOn(cv::Mat &dst);
+    virtual void drawFG(cv::Mat &dst);
     virtual bool isAtPos(const cv::Point &pos);
 
     virtual const cv::Rect &getRect();
@@ -84,6 +82,7 @@ protected:
     virtual void readInternals(const cv::FileNode &node);
     */
 
+    bool fillBG;
     cv::Rect rect;
 
     std::list<std::shared_ptr<Widget>> widgets;

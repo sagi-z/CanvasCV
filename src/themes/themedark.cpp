@@ -1,5 +1,4 @@
 #include "themedark.h"
-#include "colors.h"
 #include "widgets/widget.h"
 #include "shapes/shape.h"
 #include "shapes/linecrossing.h"
@@ -9,7 +8,12 @@ using namespace cv;
 namespace canvascv
 {
 
-void ThemeDark::allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar &color, int type)
+const Scalar THM_DARK_GRAY(32,32,32,255);
+const Scalar THM_LIGHT_GRAY(160,160,160,255);
+const Scalar THM_BLACK(0,0,0,255);
+const Scalar THM_ORANGE(0,165,255,255);
+
+void ThemeDark::allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar &color)
 {
     if (size.width == 0 || size.height == 0)
     {
@@ -17,86 +21,79 @@ void ThemeDark::allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar 
     }
     else
     {
-        dst.create(size, type);
+        dst.create(size, CV_8UC4);
         dst = color;
-    }
-}
-
-void ThemeDark::drawBG(cv::Mat &dst, const cv::Rect &rect, const cv::Mat &bg, double alpha)
-{
-    Mat roi = dst(rect);
-    if (alpha > 0. && alpha < 1.)
-    {
-        cv::addWeighted(bg, alpha, roi, 1.0 - alpha , 0.0, roi);
-    }
-    else
-    {
-        bg.copyTo(roi);
     }
 }
 
 void ThemeDark::flat(Mat &bg, const Scalar &color)
 {
-    (void) color; // unused in this theme
-    cv::rectangle(bg, {0, 0}, {bg.cols - 1, bg.rows - 1}, Colors::M3_GRAY, 2, LINE_AA);
+    Scalar myDarkGray = THM_DARK_GRAY;
+    myDarkGray[3] = color[3];
+    cv::rectangle(bg, {0, 0}, {bg.cols - 1, bg.rows - 1}, myDarkGray, 2, LINE_AA);
 }
 
 void ThemeDark::raised(Mat &bg, const Scalar &color)
 {
-    (void) color; // unused in this theme
+    Scalar myLightGray = THM_LIGHT_GRAY;
+    Scalar myBlack = THM_BLACK;
+    myLightGray[3] = myBlack[3] = color[3];
     // bright top line first
-    cv::line(bg, {0,0}, {bg.cols - 1,0}, Colors::P1_GRAY, 2, LINE_AA);
+    cv::line(bg, {0,0}, {bg.cols - 1,0}, myLightGray, 2, LINE_AA);
 
     // dark bottom line second
-    cv::line(bg, {bg.cols - 1,bg.rows - 1}, {0,bg.rows - 1}, Colors::Black, 2, LINE_AA);
+    cv::line(bg, {bg.cols - 1,bg.rows - 1}, {0,bg.rows - 1}, myBlack, 2, LINE_AA);
 
     // bright right line third
-    cv::line(bg, {bg.cols - 1,0}, {bg.cols - 1,bg.rows - 1}, Colors::P1_GRAY, 2, LINE_AA);
+    cv::line(bg, {bg.cols - 1,0}, {bg.cols - 1,bg.rows - 1}, myLightGray, 2, LINE_AA);
 
     // dark left line forth
-    cv::line(bg, {0,bg.rows - 1}, {0,0}, Colors::Black, 2, LINE_AA);
+    cv::line(bg, {0,bg.rows - 1}, {0,0}, myBlack, 2, LINE_AA);
 }
 
 void ThemeDark::sunken(Mat &bg, const Scalar &color)
 {
-    (void) color; // unused in this theme
+    Scalar myLightGray = THM_LIGHT_GRAY;
+    Scalar myBlack = THM_BLACK;
+    myLightGray[3] = myBlack[3] = color[3];
     // reverse light from raised
     // dark top line first
-    cv::line(bg, {0,0}, {bg.cols - 1,0}, Colors::Black, 2, LINE_AA);
+    cv::line(bg, {0,0}, {bg.cols - 1,0}, myBlack, 2, LINE_AA);
 
     // light bottom line second
-    cv::line(bg, {bg.cols - 1,bg.rows - 1}, {0,bg.rows - 1}, Colors::P1_GRAY, 2, LINE_AA);
+    cv::line(bg, {bg.cols - 1,bg.rows - 1}, {0,bg.rows - 1}, myLightGray, 2, LINE_AA);
 
     // dark right line third
-    cv::line(bg, {bg.cols - 1,0}, {bg.cols - 1,bg.rows - 1}, Colors::Black, 2, LINE_AA);
+    cv::line(bg, {bg.cols - 1,0}, {bg.cols - 1,bg.rows - 1}, myBlack, 2, LINE_AA);
 
     // light left line forth
-    cv::line(bg, {0,bg.rows - 1}, {0,0}, Colors::P1_GRAY, 2, LINE_AA);
+    cv::line(bg, {0,bg.rows - 1}, {0,0}, myLightGray, 2, LINE_AA);
 }
 
 void ThemeDark::selected(Mat &bg, const Scalar &color)
 {
-    (void) color; // unused in this theme
-    cv::rectangle(bg, {0, 0}, {bg.cols - 1, bg.rows - 1}, Colors::Orange, 2, LINE_AA);
+    Scalar myOrange = THM_ORANGE;
+    myOrange[3] = color[3];
+    cv::rectangle(bg, {0, 0}, {bg.cols - 1, bg.rows - 1}, myOrange, 2, LINE_AA);
 }
 
 void ThemeDark::applyStyle(Widget *widget)
 {
-   widget->setOutlineColor(Colors::Orange);
-   widget->setFillColor(Colors::M3_GRAY);
+   widget->setOutlineColor(THM_ORANGE);
+   widget->setFillColor(THM_DARK_GRAY);
    widget->setThickness(1);
-   widget->setSelectColor(Colors::Orange);
+   widget->setSelectColor(THM_ORANGE);
 }
 
 void ThemeDark::applyStyle(Shape *shape)
 {
-   shape->setOutlineColor(Colors::M3_GRAY);
-   shape->setFillColor(Colors::Orange);
+   shape->setOutlineColor(THM_DARK_GRAY);
+   shape->setFillColor(THM_ORANGE);
    shape->setThickness(1);
    if (shape->getType() == LineCrossing::type)
    {
        ((LineCrossing*)shape)->setArrowMagnitude(30);
-       ((LineCrossing*)shape)->getArrow()->setOutlineColor(Colors::Orange);
+       ((LineCrossing*)shape)->getArrow()->setOutlineColor(THM_ORANGE);
    }
    else if (shape->getType() == Handle::type)
    {

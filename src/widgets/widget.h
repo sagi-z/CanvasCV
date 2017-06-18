@@ -126,12 +126,11 @@ public:
 
     virtual void setLineType(int value);
 
-    double getAlpha() const;
-    virtual void setAlpha(double value);
+    uchar getAlpha() const;
+    virtual void setAlpha(uchar value);
 
     std::string getMsg() const;
     void setMsg(const std::string &value);
-
 
     Anchor getLayoutAnchor() const
     {
@@ -173,9 +172,6 @@ public:
 
 protected:
 
-    bool getFillBG() const;
-    virtual void setFillBG(bool value);
-
     Relief getRelief() const;
     void setRelief(const Relief &value);
 
@@ -185,10 +181,7 @@ protected:
     void setStateChangesBG();
 
     /// invokes Theme::allocateBG()
-    void allocateBG(const cv::Size &size, int type = CV_8UC3);
-
-    /// invokes Theme::drawBG()
-    void drawBG(cv::Mat &dst, const cv::Rect &rect);
+    void allocateBG(const cv::Size &size);
 
     /// update self so next call to 'draw' will display correctly
     virtual void recalc() = 0;
@@ -206,13 +199,16 @@ protected:
     void selectedWidget();
 
     /**
-     * @brief draw the widget
-     * @param dst
+     * @brief render the widget to dst
+     * @param dst is the full size image
      */
-    virtual void draw(cv::Mat &dst);
+    virtual void renderOn(cv::Mat &dst);
 
-    /// dst is the roi of the widget and not full image
-    virtual void drawFG(cv::Mat &dst);
+    /// dst is the roi of the widget size and not the full image
+    virtual void drawFG(cv::Mat &dst) = 0;
+
+    /// helper method which delgates to drawFG for derived
+    void callDrawFG();
 
     /// Actual size the widget is occupying due to Layout manager
     virtual const cv::Rect &getRect() = 0;
@@ -250,16 +246,12 @@ protected:
 
     int id;
     cv::Point location;
-    cv::Scalar outlineColor;
-    cv::Scalar fillColor;
     cv::Scalar selectColor;
     Relief relief;
     bool locked;
     bool visible;
     int thickness;
     int lineType;
-    double alpha;
-    bool fillBG;
     int forcedWidth;
     int forcedHeight;
     Anchor layoutAnchor;
@@ -321,7 +313,9 @@ private:
     void read(const cv::FileNode& node);
     */
 
-    cv::Mat bg;
+    cv::Scalar outlineColor;
+    cv::Scalar fillColor;
+    cv::Mat widgetPixels;
     State state;
     bool isDirty;
     bool delayedUpdate;

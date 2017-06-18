@@ -54,21 +54,12 @@ void CompoundWidget::setLineType(int value)
     }
 }
 
-void CompoundWidget::setAlpha(double value)
+void CompoundWidget::setAlpha(uchar value)
 {
     Widget::setAlpha(value);
     for (auto &widget : widgets)
     {
         widget->setAlpha(value);
-    }
-}
-
-void CompoundWidget::setFillBG(bool value)
-{
-    Widget::setFillBG(value);
-    for (auto &widget : widgets)
-    {
-        widget->setFillBG(value);
     }
 }
 
@@ -261,11 +252,11 @@ void CompoundWidget::recalc()
 }
 
 CompoundWidget::CompoundWidget(Layout &layoutVal, const Point &pos)
-    :Widget(layoutVal, pos)
+    :Widget(layoutVal, pos),
+      fillBG(false)
 {
     rect.x = location.x;
     rect.y = location.y;
-    fillBG = false;
 }
 
 const Rect CompoundWidget::getBoundaries() const
@@ -280,19 +271,26 @@ const Rect CompoundWidget::getBoundaries() const
     return boundaries;
 }
 
-void CompoundWidget::draw(Mat &dst)
+void CompoundWidget::renderOn(Mat &dst)
 {
-    if (visible)
-    {
-        if (fillBG) Widget::draw(dst); // only usable for frames
-        for (auto &widget : widgets)
-        {
-            if (widget->getVisible())
-            {
-                widget->draw(dst);
-            }
-        }
-    }
+   if (visible)
+   {
+       if(fillBG) Widget::renderOn(dst); // just for frames
+       for (auto &widget : widgets)
+       {
+           widget->renderOn(dst);
+       }
+   }
+}
+
+void CompoundWidget::drawFG(Mat &dst)
+{
+    (void) dst;
+    // * All which was 'dirty' was already updated in out kids
+    //  because:
+    // 1. recalc of layouts called their update first/
+    // 2. uopdate of compounds called their update first.
+    // * We don't have any FG of ourself.
 }
 
 const Rect &CompoundWidget::getRect()

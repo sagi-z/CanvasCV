@@ -28,7 +28,7 @@ MsgBox::MsgBox(Layout &layoutVal, const Point &pos)
     frame->setFrameRelief(RAISED);
     frame->setPadding(5);
     auto text = FloatingText::create(*frame, "", CENTER_TOP, CENTER);
-    text->setFillBG(false); // no seperate background to the text
+    text->setAlpha(0); // transpaernt backgound
     buttons = HorizontalLayout::create(*frame);
     buttons->setLayoutAnchor(CENTER);
 }

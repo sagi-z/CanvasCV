@@ -12,7 +12,7 @@ const char * HFrame::type = "HFrame";
 HFrame::HFrame(Layout &layoutVal, const Point &pos)
     : HorizontalLayout(layoutVal, pos)
 {
-    setDrawFrame(true);
+    fillBG = true;
 }
 
 shared_ptr<HFrame> HFrame::create(Layout &layout, const Point &pos)

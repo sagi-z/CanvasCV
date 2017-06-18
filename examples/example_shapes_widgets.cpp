@@ -189,7 +189,8 @@ int main(int argc, char **argv)
     ++argv;
     Mat image;
     if (argc) {
-        Mat orig = imread(argv[0]);
+//        Mat orig = imread(argv[0]);
+        Mat orig = imread(argv[0], IMREAD_UNCHANGED);
         if (orig.empty()) {
             cerr << "Cannot load image " << argv[0] << endl;
             return -1;
@@ -208,6 +209,7 @@ int main(int argc, char **argv)
         image = Colors::White;
     }
 
+    cout << "image number of channels is " << image.channels() << endl;
     Canvas c(image.size());
     c.setShapeType("Line"); // default shape type for direct GUI creation
     c.enableScreenText();

@@ -30,21 +30,11 @@ public:
 
     /**
      * @brief allocateBG creates the rect background for widgets
-     * @param dst is a Mat dedicated to hold the background
+     * @param dst is a Mat dedicated to hold the background will be filled with 4 channels
      * @param size will be the size of dst when done
-     * @param color is the requested color, which the theme is allowed to ignore
-     * @param type is the color depth
+     * @param color is the requested color, with alpha, which the theme is allowed to ignore
      */
-    virtual void allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar &color, int type = CV_8UC3) = 0;
-
-    /**
-     * @brief drawBG draws a rect background previouslt prepared by allocateBG()
-     * @param dst is the image on which this is drawn
-     * @param rect it the roi inside the dst which will be drawn
-     * @param bg was previously allocated by allocateBG()
-     * @param alpha in the range of (0, 1) or assumed to be 1 (opaque)
-     */
-    virtual void drawBG(cv::Mat &dst, const cv::Rect &rect, const cv::Mat &bg, double alpha) = 0;
+    virtual void allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar &color) = 0;
 
     /**
      * @brief flat will cause bg to appear flat

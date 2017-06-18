@@ -47,19 +47,19 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
     {
         if (widget->getVisible())
         {
-            widget->draw(dst);
+            widget->renderOn(dst);
         }
     }
 
     // These go on top of everything
     if (hasScreenText)
     {
-        static_cast<Widget*>(screenText.get())->draw(dst);
+        static_cast<Widget*>(screenText.get())->renderOn(dst);
     }
     if (hasStatusMsg)
     {
         statusMsg->setLocation(Point(5, dst.rows - 5));
-        static_cast<Widget*>(statusMsg.get())->draw(dst);
+        static_cast<Widget*>(statusMsg.get())->renderOn(dst);
     }
 }
 
@@ -350,26 +350,29 @@ void Canvas::getShapes(const Point &pos, std::list<std::shared_ptr<Shape> > &res
     }
 }
 
-void Canvas::enableScreenText(Scalar color, Scalar bgColor, double scale, int thickness, double alpha, int fontFace)
+void Canvas::enableScreenText(Scalar color, Scalar bgColor, double scale, int thickness, uchar alpha, int fontFace)
 {
     hasScreenText = true;
     if (! screenText.get())
     {
         screenText = FloatingText::create(*this, Point(5,5));
-        screenText->setOutlineColor(color);
+        screenText->setMaxWidth(boundaries.width);
     }
+    screenText->setOutlineColor(color);
     screenText->setFillColor(bgColor);
     screenText->setFontScale(scale);
+    screenText->setThickness(thickness);
     screenText->setAlpha(alpha);
     screenText->setFontFace(fontFace);
 }
 
-void Canvas::enableStatusMsg(Scalar color, Scalar bgColor, double scale, int thickness, double alpha, int fontFace)
+void Canvas::enableStatusMsg(Scalar color, Scalar bgColor, double scale, int thickness, uchar alpha, int fontFace)
 {
     hasStatusMsg = true;
     if (! statusMsg.get())
     {
         statusMsg = FloatingText::create(*this, Point(0,0));  // location, size dependent, is set during redrawOn
+        statusMsg->setMaxWidth(boundaries.width);
         statusMsg->setFlowAnchor(Widget::BOTTOM_LEFT);
     }
     statusMsg->setOutlineColor(color);
