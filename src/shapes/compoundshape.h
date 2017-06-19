@@ -44,8 +44,7 @@ protected:
     template <class T>
     T* addShape(cv::Point pos);
 
-    bool rmvShape(std::shared_ptr<Shape> &shape);
-    void delActiveShape();
+    bool rmvShape(Shape *shape);
 
     virtual void writeInternals(cv::FileStorage &fs) const;
     virtual void readInternals(const cv::FileNode &node);

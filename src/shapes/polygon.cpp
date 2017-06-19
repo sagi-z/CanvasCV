@@ -37,6 +37,12 @@ bool Polygon::mousePressed(const Point &pos, bool onCreate)
     {
         if (CompoundShape::mousePressed(pos, onCreate))
         {
+            // one of the points might have lost it's focus
+            //  by the generic CompoundShape::mousePressed()
+            for (Handle *handle : handles)
+            {
+                handle->setVisible(true);
+            }
             return true;
         }
 
@@ -151,9 +157,10 @@ bool Polygon::keyPressed(int &key)
 
                 // The last handle was just used for show
                 //  and is not needed anymore
-                handles.back()->setVisible(false);
+                Handle *toDelete = handles.back();
+                toDelete->setVisible(false);
                 handles.pop_back();
-                delActiveShape();
+                rmvShape(toDelete);
                 setActive(handles.back());
 
                 getPoints(vertices);
@@ -178,7 +185,7 @@ bool Polygon::keyPressed(int &key)
                 handles.pop_back();
                 handles.back()->setLocked(false);
                 handles.back()->setPos(pos);
-                delActiveShape();
+                rmvShape(toDelete);
                 setActive(handles.back());
             }
             else

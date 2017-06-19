@@ -35,7 +35,7 @@ bool CompoundShape::mousePressed(const Point &pos, bool onCreate)
             {
                 active->lostFocus();
                 active.reset();
-                return false;
+//                return false;
             } else {
                 return true;
             }
@@ -179,25 +179,24 @@ void CompoundShape::translate(const Point &offset)
     }
 }
 
-bool CompoundShape::rmvShape(shared_ptr<Shape> &shape)
+bool CompoundShape::rmvShape(Shape *shape)
 {
-    list<shared_ptr<Shape>>::iterator i = find(shapes.begin(),shapes.end(),shape);
+    auto i = find_if(shapes.begin(),shapes.end(),[shape](const shared_ptr<Shape> &item)->bool
+    {
+        return item.get() == shape;
+    }
+    );
     if (i != shapes.end())
     {
+        if (active.get() == shape)
+        {
+            active->lostFocus();
+            active.reset();
+        }
         shapes.erase(i);
         return true;
     }
     return false;
-}
-
-void CompoundShape::delActiveShape()
-{
-    if (active.get())
-    {
-        rmvShape(active);
-        active->lostFocus();
-        active.reset();
-    }
 }
 
 void CompoundShape::writeInternals(FileStorage &fs) const
