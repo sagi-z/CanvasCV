@@ -9,7 +9,6 @@ namespace canvascv
 const char * Polygon::type = "Polygon";
 
 Polygon::Polygon(const Point &pos)
-    :ready(false)
 {
     handles.push_back(addShape<Handle>(pos));
     handles.back()->setLocked(true);
@@ -25,7 +24,7 @@ void Polygon::draw(Mat &canvas)
     {
         line(canvas,(**iter)(), (**nextIter)(), outlineColor, thickness, lineType);
     }
-    if (ready)
+    if (isReady())
     {
         line(canvas,(*handles.back())(), (*handles.front())(), outlineColor, thickness, lineType);
     }
@@ -34,7 +33,7 @@ void Polygon::draw(Mat &canvas)
 
 bool Polygon::mousePressed(const Point &pos, bool onCreate)
 {
-    if (ready)
+    if (isReady())
     {
         if (CompoundShape::mousePressed(pos, onCreate))
         {
@@ -66,7 +65,7 @@ bool Polygon::mousePressed(const Point &pos, bool onCreate)
 
 bool Polygon::mouseMoved(const Point &pos)
 {
-    if (ready)
+    if (isReady())
     {
         if (CompoundShape::mouseMoved(pos))
         {
@@ -85,7 +84,7 @@ bool Polygon::mouseMoved(const Point &pos)
 
 bool Polygon::mouseReleased(const Point &pos)
 {
-    if (ready)
+    if (isReady())
     {
         if (CompoundShape::mouseReleased(pos))
         {
@@ -103,7 +102,7 @@ bool Polygon::mouseReleased(const Point &pos)
     }
     else
     {
-        return true;
+        return true; // editing points - active
     }
 
     return false;
@@ -111,7 +110,7 @@ bool Polygon::mouseReleased(const Point &pos)
 
 void Polygon::lostFocus()
 {
-    if (! ready)
+    if (! isReady())
     {
         setDeleted();
     }
@@ -136,7 +135,7 @@ const char *Polygon::getType() const
 
 bool Polygon::keyPressed(int &key)
 {
-    if (ready) return true;
+    if (isReady()) return true;
     if (key < 128 || key == 65288)
     {
         switch (key)
@@ -148,7 +147,7 @@ bool Polygon::keyPressed(int &key)
             key = -1; // consume key
             if (handles.size() > 3)
             {
-                ready = true;
+                setReady();
 
                 // The last handle was just used for show
                 //  and is not needed anymore
@@ -198,7 +197,7 @@ const string &Polygon::getStatusMsg() const
            "Click to create a new vertex.\n"
            "ENTER to finish. ESC to cancel. BS to remove last point.";
    const static string msgEdit = "drag a vertex to modify to polygon";
-   if (ready)
+   if (isReady())
    {
        return msgEdit;
    }
@@ -206,6 +205,12 @@ const string &Polygon::getStatusMsg() const
    {
        return msgCreate;
    }
+}
+
+void Polygon::translate(const Point &offset)
+{
+    CompoundShape::translate(offset);
+    getPoints(vertices);
 }
 
 void Polygon::reloadPointers(const list<Shape*> &lst, list<Shape*>::const_iterator &i)
@@ -218,7 +223,7 @@ void Polygon::reloadPointers(const list<Shape*> &lst, list<Shape*>::const_iterat
         handles.push_back(dynamic_cast<Handle*>(*i++));
     }
     getPoints(vertices);
-    ready = true;
+    setReady();
 }
 
 }

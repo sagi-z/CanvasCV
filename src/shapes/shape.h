@@ -27,32 +27,10 @@ class Shape
 public:
 
     /// constructor
-    Shape()
-        : id(genId()),
-          outlineColor(Colors::Green),
-          fillColor(outlineColor),
-          locked(false),
-          visible(true),
-          editing(false),
-          thickness(1),
-          lineType(cv::LINE_AA),
-          canvas(nullptr),
-          deleted(false)
-    {}
+    Shape();
 
     /// copy constructor
-    Shape(const Shape &other)
-        : id(genId()),
-          outlineColor(other.outlineColor),
-          fillColor(other.fillColor),
-          locked(other.locked),
-          visible(other.visible),
-          editing(other.editing),
-          thickness(other.thickness),
-          lineType(other.lineType),
-          canvas(other.canvas),
-          deleted(other.deleted)
-    {}
+    Shape(const Shape &other);
 
     /// virtual destructor
     virtual ~Shape();
@@ -166,6 +144,8 @@ public:
     /// returns true if shape is at pos, false otherwise
     virtual bool isAtPos(const cv::Point &pos) = 0;
 
+    virtual void translate(const cv::Point &offset) = 0;
+
 
     /// return a unique id for this shape
     int getId()
@@ -255,6 +235,10 @@ protected:
 
     bool isDeleted();
 
+    void setReady();
+
+    bool isReady() const;
+
     int id;
     cv::Scalar outlineColor;
     cv::Scalar fillColor;
@@ -287,6 +271,7 @@ private:
 
     std::list<CBType> cbs;
     bool deleted;
+    bool ready;
 };
 
 // These write and read functions must be defined for the serialization in cv::FileStorage to work

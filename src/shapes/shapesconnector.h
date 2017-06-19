@@ -40,6 +40,8 @@ public:
 
     void disconnectShape(int id);
 
+    virtual void translate(const cv::Point &offset);
+
     static const char * type;
 
 protected:

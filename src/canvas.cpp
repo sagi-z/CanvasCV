@@ -14,7 +14,8 @@ Canvas::Canvas(Size sizeVal)
     : on(true),
       boundaries(Point(0,0), sizeVal),
       hasScreenText(false),
-      hasStatusMsg(false)
+      hasStatusMsg(false),
+      dragPos(0,0)
 {
 }
 
@@ -84,22 +85,26 @@ bool Canvas::onMousePress(const cv::Point &pos)
     }
 
     // delegate to active shape
-    if (active.get())
+    if (activeShape.get())
     {
-        if (! active->mousePressed(pos))
+        if (! activeShape->mousePressed(pos))
         {
-            active->lostFocus();
-            active->broadcastEvent(Shape::UNSELECT);
-            broadcastModify(active.get());
-            if (active->isDeleted())
+            activeShape->lostFocus();
+            activeShape->broadcastEvent(Shape::UNSELECT);
+            broadcastModify(activeShape.get());
+            if (activeShape->isDeleted())
             {
                 deleteActive();
             }
             else
             {
-                active.reset();
+                activeShape.reset();
             }
             setStatusMsg("");
+        }
+        else if (activeShape->isReady() && activeShape->getVisible() && ! activeShape->getLocked())
+        {   // note that only active shapes can be dragged
+            dragPos = pos;
         }
         return false;
     }
@@ -109,19 +114,19 @@ bool Canvas::onMousePress(const cv::Point &pos)
     {
         if (shape->mousePressed(pos))
         {
-            active = shape;
+            activeShape = shape;
             if (hasStatusMsg)
             {
-                if (active->getLocked())
+                if (activeShape->getLocked())
                 {
                     setStatusMsg("Shape is locked.");
                 }
                 else
                 {
-                    setStatusMsg(active->getStatusMsg());
+                    setStatusMsg(activeShape->getStatusMsg());
                 }
             }
-            active->broadcastEvent(Shape::SELECT);
+            activeShape->broadcastEvent(Shape::SELECT);
             return true;
         }
     }
@@ -131,22 +136,22 @@ bool Canvas::onMousePress(const cv::Point &pos)
     {
         shapes.push_back(std::shared_ptr<Shape>(ShapeFactory::newShape(shapeType,pos)));
         processNewShape();
-        if (! active->mousePressed(pos, true))
+        if (! activeShape->mousePressed(pos, true))
         {
-            active->lostFocus();
-            if (active->isDeleted())
+            activeShape->lostFocus();
+            if (activeShape->isDeleted())
             {
                 deleteActive();
             }
             else
             {
-                active.reset();
+                activeShape.reset();
             }
             setStatusMsg("");
         }
         else
         {
-            active->broadcastEvent(Shape::SELECT);
+            activeShape->broadcastEvent(Shape::SELECT);
             return true;
         }
     }
@@ -157,6 +162,8 @@ bool Canvas::onMousePress(const cv::Point &pos)
 void Canvas::onMouseRelease(const cv::Point &pos)
 {
     if (! on) return;
+
+    dragPos.x = dragPos.y = 0;
 
     // widgets have preference over shapes
     if (activeWidget.get())
@@ -175,20 +182,20 @@ void Canvas::onMouseRelease(const cv::Point &pos)
         }
     }
 
-    if (active.get())
+    if (activeShape.get())
     {
-        if (! active->mouseReleased(pos))
+        if (! activeShape->mouseReleased(pos))
         {
-            active->lostFocus();
-            active->broadcastEvent(Shape::UNSELECT);
-            broadcastModify(active.get());
-            if (active->isDeleted())
+            activeShape->lostFocus();
+            activeShape->broadcastEvent(Shape::UNSELECT);
+            broadcastModify(activeShape.get());
+            if (activeShape->isDeleted())
             {
                 deleteActive();
             }
             else
             {
-                active.reset();
+                activeShape.reset();
             }
             setStatusMsg("");
         }
@@ -226,19 +233,31 @@ void Canvas::onMouseMove(const cv::Point &pos)
         }
     }
 
-    // shapes
-    if (active.get())
+    // shapes can be dragged
+    if (activeShape.get())
     {
-        active->mouseMoved(pos);
+        if (dragPos.x || dragPos.y)
+        {
+            Point offset = pos - dragPos;
+            activeShape->translate(offset);
+            dragPos = pos;
+        }
+        else
+        {
+            activeShape->mouseMoved(pos);
+        }
     }
 }
 
 std::shared_ptr<Shape> Canvas::createShape(string type, const Point &pos)
 {
-    shapes.push_back(std::shared_ptr<Shape>(ShapeFactory::newShape(type,pos)));
+    std::shared_ptr<Shape> shape(ShapeFactory::newShape(type, pos));
+    shapes.push_back(shape);
     processNewShape();
-    active->lostFocus();
-    return active;
+    shape->setReady();
+    shape->lostFocus();
+    activeShape.reset();
+    return shape;
 }
 
 void Canvas::consumeKey(int &key)
@@ -247,19 +266,19 @@ void Canvas::consumeKey(int &key)
 
     if (key != -1)
     {
-        if (active.get())
+        if (activeShape.get())
         {
-            if (! active->keyPressed(key))
+            if (! activeShape->keyPressed(key))
             {
-                active->lostFocus();
-                active->broadcastEvent(Shape::UNSELECT);
-                if (active->isDeleted())
+                activeShape->lostFocus();
+                activeShape->broadcastEvent(Shape::UNSELECT);
+                if (activeShape->isDeleted())
                 {
                     deleteActive();
                 }
                 else
                 {
-                    active.reset();
+                    activeShape.reset();
                 }
                 setStatusMsg("");
             }
@@ -269,11 +288,11 @@ void Canvas::consumeKey(int &key)
 
 void Canvas::deleteActive()
 {
-    if (active.get())
+    if (activeShape.get())
     {
-        deleteShape(active);
-        active->lostFocus();
-        active.reset();
+        deleteShape(activeShape);
+        activeShape->lostFocus();
+        activeShape.reset();
         setStatusMsg("");
     }
 }
@@ -425,18 +444,18 @@ void Canvas::broadcastDelete(Shape *shape)
 
 void Canvas::processNewShape()
 {
-    active = shapes.back();
-    active->setCanvas(*this);
-    broadcastCreate(active.get());
+    activeShape = shapes.back();
+    activeShape->setCanvas(*this);
+    broadcastCreate(activeShape.get());
     if (hasStatusMsg)
     {
-        if (active->getLocked())
+        if (activeShape->getLocked())
         {
             setStatusMsg("Shape is locked.");
         }
         else
         {
-            setStatusMsg(active->getStatusMsg());
+            setStatusMsg(activeShape->getStatusMsg());
         }
     }
 }
@@ -505,7 +524,7 @@ Size Canvas::getSize()
 
 void write(cv::FileStorage& fs, const std::string&, const Canvas& x)
 {
-    if (x.active.get())
+    if (x.activeShape.get())
     {
     }
     fs << "{";
@@ -516,7 +535,7 @@ void write(cv::FileStorage& fs, const std::string&, const Canvas& x)
     }
     fs << "]";
     fs << "}";
-    if (x.active.get()) {
+    if (x.activeShape.get()) {
     }
 }
 

@@ -26,6 +26,34 @@ void read(const FileNode& node, Shape*& x, const Shape *default_value)
     }
 }
 
+Shape::Shape()
+    : id(genId()),
+      outlineColor(Colors::Green),
+      fillColor(outlineColor),
+      locked(false),
+      visible(true),
+      editing(false),
+      thickness(1),
+      lineType(cv::LINE_AA),
+      canvas(nullptr),
+      deleted(false),
+      ready(false)
+{}
+
+Shape::Shape(const Shape &other)
+    : id(genId()),
+      outlineColor(other.outlineColor),
+      fillColor(other.fillColor),
+      locked(other.locked),
+      visible(other.visible),
+      editing(other.editing),
+      thickness(other.thickness),
+      lineType(other.lineType),
+      canvas(other.canvas),
+      deleted(other.deleted),
+      ready(other.ready)
+{}
+
 Shape::~Shape()
 {
 }
@@ -37,7 +65,7 @@ void Shape::notifyOnEvent(Shape::CBType cb)
 
 void Shape::drawHelper(Mat &canvas, Shape *other)
 {
-   other->draw(canvas);
+    other->draw(canvas);
 }
 
 void Shape::setCanvas(Canvas &value)
@@ -47,8 +75,8 @@ void Shape::setCanvas(Canvas &value)
 
 const string &Shape::getStatusMsg() const
 {
-   static const string emptyStr;
-   return emptyStr;
+    static const string emptyStr;
+    return emptyStr;
 }
 
 void Shape::setDeleted()
@@ -58,7 +86,17 @@ void Shape::setDeleted()
 
 bool Shape::isDeleted()
 {
-   return deleted;
+    return deleted;
+}
+
+void Shape::setReady()
+{
+    ready = true;
+}
+
+bool Shape::isReady() const
+{
+   return ready;
 }
 
 void Shape::broadcastEvent(CBEvent event)

@@ -18,6 +18,7 @@ Handle::Handle(const Point &pos)
     thickness = 3;
     outlineColor = Colors::Red;
     fillColor = Colors::Red;
+    setReady();
 }
 
 Handle::~Handle()
@@ -41,35 +42,19 @@ bool Handle::mousePressed(const Point &pos, bool)
 {
     if (visible && ! locked)
     {
-        if (isPoint(pos))
-        {
-            editing = true;
-            return true;
-        }
+        return isPoint(pos);
     }
     return false;
 }
 
 bool Handle::mouseMoved(const Point &pos)
 {
-    if (editing)
-    {
-        pt = pos;
-        broadcastPosChanged(pos);
-        return true;
-    }
     return false;
 }
 
 bool Handle::mouseReleased(const Point &pos)
 {
-    if (editing)
-    {
-        pt = pos;
-        broadcastPosChanged(pos);
-        editing = false;
-    }
-    return false;
+    return isPoint(pos);
 }
 
 void Handle::writeInternals(FileStorage &fs) const
@@ -170,6 +155,11 @@ void Handle::setPos(const Point &pos, bool notify)
             broadcastPosChanged(pos);
         }
     }
+}
+
+void Handle::translate(const Point &offset)
+{
+   setPos(pt + offset);
 }
 
 int Handle::getRadius() const

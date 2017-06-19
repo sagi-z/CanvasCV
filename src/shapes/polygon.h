@@ -25,7 +25,7 @@ public:
 
     bool isPointInPoly(const cv::Point &pos) const
     {
-        if (ready)
+        if (isReady())
         {
             return cv::pointPolygonTest(vertices, pos, false) >= 0;
 
@@ -35,6 +35,8 @@ public:
 
     template <typename _TP>
     void getPoints(vector<Point_<_TP>> &out);
+
+    virtual void translate(const cv::Point &offset);
 
     static const char * type;
 
@@ -49,7 +51,6 @@ protected:
 private:
 
     virtual void reloadPointers(const std::list<Shape*> &lst, std::list<Shape*>::const_iterator &i);
-    bool ready;
     std::list<Handle*> handles;
     std::vector<cv::Point> vertices;
 };

@@ -40,6 +40,8 @@ public:
 
     void setPos(const cv::Point &pos, bool notify = true);
 
+    virtual void translate(const cv::Point &offset);
+
     int getRadius() const;
 
     CBID addPosChangedCB(PosChangedCB cb);

@@ -18,7 +18,6 @@ ShapesConnector::ShapesConnector(const Point &pos)
       space(5),
       tmpDragTarget(nullptr)
 {
-    dragDisabled = true;
     center = addShape<Handle>(pos);
     center->setLocked(true);
     setOutlineColor(Colors::Orange);
@@ -214,6 +213,15 @@ void ShapesConnector::disconnectShape(int id)
    {
        disconnectHead();
    }
+}
+
+void ShapesConnector::translate(const Point &offset)
+{
+    Shape *pHead = getHeadShape();
+    if (pHead && pHead->getLocked()) return;
+    Shape *pTail = getTailShape();
+    if (pTail && pTail->getLocked()) return;
+    return CompoundShape::translate(offset);
 }
 
 void ShapesConnector::writeInternals(FileStorage &fs) const

@@ -164,6 +164,21 @@ shared_ptr<Shape> CompoundShape::getShape(int id)
     return nullptr;
 }
 
+void CompoundShape::translate(const Point &offset)
+{
+    if (active.get() && active->getType() == Handle::type)
+    {
+        active->translate(offset);
+    }
+    else
+    {
+        for (auto &shape : shapes)
+        {
+            shape->translate(offset);
+        }
+    }
+}
+
 bool CompoundShape::rmvShape(shared_ptr<Shape> &shape)
 {
     list<shared_ptr<Shape>>::iterator i = find(shapes.begin(),shapes.end(),shape);
@@ -232,9 +247,16 @@ bool CompoundShape::keyPressed(int &key)
 
 void CompoundShape::lostFocus()
 {
-    for (auto &shape : shapes)
+    if (! isReady())
     {
-        shape->lostFocus();
+        setDeleted();
+    }
+    else
+    {
+        for (auto &shape : shapes)
+        {
+            shape->lostFocus();
+        }
     }
 }
 

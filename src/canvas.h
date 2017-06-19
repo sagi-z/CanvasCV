@@ -248,9 +248,10 @@ private:
     std::shared_ptr<FloatingText> screenText;
     std::shared_ptr<FloatingText> statusMsg;
     std::string shapeType;
+    cv::Point dragPos;
     std::list<std::shared_ptr<Shape>> shapes;
     std::list<std::shared_ptr<Widget>> widgets;
-    std::shared_ptr<Shape> active;
+    std::shared_ptr<Shape> activeShape;
     std::shared_ptr<Widget> activeWidget;
     std::list<CBType> createNotifs;
     std::list<CBType> modifyNotifs;
@@ -266,8 +267,9 @@ std::shared_ptr<T> Canvas::createShape(const cv::Point &pos)
     std::shared_ptr<T> shape(ShapeFactoryT<T>::newShape(pos));
     shapes.push_back(shape);
     processNewShape();
+    ((Shape*)shape.get())->setReady();
     ((Shape*)shape.get())->lostFocus();
-    active.reset();
+    activeShape.reset();
     return shape;
 }
 

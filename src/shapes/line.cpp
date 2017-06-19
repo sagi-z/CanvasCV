@@ -12,8 +12,9 @@ const char * Line::type = "Line";
 Line::Line(const Point &pos)
 {
     pt1 = addShape<Handle>(pos);
+    pt1->setLocked(true);
+    pt1->setVisible(false);
     pt2 = addShape<Handle>(pos);
-    dragDisabled = false;
 }
 
 void Line::draw(Mat &canvas)
@@ -24,25 +25,33 @@ void Line::draw(Mat &canvas)
 
 bool Line::mousePressed(const Point &pos, bool onCreate)
 {
-    if (CompoundShape::mousePressed(pos, onCreate))
+    if (isReady())
     {
-        return true;
-    }
+        if (CompoundShape::mousePressed(pos, onCreate))
+        {
+            return true;
+        }
 
-    if (isPointOnLine(pos))
+        if (isPointOnLine(pos))
+        {
+            if (! pt1->getLocked())
+            {
+                pt1->setVisible(true);
+            }
+            if (! pt2->getLocked())
+            {
+                pt2->setVisible(true);
+            }
+            return true;
+        }
+    }
+    else
     {
-        if (! pt1->getLocked())
-        {
-            pt1->setVisible(true);
-        }
-        if (! pt2->getLocked())
-        {
-            pt2->setVisible(true);
-        }
-        if (! onCreate && ! locked && ! dragDisabled)
-        {
-            dragPos = pos;
-        }
+        if ( onCreate) return true;
+
+        setReady();
+        pt1->setLocked(false);
+        pt1->setVisible(true);
         return true;
     }
 
@@ -51,23 +60,22 @@ bool Line::mousePressed(const Point &pos, bool onCreate)
 
 bool Line::mouseMoved(const Point &pos)
 {
-    if (dragPos.x || dragPos.y)
+    if (isReady())
     {
-        Point diff = dragPos - pos;
-        pt1->setPos((*pt1)() - diff);
-        pt2->setPos((*pt2)() - diff);
-        dragPos = pos;
-        return true;
-    }
+        if (CompoundShape::mouseMoved(pos))
+        {
+            return true;
+        }
 
-    if (CompoundShape::mouseMoved(pos))
-    {
-        return true;
+        if (isPointOnLine(pos))
+        {
+            return true;
+        }
     }
-
-    if (isPointOnLine(pos))
+    else
     {
-        return true;
+       pt2->setPos(pos);
+       return true;
     }
 
     return false;
@@ -75,25 +83,33 @@ bool Line::mouseMoved(const Point &pos)
 
 bool Line::mouseReleased(const Point &pos)
 {
-    if (dragPos.x || dragPos.y)
+    if (isReady())
     {
-        dragPos.x = 0;
-        dragPos.y = 0;
-        return true;
-    }
+        if (CompoundShape::mouseReleased(pos))
+        {
+            return true;
+        }
 
-    if (CompoundShape::mouseReleased(pos))
-    {
-        return true;
+        if (isPointOnLine(pos))
+        {
+            // mouse unclicked on line
+            return true;
+        }
     }
-
-    if (isPointOnLine(pos))
+    else
     {
-        // mouse unclicked on line
         return true;
     }
 
     return false;
+}
+
+void Line::reloadPointers(const list<Shape*> &lst, list<Shape*>::const_iterator &i)
+{
+    CompoundShape::reloadPointers(lst, i);
+    pt1 = dynamic_cast<Handle*>(*i++);
+    pt2 = dynamic_cast<Handle*>(*i++);
+    setReady();
 }
 
 list<Handle *> Line::getConnectionTargets()
@@ -147,6 +163,18 @@ const Point &Line::getTail() const
 const Point &Line::getHead() const
 {
     return (*pt2)();
+}
+
+bool Line::keyPressed(int &key)
+{
+    if (isReady()) return true;
+
+    if (key == 27)
+    { // ESC
+        key = -1; // consume key
+        return false; // lostFocus() => the canvas will delete us
+    }
+    return true;
 }
 
 }

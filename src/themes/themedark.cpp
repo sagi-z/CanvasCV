@@ -89,7 +89,7 @@ void ThemeDark::applyStyle(Shape *shape)
 {
    shape->setOutlineColor(THM_DARK_GRAY);
    shape->setFillColor(THM_ORANGE);
-   shape->setThickness(1);
+   shape->setThickness(2);
    if (shape->getType() == LineCrossing::type)
    {
        ((LineCrossing*)shape)->setArrowMagnitude(30);
@@ -97,7 +97,7 @@ void ThemeDark::applyStyle(Shape *shape)
    }
    else if (shape->getType() == Handle::type)
    {
-       shape->setThickness(3);
+       shape->setThickness(4);
    }
 }
 

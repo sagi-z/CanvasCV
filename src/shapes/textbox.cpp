@@ -16,12 +16,14 @@ TextBox::TextBox(const Point &pos) :
     text("text"),
     prevText(text),
     fontFace(FONT_HERSHEY_COMPLEX_SMALL),
-    fontScale(0.5)
+    fontScale(0.5),
+    fontThickness(1)
 {
     topLeft.reset(dynamic_cast<Handle*>(ShapeFactoryT<Handle>::newShape(pos)));
     topLeft->setLocked(true);
     recalcRect();
     registerCBs();
+    setReady();
 }
 
 
@@ -40,7 +42,7 @@ void TextBox::draw(Mat &canvas)
         }
         rectangle(canvas, rect, outlineColor, thickness);
         putText(canvas, text, Point(rect.tl().x,rect.tl().y+baseline*2), fontFace, fontScale,
-                outlineColor, thickness, LINE_AA);
+                outlineColor, fontThickness, LINE_AA);
         drawHelper(canvas, topLeft.get());
     }
 }
@@ -49,10 +51,6 @@ bool TextBox::mousePressed(const Point &pos, bool onCreate)
 {
     if (visible)
     {
-        if (! onCreate && ! locked)
-        {
-            dragPos = pos;
-        }
         if (pos.inside(rect))
         {
             editing = true;
@@ -72,13 +70,6 @@ bool TextBox::mousePressed(const Point &pos, bool onCreate)
 
 bool TextBox::mouseMoved(const Point &pos)
 {
-    if (dragPos.x || dragPos.y)
-    {
-        Point diff = dragPos - pos;
-        setTL((*topLeft)() - diff);
-        dragPos = pos;
-        return true;
-    }
     return false;
 }
 
@@ -86,13 +77,6 @@ bool TextBox::mouseReleased(const Point &pos)
 {
     if (visible)
     {
-        if (dragPos.x || dragPos.y)
-        {
-            dragPos.x = 0;
-            dragPos.y = 0;
-            return true;
-        }
-
         if (pos.inside(rect))
         {
             if (editing)
@@ -157,10 +141,20 @@ void TextBox::recalcRect()
 {
     baseline=0;
     Size textSize = getTextSize(text, fontFace,
-                                fontScale, thickness, &baseline);
+                                fontScale, fontThickness, &baseline);
     baseline += thickness;
     rect = Rect((*topLeft)(),
                     (*topLeft)() + Point(textSize.width, textSize.height+baseline*2));
+}
+
+int TextBox::getFontThickness() const
+{
+    return fontThickness;
+}
+
+void TextBox::setFontThickness(int value)
+{
+    fontThickness = value;
 }
 
 void TextBox::writeInternals(FileStorage &fs) const
@@ -170,6 +164,7 @@ void TextBox::writeInternals(FileStorage &fs) const
     fs << "topLeft" << *topLeft;
     fs << "fontFace" << fontFace;
     fs << "fontScale" << fontScale;
+    fs << "fontThickness" << fontThickness;
 }
 
 void TextBox::readInternals(const FileNode &node)
@@ -181,6 +176,7 @@ void TextBox::readInternals(const FileNode &node)
     topLeft.reset(dynamic_cast<Handle*>(shape));
     node["fontFace"] >> fontFace;
     node["fontScale"] >> fontScale;
+    node["fontThickness"] >> fontThickness;
     recalcRect();
     registerCBs();
 }
@@ -248,6 +244,12 @@ void TextBox::setFontScale(double value)
 {
     fontScale = value;
     recalcRect();
+}
+
+void TextBox::translate(const Point &offset)
+{
+   topLeft->translate(offset);
+   recalcRect();
 }
 
 }

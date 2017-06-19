@@ -81,6 +81,8 @@ public:
         return isPointOnLine(pos);
     }
 
+    virtual bool keyPressed(int &key);
+
     static const char * type;
 
 protected:
@@ -91,15 +93,8 @@ protected:
 
     Handle* pt1;
     Handle* pt2;
-    cv::Point dragPos;
-    bool dragDisabled;
 
-    virtual void reloadPointers(const std::list<Shape*> &lst, std::list<Shape*>::const_iterator &i)
-    {
-        CompoundShape::reloadPointers(lst, i);
-        pt1 = dynamic_cast<Handle*>(*i++);
-        pt2 = dynamic_cast<Handle*>(*i++);
-    }
+    virtual void reloadPointers(const std::list<Shape*> &lst, std::list<Shape*>::const_iterator &i);
 };
 
 }

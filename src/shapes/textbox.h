@@ -40,7 +40,12 @@ public:
 
     void setFontScale(double value);
 
+    virtual void translate(const cv::Point &offset);
+
     static const char * type;
+
+    int getFontThickness() const;
+    void setFontThickness(int value);
 
 protected:
     virtual void writeInternals(cv::FileStorage &fs) const;
@@ -62,10 +67,10 @@ private:
     std::string prevText;
     int fontFace;
     double fontScale;
+    int fontThickness;
     int baseline;
     std::shared_ptr<Handle> topLeft;
     cv::Rect rect;
-    cv::Point dragPos;
 };
 
 }

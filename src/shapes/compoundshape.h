@@ -24,6 +24,7 @@ public:
 
     virtual std::shared_ptr<Shape> getShape(int id);
 
+    virtual void translate(const cv::Point &offset);
 protected:
     virtual ~CompoundShape() {} // force inheritance
 
