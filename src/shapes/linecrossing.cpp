@@ -11,13 +11,15 @@ const char * LineCrossing::type = "LineCrossing";
 LineCrossing::LineCrossing(const Point &pos)
     : direction(1), arrowMagnitude(60)
 {
-    line = addShape<Line>(pos);
     arrow = addShape<Arrow>(pos);
     arrow->setVisible(false);
     arrow->setLocked(true);
     textBox = addShape<TextBox>(pos);
+    textBox->setVisible(false);
     textBox->setLocked(true);
+    line = addShape<Line>(pos);
     registerCBs();
+    setActive(line);
 }
 
 void LineCrossing::draw(Mat &canvas)
@@ -25,8 +27,10 @@ void LineCrossing::draw(Mat &canvas)
     if (line->length()<10)
     {
         arrow->setVisible(false);
+        textBox->setVisible(false);
     } else {
         arrow->setVisible(true);
+        textBox->setVisible(true);
         arrow->getPT1().setVisible(false);
         arrow->getPT2().setVisible(false);
     }
@@ -35,19 +39,27 @@ void LineCrossing::draw(Mat &canvas)
 
 bool LineCrossing::mousePressed(const Point &pos, bool onCreate)
 {
-    if (arrow->getVisible())
+    if (isReady())
     {
-        if (arrow->isPointOnLine(pos))
+        if (arrow->getVisible())
         {
-            direction *= -1;
-            recalcArrow();
-            return true;
+            if (arrow->isPointOnLine(pos))
+            {
+                direction *= -1;
+                recalcArrow();
+                return true;
+            }
         }
-    }
 
-    if (CompoundShape::mousePressed(pos, onCreate))
+        return CompoundShape::mousePressed(pos, onCreate);
+    }
+    else
     {
-        return true;
+       if (CompoundShape::mousePressed(pos, onCreate))
+       {
+           if (line->isReady()) setReady();
+           return true;
+       }
     }
     return false;
 }

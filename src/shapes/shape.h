@@ -146,6 +146,7 @@ public:
 
     virtual void translate(const cv::Point &offset) = 0;
 
+    bool isReady() const;
 
     /// return a unique id for this shape
     int getId()
@@ -236,8 +237,6 @@ protected:
     bool isDeleted();
 
     void setReady();
-
-    bool isReady() const;
 
     int id;
     cv::Scalar outlineColor;
