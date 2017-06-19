@@ -172,7 +172,7 @@ public:
      * @param fontFace is the OpenCV fonr to use
      */
     void enableScreenText(cv::Scalar color = Colors::Black,
-                          cv::Scalar bgColor = Colors::P1_GRAY,
+                          cv::Scalar bgColor = Colors::LightGray,
                           double scale = 0.5,
                           int thickness = 1,
                           uchar alpha = 80,
@@ -189,7 +189,7 @@ public:
      * @param fontFace is the OpenCV fonr to use
      */
     void enableStatusMsg(cv::Scalar color = Colors::Orange,
-                         cv::Scalar bgColor = Colors::P1_GRAY,
+                         cv::Scalar bgColor = Colors::LightGray,
                          double scale = 0.5,
                          int thickness = 1,
                          uchar alpha = 80,

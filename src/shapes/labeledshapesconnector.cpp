@@ -12,7 +12,7 @@ LabeledShapesConnector::LabeledShapesConnector(const Point &pos)
     : ShapesConnector(pos)
 {
     label = addShape<TextBox>(pos);
-    label->setOutlineColor(Colors::P1_RED);
+    label->setOutlineColor(Colors::Tomato);
     center->connect(*label->getConnectionTargets().front());
 }
 

@@ -26,6 +26,7 @@ class Shape
 {
 public:
 
+    /// constructor
     Shape()
         : id(genId()),
           outlineColor(Colors::Green),
@@ -39,6 +40,7 @@ public:
           deleted(false)
     {}
 
+    /// copy constructor
     Shape(const Shape &other)
         : id(genId()),
           outlineColor(other.outlineColor),
@@ -52,6 +54,7 @@ public:
           deleted(other.deleted)
     {}
 
+    /// virtual destructor
     virtual ~Shape();
 
     /**
@@ -59,10 +62,12 @@ public:
      */
     enum CBEvent
     {
-        SELECT,
-        UNSELECT,
-        REMOVED
+        SELECT,   ///< shape selected
+        UNSELECT, ///< shape unselected
+        REMOVED   ///< shape removed
     };
+
+    /// signature of a callback which gets the CBEvent
     typedef std::function<void(Shape*, CBEvent)> CBType;
 
     /**

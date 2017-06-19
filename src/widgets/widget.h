@@ -22,40 +22,86 @@ class Widget
 {
 public:
 
-    // Used both for internal widget flow and in Layout managers
-    // Widget flow:
-    // ===========
-    // * TOP (default) - means the widget 'location' is the
-    //  top-left cv::Point of the widget cv::Rect. The contets are
-    //  filled downwards.
-    // * BOTTOM - means the widget 'location' is the bottom-left
-    //  cv::Point of the widget cv::Rect. The contets are filled
-    //  upwards.
-    // * For widgets that are also layout managers, you can control
-    //  the direction in which they progress by also anchoring them to
-    //  the opposite side -
-    //   - vertical layout can progress either up or down, so you
-    //    can anchor it also to TOP (default) / BOTTOM.
-    //   - horizontal layout can progress either left or right, so you
-    //    can anchor it also to LEFT (default) / RIGHT.
-    //
-    // Layout alignment:
-    // ================
-    // * For a vertical layout - if the stretchX is false, you can
-    //  align (anchor) the widget horizontally to the LEFT (default) / CENTER / RIGHT.
-    //   The layout manager will handle vetical layout according to its own
-    //  widget flow - anchored to the TOP (default) or BOTTOM.
-    // * For a horizontal layout - if the stretchY is false, you can
-    //  align (anchor) the widget vertically to the TOP (default) / CENTER / BOTTOM.
-    //   The layout manager will handle horizontal layout according to its own
-    //  widget flow - anchored to the LEFT (default) or RIGHT.
-    enum Relief
+    /// These are the widget states
+    enum State
     {
-        FLAT,
-        RAISED,
-        SUNKEN
+        ENTER,  ///< got gocus
+        LEAVE,  ///< lost focus
+        PRESS,  ///< mouse pressed
+        RELEASE ///< mouse left
     };
 
+    /// signature of a callback which gets the State
+    typedef std::function<void(Widget*, State)> CBWidgetState;
+
+    /// signature of a callback which gets a user selection
+    typedef std::function<void(Widget*, int)> CBUserSelection;
+
+    /// constructor
+    Widget(Layout &layoutVal, const cv::Point &pos = cv::Point(0,0));
+
+    /// copy constructor
+    Widget(const Widget &other);
+
+    /// virtual destructor
+    virtual ~Widget();
+
+    /**
+     * @brief getType is always implemented by derived to return the same static pointer per widget.
+     * @return const char * pointer to string with widget type name
+     */
+    virtual const char *getType() const = 0;
+
+    /**
+     * @brief used to register for notifications on a widget
+     * @param cb to invoke on widget state change
+     */
+    void notifyOnChange(CBWidgetState cb);
+
+    /// get the outline color
+    cv::Scalar getOutlineColor() const;
+
+    /// set the outline color
+    virtual void setOutlineColor(const cv::Scalar &value);
+
+    /// get the bg color
+    cv::Scalar getFillColor() const;
+
+    /// set the bg color
+    virtual void setFillColor(const cv::Scalar &value);
+
+    /// is the widget visible
+    bool getVisible() const
+    {
+        return visible;
+    }
+
+    /// set the widget visible state
+    virtual void setVisible(bool value);
+
+    /// get line thickness to use when drawing
+    int getThickness() const;
+
+    /// set line thickness to use when drawing
+    virtual void setThickness(int value);
+
+    /// get the line type (LINE_4, LINE_8, LINE_AA)
+    int getLineType() const;
+
+    /// set the line type (LINE_4, LINE_8, LINE_AA)
+    virtual void setLineType(int value);
+
+    /// get the alpha value used for the widge background [0,255] => [transparent,opaque]
+    uchar getAlpha() const;
+
+    /// set the alpha value used for the widge background [0,255] => [transparent,opaque]
+    virtual void setAlpha(uchar value);
+
+    /**
+     * @brief The Anchor enum
+     * Used for both aligment in the Layout we belong to and internal widget alignments
+     * @see getLayoutAnchor(), setLayoutAnchor(), getFlowAnchor(), setFlowAnchor()
+     */
     enum Anchor
     {
         TOP    = 0b00000001,
@@ -73,102 +119,97 @@ public:
         CENTER_RIGHT  = CENTER | RIGHT
     };
 
-
-    enum State
-    {
-        ENTER,
-        LEAVE,
-        PRESS,
-        RELEASE
-    };
-
-    typedef std::function<void(Widget*, State)> CBWidgetState;
-
-    typedef std::function<void(Widget*, int)> CBUserSelection;
-
-    Widget(Layout &layoutVal, const cv::Point &pos = cv::Point(0,0));
-
-    Widget(const Widget &other);
-
-    virtual ~Widget();
-
-    virtual const char *getType() const = 0;
-
-    void notifyOnChange(CBWidgetState cb);
-
-    cv::Scalar getOutlineColor() const;
-
-    virtual void setOutlineColor(const cv::Scalar &value);
-
-    cv::Scalar getFillColor() const;
-
-    virtual void setFillColor(const cv::Scalar &value);
-
-    bool getLocked() const
-    {
-        return locked;
-    }
-
-    virtual void setLocked(bool value);
-
-    bool getVisible() const
-    {
-        return visible;
-    }
-
-    virtual void setVisible(bool value);
-
-    int getThickness() const;
-
-    virtual void setThickness(int value);
-
-    int getLineType() const;
-
-    virtual void setLineType(int value);
-
-    uchar getAlpha() const;
-    virtual void setAlpha(uchar value);
-
-    std::string getMsg() const;
-    void setMsg(const std::string &value);
-
+    /**
+     * @brief getLayoutAnchor returns the anchor for using in the Layout we're in
+     * @return the Anchor related to the Layout we're in
+     * @see VerticalLayout, HorizontalLayout
+     */
     Anchor getLayoutAnchor() const
     {
         return layoutAnchor;
     }
 
+    /**
+     * @brief setLayoutAnchor sets the anchor for using in the Layout we're in
+     * @param value is used to set the layoutAnchor
+     * @see VerticalLayout, HorizontalLayout
+     */
+    void setLayoutAnchor(const Anchor &value);
+
+    /**
+     * @brief getFlowAnchor affects internal widget alignment and direction of growth
+     * @return the Anchor of our own flow
+     * @see VerticalLayout, HorizontalLayout, FloatingText
+     */
     Anchor getFlowAnchor() const
     {
         return flowAnchor;
     }
 
-    void setLayoutAnchor(const Anchor &value);
-
+    /**
+     * @brief setFlowAnchor affects internal widget alignment and direction of growth
+     * @param value is used to set the flowAnchor
+     * @see VerticalLayout, HorizontalLayout, FloatingText
+     */
     void setFlowAnchor(const Anchor &value);
 
+    /// Widgets have a unique id per instance
     int getId()
     {
         return id;
     }
 
+    /**
+     * @brief getStatusMsg
+     * @return a message to display during mouse hover
+     * @see Canvas::enableStatusMsg
+     */
     virtual const std::string &getStatusMsg() const;
+
+    /**
+     * @brief setStatusMsg
+     * @param value a message to display during mouse hover
+     * @see Canvas::enableStatusMsg
+     */
     void setStatusMsg(const std::string &value);
 
+    /// get widget position in Canvas
     cv::Point getLocation() const;
+
+    /// set widget position in Canvas
     virtual void setLocation(const cv::Point &value);
 
+    /// move the widget
     virtual void translate(const cv::Point &translation);
 
+    /// get if the Layout we're in should stretch us in the X direction
     bool getStretchX() const;
+
+    /// set if the Layout we're in should stretch us in the X direction
     void setStretchX(bool value);
 
+    /// get if the Layout we're in should stretch us in the Y direction
     bool getStretchY() const;
+
+    /// set if the Layout we're in should stretch us in the Y direction
     void setStretchY(bool value);
 
+    /// get the color to use when a widget is selected
     cv::Scalar getSelectColor() const;
+
+    /// set the color to use when a widget is selected
     virtual void setSelectColor(const cv::Scalar &value);
 
+    /// get rid of the widget
     void rmvFromLayout();
+
+    /// Control the widget BG relieft style
+    enum Relief
+    {
+        FLAT,
+        RAISED,
+        SUNKEN
+    };
 
 protected:
 
@@ -248,7 +289,6 @@ protected:
     cv::Point location;
     cv::Scalar selectColor;
     Relief relief;
-    bool locked;
     bool visible;
     int thickness;
     int lineType;

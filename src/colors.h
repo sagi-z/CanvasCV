@@ -10,39 +10,6 @@ class Colors
 {
 public:
 
-    // P1 colors are lighter colors (Plus1 below middle
-    //  row in RGB color codes chart)
-    static const cv::Scalar P1_GRAY;
-    static const cv::Scalar P1_PINK;
-    static const cv::Scalar P1_LPINK;
-    static const cv::Scalar P1_PURPLE;
-    static const cv::Scalar P1_BLUE;
-    static const cv::Scalar P1_LBLUE;
-    static const cv::Scalar P1_CYAN;
-    static const cv::Scalar P1_LCYAN;
-    static const cv::Scalar P1_GREEN;
-    static const cv::Scalar P1_LGREEN;
-    static const cv::Scalar P1_YELLOW;
-    static const cv::Scalar P1_ORANGE;
-    static const cv::Scalar P1_RED;
-
-    // M3 colors are darger colors (Minus3 above middle
-    //  row in RGB color codes chart)
-    static const cv::Scalar M3_GRAY;
-    static const cv::Scalar M3_PINK;
-    static const cv::Scalar M3_LPINK;
-    static const cv::Scalar M3_PURPLE;
-    static const cv::Scalar M3_BLUE;
-    static const cv::Scalar M3_LBLUE;
-    static const cv::Scalar M3_CYAN;
-    static const cv::Scalar M3_LCYAN;
-    static const cv::Scalar M3_GREEN;
-    static const cv::Scalar M3_LGREEN;
-    static const cv::Scalar M3_YELLOW;
-    static const cv::Scalar M3_ORANGE;
-    static const cv::Scalar M3_RED;
-
-
     static const cv::Scalar Maroon; ///< <SPAN style="background: #800000;">&nbsp;&nbsp;</SPAN> RGB: (128,0,0)  HEX: #800000
     static const cv::Scalar DarkRed; ///< <SPAN style="background: #8B0000;">&nbsp;&nbsp;</SPAN> RGB: (139,0,0)  HEX: #8B0000
     static const cv::Scalar Brown; ///< <SPAN style="background: #A52A2A;">&nbsp;&nbsp;</SPAN> RGB: (165,42,42)  HEX: #A52A2A

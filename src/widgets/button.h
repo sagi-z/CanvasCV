@@ -54,7 +54,7 @@ protected:
            cv::Point locationVal = cv::Point(0, 0),
            int maxWidthVal = 0,
            cv::Scalar colorVal = Colors::Black,
-           cv::Scalar bgColorVal = Colors::P1_GRAY,
+           cv::Scalar bgColorVal = Colors::LightGray,
            double fontScaleVal = 0.5,
            int fontThicknessVal = 1,
            int fontFaceVal = cv::FONT_HERSHEY_COMPLEX_SMALL);

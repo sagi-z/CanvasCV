@@ -2,38 +2,6 @@
 
 namespace canvascv {
 
-// P1 colors are lighter colors (Plus1 below middle
-//  row in RGB color codes chart)
-const cv::Scalar Colors::P1_GRAY(160,160,160);
-const cv::Scalar Colors::P1_PINK(153,51,255);
-const cv::Scalar Colors::P1_LPINK(255,51,255);
-const cv::Scalar Colors::P1_PURPLE(255,51,153);
-const cv::Scalar Colors::P1_BLUE(255,51,51);
-const cv::Scalar Colors::P1_LBLUE(255,153,51);
-const cv::Scalar Colors::P1_CYAN(255,255,51);
-const cv::Scalar Colors::P1_LCYAN(153,255,51);
-const cv::Scalar Colors::P1_GREEN(51,255,51);
-const cv::Scalar Colors::P1_LGREEN(51,255,153);
-const cv::Scalar Colors::P1_YELLOW(51,255,255);
-const cv::Scalar Colors::P1_ORANGE(51,153,255);
-const cv::Scalar Colors::P1_RED(51,51,255);
-
-// M3 colors are darger colors (Minus3 above middle
-//  row in RGB color codes chart)
-const cv::Scalar Colors::M3_GRAY(32,32,32);
-const cv::Scalar Colors::M3_PINK(51,0,102);
-const cv::Scalar Colors::M3_LPINK(102,0,102);
-const cv::Scalar Colors::M3_PURPLE(102,0,51);
-const cv::Scalar Colors::M3_BLUE(102,0,0);
-const cv::Scalar Colors::M3_LBLUE(102,51,0);
-const cv::Scalar Colors::M3_CYAN(102,102,0);
-const cv::Scalar Colors::M3_LCYAN(51,102,0);
-const cv::Scalar Colors::M3_GREEN(0,102,0);
-const cv::Scalar Colors::M3_LGREEN(0,102,51);
-const cv::Scalar Colors::M3_YELLOW(0,102,102);
-const cv::Scalar Colors::M3_ORANGE(0,52,102);
-const cv::Scalar Colors::M3_RED(0,0,102);
-
 const cv::Scalar Colors::AliceBlue(255,248,240); // #F0F8FF
 const cv::Scalar Colors::AntiqueWhite(215,235,250); // #FAEBD7
 const cv::Scalar Colors::Aqua(255,255,0); // #00FFFF

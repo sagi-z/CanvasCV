@@ -19,7 +19,7 @@ FloatingText::FloatingText(Layout &layoutVal, const Point &pos)
       fontHeight(0)
 {
     setOutlineColor(Colors::Black);
-    setFillColor(Colors::P1_GRAY);
+    setFillColor(Colors::LightGray);
 }
 
 FloatingText::FloatingText(Layout &layoutVal, const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,

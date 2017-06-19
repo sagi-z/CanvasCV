@@ -69,14 +69,14 @@ public:
     /// set the maxuimum allowed width of rows in pixels (0 to disable max width)
     void setMaxWidth(int value);
 
-    virtual const cv::Rect &getRect();
-    virtual const cv::Rect &getMinimalRect();
-
     static const char *type;
 
 protected:
     friend class WidgetFactory;
     template <class T> friend class WidgetFactoryT;
+
+    virtual const cv::Rect &getRect();
+    virtual const cv::Rect &getMinimalRect();
 
     FloatingText(Layout &layoutVal, const cv::Point &pos);
 
@@ -84,7 +84,7 @@ protected:
                  cv::Point locationVal = cv::Point(0, 0),
                  int maxWidthVal = 0,
                  cv::Scalar colorVal = Colors::Black,
-                 cv::Scalar bgColorVal = Colors::P1_GRAY,
+                 cv::Scalar bgColorVal = Colors::LightGray,
                  double fontScaleVal = 0.5,
                  int fontThicknessVal = 1,
                  int fontFaceVal = cv::FONT_HERSHEY_COMPLEX_SMALL);

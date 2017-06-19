@@ -63,15 +63,6 @@ void CompoundWidget::setAlpha(uchar value)
     }
 }
 
-void CompoundWidget::setLocked(bool value)
-{
-    Widget::setLocked(value);
-    for (auto &widget : widgets)
-    {
-        widget->setLocked(value);
-    }
-}
-
 void CompoundWidget::setVisible(bool value)
 {
     Widget::setVisible(value);

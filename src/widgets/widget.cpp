@@ -37,7 +37,6 @@ Widget::Widget(Layout &layoutVal, const Point &pos)
       fillColor(Colors::Black),
       selectColor(Colors::Orange),
       relief(FLAT),
-      locked(false),
       visible(true),
       thickness(1),
       lineType(LINE_AA),
@@ -66,7 +65,6 @@ Widget::Widget(const Widget &other)
       fillColor(other.fillColor),
       selectColor(other.selectColor),
       relief(other.relief),
-      locked(other.locked),
       visible(other.visible),
       thickness(other.thickness),
       lineType(other.lineType),
@@ -126,11 +124,6 @@ void Widget::setFillColor(const Scalar &value)
         fillColor[2] = value[2];
         setDirty();
     }
-}
-
-void Widget::setLocked(bool value)
-{
-    locked = value;
 }
 
 void Widget::setVisible(bool value)
@@ -561,7 +554,6 @@ void Widget::readInternals(const FileNode &node)
     node["leftPos"] >> location;
     node["outlineColor"] >> outlineColor;
     node["fillColor"] >> fillColor;
-    node["locked"] >> locked;
     node["visible"] >> visible;
     node["thickness"] >> thickness;
     node["lineType"] >> lineType;
@@ -592,7 +584,6 @@ void Widget::writeInternals(FileStorage &fs) const
           "leftPos" << location <<
           "outlineColor" << outlineColor <<
           "fillColor" << fillColor <<
-          "locked" << locked <<
           "visible" << visible <<
           "thickness" << thickness <<
           "lineType" << lineType <<
