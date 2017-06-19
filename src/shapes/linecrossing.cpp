@@ -55,11 +55,11 @@ bool LineCrossing::mousePressed(const Point &pos, bool onCreate)
     }
     else
     {
-       if (CompoundShape::mousePressed(pos, onCreate))
-       {
-           if (line->isReady()) setReady();
-           return true;
-       }
+        if (CompoundShape::mousePressed(pos, onCreate))
+        {
+            if (line->isReady()) setReady();
+            return true;
+        }
     }
     return false;
 }

@@ -36,6 +36,8 @@ public:
 
     static const char * type;
 
+    virtual void translate(const cv::Point &offset);
+
 protected:
     virtual void draw(cv::Mat &canvas);
     virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);

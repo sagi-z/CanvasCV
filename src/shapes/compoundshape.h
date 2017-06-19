@@ -40,6 +40,7 @@ protected:
     virtual void lostFocus();
 
     void setActive(Shape* shape);
+    Shape* getActive();
 
     template <class T>
     T* addShape(cv::Point pos);

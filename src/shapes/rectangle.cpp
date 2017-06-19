@@ -19,12 +19,14 @@ Rectangle::Rectangle(const Point &pos)
     rotate3 = addShape<Handle>(Point(pos.x-1, pos.y));
     rotate4 = addShape<Handle>(Point(pos.x, pos.y-1));
     center = addShape<Handle>(pos);
+    center->setVisible(false);
     width = 3;
     height = 3;
     angle = 0;
     selfUpdate = false;
     updatePoints();
     registerCBs();
+    setActive(pt3);
 }
 
 void Rectangle::draw(Mat &canvas)
@@ -38,17 +40,33 @@ void Rectangle::draw(Mat &canvas)
 
 bool Rectangle::mousePressed(const Point &pos, bool onCreate)
 {
-    if (CompoundShape::mousePressed(pos, onCreate))
+    if (isReady())
     {
-        return true;
-    }
-
-    if (isPointInRectangle(pos))
-    {
-        for (auto &pt : {pt1, pt2, pt3, pt4, rotate1, rotate2, rotate3, rotate4, center})
+        if (CompoundShape::mousePressed(pos, onCreate))
         {
-            pt->setVisible(true);
+            // one of the points might have lost it's focus
+            //  by the generic CompoundShape::mousePressed()
+            for (auto &pt : {pt1, pt2, pt3, pt4, rotate1, rotate2, rotate3, rotate4})
+            {
+                pt->setVisible(true);
+            }
+            return true;
         }
+
+        if (isPointInRectangle(pos))
+        {
+            for (auto &pt : {pt1, pt2, pt3, pt4, rotate1, rotate2, rotate3, rotate4})
+            {
+                pt->setVisible(true);
+            }
+            return true;
+        }
+    }
+    else
+    {
+        if ( onCreate) return true;
+
+        setReady();
         return true;
     }
 
@@ -57,13 +75,21 @@ bool Rectangle::mousePressed(const Point &pos, bool onCreate)
 
 bool Rectangle::mouseMoved(const Point &pos)
 {
-    if (CompoundShape::mouseMoved(pos))
+    if (isReady())
     {
-        return true;
-    }
+        if (CompoundShape::mouseMoved(pos))
+        {
+            return true;
+        }
 
-    if (isPointInRectangle(pos))
+        if (isPointInRectangle(pos))
+        {
+            return true;
+        }
+    }
+    else
     {
+        pt3->setPos(pos);
         return true;
     }
 
@@ -72,18 +98,25 @@ bool Rectangle::mouseMoved(const Point &pos)
 
 bool Rectangle::mouseReleased(const Point &pos)
 {
-    if (CompoundShape::mouseReleased(pos))
+    if (isReady())
     {
-        return true;
-    }
-
-    if (isPointInRectangle(pos))
-    {
-        // mouse unclicked in rect
-        for (auto &pt : {pt1, pt2, pt3, pt4, rotate1, rotate2, rotate3, rotate4, center})
+        if (CompoundShape::mouseReleased(pos))
         {
-            pt->setVisible(true);
+            return true;
         }
+
+        if (isPointInRectangle(pos))
+        {
+            // mouse unclicked in rect
+            for (auto &pt : {pt1, pt2, pt3, pt4, rotate1, rotate2, rotate3, rotate4})
+            {
+                pt->setVisible(true);
+            }
+            return true;
+        }
+    }
+    else
+    {
         return true;
     }
 
@@ -265,6 +298,19 @@ void Rectangle::setRect(const RotatedRect &rect)
     height = rect.size.height;
     angle = rect.angle * CV_PI / 180;
     updatePoints();
+}
+
+void Rectangle::translate(const Point &offset)
+{
+    Shape *shape = getActive();
+    if (shape)
+    {
+        shape->translate(offset);
+    }
+    else
+    {
+        center->translate(offset);
+    }
 }
 
 }

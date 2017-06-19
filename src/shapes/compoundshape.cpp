@@ -277,4 +277,9 @@ void CompoundShape::setActive(Shape *shape)
     }
 }
 
+Shape *CompoundShape::getActive()
+{
+   return active.get();
+}
+
 }
