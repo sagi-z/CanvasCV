@@ -225,7 +225,12 @@ public:
     /// utility method to handle mouse events on window winName
     void setMouseCallback(const char * winName);
 
-    /// utility method to handle key strokes
+    /**
+     * @brief waitKeyEx
+     * utility method to handle key strokes, your get the keystroke
+     * @param delay
+     * @return the key press or -1 if a shape/widget consumed it
+     */
     int waitKeyEx(int delay = 0);
 
 protected:
