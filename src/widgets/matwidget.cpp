@@ -62,7 +62,6 @@ void MatWidget::recalc()
     rect.y = location.y;
     rect.width = mat.cols;
     rect.height = mat.rows;
-    allocateBG(mat.size());
     callDrawFG(false);
 }
 

@@ -64,52 +64,28 @@ public:
 
 
     /// get the outline color
-    cv::Scalar getOutlineColor() const
-    {
-        return outlineColor;
-    }
+    cv::Scalar getOutlineColor() const;
 
     /// set the outline color
-    virtual void setOutlineColor(const cv::Scalar &value)
-    {
-        outlineColor = value;
-    }
+    virtual void setOutlineColor(const cv::Scalar &value);
 
     /// get the fill color (fill color is not very useful for shapes right now)
-    cv::Scalar getFillColor() const
-    {
-        return fillColor;
-    }
+    cv::Scalar getFillColor() const;
 
     /// set the fill color (fill color is not very useful for shapes right now)
-    virtual void setFillColor(const cv::Scalar &value)
-    {
-        fillColor = value;
-    }
+    virtual void setFillColor(const cv::Scalar &value);
 
     /// is the shape locked (can't be moved/edited)
-    bool getLocked() const
-    {
-        return locked;
-    }
+    bool getLocked() const;
 
     /// set the shape lock state (can/can't be moved/edited)
-    virtual void setLocked(bool value)
-    {
-        locked = value;
-    }
+    virtual void setLocked(bool value);
 
     /// is the shape visible
-    bool getVisible() const
-    {
-        return visible;
-    }
+    bool getVisible() const;
 
     /// set the shape visible state
-    virtual void setVisible(bool value)
-    {
-        visible = value;
-    }
+    virtual void setVisible(bool value);
 
     /**
      * @brief getType is always implemented by derived to return the same static pointer per shape.
@@ -118,28 +94,16 @@ public:
     virtual const char *getType() const = 0;
 
     /// get line thickness to use when drawing
-    int getThickness() const
-    {
-        return thickness;
-    }
+    int getThickness() const;
 
     /// set line thickness to use when drawing
-    virtual void setThickness(int value)
-    {
-        thickness = value;
-    }
+    virtual void setThickness(int value);
 
     /// get the line type (LINE_4, LINE_8, LINE_AA)
-    int getLineType() const
-    {
-        return lineType;
-    }
+    int getLineType() const;
 
     /// set the line type (LINE_4, LINE_8, LINE_AA)
-    virtual void setLineType(int value)
-    {
-        lineType = value;
-    }
+    virtual void setLineType(int value);
 
     /// returns true if shape is at pos, false otherwise
     virtual bool isAtPos(const cv::Point &pos) = 0;
@@ -149,10 +113,7 @@ public:
     bool isReady() const;
 
     /// return a unique id for this shape
-    int getId()
-    {
-        return id;
-    }
+    int getId();
 
 protected:
     virtual void writeInternals(cv::FileStorage& fs) const = 0;
@@ -182,30 +143,19 @@ protected:
      * @param id
      * @return internal sub shape with requested id
      */
-    virtual std::shared_ptr<Shape> getShape(int id)
-    {
-        return nullptr;
-    }
+    virtual std::shared_ptr<Shape> getShape(int id);
 
     /**
      * @brief keyPressed will be called by Canvas for active shapes
      * @param key was pressed. You must set it to -1 if you consumed it.
      * @return true if we want to stay in focus and false otherwise
      */
-    virtual bool keyPressed(int &key)
-    {
-        (void)key; // remove compile warning;
-        // consume nothing and keep focus for any key press by default
-        return true;
-    }
+    virtual bool keyPressed(int &key);
 
     /**
      * @brief lostFocus is called by Canvas if we're in it and just became non-active
      */
-    virtual void lostFocus()
-    {
-        // do nothing by default
-    }
+    virtual void lostFocus();
 
     /**
      * @brief mouseReleased
@@ -214,10 +164,7 @@ protected:
      */
     virtual bool mouseReleased(const cv::Point &pos) = 0;
 
-    bool isEditing()
-    {
-        return editing;
-    }
+    bool isEditing();
 
     /**
      * @brief draw shape on the canvas
@@ -256,11 +203,7 @@ private:
     /// called when events happen
     void broadcastEvent(CBEvent event);
 
-    int genId()
-    {
-        static int idGenerator;
-        return ++idGenerator;
-    }
+    int genId();
 
     friend void write(cv::FileStorage& fs, const std::string&, const Shape& x);
     friend void read(const cv::FileNode& node, Shape*& x, const Shape* default_value);

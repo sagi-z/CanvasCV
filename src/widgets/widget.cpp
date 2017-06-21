@@ -462,11 +462,14 @@ void Widget::renderOn(Mat &dst)
         if (intersection.width && intersection.height)
         {
             Mat roiDst(dst, intersection);
-            Mat roiSrcBG(bg, Rect(intersection.x - rect.x,
-                                  intersection.y - rect.y,
-                                  intersection.width, intersection.height));
-            mergeMats(roiSrcBG, roiDst);
-            if ( ! fg.empty())
+            if (! bg.empty())
+            {
+                Mat roiSrcBG(bg, Rect(intersection.x - rect.x,
+                                      intersection.y - rect.y,
+                                      intersection.width, intersection.height));
+                mergeMats(roiSrcBG, roiDst);
+            }
+            if (! fg.empty())
             {
                 Mat roiSrcFG(fg, Rect(intersection.x - rect.x,
                                       intersection.y - rect.y,
@@ -479,11 +482,12 @@ void Widget::renderOn(Mat &dst)
 
 void Widget::callDrawFG(bool preAllocateMat)
 {
-    if (! bg.empty())
+    const Rect &rect = getRect();
+    if (rect.width && rect.height)
     {
         if (preAllocateMat)
         {
-            fg = Mat::zeros(bg.size(), bg.type());
+            fg = Mat::zeros(rect.height, rect.width, CV_8UC4);
         }
         drawFG(fg);
     }

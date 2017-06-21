@@ -63,6 +63,66 @@ void Shape::notifyOnEvent(Shape::CBType cb)
     cbs.push_back(cb);
 }
 
+Scalar Shape::getOutlineColor() const
+{
+    return outlineColor;
+}
+
+void Shape::setOutlineColor(const Scalar &value)
+{
+    outlineColor = value;
+}
+
+Scalar Shape::getFillColor() const
+{
+    return fillColor;
+}
+
+void Shape::setFillColor(const Scalar &value)
+{
+    fillColor = value;
+}
+
+bool Shape::getLocked() const
+{
+    return locked;
+}
+
+void Shape::setLocked(bool value)
+{
+    locked = value;
+}
+
+bool Shape::getVisible() const
+{
+    return visible;
+}
+
+void Shape::setVisible(bool value)
+{
+    visible = value;
+}
+
+int Shape::getThickness() const
+{
+    return thickness;
+}
+
+void Shape::setThickness(int value)
+{
+    thickness = value;
+}
+
+int Shape::getLineType() const
+{
+    return lineType;
+}
+
+void Shape::setLineType(int value)
+{
+    lineType = value;
+}
+
 void Shape::drawHelper(Mat &canvas, Shape *other)
 {
     other->draw(canvas);
@@ -99,12 +159,45 @@ bool Shape::isReady() const
    return ready;
 }
 
+int Shape::getId()
+{
+    return id;
+}
+
+std::shared_ptr<Shape> Shape::getShape(int id)
+{
+    return nullptr;
+}
+
+bool Shape::keyPressed(int &key)
+{
+    (void)key; // remove compile warning;
+    // consume nothing and keep focus for any key press by default
+    return true;
+}
+
+void Shape::lostFocus()
+{
+    // do nothing by default
+}
+
+bool Shape::isEditing()
+{
+    return editing;
+}
+
 void Shape::broadcastEvent(CBEvent event)
 {
     for (auto &cb : cbs)
     {
         cb(this, event);
     }
+}
+
+int Shape::genId()
+{
+    static int idGenerator;
+    return ++idGenerator;
 }
 
 void Shape::write(FileStorage& fs) const

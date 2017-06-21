@@ -36,6 +36,7 @@ void RadioButtons::addRadioButton(const string &txt, Widget::CBUserSelection cbU
     auto button = MatWidget::create(*row, getRadioNotSelected());
     auto text = Text::create(*row, txt);
     button->setLayoutAnchor(CENTER);
+    text->setAlpha(0);
     text->setFlowAnchor(LEFT);
     text->setLayoutAnchor(CENTER);
     text->setAlpha(0);
