@@ -54,6 +54,8 @@ void RadioButtons::addRadioButton(const string &txt, Widget::CBUserSelection cbU
 
 void RadioButtons::recalc()
 {
+    radioSelected.release();
+    radioNotSelected.release();
     for (int i = 0; i < drawings.size(); ++i)
     {
         if (i == selection)
@@ -70,18 +72,22 @@ void RadioButtons::recalc()
 
 cv::Mat RadioButtons::getRadioSelected()
 {
-    Mat drawing(14,14,CV_8UC4);
-    drawing = Scalar::all(0); // transparent BG
-    circle(drawing, Point(6,6), 4, getOutlineColor(), -1, lineType);
-    return drawing;
+    if (radioSelected.empty())
+    {
+        radioSelected = Mat::zeros(14,14,CV_8UC4);
+        circle(radioSelected, Point(6,6), 4, getOutlineColor(), -1, lineType);
+    }
+    return radioSelected;
 }
 
 cv::Mat RadioButtons::getRadioNotSelected()
 {
-    Mat drawing(14,14,CV_8UC4);
-    drawing = Scalar::all(0); // transparent BG
-    circle(drawing, Point(6,6), 4, getOutlineColor(), thickness, lineType);
-    return drawing;
+    if (radioNotSelected.empty())
+    {
+        radioNotSelected = Mat::zeros(14,14,CV_8UC4);
+        circle(radioNotSelected, Point(6,6), 4, getOutlineColor(), thickness, lineType);
+    }
+    return radioNotSelected;
 }
 
 int RadioButtons::getSelection() const

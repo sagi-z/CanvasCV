@@ -31,7 +31,6 @@ const char *MatWidget::getType() const
 
 void MatWidget::drawFG(Mat &dst)
 {
-//    mergeMats(mat, dst);
     dst = mat;
 }
 
@@ -42,8 +41,11 @@ const Mat &MatWidget::getMat() const
 
 void MatWidget::setMat(const cv::Mat &value)
 {
-    mat = value;
-    setDirty();
+    if (value.ptr(0) != mat.ptr(0))
+    {
+        mat = value;
+        setDirty();
+    }
 }
 
 const Rect &MatWidget::getRect()

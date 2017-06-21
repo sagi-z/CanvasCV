@@ -83,6 +83,8 @@ private:
 
     std::shared_ptr<VFrame> frame;
     std::vector<MatWidget*> drawings;
+    cv::Mat radioNotSelected;
+    cv::Mat radioSelected;
     int selection;
 };
 
