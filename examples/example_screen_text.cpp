@@ -74,7 +74,7 @@ int main(int argc, char **argv)
                 WINDOW_AUTOSIZE); // diable mouse resize since resizing
                                   // the window will stretch the widgets
 
-    int delay = 1000/15;
+    int delay = 1000/25;
     int key = 0;
     Mat out; // keeping it out of the loop is a little more efficient
     do
@@ -93,8 +93,12 @@ int main(int argc, char **argv)
         c.redrawOn(image, out);
 
         imshow("Canvas", out);
+
+        // key = c.waitKeyEx(delay); // optionally - could use this insetad of the next 2 lines
+
         key = waitKeyEx(delay);
         c.consumeKey(key);
+
     } while (key != 'q');
 
     destroyAllWindows();

@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     // You can also delegate by yourself as in example_selectbox.cpp
     c.setMouseCallback("Canvas");
 
-    int delay = 1000/15;
+    int delay = 1000/25;
     int key = 0;
     Mat out; // keeping it out of the loop is a little more efficient
     while (radioButtons->getSelection() != 3 && key != 'q')
