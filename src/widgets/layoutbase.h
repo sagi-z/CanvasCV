@@ -22,7 +22,7 @@ protected:
     virtual bool isDuringUpdate() const;
 
 private:
-    virtual void setDirtyLayout() = 0;
+    virtual bool setDirtyLayout() = 0;
 
     bool duringDirtyHandling;
     std::list<Widget*> dirtyWidgets;

@@ -244,7 +244,7 @@ protected:
 
 private:
 
-    virtual void setDirtyLayout();
+    virtual bool setDirtyLayout();
 
     void broadcastCreate(Shape *shape);
     void broadcastModify(Shape *shape);

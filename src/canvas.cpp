@@ -631,10 +631,9 @@ bool Canvas::rmvWidget(const shared_ptr<Widget> &widget)
     return rmvWidget(widget.get());
 }
 
-void Canvas::setDirtyLayout()
+bool Canvas::setDirtyLayout()
 {
-    // TODO: if canvas is also a comound widget, then uncomment this:
-    // setDirty();
+    return ! isDuringUpdate();
 }
 
 }

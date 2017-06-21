@@ -265,8 +265,12 @@ protected:
     virtual void readInternals(const cv::FileNode& node) = 0;
     */
 
-    /// Mark us as 'dirty' so before the next draw, our 'update' will be called
-    void setDirty();
+    /**
+     * @brief setDirty
+     * Mark us as 'dirty' so before the next draw, our 'update' will be called
+     * @return true if marked as dirty for later or false if changes were done on the spot
+     */
+    bool setDirty();
 
     bool getIsDirty() const;
 

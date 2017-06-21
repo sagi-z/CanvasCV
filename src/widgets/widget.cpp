@@ -550,7 +550,7 @@ void Widget::translate(const Point &translation)
     }
 }
 
-void Widget::setDirty()
+bool Widget::setDirty()
 {
     if (delayedUpdate)
     {
@@ -570,9 +570,11 @@ void Widget::setDirty()
     }
     else
     {
+        // We're already during an update.
+        // Returning false will cause out caller to recalc()
         isDirty = false;
-        recalc();
     }
+    return isDirty;
 }
 
 void Widget::update()

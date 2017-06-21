@@ -84,7 +84,7 @@ protected:
 
     std::list<std::shared_ptr<Widget>> widgets;
 private:
-    virtual void setDirtyLayout();
+    virtual bool setDirtyLayout();
 
     virtual void broadcastChange(State status);
     virtual void layoutResized(const cv::Rect &boundaries);

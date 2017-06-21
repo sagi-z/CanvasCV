@@ -98,9 +98,9 @@ bool CompoundWidget::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
     return false;
 }
 
-void CompoundWidget::setDirtyLayout()
+bool CompoundWidget::setDirtyLayout()
 {
-    setDirty();
+    return setDirty();
 }
 
 bool CompoundWidget::rmvWidget(Widget *widget)
