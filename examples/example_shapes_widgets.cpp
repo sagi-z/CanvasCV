@@ -123,13 +123,13 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
 
     auto buttons = VFrame::create(c, (*head)());
 
-    FloatingText::create(*msgs,
+    Text::create(*msgs,
                          "aligned to top",
                          Widget::BOTTOM)->setLayoutAnchor(Widget::TOP);
-    FloatingText::create(*msgs,
+    Text::create(*msgs,
                          "aligned to center",
                          Widget::BOTTOM)->setLayoutAnchor(Widget::CENTER);
-    FloatingText::create(*msgs,
+    Text::create(*msgs,
                          "These 3 objects where precreated.\n"
                          "They are an Ellipse,\n"
                          " ShapesConnector and a TextBox.\n"

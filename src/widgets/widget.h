@@ -139,7 +139,7 @@ public:
     /**
      * @brief getFlowAnchor affects internal widget alignment and direction of growth
      * @return the Anchor of our own flow
-     * @see VerticalLayout, HorizontalLayout, FloatingText
+     * @see VerticalLayout, HorizontalLayout, Text
      */
     Anchor getFlowAnchor() const
     {
@@ -149,7 +149,7 @@ public:
     /**
      * @brief setFlowAnchor affects internal widget alignment and direction of growth
      * @param value is used to set the flowAnchor
-     * @see VerticalLayout, HorizontalLayout, FloatingText
+     * @see VerticalLayout, HorizontalLayout, Text
      */
     void setFlowAnchor(const Anchor &value);
 
@@ -212,6 +212,8 @@ public:
     };
 
 protected:
+
+    void mergeMats(cv::Mat &roiSrc, cv::Mat &roiDst);
 
     Relief getRelief() const;
     void setRelief(const Relief &value);

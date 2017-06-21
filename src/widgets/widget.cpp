@@ -318,6 +318,72 @@ void Widget::setSelectColor(const Scalar &value)
     }
 }
 
+void Widget::mergeMats(Mat &roiSrc, Mat &roiDst)
+{
+    assert(roiSrc.size() == roiDst.size());
+    if (roiSrc.channels() == 3)
+    {
+        assert(roiDst.channels() == 4); // that case is not implemented yet
+        Vec3b *pSrcRow;
+        Vec4b *pDstRow;
+        for (int r = 0; r < roiDst.rows; ++r)
+        {
+            pSrcRow = roiSrc.ptr<Vec3b>(r);
+            pDstRow = roiDst.ptr<Vec4b>(r);
+            for (int c = 0; c < roiDst.cols; ++c)
+            {
+                pDstRow[c][0] = pSrcRow[c][0];
+                pDstRow[c][1] = pSrcRow[c][1];
+                pDstRow[c][2] = pSrcRow[c][2];
+                pDstRow[c][3] = 255; // opaque
+            }
+        }
+    }
+    else
+    {
+        if (roiDst.channels() == 4)
+        {
+            Vec4b *pSrcRow;
+            Vec4b *pDstRow;
+            double alpha, alphaOrig, beta;
+            for (int r = 0; r < roiDst.rows; ++r)
+            {
+                pSrcRow = roiSrc.ptr<Vec4b>(r);
+                pDstRow = roiDst.ptr<Vec4b>(r);
+                for (int c = 0; c < roiDst.cols; ++c)
+                {
+                    alpha = pSrcRow[c][3] / 255.;
+                    alphaOrig = pDstRow[c][3] / 255.;
+                    beta = alphaOrig * (1. - alpha);
+                    pDstRow[c][0] = pSrcRow[c][0]*alpha + pDstRow[c][0]*beta;
+                    pDstRow[c][1] = pSrcRow[c][1]*alpha + pDstRow[c][1]*beta;
+                    pDstRow[c][2] = pSrcRow[c][2]*alpha + pDstRow[c][2]*beta;
+                    pDstRow[c][3] = pSrcRow[c][3];
+                }
+            }
+        }
+        else
+        {
+            Vec4b *pSrcRow;
+            Vec3b *pDstRow;
+            double alpha, beta;
+            for (int r = 0; r < roiDst.rows; ++r)
+            {
+                pSrcRow = roiSrc.ptr<Vec4b>(r);
+                pDstRow = roiDst.ptr<Vec3b>(r);
+                for (int c = 0; c < roiDst.cols; ++c)
+                {
+                    alpha = pSrcRow[c][3] / 255.;
+                    beta = 1. - alpha;
+                    pDstRow[c][0] = pSrcRow[c][0]*alpha + pDstRow[c][0]*beta;
+                    pDstRow[c][1] = pSrcRow[c][1]*alpha + pDstRow[c][1]*beta;
+                    pDstRow[c][2] = pSrcRow[c][2]*alpha + pDstRow[c][2]*beta;
+                }
+            }
+        }
+    }
+}
+
 void Widget::mousePressed()
 {
 }
@@ -398,44 +464,7 @@ void Widget::renderOn(Mat &dst)
             Mat roiSrc(widgetPixels, Rect(intersection.x - rect.x,
                                           intersection.y - rect.y,
                                           intersection.width, intersection.height));
-            if (dst.channels() == 4)
-            {
-                Vec4b *pSrcRow;
-                Vec4b *pDstRow;
-                double alpha, beta;
-                for (int i = 0; i < roiDst.rows; ++i)
-                {
-                    pSrcRow = roiSrc.ptr<Vec4b>(i);
-                    pDstRow = roiDst.ptr<Vec4b>(i);
-                    for (int c = 0; c < roiDst.cols; ++c)
-                    {
-                        alpha = pSrcRow[c][3] / 255.;
-                        beta = 1. - alpha;
-                        pDstRow[c][0] = pSrcRow[c][0]*alpha + pDstRow[c][0]*beta;
-                        pDstRow[c][1] = pSrcRow[c][1]*alpha + pDstRow[c][1]*beta;
-                        pDstRow[c][2] = pSrcRow[c][2]*alpha + pDstRow[c][2]*beta;
-                    }
-                }
-            }
-            else
-            {
-                Vec4b *pSrcRow;
-                Vec3b *pDstRow;
-                double alpha, beta;
-                for (int i = 0; i < roiDst.rows; ++i)
-                {
-                    pSrcRow = roiSrc.ptr<Vec4b>(i);
-                    pDstRow = roiDst.ptr<Vec3b>(i);
-                    for (int c = 0; c < roiDst.cols; ++c)
-                    {
-                        alpha = pSrcRow[c][3] / 255.;
-                        beta = 1. - alpha;
-                        pDstRow[c][0] = pSrcRow[c][0]*alpha + pDstRow[c][0]*beta;
-                        pDstRow[c][1] = pSrcRow[c][1]*alpha + pDstRow[c][1]*beta;
-                        pDstRow[c][2] = pSrcRow[c][2]*alpha + pDstRow[c][2]*beta;
-                    }
-                }
-            }
+            mergeMats(roiSrc, roiDst);
         }
     }
 }

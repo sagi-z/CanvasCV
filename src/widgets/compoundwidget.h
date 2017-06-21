@@ -43,15 +43,15 @@ public:
     virtual const std::string &getStatusMsg() const;
 
     /// delegate to internal Widget parts added by derived classes
-    virtual void recalc();
-
-    /// delegate to internal Widget parts added by derived classes
     virtual void translate(const cv::Point &translation);
 
 protected:
     // force inheritance
     CompoundWidget(Layout &layoutVal, const cv::Point &pos);
     virtual ~CompoundWidget() {}
+
+    /// delegate to internal Widget parts added by derived classes
+    virtual void recalc();
 
     virtual void addWidget(const std::shared_ptr<Widget> &widget);
     virtual bool rmvWidget(const std::shared_ptr<Widget> &widget);

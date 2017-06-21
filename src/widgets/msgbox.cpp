@@ -1,5 +1,5 @@
 #include "msgbox.h"
-#include "floatingtext.h"
+#include "text.h"
 #include "button.h"
 #include "canvas.h"
 using namespace std;
@@ -13,7 +13,7 @@ const char *MsgBox::type = "MsgBox";
 
 /*
  *  -> VFrame
- *      -> FloatingText (CENTERED)
+ *      -> Text (CENTERED)
  *      -> HorizontalLayout (CENTERED)
  *          -> Button (stretchX/Y)
  *          -> Button (stretchX/Y)
@@ -27,7 +27,7 @@ MsgBox::MsgBox(Layout &layoutVal, const Point &pos)
     frame = VFrame::create(*this, pos);
     frame->setFrameRelief(RAISED);
     frame->setPadding(5);
-    auto text = FloatingText::create(*frame, "", CENTER_TOP, CENTER);
+    auto text = Text::create(*frame, "", CENTER_TOP, CENTER);
     text->setAlpha(0); // transpaernt backgound
     buttons = HorizontalLayout::create(*frame);
     buttons->setLayoutAnchor(CENTER);
@@ -35,7 +35,7 @@ MsgBox::MsgBox(Layout &layoutVal, const Point &pos)
 
 void MsgBox::setMsg(const string &msg)
 {
-   frame->at<FloatingText>(0)->setMsg(msg);
+   frame->at<Text>(0)->setMsg(msg);
 }
 
 const char *MsgBox::getType() const

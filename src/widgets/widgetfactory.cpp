@@ -36,7 +36,7 @@ bool WidgetFactory::postConstuct(Layout &layout, const std::shared_ptr<Widget> &
 
 }
 
-#include "floatingtext.h"
+#include "text.h"
 #include "button.h"
 #include "verticallayout.h"
 #include "horizontallayout.h"
@@ -44,11 +44,13 @@ bool WidgetFactory::postConstuct(Layout &layout, const std::shared_ptr<Widget> &
 #include "hframe.h"
 #include "msgbox.h"
 #include "selectionbox.h"
+#include "radiobuttons.h"
+#include "matwidget.h"
 
 namespace canvascv
 {
 
-REGISTER_WIDGET(FloatingText);
+REGISTER_WIDGET(Text);
 REGISTER_WIDGET(Button);
 REGISTER_WIDGET(VerticalLayout);
 REGISTER_WIDGET(HorizontalLayout);
@@ -56,5 +58,7 @@ REGISTER_WIDGET(VFrame);
 REGISTER_WIDGET(HFrame);
 REGISTER_WIDGET(MsgBox);
 REGISTER_WIDGET(SelectionBox);
+REGISTER_WIDGET(MatWidget);
+REGISTER_WIDGET(RadioButtons);
 
 }

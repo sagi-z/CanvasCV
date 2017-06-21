@@ -84,6 +84,11 @@ void AutoLayout::rmvWidget(int i)
     }
 }
 
+size_t AutoLayout::size() const
+{
+   return widgets.size();
+}
+
 template<>
 Widget *AutoLayout::at(int index)
 {

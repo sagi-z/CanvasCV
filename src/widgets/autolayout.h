@@ -63,6 +63,9 @@ public:
     template <typename T=Widget>
     T *at(int index);
 
+    /// returns the number of widgets in the layout
+    size_t size() const;
+
 protected:
 
     AutoLayout(Layout &layoutVal, const cv::Point& pos);

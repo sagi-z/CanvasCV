@@ -4,7 +4,7 @@
 #include <opencv2/opencv.hpp>
 #include <list>
 #include "colors.h"
-#include "floatingtext.h"
+#include "text.h"
 
 namespace canvascv
 {
@@ -13,7 +13,7 @@ namespace canvascv
  * @brief The Button class
  * a button widget to use on the OpenCV Window
  */
-class Button : public FloatingText
+class Button : public Text
 {
 public:
     virtual const char *getType() const;
@@ -49,15 +49,6 @@ protected:
     friend class WidgetFactory;
     template <class T> friend class WidgetFactoryT;
     Button(Layout &layoutVal, const cv::Point &pos);
-
-    Button(Layout &layoutVal, const std::string msgVal = "",
-           cv::Point locationVal = cv::Point(0, 0),
-           int maxWidthVal = 0,
-           cv::Scalar colorVal = Colors::Black,
-           cv::Scalar bgColorVal = Colors::LightGray,
-           double fontScaleVal = 0.5,
-           int fontThicknessVal = 1,
-           int fontFaceVal = cv::FONT_HERSHEY_COMPLEX_SMALL);
 
     /* TODO - write/read widgets to file for a designer app
     virtual void writeInternals(cv::FileStorage &fs) const

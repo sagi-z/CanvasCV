@@ -1,5 +1,5 @@
-#ifndef FLOATINGTEXT_H
-#define FLOATINGTEXT_H
+#ifndef TEXT_H
+#define TEXT_H
 
 #include <opencv2/opencv.hpp>
 #include <list>
@@ -10,14 +10,14 @@ namespace canvascv
 {
 
 /**
- * @brief The FloatingText class
+ * @brief The Text class
  * Displaying text on the OpenCV Window with/without a hilighting background.
  */
-class FloatingText : public Widget
+class Text : public Widget
 {
 public:
     /**
-     * @brief create a FloatingText widget
+     * @brief create a Text widget
      * @param layout widgets are placed in layouts Canvas/VFrame/HFrame/...
      * @param pos location in the Layout (Layouts can ignore that)
      * @param text what to write (accepts newline)
@@ -29,13 +29,13 @@ public:
      *  - RIGHT/CENTER/LEFT is relevat to a VerticalLayout/VFrame (unless setStretchX() is used)
      * @return a smart pointer copy of the object kept in the Layout
      */
-    static std::shared_ptr<FloatingText> create(Layout &layout, const cv::Point &pos,
+    static std::shared_ptr<Text> create(Layout &layout, const cv::Point &pos,
                                                 const std::string &text = "",
                                                 Anchor flowAnchor = TOP,
                                                 Anchor layoutAnchor = TOP);
 
     /// a convinient version to the above without the 'pos' argument
-    static std::shared_ptr<FloatingText> create(Layout &layout,
+    static std::shared_ptr<Text> create(Layout &layout,
                                                 const std::string &text = "",
                                                 Anchor flowAnchor = TOP,
                                                 Anchor layoutAnchor = TOP);
@@ -78,16 +78,7 @@ protected:
     virtual const cv::Rect &getRect();
     virtual const cv::Rect &getMinimalRect();
 
-    FloatingText(Layout &layoutVal, const cv::Point &pos);
-
-    FloatingText(Layout &layoutVal, const std::string msgVal = "",
-                 cv::Point locationVal = cv::Point(0, 0),
-                 int maxWidthVal = 0,
-                 cv::Scalar colorVal = Colors::Black,
-                 cv::Scalar bgColorVal = Colors::LightGray,
-                 double fontScaleVal = 0.5,
-                 int fontThicknessVal = 1,
-                 int fontFaceVal = cv::FONT_HERSHEY_COMPLEX_SMALL);
+    Text(Layout &layoutVal, const cv::Point &pos);
 
     virtual void recalc();
 
@@ -123,4 +114,4 @@ private:
 };
 
 }
-#endif // FLOATINGTEXT_H
+#endif // TEXT_H

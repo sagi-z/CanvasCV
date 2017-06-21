@@ -1,4 +1,4 @@
-#include "floatingtext.h"
+#include "text.h"
 #include "widgetfactory.h"
 #include "layout.h"
 
@@ -8,9 +8,9 @@ using namespace std;
 namespace canvascv
 {
 
-const char *FloatingText::type = "FloatingText";
+const char *Text::type = "Text";
 
-FloatingText::FloatingText(Layout &layoutVal, const Point &pos)
+Text::Text(Layout &layoutVal, const Point &pos)
     : Widget(layoutVal, pos),
       msg(),
       maxWidth(0),
@@ -22,34 +22,20 @@ FloatingText::FloatingText(Layout &layoutVal, const Point &pos)
     setFillColor(Colors::LightGray);
 }
 
-FloatingText::FloatingText(Layout &layoutVal, const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,
-                           Scalar bgColorVal, double fontScaleVal, int thicknessVal, int fontFaceVal)
-    : Widget(layoutVal, locationVal),
-      msg(msgVal),
-      maxWidth(maxWidthVal),
-      fontScale(fontScaleVal),
-      fontFace(fontFaceVal),
-      fontHeight(0)
-{
-    setOutlineColor(colorVal);
-    setFillColor(bgColorVal);
-    thickness = thicknessVal;
-}
-
-shared_ptr<FloatingText> FloatingText::create(Layout &layout,
+shared_ptr<Text> Text::create(Layout &layout,
                                               const cv::Point &pos,
                                               const string &text,
                                               Anchor flowAnchor,
                                               Anchor layoutAnchor)
 {
-    shared_ptr<FloatingText> widget(WidgetFactoryT<FloatingText>::newWidget(layout, pos));
+    shared_ptr<Text> widget(WidgetFactoryT<Text>::newWidget(layout, pos));
     widget->setMsg(text);
     widget->setFlowAnchor(flowAnchor);
     widget->setLayoutAnchor(layoutAnchor);
     return widget;
 }
 
-shared_ptr<FloatingText> FloatingText::create(Layout &layout,
+shared_ptr<Text> Text::create(Layout &layout,
                                               const string &text,
                                               Anchor flowAnchor,
                                               Anchor layoutAnchor)
@@ -57,17 +43,17 @@ shared_ptr<FloatingText> FloatingText::create(Layout &layout,
     return create(layout, Point(0,0), text, flowAnchor, layoutAnchor);
 }
 
-const char *FloatingText::getType() const
+const char *Text::getType() const
 {
    return type;
 }
 
-string FloatingText::getMsg() const
+string Text::getMsg() const
 {
     return msg;
 }
 
-void FloatingText::setMsg(const string &value)
+void Text::setMsg(const string &value)
 {
     if (msg != value)
     {
@@ -76,12 +62,12 @@ void FloatingText::setMsg(const string &value)
     }
 }
 
-int FloatingText::getFontFace() const
+int Text::getFontFace() const
 {
     return fontFace;
 }
 
-void FloatingText::setFontFace(int value)
+void Text::setFontFace(int value)
 {
     if (fontFace != value)
     {
@@ -90,12 +76,12 @@ void FloatingText::setFontFace(int value)
     }
 }
 
-double FloatingText::getFontScale() const
+double Text::getFontScale() const
 {
     return fontScale;
 }
 
-void FloatingText::setFontScale(double value)
+void Text::setFontScale(double value)
 {
     if (fontScale != value)
     {
@@ -104,7 +90,7 @@ void FloatingText::setFontScale(double value)
     }
 }
 
-void FloatingText::drawFG(Mat &dst)
+void Text::drawFG(Mat &dst)
 {
     if (rows.size())
     {
@@ -129,7 +115,7 @@ void FloatingText::drawFG(Mat &dst)
     }
 }
 
-void FloatingText::prepareMsgParts()
+void Text::prepareMsgParts()
 {
     rows.clear();
     if (msg.length())
@@ -220,12 +206,12 @@ void FloatingText::prepareMsgParts()
     allocateBG(rect.size());
 }
 
-int FloatingText::getMaxWidth() const
+int Text::getMaxWidth() const
 {
     return maxWidth;
 }
 
-void FloatingText::setMaxWidth(int value)
+void Text::setMaxWidth(int value)
 {
     if (maxWidth != value)
     {
@@ -234,22 +220,22 @@ void FloatingText::setMaxWidth(int value)
     }
 }
 
-int FloatingText::getFontHeight() const
+int Text::getFontHeight() const
 {
     return fontHeight;
 }
 
-const Rect &FloatingText::getRect()
+const Rect &Text::getRect()
 {
     return rect;
 }
 
-const Rect &FloatingText::getMinimalRect()
+const Rect &Text::getMinimalRect()
 {
     return minimalRect;
 }
 
-void FloatingText::recalc()
+void Text::recalc()
 {
     prepareMsgParts();
     callDrawFG();

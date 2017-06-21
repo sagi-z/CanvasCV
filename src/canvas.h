@@ -5,7 +5,7 @@
 #include "widgets/widget.h"
 #include "shapes/shapefactory.h"
 #include "widgets/widgetfactory.h"
-#include "widgets/floatingtext.h"
+#include "widgets/text.h"
 #include "widgets/layoutbase.h"
 
 #include <list>
@@ -245,8 +245,8 @@ private:
     cv::Rect boundaries;
     bool hasScreenText;
     bool hasStatusMsg;
-    std::shared_ptr<FloatingText> screenText;
-    std::shared_ptr<FloatingText> statusMsg;
+    std::shared_ptr<Text> screenText;
+    std::shared_ptr<Text> statusMsg;
     std::string shapeType;
     cv::Point dragPos;
     std::list<std::shared_ptr<Shape>> shapes;

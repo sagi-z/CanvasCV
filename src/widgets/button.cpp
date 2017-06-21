@@ -11,17 +11,7 @@ namespace canvascv
 const char *Button::type = "Button";
 
 Button::Button(Layout &layoutVal, const Point &pos)
-    : FloatingText(layoutVal, pos)
-{
-    setRelief(RAISED);
-    setFlowAnchor(CENTER_TOP);
-}
-
-Button::Button(Layout &layoutVal, const string msgVal, Point locationVal, int maxWidthVal, Scalar colorVal,
-               Scalar bgColorVal, double fontScaleVal, int fontThicknessVal, int fontFaceVal)
-    : FloatingText(layoutVal, msgVal, locationVal, maxWidthVal, colorVal,
-                   bgColorVal, fontScaleVal, fontThicknessVal,
-                   fontFaceVal)
+    : Text(layoutVal, pos)
 {
     setRelief(RAISED);
     setFlowAnchor(CENTER_TOP);

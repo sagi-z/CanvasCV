@@ -374,7 +374,7 @@ void Canvas::enableScreenText(Scalar color, Scalar bgColor, double scale, int th
     hasScreenText = true;
     if (! screenText.get())
     {
-        screenText = FloatingText::create(*this, Point(5,5));
+        screenText = Text::create(*this, Point(5,5));
         screenText->setMaxWidth(boundaries.width);
     }
     screenText->setOutlineColor(color);
@@ -390,7 +390,7 @@ void Canvas::enableStatusMsg(Scalar color, Scalar bgColor, double scale, int thi
     hasStatusMsg = true;
     if (! statusMsg.get())
     {
-        statusMsg = FloatingText::create(*this, Point(0,0));  // location, size dependent, is set during redrawOn
+        statusMsg = Text::create(*this, Point(0,0));  // location, size dependent, is set during redrawOn
         statusMsg->setMaxWidth(boundaries.width);
         statusMsg->setFlowAnchor(Widget::BOTTOM_LEFT);
     }
