@@ -222,6 +222,12 @@ public:
     /// load all the from a file into the canvas (removing all current shapes in the process)
     void readShapesFromFile(const std::string &filepath);
 
+    /// utility method to handle mouse events on window winName
+    void setMouseCallback(const char * winName);
+
+    /// utility method to handle key strokes
+    int waitKeyEx(int delay = 0);
+
 protected:
     virtual void recalc() {}
 

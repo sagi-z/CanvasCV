@@ -17,7 +17,8 @@ TextBox::TextBox(const Point &pos) :
     prevText(text),
     fontFace(FONT_HERSHEY_COMPLEX_SMALL),
     fontScale(0.5),
-    fontThickness(1)
+    fontThickness(1),
+    fontColor(outlineColor)
 {
     topLeft.reset(dynamic_cast<Handle*>(ShapeFactoryT<Handle>::newShape(pos)));
     topLeft->setLocked(true);
@@ -38,11 +39,11 @@ void TextBox::draw(Mat &canvas)
             rectSelected.y -= 2;
             rectSelected.width += 4;
             rectSelected.height += 4;
-            rectangle(canvas, rectSelected, outlineColor, thickness);
+            rectangle(canvas, rectSelected, fillColor, thickness);
         }
-        rectangle(canvas, rect, outlineColor, thickness);
+        rectangle(canvas, rect, outlineColor, -1);
         putText(canvas, text, Point(rect.tl().x,rect.tl().y+baseline*2), fontFace, fontScale,
-                outlineColor, fontThickness, LINE_AA);
+                fontColor, fontThickness, LINE_AA);
         drawHelper(canvas, topLeft.get());
     }
 }
@@ -147,6 +148,16 @@ void TextBox::recalcRect()
                     (*topLeft)() + Point(textSize.width, textSize.height+baseline*2));
 }
 
+cv::Scalar TextBox::getFontColor() const
+{
+    return fontColor;
+}
+
+void TextBox::setFontColor(const cv::Scalar &value)
+{
+    fontColor = value;
+}
+
 int TextBox::getFontThickness() const
 {
     return fontThickness;
@@ -165,6 +176,7 @@ void TextBox::writeInternals(FileStorage &fs) const
     fs << "fontFace" << fontFace;
     fs << "fontScale" << fontScale;
     fs << "fontThickness" << fontThickness;
+    fs << "fontColor" << fontColor;
 }
 
 void TextBox::readInternals(const FileNode &node)
@@ -177,6 +189,7 @@ void TextBox::readInternals(const FileNode &node)
     node["fontFace"] >> fontFace;
     node["fontScale"] >> fontScale;
     node["fontThickness"] >> fontThickness;
+    node["fontColor"] >> fontColor;
     recalcRect();
     registerCBs();
 }

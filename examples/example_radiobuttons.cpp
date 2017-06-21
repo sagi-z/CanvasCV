@@ -13,27 +13,6 @@ using namespace std;
 using namespace cv;
 using namespace canvascv;
 
-// **Optional
-// This is needed for user interaction - creating/editing choosing shapes.
-// Clicking on interactive widgets.
-// We don't need this code if we only want to display "on screen" messages and "status bar" messages.
-static void mouseCB(int event, int x, int y, int flags, void* userData) {
-    (void)flags;
-    Canvas *pCanvas=reinterpret_cast<Canvas*>(userData);
-    switch( event )
-    {
-    case EVENT_LBUTTONDOWN:
-        pCanvas->onMousePress(Point(x,y));
-        break;
-    case EVENT_LBUTTONUP:
-        pCanvas->onMouseRelease(Point(x,y));
-        break;
-    case EVENT_MOUSEMOVE:
-        pCanvas->onMouseMove(Point(x,y));
-        break;
-    }
-}
-
 int main(int argc, char **argv)
 {
     --argc;
@@ -88,7 +67,13 @@ int main(int argc, char **argv)
     radioButtons->setOutlineColor(Colors::Blue);
 
     namedWindow("Canvas", WINDOW_AUTOSIZE);
-    setMouseCallback("Canvas", mouseCB, &c);
+
+    // **Optional
+    // This is needed for user interaction - creating/editing choosing shapes.
+    // Clicking on interactive widgets.
+    // We don't need this code if we only want to display "on screen" messages and "status bar" messages.
+    // You can also delegate by yourself as in example_selectbox.cpp
+    c.setMouseCallback("Canvas");
 
     int delay = 1000/15;
     int key = 0;

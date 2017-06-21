@@ -11,13 +11,13 @@ const char * LineCrossing::type = "LineCrossing";
 LineCrossing::LineCrossing(const Point &pos)
     : direction(1), arrowMagnitude(60)
 {
+    line = addShape<Line>(pos);
     arrow = addShape<Arrow>(pos);
     arrow->setVisible(false);
     arrow->setLocked(true);
     textBox = addShape<TextBox>(pos);
     textBox->setVisible(false);
     textBox->setLocked(true);
-    line = addShape<Line>(pos);
     registerCBs();
     setActive(line);
 }

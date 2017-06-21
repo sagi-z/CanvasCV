@@ -99,6 +99,10 @@ void ThemeDark::applyStyle(Shape *shape)
    {
        shape->setThickness(4);
    }
+   else if (shape->getType() == TextBox::type)
+   {
+       ((TextBox*)shape)->setFontColor(THM_ORANGE);
+   }
 }
 
 }

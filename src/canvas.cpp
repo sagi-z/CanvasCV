@@ -3,9 +3,12 @@
 #include "shapes/shapefactory.h"
 #include "shapes/shape.h"
 #include "shapes/shapesconnector.h"
+
+#include <opencv2/highgui.hpp>
 #include <algorithm>
 
 using namespace std;
+using namespace cv;
 
 namespace canvascv
 {
@@ -24,7 +27,7 @@ Canvas::~Canvas()
     clearShapes();
 }
 
-void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
+void Canvas::redrawOn(const Mat &src, Mat &dst)
 {
     if (&src != &dst)
     {
@@ -64,7 +67,7 @@ void Canvas::redrawOn(const cv::Mat &src, cv::Mat &dst)
     }
 }
 
-bool Canvas::onMousePress(const cv::Point &pos)
+bool Canvas::onMousePress(const Point &pos)
 {
     if (! on) return false;
 
@@ -159,7 +162,7 @@ bool Canvas::onMousePress(const cv::Point &pos)
     return false;
 }
 
-void Canvas::onMouseRelease(const cv::Point &pos)
+void Canvas::onMouseRelease(const Point &pos)
 {
     if (! on) return;
 
@@ -202,7 +205,7 @@ void Canvas::onMouseRelease(const cv::Point &pos)
     }
 }
 
-void Canvas::onMouseMove(const cv::Point &pos)
+void Canvas::onMouseMove(const Point &pos)
 {
     if (! on) return;
 
@@ -482,6 +485,36 @@ void Canvas::readShapesFromFile(const string &filepath)
     fs["CanvasShapes"] >> *this;
 }
 
+
+static void mouseCB(int event, int x, int y, int flags, void* userData) {
+    (void)flags;
+    Canvas *pCanvas=reinterpret_cast<Canvas*>(userData);
+    switch( event )
+    {
+    case EVENT_LBUTTONDOWN:
+        pCanvas->onMousePress(Point(x,y));
+        break;
+    case EVENT_LBUTTONUP:
+        pCanvas->onMouseRelease(Point(x,y));
+        break;
+    case EVENT_MOUSEMOVE:
+        pCanvas->onMouseMove(Point(x,y));
+        break;
+    }
+}
+
+void Canvas::setMouseCallback(const char *winName)
+{
+    cv::setMouseCallback(winName, mouseCB, this);
+}
+
+int Canvas::waitKeyEx(int delay)
+{
+    int key = cv::waitKeyEx(delay);
+    consumeKey(key);
+    return key;
+}
+
 bool Canvas::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
 {
     auto i = find_if(widgets.begin(),
@@ -504,7 +537,7 @@ const Rect Canvas::getBoundaries() const
     return boundaries;
 }
 
-void Canvas::setSize(const cv::Size &value)
+void Canvas::setSize(const Size &value)
 {
     if (boundaries.size() != value)
     {
@@ -522,7 +555,7 @@ Size Canvas::getSize()
    return boundaries.size();
 }
 
-void write(cv::FileStorage& fs, const std::string&, const Canvas& x)
+void write(FileStorage& fs, const std::string&, const Canvas& x)
 {
     if (x.activeShape.get())
     {
@@ -539,10 +572,10 @@ void write(cv::FileStorage& fs, const std::string&, const Canvas& x)
     }
 }
 
-void read(const cv::FileNode& node, Canvas& x, const Canvas&)
+void read(const FileNode& node, Canvas& x, const Canvas&)
 {
     x.clearShapes();
-    cv::FileNode n = node["shapes"];
+    FileNode n = node["shapes"];
     FileNodeIterator it = n.begin(), it_end = n.end();
     for (; it != it_end; )
     { // ++it is done automatically by "it >> shape"

@@ -24,27 +24,6 @@ using namespace std;
 using namespace cv;
 using namespace canvascv;
 
-// **Optional
-// This is needed for user interaction - creating/editing choosing shapes.
-// Clicking on interactive widgets.
-// We don't need this code if we only want to display "on screen" messages and "status bar" messages.
-static void mouseCB(int event, int x, int y, int flags, void* userData) {
-    (void)flags;
-    Canvas *pCanvas=reinterpret_cast<Canvas*>(userData);
-    switch( event )
-    {
-    case EVENT_LBUTTONDOWN:
-        pCanvas->onMousePress(Point(x,y));
-        break;
-    case EVENT_LBUTTONUP:
-        pCanvas->onMouseRelease(Point(x,y));
-        break;
-    case EVENT_MOUSEMOVE:
-        pCanvas->onMouseMove(Point(x,y));
-        break;
-    }
-}
-
 static string gHelpMsg =
 "Usage:\n"
 "=====\n"
@@ -222,21 +201,22 @@ int main(int argc, char **argv)
     {
         if (shape->getType() == LineCrossing::type)
         {
-            ((LineCrossing*)shape)->setArrowMagnitude(30);
+            ((LineCrossing*)shape)->setArrowMagnitude(50);
         }
     });
-
-    // modify callback
-//    c.notifyOnModify([](Shape *shape){cout << "MODIFY " << shape << "\n" << *shape << endl;});
-
-    // delete callback
-//    c.notifyOnDelete([](Shape *shape){cout << "DELETE " << shape << "\n" << *shape << endl;});
 
     // Creating shapes on the canvas from code is also possible
     createShapesFromCodeExample(c, Point(image.cols / 2, image.rows / 2));
 
     namedWindow("Canvas", WINDOW_AUTOSIZE);
-    setMouseCallback("Canvas", mouseCB, &c);
+
+    // **Optional
+    // This is needed for user interaction - creating/editing choosing shapes.
+    // Clicking on interactive widgets.
+    // We don't need this code if we only want to display "on screen" messages and "status bar" messages.
+    // You can also delegate by yourself as in example_selectbox.cpp
+    c.setMouseCallback("Canvas");
+
 
     int delay = 1000/25;
     int key = 0;
@@ -298,8 +278,7 @@ int main(int argc, char **argv)
 
         c.redrawOn(image, out);
         imshow("Canvas", out);
-        key = waitKeyEx(delay);
-        c.consumeKey(key);
+        key = c.waitKeyEx(delay); // optional - method to encapsulate 2 calls
     } while (key != 'q');
 
     destroyAllWindows();

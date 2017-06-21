@@ -47,6 +47,9 @@ public:
     int getFontThickness() const;
     void setFontThickness(int value);
 
+    cv::Scalar getFontColor() const;
+    void setFontColor(const cv::Scalar &value);
+
 protected:
     virtual void writeInternals(cv::FileStorage &fs) const;
     virtual void readInternals(const cv::FileNode &node);
@@ -68,6 +71,7 @@ private:
     int fontFace;
     double fontScale;
     int fontThickness;
+    cv::Scalar fontColor;
     int baseline;
     std::shared_ptr<Handle> topLeft;
     cv::Rect rect;
