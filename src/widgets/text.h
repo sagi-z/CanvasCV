@@ -30,15 +30,15 @@ public:
      * @return a smart pointer copy of the object kept in the Layout
      */
     static std::shared_ptr<Text> create(Layout &layout, const cv::Point &pos,
-                                                const std::string &text = "",
-                                                Anchor flowAnchor = TOP,
-                                                Anchor layoutAnchor = TOP);
+                                        const std::string &text = "",
+                                        Anchor flowAnchor = TOP,
+                                        Anchor layoutAnchor = TOP);
 
     /// a convinient version to the above without the 'pos' argument
     static std::shared_ptr<Text> create(Layout &layout,
-                                                const std::string &text = "",
-                                                Anchor flowAnchor = TOP,
-                                                Anchor layoutAnchor = TOP);
+                                        const std::string &text = "",
+                                        Anchor flowAnchor = TOP,
+                                        Anchor layoutAnchor = TOP);
 
     virtual const char *getType() const;
 

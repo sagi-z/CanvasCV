@@ -23,10 +23,10 @@ Text::Text(Layout &layoutVal, const Point &pos)
 }
 
 shared_ptr<Text> Text::create(Layout &layout,
-                                              const cv::Point &pos,
-                                              const string &text,
-                                              Anchor flowAnchor,
-                                              Anchor layoutAnchor)
+                              const cv::Point &pos,
+                              const string &text,
+                              Anchor flowAnchor,
+                              Anchor layoutAnchor)
 {
     shared_ptr<Text> widget(WidgetFactoryT<Text>::newWidget(layout, pos));
     widget->setMsg(text);
@@ -36,16 +36,16 @@ shared_ptr<Text> Text::create(Layout &layout,
 }
 
 shared_ptr<Text> Text::create(Layout &layout,
-                                              const string &text,
-                                              Anchor flowAnchor,
-                                              Anchor layoutAnchor)
+                              const string &text,
+                              Anchor flowAnchor,
+                              Anchor layoutAnchor)
 {
     return create(layout, Point(0,0), text, flowAnchor, layoutAnchor);
 }
 
 const char *Text::getType() const
 {
-   return type;
+    return type;
 }
 
 string Text::getMsg() const

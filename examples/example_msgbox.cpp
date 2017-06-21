@@ -41,7 +41,8 @@ int main(int argc, char **argv)
     Mat image;
     if (argc)
     {
-        Mat orig = imread(argv[0]);
+//        Mat orig = imread(argv[0]);
+        Mat orig = imread(argv[0], IMREAD_UNCHANGED);
         if (orig.empty()) {
             cerr << "Cannot load image " << argv[0] << endl;
             return -1;

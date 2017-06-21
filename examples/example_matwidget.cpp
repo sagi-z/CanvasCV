@@ -89,6 +89,7 @@ int main(int argc, char **argv)
     Mat smily = drawSmily();
     matWidget = MatWidget::create(c, smily);
     matWidget->setVisible(false);
+    matWidget->setAlpha(0.);
 
     namedWindow("Canvas", WINDOW_AUTOSIZE);
     setMouseCallback("Canvas", mouseCB, &c);

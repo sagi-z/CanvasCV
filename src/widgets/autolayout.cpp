@@ -31,7 +31,7 @@ void AutoLayout::recalc()
             rect.height += padding*2;
         }
         allocateBG(rect.size());
-        callDrawFG();
+//        callDrawFG();
     }
 
     /* This solution is currently replaced with Canvas ROI clipping

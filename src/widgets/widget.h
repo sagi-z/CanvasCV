@@ -251,7 +251,7 @@ protected:
     virtual void drawFG(cv::Mat &dst) = 0;
 
     /// helper method which delgates to drawFG for derived
-    void callDrawFG();
+    void callDrawFG(bool preAllocateMat=true);
 
     /// Actual size the widget is occupying due to Layout manager
     virtual const cv::Rect &getRect() = 0;
@@ -285,7 +285,6 @@ protected:
     /// Used by Layout managers
     void stretchWidth(int width);
     void stretchHeight(int height);
-
 
     int id;
     cv::Point location;
@@ -357,7 +356,8 @@ private:
 
     cv::Scalar outlineColor;
     cv::Scalar fillColor;
-    cv::Mat widgetPixels;
+    cv::Mat bg;
+    cv::Mat fg;
     State state;
     bool isDirty;
     bool delayedUpdate;

@@ -353,12 +353,13 @@ void Widget::mergeMats(Mat &roiSrc, Mat &roiDst)
                 for (int c = 0; c < roiDst.cols; ++c)
                 {
                     alpha = pSrcRow[c][3] / 255.;
-                    alphaOrig = pDstRow[c][3] / 255.;
-                    beta = alphaOrig * (1. - alpha);
+//                    alphaOrig = pDstRow[c][3] / 255.;
+//                    beta = alphaOrig * (1. - alpha);
+                    beta = 1. - alpha;
                     pDstRow[c][0] = pSrcRow[c][0]*alpha + pDstRow[c][0]*beta;
                     pDstRow[c][1] = pSrcRow[c][1]*alpha + pDstRow[c][1]*beta;
                     pDstRow[c][2] = pSrcRow[c][2]*alpha + pDstRow[c][2]*beta;
-                    pDstRow[c][3] = pSrcRow[c][3];
+//                    pDstRow[c][3] = pSrcRow[c][3];
                 }
             }
         }
@@ -402,17 +403,17 @@ void Widget::mouseLeave()
 
 void Widget::allocateBG(const Size &size)
 {
-    ThemeRepository::getCurrentTheme()->allocateBG(widgetPixels, size, fillColor);
+    ThemeRepository::getCurrentTheme()->allocateBG(bg, size, fillColor);
     switch (relief)
     {
     case FLAT:
-        ThemeRepository::getCurrentTheme()->flat(widgetPixels, fillColor);
+        ThemeRepository::getCurrentTheme()->flat(bg, fillColor);
         break;
     case RAISED:
-        ThemeRepository::getCurrentTheme()->raised(widgetPixels, fillColor);
+        ThemeRepository::getCurrentTheme()->raised(bg, fillColor);
         break;
     case SUNKEN:
-        ThemeRepository::getCurrentTheme()->sunken(widgetPixels, fillColor);
+        ThemeRepository::getCurrentTheme()->sunken(bg, fillColor);
         break;
     }
 }
@@ -433,22 +434,22 @@ void Widget::setStretchY(bool value)
 
 void Widget::flatWidget()
 {
-    ThemeRepository::getCurrentTheme()->flat(widgetPixels, fillColor);
+    ThemeRepository::getCurrentTheme()->flat(bg, fillColor);
 }
 
 void Widget::raisedWidget()
 {
-    ThemeRepository::getCurrentTheme()->raised(widgetPixels, fillColor);
+    ThemeRepository::getCurrentTheme()->raised(bg, fillColor);
 }
 
 void Widget::sunkenWidget()
 {
-    ThemeRepository::getCurrentTheme()->sunken(widgetPixels, fillColor);
+    ThemeRepository::getCurrentTheme()->sunken(bg, fillColor);
 }
 
 void Widget::selectedWidget()
 {
-    ThemeRepository::getCurrentTheme()->selected(widgetPixels, selectColor);
+    ThemeRepository::getCurrentTheme()->selected(bg, selectColor);
 }
 
 void Widget::renderOn(Mat &dst)
@@ -461,19 +462,30 @@ void Widget::renderOn(Mat &dst)
         if (intersection.width && intersection.height)
         {
             Mat roiDst(dst, intersection);
-            Mat roiSrc(widgetPixels, Rect(intersection.x - rect.x,
-                                          intersection.y - rect.y,
-                                          intersection.width, intersection.height));
-            mergeMats(roiSrc, roiDst);
+            Mat roiSrcBG(bg, Rect(intersection.x - rect.x,
+                                  intersection.y - rect.y,
+                                  intersection.width, intersection.height));
+            mergeMats(roiSrcBG, roiDst);
+            if ( ! fg.empty())
+            {
+                Mat roiSrcFG(fg, Rect(intersection.x - rect.x,
+                                      intersection.y - rect.y,
+                                      intersection.width, intersection.height));
+                mergeMats(roiSrcFG, roiDst);
+            }
         }
     }
 }
 
-void Widget::callDrawFG()
+void Widget::callDrawFG(bool preAllocateMat)
 {
-    if (! widgetPixels.empty())
+    if (! bg.empty())
     {
-        drawFG(widgetPixels);
+        if (preAllocateMat)
+        {
+            fg = Mat::zeros(bg.size(), bg.type());
+        }
+        drawFG(fg);
     }
 }
 

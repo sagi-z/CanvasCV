@@ -69,18 +69,17 @@ void RadioButtons::recalc()
 
 cv::Mat RadioButtons::getRadioSelected()
 {
-    Mat drawing(12,12,CV_8UC4);
+    Mat drawing(14,14,CV_8UC4);
     drawing = Scalar::all(0); // transparent BG
-    circle(drawing, Point(5,5), 5, getOutlineColor(), -1, lineType);
+    circle(drawing, Point(6,6), 4, getOutlineColor(), -1, lineType);
     return drawing;
 }
 
 cv::Mat RadioButtons::getRadioNotSelected()
 {
-    Mat drawing(12,12,CV_8UC4);
+    Mat drawing(14,14,CV_8UC4);
     drawing = Scalar::all(0); // transparent BG
-    // FIXME: value of 2 here is strange
-    circle(drawing, Point(5,5), 5, getOutlineColor(), 2, lineType);
+    circle(drawing, Point(6,6), 4, getOutlineColor(), thickness, lineType);
     return drawing;
 }
 

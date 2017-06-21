@@ -31,7 +31,8 @@ const char *MatWidget::getType() const
 
 void MatWidget::drawFG(Mat &dst)
 {
-    mergeMats(mat, dst);
+//    mergeMats(mat, dst);
+    dst = mat;
 }
 
 const Mat &MatWidget::getMat() const
@@ -62,7 +63,7 @@ void MatWidget::recalc()
     rect.width = mat.cols;
     rect.height = mat.rows;
     allocateBG(mat.size());
-    callDrawFG();
+    callDrawFG(false);
 }
 
 }
