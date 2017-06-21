@@ -140,9 +140,8 @@ void Text::prepareMsgParts()
             Size textSize = getTextSize(line, fontFace,
                                         fontScale, thickness,
                                         &baseline);
-            baseline += thickness;
             int width = doublePadding + textSize.width; // padding pixels at start & end = doublePadding
-            fontHeight = textSize.height+baseline*2;
+            fontHeight = textSize.height + baseline + padding;
             if (maxWidth)
             {
                 totalRows += width / localMaxWidth + 1;
