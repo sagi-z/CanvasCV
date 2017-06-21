@@ -12,6 +12,8 @@ const char *Text::type = "Text";
 
 Text::Text(Layout &layoutVal, const Point &pos)
     : Widget(layoutVal, pos),
+      padding(2),
+      doublePadding(padding*2),
       msg(),
       maxWidth(0),
       fontScale(0.5),
@@ -98,14 +100,14 @@ void Text::drawFG(Mat &dst)
         int y = fontHeight;
         for (auto &strRow : rows)
         {
-            Point textPos(5, y); // aligh to left by default
+            Point textPos(padding, y); // aligh to left by default
             if (flowAnchor & CENTER)
             {
                 textPos.x += (dst.cols - strRow.width) / 2.;
             }
             else if (flowAnchor & RIGHT)
             {
-                textPos.x = location.x + dst.cols - 5 - strRow.width;
+                textPos.x = location.x + dst.cols - padding - strRow.width;
             }
             putText(dst, strRow.str, textPos,
                     fontFace, fontScale, getOutlineColor(), thickness, LINE_AA);
@@ -122,7 +124,7 @@ void Text::prepareMsgParts()
     {
         if (! layout) return;
         int localMaxWidth = maxWidth;
-        if (localMaxWidth < 10) localMaxWidth = 10;
+        if (localMaxWidth < doublePadding) localMaxWidth = doublePadding;
 
         std::list<StringRow> msgParts;
         int totalRows=0;
@@ -139,7 +141,7 @@ void Text::prepareMsgParts()
                                         fontScale, thickness,
                                         &baseline);
             baseline += thickness;
-            int width = 10 + textSize.width; // 5 pixels at start & end = 10
+            int width = doublePadding + textSize.width; // padding pixels at start & end = doublePadding
             fontHeight = textSize.height+baseline*2;
             if (maxWidth)
             {
@@ -168,7 +170,7 @@ void Text::prepareMsgParts()
             int rectWidth = maxNeededWidth;
             if (maxWidth)
             {
-                rectWidth = min(localMaxWidth - 5, // "absolute limit width" vs.
+                rectWidth = min(localMaxWidth - padding, // "absolute limit width" vs.
                                 maxNeededWidth);   // "width which is realy needed"
             }
             minimalRect = Rect(location.x, yRectStart, rectWidth, rectHeight);
@@ -180,7 +182,7 @@ void Text::prepareMsgParts()
                 int numRows=1;
                 double ratio = 1.;
                 int realWidth = lineData.width;
-                if (lineData.width   // has +10 pixels for padding
+                if (lineData.width   // has +doublePadding pixels for padding
                         > rectWidth) // actual boundaries
                 {
                     // wrap a long line to numRows lines
@@ -204,6 +206,21 @@ void Text::prepareMsgParts()
         rect = minimalRect = Rect();
     }
     allocateBG(rect.size());
+}
+
+int Text::getPadding() const
+{
+    return padding;
+}
+
+void Text::setPadding(int value)
+{
+    if (padding != value)
+    {
+        padding = value;
+        doublePadding = padding * 2;
+        setDirty();
+    }
 }
 
 int Text::getMaxWidth() const

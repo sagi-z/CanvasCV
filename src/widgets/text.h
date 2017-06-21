@@ -71,10 +71,6 @@ public:
 
     static const char *type;
 
-protected:
-    friend class WidgetFactory;
-    template <class T> friend class WidgetFactoryT;
-
     virtual const cv::Rect &getRect();
     virtual const cv::Rect &getMinimalRect();
 
@@ -93,6 +89,9 @@ protected:
     }
     */
 
+    int getPadding() const;
+    void setPadding(int value);
+
 private:
 
     void prepareMsgParts();
@@ -103,6 +102,8 @@ private:
         int width;
     };
 
+    int padding;
+    int doublePadding;
     std::string msg;
     std::list<StringRow> rows;
     int fontHeight;
