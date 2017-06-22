@@ -2,7 +2,7 @@
 
 // **Optional
 // These are used to create widgets
-#include "widgets/radiobuttons.h"
+#include "widgets/checkboxes.h"
 
 #include <iostream>
 #include <iterator>
@@ -21,7 +21,8 @@ int main(int argc, char **argv)
     if (argc)
     {
         Mat orig = imread(argv[0]);
-        if (orig.empty()) {
+        if (orig.empty())
+        {
             cerr << "Cannot load image " << argv[0] << endl;
             return -1;
         }
@@ -43,33 +44,23 @@ int main(int argc, char **argv)
 
     Canvas c(image.size());
     c.enableScreenText();
+    c.setScreenText("Nothing selected");
     Widget::CBUserSelection cb = [&c](Widget *w, int index) {
         stringstream s;
-        RadioButtons *rb = (RadioButtons*)w;
-        s << "User selected option '" << index << "': '" << rb->getTextAt(index) << "'\n";
+        CheckBoxes *boxes = (CheckBoxes*)w;
+        s << "User selected option '" << index << "': '" << boxes->getTextAt(index) << "'\n";
+        for (int i = 0; i < boxes->size(); ++i)
+            s << "Option '" << boxes->getTextAt(i) << "' is " << boxes->isChecked(i) << "\n";
         c.setScreenText(s.str());
-        switch (index)
-        {
-        case 0:
-            w->setOutlineColor(Colors::Blue);
-            break;
-        case 1:
-            w->setOutlineColor(Colors::Green);
-            break;
-        case 2:
-            w->setOutlineColor(Colors::Red);
-            break;
-        }
     };
 
-    auto radioButtons = RadioButtons::create(c, {
-                                                 "Blue",  // index 0
-                                                 "Green", // index 1
-                                                 "Red",   // index 2
-                                                 "Exit"   // index 3
-                                             }, 0, cb,
-                                             Point(image.cols / 2., image.rows / 2.));
-    radioButtons->setOutlineColor(Colors::Blue);
+    CheckBoxes::create(c, {
+                           "One",  // index 0
+                           "Two", // index 1
+                           "Three",   // index 2
+                           "Four"   // index 3
+                       }, cb,
+                       Point(image.cols / 2., image.rows / 2.));
 
     namedWindow("Canvas", WINDOW_AUTOSIZE);
     c.setMouseCallback("Canvas"); // optional for mouse usage see also (example_selectbox.cpp)
@@ -77,7 +68,7 @@ int main(int argc, char **argv)
     int delay = 1000/25;
     int key = 0;
     Mat out; // keeping it out of the loop is a little more efficient
-    while (radioButtons->getSelection() != 3 && key != 'q')
+    while (key != 'q')
     {
         c.redrawOn(image, out);
         imshow("Canvas", out);

@@ -1,5 +1,5 @@
-#ifndef RADIOBUTTONS_H
-#define RADIOBUTTONS_H
+#ifndef CHECKBOXES_H
+#define CHECKBOXES_H
 
 #include <future>
 #include "compoundwidget.h"
@@ -11,24 +11,24 @@ namespace canvascv
 class MatWidget;
 
 /**
- * @brief The RadioButtons class
- * Use a radio buttons to get a user selection for multiple options
+ * @brief The CheckBoxes class
+ * Use a check box to get a user selection for multiple options
  */
-class RadioButtons : public CompoundWidget
+class CheckBoxes : public CompoundWidget
 {
 public:
 
     /**
-     * @brief create a radio buttons widget
+     * @brief create a check box widget
      * @param layout widgets are placed in layouts Canvas/VFrame/HFrame/...
-     * @param buttonNames automatically create items with names of buttonNames
+     * @param checkBoxNames automatically create items with names of checkBoxNames
      * @param defaultSelection is the index to show as selected on start
-     * @param cbUserSelection a callback to invoke with index of pressed button
+     * @param cbUserSelection a callback to invoke with index of pressed checkBox
      * @param pos location in the Layout (if the layout supports Point locations)
      * @return a smart pointer copy of the object kept in the Layout
      * @code
         Canvas c(image.size());
-        auto selectionBox = RadioButtons::create(c, {
+        auto selectionBoxes = CheckBoxes::create(c, {
                                                 "Long Option1",     // index 0
                                                 "Option2\n2 lines", // index 1
                                                 "Option3"           // index 2
@@ -45,21 +45,26 @@ public:
         }
      * @endcode
      */
-    static std::shared_ptr<RadioButtons> create(Layout &layoutVal,
-                                                std::vector<std::string> buttonNames,
-                                                int defaultSelection = -1,
-                                                Widget::CBUserSelection cbUserSelection = Widget::CBUserSelection(),
-                                                const cv::Point &pos = cv::Point(0,0));
+    static std::shared_ptr<CheckBoxes> create(Layout &layoutVal,
+                                              std::vector<std::string> checkBoxNames,
+                                              Widget::CBUserSelection cbUserSelection = Widget::CBUserSelection(),
+                                              const cv::Point &pos = cv::Point(0,0));
 
     /**
      * @brief setSelection
-     * make a certain option selected
-     * @param value will be shown as selected
+     * make a certain box checked
+     * @param index is box index
+     * @param checked is true or false for checked or unchecked
      */
-    void setSelection(int value);
+    void setChecked(int index, bool checked);
 
-    /// get the current selected option
-    int getSelection() const;
+    /**
+     * @brief isChecked
+     * is a box at index checked
+     * @param index is box index
+     * @return true or flase for checked or unchecked
+     */
+    bool isChecked(int index) const;
 
     /**
      * @brief getTextAt
@@ -80,29 +85,29 @@ protected:
     friend class WidgetFactory;
     template <class T> friend class WidgetFactoryT;
 
-    RadioButtons(Layout &layoutVal, const cv::Point &pos);
+    CheckBoxes(Layout &layoutVal, const cv::Point &pos);
 
-    void addRadioButton(const std::string &txt,
-                        Widget::CBUserSelection cbUserSelection);
+    void addCheckBox(const std::string &txt,
+                     Widget::CBUserSelection cbUserSelection);
 
     virtual void recalc();
 
 private:
 
-    cv::Mat getRadioNotSelected();
-    cv::Mat getRadioSelected();
+    cv::Mat getCheckBoxNotSelected();
+    cv::Mat getCheckBoxSelected();
 
     std::shared_ptr<VFrame> frame;
     std::vector<MatWidget*> drawings;
-    cv::Mat radioNotSelected;
-    cv::Mat radioSelected;
-    int selection;
+    cv::Mat checkBoxNotSelected;
+    cv::Mat checkBoxSelected;
+    std::vector<bool> selections;
 };
 
 }
 
-/** @example example_radiobuttons.cpp
- * This is an example of how to use the RadioButtons Widget.
+/** @example example_checkboxes.cpp
+ * This is an example of how to use the CheckBoxes Widget.
  */
 
-#endif // RADIOBUTTONS_H
+#endif // CHECKBOXES_H

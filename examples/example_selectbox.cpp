@@ -77,10 +77,14 @@ int main(int argc, char **argv)
                                             "Long Option1",     // index 0
                                             "Option2\n2 lines", // index 1
                                             "Option3"           // index 2
-                                        },
-                                        [](Widget *w, int i) {
-        w->setVisible(false);
-        cout << "Option " << i << " was chosen" << endl;
+                                        }, [&c](Widget *w, int i) {
+            w->setVisible(false);
+            cout << "Option " << i << " was chosen" << endl;
+            stringstream s;
+            SelectionBox *sb = (SelectionBox*)w;
+            s << "User selected option '" << i<< "': '" << sb->getTextAt(i) << "'\n";
+            s << "left click to open selection box. left click to select an item\n'q' to quit";
+            c.setScreenText(s.str());
     });
     selectionBox->setVisible(false);
 
@@ -88,7 +92,7 @@ int main(int argc, char **argv)
     setMouseCallback("Canvas", mouseCB, &c);
 
     c.enableScreenText();
-    c.setScreenText("left click to open selection box. left click to select an item");
+    c.setScreenText("left click to open selection box. left click to select an item\n'q' to quit");
 
     int delay = 1000/25;
     int key = 0;

@@ -115,9 +115,13 @@ int main(int argc, char **argv)
             };
             arrow->getPT1().addPosChangedCB(cb);
             arrow->getPT2().addPosChangedCB(cb);
-            int shapeId = lc->getArrow()->getPT1().getId();
+
+             // register for LineCrossing's directional arrow changes
             auto cbId = lc->getArrow()->getPT1().addPosChangedCB(cb);
 
+            // If an arrow is deleted, don't let the LineCrossing's directional
+            //  arrow notify it about changes
+            int shapeId = lc->getArrow()->getPT1().getId();
             c.notifyOnShapeDelete([&c, arrow, shapeId, cbId](Shape *deleted)
             {
                 if (arrow == deleted)

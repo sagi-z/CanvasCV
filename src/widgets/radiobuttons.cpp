@@ -95,6 +95,20 @@ int RadioButtons::getSelection() const
     return selection;
 }
 
+string RadioButtons::getTextAt(int index) const
+{
+    if (index >= 0 && index < frame->size())
+    {
+        return frame->at<HorizontalLayout>(index)->at<Text>(1)->getMsg();
+    }
+    return "";
+}
+
+size_t RadioButtons::size() const
+{
+    return frame->size();
+}
+
 const char *RadioButtons::getType() const
 {
     return type;

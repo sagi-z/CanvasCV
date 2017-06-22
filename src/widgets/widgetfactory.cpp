@@ -44,8 +44,9 @@ bool WidgetFactory::postConstuct(Layout &layout, const std::shared_ptr<Widget> &
 #include "hframe.h"
 #include "msgbox.h"
 #include "selectionbox.h"
-#include "radiobuttons.h"
 #include "matwidget.h"
+#include "radiobuttons.h"
+#include "checkboxes.h"
 
 namespace canvascv
 {
@@ -60,5 +61,6 @@ REGISTER_WIDGET(MsgBox);
 REGISTER_WIDGET(SelectionBox);
 REGISTER_WIDGET(MatWidget);
 REGISTER_WIDGET(RadioButtons);
+REGISTER_WIDGET(CheckBoxes);
 
 }

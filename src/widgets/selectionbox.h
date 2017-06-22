@@ -47,6 +47,17 @@ public:
                                                 Widget::CBUserSelection cbUserSelection = Widget::CBUserSelection(),
                                                 const cv::Point &pos = cv::Point(0,0));
 
+    /**
+     * @brief getTextAt
+     * return the text at index index
+     * @param index is the index you want the text for
+     * @return return the text at index index or empty string if invalid index
+     */
+    std::string getTextAt(int index) const;
+
+    /// return nunmber of check boxes in group
+    size_t size() const;
+
     virtual const char *getType() const;
 
     static const char *type;
