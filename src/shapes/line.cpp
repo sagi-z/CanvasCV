@@ -117,6 +117,11 @@ list<Handle *> Line::getConnectionTargets()
     return {pt1, pt2};
 }
 
+const char *Line::getType() const
+{
+   return type;
+}
+
 void Line::lockTail(bool isLocked)
 {
     pt1->setLocked(isLocked);

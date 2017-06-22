@@ -9,7 +9,7 @@ namespace canvascv {
 const char * LineCrossing::type = "LineCrossing";
 
 LineCrossing::LineCrossing(const Point &pos)
-    : direction(1), arrowMagnitude(60)
+    : direction(-1), arrowMagnitude(60)
 {
     line = addShape<Line>(pos);
     arrow = addShape<Arrow>(pos);
@@ -80,21 +80,15 @@ void LineCrossing::registerCBs()
 
 void LineCrossing::recalcArrow()
 {
-    if (arrow->getVisible())
-    {
-        Point head, tail;
-        arrowTailHead(tail, head);
-        arrow->setTailPos(tail);
-        arrow->setHeadPos(head);
-    }
+    Point head, tail;
+    arrowTailHead(tail, head);
+    arrow->setTailPos(tail);
+    arrow->setHeadPos(head);
 }
 
 void LineCrossing::recalcTextBox()
 {
-    if (textBox->getVisible())
-    {
-        textBox->setTL(middlePoint());
-    }
+    textBox->setTL(middlePoint());
 }
 
 Point LineCrossing::middlePoint()
@@ -153,6 +147,22 @@ const string &LineCrossing::getStatusMsg() const
 {
     const static string msg = "Click on the arrow to change crossing direction.\nDrag line or Handles to position.";
     return msg;
+}
+
+int LineCrossing::cross_z(const Point &pt) const
+{
+    return cross_z(line->getTail(), line->getHead(), direction, pt);
+}
+
+int LineCrossing::cross_z(const Point &lineStart, const Point &lineEnd, int direction, const Point &pt) const
+{
+    // a and b are 2 vectors on the same plane with z = 0
+    Point a(lineEnd.x-lineStart.x, lineEnd.y-lineStart.y);
+    Point b(pt.x-lineStart.x, pt.y-lineStart.y);
+
+    // their cross product vector has a z dimension, which is the only thing we want here
+    int c_z = a.x*b.y - a.y*b.x;
+    return c_z * direction;
 }
 
 
@@ -214,6 +224,40 @@ Line *LineCrossing::getLine()
 Arrow *LineCrossing::getArrow()
 {
     return arrow;
+}
+
+bool LineCrossing::wasCrossed(const Point &pt) const
+{
+    return cross_z(pt) < 0;
+}
+
+int LineCrossing::isCrossedBySegment(const Point &lineStart, const Point &lineEnd) const
+{
+    int z1 = cross_z(lineStart);
+    int z2 = cross_z(lineEnd);
+    if (z1 >= 0 && z2 <= 0)
+    {   // Maybe crossing in the direction of the arrow
+        int z3 = cross_z(lineStart, lineEnd, 1, line->getTail());
+        int z4 = cross_z(lineStart, lineEnd, 1, line->getHead());
+        if ( (z3 <= 0 && z4 >= 0)
+             ||
+             (z4 <= 0 && z3 >= 0) )
+        {
+            return 1;
+        }
+    }
+    else if (z2 >= 0 && z1 <= 0)
+    {   // Maybe crossing against the direction of the arrow
+        int z3 = cross_z(lineStart, lineEnd, 1, line->getTail());
+        int z4 = cross_z(lineStart, lineEnd, 1, line->getHead());
+        if ( (z3 <= 0 && z4 >= 0)
+             ||
+             (z4 <= 0 && z3 >= 0) )
+        {
+            return -1;
+        }
+    }
+    return 0;
 }
 
 }

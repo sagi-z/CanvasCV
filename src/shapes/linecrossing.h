@@ -13,8 +13,6 @@ namespace canvascv
 class LineCrossing : public CompoundShape
 {
 public:
-    LineCrossing(const cv::Point& pos);
-
     virtual bool isAtPos(const cv::Point &pos)
     {
         return line->isAtPos(pos);
@@ -46,9 +44,35 @@ public:
     /// getter to internal Arrow
     Arrow *getArrow();
 
+    /**
+     * @brief wasCrossed
+     * Use cross product and predefined direction to tell if a given point
+     * is accross the <b> endless line </b> represented by this segment.
+     * @param pt is the point we're going to examine
+     * @return bool if line is on the other side of the line according to the direction arrow
+     */
+    bool wasCrossed(const Point &pt) const;
+
+    /**
+     * @brief isCrossedBy
+     * Use cross product and predefined direction to tell if a given line
+     * path, starting at lineStart and ending at lineEnd is crossing this
+     * specific <b> line segment </b>.
+     * @param lineStart the start of the line to check against (path origin Point).
+     * @param lineEnd the end of the line to check against (path latest Point).
+     * @return
+     * - 0 if the segments are not crossing
+     */
+    int isCrossedBySegment(const Point &lineStart, const Point &lineEnd) const;
+
     static const char * type;
 
 protected:
+    friend class ShapeFactory;
+    template <class T> friend class ShapeFactoryT;
+
+    LineCrossing(const cv::Point& pos);
+
     virtual void draw(cv::Mat &canvas);
     virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);
 
@@ -71,6 +95,9 @@ protected:
 
     virtual const std::string &getStatusMsg() const;
 
+    int cross_z(const Point &pt) const;
+    int cross_z(const Point &lineStart, const Point &lineEnd, int direction, const Point &pt) const;
+
 private:
     Line* line;
     Arrow* arrow;
@@ -80,5 +107,9 @@ private:
 };
 
 }
+
+/** @example example_linecrossing.cpp
+ * This is an example of how to use the LineCrossing shape.
+ */
 
 #endif // LINECROSSING_H

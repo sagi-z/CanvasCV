@@ -10,16 +10,16 @@
 namespace canvascv
 {
 
+/**
+ * @brief The Line class
+ * One of the basic shapes is a line.
+ */
 class Line : public CompoundShape
 {
 public:
-    Line(const cv::Point &pos);
-
     virtual std::list<Handle *> getConnectionTargets();
 
-    virtual const char *getType() const {
-        return type;
-    }
+    virtual const char *getType() const;
 
     void lockTail(bool isLocked);
 
@@ -86,6 +86,11 @@ public:
     static const char * type;
 
 protected:
+    friend class ShapeFactory;
+    template <class T> friend class ShapeFactoryT;
+
+    Line(const cv::Point &pos);
+
     virtual void draw(cv::Mat &canvas);
     virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);
     virtual bool mouseMoved(const cv::Point &pos);
