@@ -115,14 +115,18 @@ int main(int argc, char **argv)
             };
             arrow->getPT1().addPosChangedCB(cb);
             arrow->getPT2().addPosChangedCB(cb);
-            lc->getLine()->getPT1().addPosChangedCB(cb);
-            lc->getLine()->getPT2().addPosChangedCB(cb);
+            int shapeId = lc->getArrow()->getPT1().getId();
+            auto cbId = lc->getArrow()->getPT1().addPosChangedCB(cb);
 
-            c.notifyOnShapeModify([arrow, defaultColor, lc](Shape *modifiedShape)
+            c.notifyOnShapeDelete([&c, arrow, shapeId, cbId](Shape *deleted)
             {
-                if (modifiedShape == lc.get())
+                if (arrow == deleted)
                 {
-                    setArrowColors(*lc, *arrow, defaultColor);
+                    auto shapePtr = c.getShape(shapeId);
+                    if (shapePtr)
+                    {
+                        ((Handle*)shapePtr.get())->delPosChangedCB(cbId);
+                    }
                 }
             });
         }

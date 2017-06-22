@@ -21,7 +21,7 @@ public:
     //  we defined above
     Handle(const Handle &) = default;
 
-    ~Handle();
+    virtual ~Handle();
 
     virtual bool isAtPos(const cv::Point &pos)
     {

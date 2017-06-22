@@ -18,6 +18,7 @@ LineCrossing::LineCrossing(const Point &pos)
     textBox = addShape<TextBox>(pos);
     textBox->setVisible(false);
     textBox->setLocked(false);
+    textBox->setText(type);
     registerCBs();
     setActive(line);
 }
