@@ -209,13 +209,7 @@ int main(int argc, char **argv)
     createShapesFromCodeExample(c, Point(image.cols / 2, image.rows / 2));
 
     namedWindow("Canvas", WINDOW_AUTOSIZE);
-
-    // **Optional
-    // This is needed for user interaction - creating/editing choosing shapes.
-    // Clicking on interactive widgets.
-    // We don't need this code if we only want to display "on screen" messages and "status bar" messages.
-    // You can also delegate by yourself as in example_selectbox.cpp
-    c.setMouseCallback("Canvas");
+    c.setMouseCallback("Canvas"); // optional for mouse usage see also (example_selectbox.cpp)
 
 
     int delay = 1000/25;

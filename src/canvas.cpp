@@ -82,7 +82,7 @@ bool Canvas::onMousePress(const Point &pos)
         else
         {
             activeWidget->broadcastChange(Widget::LEAVE);
-            setStatusMsg("");
+            setStatusMsg(defaultStatusMsg);
             activeWidget.reset();
         }
     }
@@ -103,7 +103,7 @@ bool Canvas::onMousePress(const Point &pos)
             {
                 activeShape.reset();
             }
-            setStatusMsg("");
+            setStatusMsg(defaultStatusMsg);
         }
         else if (activeShape->isReady() && activeShape->getVisible() && ! activeShape->getLocked())
         {   // note that only active shapes can be dragged
@@ -150,7 +150,7 @@ bool Canvas::onMousePress(const Point &pos)
             {
                 activeShape.reset();
             }
-            setStatusMsg("");
+            setStatusMsg(defaultStatusMsg);
         }
         else
         {
@@ -180,7 +180,7 @@ void Canvas::onMouseRelease(const Point &pos)
         else
         {
             activeWidget->broadcastChange(Widget::LEAVE);
-            setStatusMsg("");
+            setStatusMsg(defaultStatusMsg);
             activeWidget.reset();
         }
     }
@@ -200,7 +200,7 @@ void Canvas::onMouseRelease(const Point &pos)
             {
                 activeShape.reset();
             }
-            setStatusMsg("");
+            setStatusMsg(defaultStatusMsg);
         }
     }
 }
@@ -215,7 +215,7 @@ void Canvas::onMouseMove(const Point &pos)
         if (! activeWidget->isAtPos(pos))
         {
             activeWidget->broadcastChange(Widget::LEAVE);
-            setStatusMsg("");
+            setStatusMsg(defaultStatusMsg);
             activeWidget.reset();
         }
         else
@@ -283,7 +283,7 @@ void Canvas::consumeKey(int &key)
                 {
                     activeShape.reset();
                 }
-                setStatusMsg("");
+                setStatusMsg(defaultStatusMsg);
             }
         }
     }
@@ -296,7 +296,7 @@ void Canvas::deleteActive()
         deleteShape(activeShape);
         activeShape->lostFocus();
         activeShape.reset();
-        setStatusMsg("");
+        setStatusMsg(defaultStatusMsg);
     }
 }
 
@@ -336,7 +336,7 @@ void Canvas::notifyOnShapeDelete(Canvas::CBType cb)
 void Canvas::clearShapes()
 {
     deleteActive();
-    setStatusMsg("");
+    setStatusMsg(defaultStatusMsg);
     while(shapes.size())
     {
        deleteShape(shapes.back());
@@ -405,6 +405,12 @@ void Canvas::enableStatusMsg(Scalar color, Scalar bgColor, double scale, int thi
     statusMsg->setFontFace(fontFace);
 }
 
+void Canvas::setDefaultStatusMsg(const string &msg)
+{
+   defaultStatusMsg = msg;
+   setStatusMsg(defaultStatusMsg);
+}
+
 void Canvas::setStatusMsg(const string &msg)
 {
     if (hasStatusMsg)
@@ -461,6 +467,11 @@ void Canvas::processNewShape()
             setStatusMsg(activeShape->getStatusMsg());
         }
     }
+}
+
+std::string Canvas::getDefaultStatusMsg() const
+{
+    return defaultStatusMsg;
 }
 
 bool Canvas::getOn() const

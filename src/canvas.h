@@ -195,8 +195,11 @@ public:
                          uchar alpha = 80,
                          int fontFace = FONT_HERSHEY_COMPLEX_SMALL);
 
-    /// manually send a status message (it might be replaced automatically when using widgets and shapes with the mouse)
-    void setStatusMsg(const std::string &msg);
+    /// set the default status message (active widget and shapes will override it)
+    void setDefaultStatusMsg(const std::string &msg);
+
+    /// get the default status message (active widget and shapes will override it)
+    std::string getDefaultStatusMsg() const;
 
     /// manually set the screen text message. It remains until disabled or changed.
     void setScreenText(const std::string &msg);
@@ -244,6 +247,8 @@ protected:
 
 private:
 
+    void setStatusMsg(const std::string &msg);
+
     virtual bool setDirtyLayout();
 
     void broadcastCreate(Shape *shape);
@@ -258,6 +263,7 @@ private:
     bool hasStatusMsg;
     std::shared_ptr<Text> screenText;
     std::shared_ptr<Text> statusMsg;
+    std::string defaultStatusMsg;
     std::string shapeType;
     cv::Point dragPos;
     std::list<std::shared_ptr<Shape>> shapes;
