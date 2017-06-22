@@ -259,6 +259,18 @@ void CompoundShape::lostFocus()
     }
 }
 
+const string &CompoundShape::getCreateStatusMsg() const
+{
+   static const string msg = "Click to set point position. ESC to cancel.";
+   return msg;
+}
+
+const string &CompoundShape::getEditStatusMsg() const
+{
+   static const string msg = "Drag with mouse to move shape.\nDrag handles to modify shape.\n";
+   return msg;
+}
+
 void CompoundShape::setActive(Shape *shape)
 {
     auto i = find_if(shapes.begin(),

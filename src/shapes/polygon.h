@@ -19,8 +19,6 @@ public:
 
     virtual bool keyPressed(int &key);
 
-    virtual const std::string &getStatusMsg() const;
-
     bool isPointInPoly(const cv::Point &pos) const
     {
         if (isReady())
@@ -50,7 +48,8 @@ protected:
     virtual bool mouseMoved(const cv::Point &pos);
     virtual bool mouseReleased(const cv::Point &pos);
     virtual void lostFocus();
-
+    virtual const string &getCreateStatusMsg() const;
+    virtual const string &getEditStatusMsg() const;
 private:
 
     virtual void reloadPointers(const std::list<Shape*> &lst, std::list<Shape*>::const_iterator &i);

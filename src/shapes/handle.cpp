@@ -104,6 +104,18 @@ void Handle::lostFocus()
     visible = false;
 }
 
+const string &Handle::getCreateStatusMsg() const
+{
+   static const string emptyStr;
+   return emptyStr;
+}
+
+const string &Handle::getEditStatusMsg() const
+{
+   static const string str = "Drag to edit shape.";
+   return str;
+}
+
 void Handle::connect(Handle &other)
 {
    if (this != &other)

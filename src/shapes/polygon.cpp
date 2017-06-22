@@ -129,6 +129,20 @@ void Polygon::lostFocus()
     }
 }
 
+const string &Polygon::getCreateStatusMsg() const
+{
+    const static string msgCreate =
+            "Click to create a new vertex.\n"
+            "ENTER to finish. ESC to cancel. BS to remove last point.";
+    return msgCreate;
+}
+
+const string &Polygon::getEditStatusMsg() const
+{
+    const static string msgEdit = "drag a vertex to modify the polygon";
+    return msgEdit;
+}
+
 list<Handle *> Polygon::getConnectionTargets()
 {
     return handles;
@@ -198,22 +212,6 @@ bool Polygon::keyPressed(int &key)
     return true;
 }
 
-const string &Polygon::getStatusMsg() const
-{
-   const static string msgCreate =
-           "Click to create a new vertex.\n"
-           "ENTER to finish. ESC to cancel. BS to remove last point.";
-   const static string msgEdit = "drag a vertex to modify to polygon";
-   if (isReady())
-   {
-       return msgEdit;
-   }
-   else
-   {
-       return msgCreate;
-   }
-}
-
 void Polygon::translate(const Point &offset)
 {
     CompoundShape::translate(offset);
@@ -223,7 +221,7 @@ void Polygon::translate(const Point &offset)
 void Polygon::reloadPointers(const list<Shape*> &lst, list<Shape*>::const_iterator &i)
 {
     CompoundShape::reloadPointers(lst, i);
-    // Here we know we consume all that's left
+    // Here we know we should consume all the left items
     handles.clear();
     while (i != lst.end())
     {

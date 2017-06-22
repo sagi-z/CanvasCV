@@ -143,9 +143,11 @@ void LineCrossing::reloadPointers(const list<Shape *> &lst, list<Shape*>::const_
     textBox = dynamic_cast<TextBox*>(*i++);
 }
 
-const string &LineCrossing::getStatusMsg() const
+const string &LineCrossing::getEditStatusMsg() const
 {
-    const static string msg = "Click on the arrow to change crossing direction.\nDrag line or Handles to position.";
+    const static string msg = "Click on the arrow to change crossing direction.\n"
+                              "Click on the TextBox to edit it.\n"
+                              "Drag line or Handles to position.";
     return msg;
 }
 

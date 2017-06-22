@@ -175,7 +175,9 @@ protected:
     /// helper method for non compund shapes to draw their members
     void drawHelper(cv::Mat &canvas, Shape *other);
 
-    virtual const std::string &getStatusMsg() const;
+    const std::string &getStatusMsg() const;
+    virtual const std::string &getCreateStatusMsg() const = 0;
+    virtual const std::string &getEditStatusMsg() const = 0;
 
     void setCanvas(Canvas &value);
 

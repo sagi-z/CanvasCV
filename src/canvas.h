@@ -247,6 +247,31 @@ protected:
 
 private:
 
+    class StatusMsgGrd
+    {
+    public:
+        StatusMsgGrd(Canvas &val) : c(val) {}
+        ~StatusMsgGrd()
+        {
+            if (c.activeWidget)
+            {
+                c.setStatusMsg(c.activeWidget->getStatusMsg());
+            }
+            else if (c.activeShape)
+            {
+                c.setStatusMsg(c.activeShape->getStatusMsg());
+            }
+            else
+            {
+                c.setStatusMsg(c.defaultStatusMsg);
+            }
+        }
+    private:
+        Canvas &c;
+    };
+    friend class StatusMsgGrd;
+
+
     void setStatusMsg(const std::string &msg);
 
     virtual bool setDirtyLayout();

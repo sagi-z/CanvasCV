@@ -46,6 +46,7 @@ protected:
     virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);
     virtual bool mouseMoved(const cv::Point &pos);
     virtual bool mouseReleased(const cv::Point &pos);
+    virtual const string &getEditStatusMsg() const;
 
 private:
     void recalcRect(const cv::Point &pos, bool rotated = false, float offset = 0);

@@ -93,7 +93,7 @@ protected:
 
     virtual void reloadPointers(const std::list<Shape*> &lst, std::list<Shape*>::const_iterator &i);
 
-    virtual const std::string &getStatusMsg() const;
+    virtual const std::string &getEditStatusMsg() const;
 
     int cross_z(const Point &pt) const;
     int cross_z(const Point &lineStart, const Point &lineEnd, int direction, const Point &pt) const;

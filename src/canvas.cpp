@@ -70,6 +70,7 @@ void Canvas::redrawOn(const Mat &src, Mat &dst)
 bool Canvas::onMousePress(const Point &pos)
 {
     if (! on) return false;
+    StatusMsgGrd(*this);
 
     // widgets have preference over shapes
     if (activeWidget.get())
@@ -82,7 +83,6 @@ bool Canvas::onMousePress(const Point &pos)
         else
         {
             activeWidget->broadcastChange(Widget::LEAVE);
-            setStatusMsg(defaultStatusMsg);
             activeWidget.reset();
         }
     }
@@ -103,7 +103,6 @@ bool Canvas::onMousePress(const Point &pos)
             {
                 activeShape.reset();
             }
-            setStatusMsg(defaultStatusMsg);
         }
         else if (activeShape->isReady() && activeShape->getVisible() && ! activeShape->getLocked())
         {   // note that only active shapes can be dragged
@@ -118,17 +117,6 @@ bool Canvas::onMousePress(const Point &pos)
         if (shape->mousePressed(pos))
         {
             activeShape = shape;
-            if (hasStatusMsg)
-            {
-                if (activeShape->getLocked())
-                {
-                    setStatusMsg("Shape is locked.");
-                }
-                else
-                {
-                    setStatusMsg(activeShape->getStatusMsg());
-                }
-            }
             activeShape->broadcastEvent(Shape::SELECT);
             return true;
         }
@@ -150,7 +138,6 @@ bool Canvas::onMousePress(const Point &pos)
             {
                 activeShape.reset();
             }
-            setStatusMsg(defaultStatusMsg);
         }
         else
         {
@@ -165,6 +152,7 @@ bool Canvas::onMousePress(const Point &pos)
 void Canvas::onMouseRelease(const Point &pos)
 {
     if (! on) return;
+    StatusMsgGrd(*this);
 
     dragPos.x = dragPos.y = 0;
 
@@ -180,7 +168,6 @@ void Canvas::onMouseRelease(const Point &pos)
         else
         {
             activeWidget->broadcastChange(Widget::LEAVE);
-            setStatusMsg(defaultStatusMsg);
             activeWidget.reset();
         }
     }
@@ -200,7 +187,6 @@ void Canvas::onMouseRelease(const Point &pos)
             {
                 activeShape.reset();
             }
-            setStatusMsg(defaultStatusMsg);
         }
     }
 }
@@ -208,6 +194,7 @@ void Canvas::onMouseRelease(const Point &pos)
 void Canvas::onMouseMove(const Point &pos)
 {
     if (! on) return;
+    StatusMsgGrd(*this);
 
     // widgets have preference over shapes
     if (activeWidget.get())
@@ -215,7 +202,6 @@ void Canvas::onMouseMove(const Point &pos)
         if (! activeWidget->isAtPos(pos))
         {
             activeWidget->broadcastChange(Widget::LEAVE);
-            setStatusMsg(defaultStatusMsg);
             activeWidget.reset();
         }
         else
@@ -231,7 +217,6 @@ void Canvas::onMouseMove(const Point &pos)
         {
             activeWidget = widget;
             activeWidget->broadcastChange(Widget::ENTER);
-            setStatusMsg(widget->getStatusMsg());
             return;
         }
     }
@@ -266,6 +251,7 @@ std::shared_ptr<Shape> Canvas::createShape(string type, const Point &pos)
 void Canvas::consumeKey(int &key)
 {
     if (! on) return;
+    StatusMsgGrd(*this);
 
     if (key != -1)
     {
@@ -283,7 +269,6 @@ void Canvas::consumeKey(int &key)
                 {
                     activeShape.reset();
                 }
-                setStatusMsg(defaultStatusMsg);
             }
         }
     }
@@ -291,12 +276,12 @@ void Canvas::consumeKey(int &key)
 
 void Canvas::deleteActive()
 {
+    StatusMsgGrd(*this);
     if (activeShape.get())
     {
         deleteShape(activeShape);
         activeShape->lostFocus();
         activeShape.reset();
-        setStatusMsg(defaultStatusMsg);
     }
 }
 
@@ -453,20 +438,10 @@ void Canvas::broadcastDelete(Shape *shape)
 
 void Canvas::processNewShape()
 {
+    StatusMsgGrd(*this);
     activeShape = shapes.back();
     activeShape->setCanvas(*this);
     broadcastCreate(activeShape.get());
-    if (hasStatusMsg)
-    {
-        if (activeShape->getLocked())
-        {
-            setStatusMsg("Shape is locked.");
-        }
-        else
-        {
-            setStatusMsg(activeShape->getStatusMsg());
-        }
-    }
 }
 
 std::string Canvas::getDefaultStatusMsg() const

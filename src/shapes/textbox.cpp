@@ -138,6 +138,18 @@ void TextBox::lostFocus()
     topLeft->setVisible(false);
 }
 
+const string &TextBox::getCreateStatusMsg() const
+{
+   static const string msg = "";
+   return msg;
+}
+
+const string &TextBox::getEditStatusMsg() const
+{
+   static const string msg = "Type lowercase text. ENTER to approve. ESC to cancel.";
+   return msg;
+}
+
 void TextBox::recalcRect()
 {
     baseline=0;

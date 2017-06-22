@@ -39,6 +39,9 @@ protected:
     virtual bool keyPressed(int &key);
     virtual void lostFocus();
 
+    virtual const string &getCreateStatusMsg() const;
+    virtual const string &getEditStatusMsg() const;
+
     void setActive(Shape* shape);
     Shape* getActive();
 

@@ -135,8 +135,22 @@ void Shape::setCanvas(Canvas &value)
 
 const string &Shape::getStatusMsg() const
 {
-    static const string emptyStr;
-    return emptyStr;
+    const static string lockedMsg = "Shape is locked.";
+    if (locked)
+    {
+        return lockedMsg;
+    }
+    else
+    {
+        if (isReady())
+        {
+            return getEditStatusMsg();
+        }
+        else
+        {
+            return getCreateStatusMsg();
+        }
+    }
 }
 
 void Shape::setDeleted()

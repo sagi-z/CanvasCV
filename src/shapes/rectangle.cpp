@@ -123,6 +123,12 @@ bool Rectangle::mouseReleased(const Point &pos)
     return false;
 }
 
+const string &Rectangle::getEditStatusMsg() const
+{
+   const static string editMsg = "Drag corner buttons to resize.\nRotat by dragging edges.";
+   return editMsg;
+}
+
 void Rectangle::recalcRect(const Point &pos, bool rotated, float offset)
 {
     if (rotated)

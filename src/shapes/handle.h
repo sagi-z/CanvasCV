@@ -66,6 +66,9 @@ protected:
     virtual bool mouseReleased(const cv::Point &pos);
     virtual void lostFocus();
 
+    virtual const string &getCreateStatusMsg() const;
+    virtual const string &getEditStatusMsg() const;
+
 private:
 
     void connectedFrom(Handle &other);
