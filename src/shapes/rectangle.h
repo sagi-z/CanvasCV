@@ -10,8 +10,6 @@ namespace canvascv
 class Rectangle : public CompoundShape
 {
 public:
-    Rectangle(const cv::Point &pos);
-
     virtual bool isAtPos(const cv::Point &pos)
     {
         return isPointInRectangle(pos);
@@ -39,6 +37,11 @@ public:
     virtual void translate(const cv::Point &offset);
 
 protected:
+    friend class ShapeFactory;
+    template <class T> friend class ShapeFactoryT;
+
+    Rectangle(const cv::Point &pos);
+
     virtual void draw(cv::Mat &canvas);
     virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);
     virtual bool mouseMoved(const cv::Point &pos);

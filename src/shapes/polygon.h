@@ -10,8 +10,6 @@ namespace canvascv
 class Polygon : public CompoundShape
 {
 public:
-    Polygon(const cv::Point &pos);
-
     virtual bool isAtPos(const cv::Point &pos)
     {
         return isPointInPoly(pos);
@@ -41,6 +39,11 @@ public:
     static const char * type;
 
 protected:
+
+    friend class ShapeFactory;
+    template <class T> friend class ShapeFactoryT;
+
+    Polygon(const cv::Point &pos);
 
     virtual void draw(cv::Mat &canvas);
     virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);

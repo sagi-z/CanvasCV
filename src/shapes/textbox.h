@@ -14,8 +14,6 @@ namespace canvascv
 class TextBox : public Shape
 {
 public:
-    TextBox(const cv::Point &pos);
-
     virtual bool isAtPos(const cv::Point &pos)
     {
         return rect.contains(pos);
@@ -51,6 +49,11 @@ public:
     void setFontColor(const cv::Scalar &value);
 
 protected:
+    friend class ShapeFactory;
+    template <class T> friend class ShapeFactoryT;
+
+    TextBox(const cv::Point &pos);
+
     virtual void writeInternals(cv::FileStorage &fs) const;
     virtual void readInternals(const cv::FileNode &node);
     void registerCBs();

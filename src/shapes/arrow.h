@@ -9,13 +9,16 @@ namespace canvascv
 class Arrow : public Line
 {
 public:
-    Arrow(const cv::Point &pos);
 
     virtual const char *getType() const;
 
     static const char * type;
 
 protected:
+    friend class ShapeFactory;
+    template <class T> friend class ShapeFactoryT;
+
+    Arrow(const cv::Point &pos);
 
     virtual void draw(cv::Mat &canvas);
 };

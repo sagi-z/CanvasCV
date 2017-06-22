@@ -10,7 +10,6 @@ namespace canvascv
 class LabeledShapesConnector : public ShapesConnector
 {
 public:
-    LabeledShapesConnector(const cv::Point &pos);
 
     virtual const char *getType() const;
 
@@ -19,6 +18,11 @@ public:
     static const char * type;
 
 private:
+    friend class ShapeFactory;
+    template <class T> friend class ShapeFactoryT;
+
+    LabeledShapesConnector(const cv::Point &pos);
+
     TextBox *label;
 
     virtual void reloadPointers(const std::list<Shape*> &lst, std::list<Shape*>::const_iterator &i)

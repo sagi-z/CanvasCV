@@ -17,8 +17,6 @@ public:
     typedef std::function<void(const cv::Point &)> PosChangedCB;
     typedef std::list<PosChangedCB>::iterator CBID;
 
-    Handle(const cv::Point &pos);
-
     // force compiler to generate default cctor inspite of the ctor
     //  we defined above
     Handle(const Handle &) = default;
@@ -54,6 +52,11 @@ public:
     static const char * type;
 
 protected:
+    friend class ShapeFactory;
+    template <class T> friend class ShapeFactoryT;
+
+    Handle(const cv::Point &pos);
+
     virtual void writeInternals(cv::FileStorage &fs) const;
     virtual void readInternals(const cv::FileNode &node);
 
