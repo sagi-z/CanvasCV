@@ -54,15 +54,6 @@ void CompoundWidget::setLineType(int value)
     }
 }
 
-void CompoundWidget::setAlpha(uchar value)
-{
-    Widget::setAlpha(value);
-    for (auto &widget : widgets)
-    {
-        widget->setAlpha(value);
-    }
-}
-
 void CompoundWidget::setVisible(bool value)
 {
     Widget::setVisible(value);

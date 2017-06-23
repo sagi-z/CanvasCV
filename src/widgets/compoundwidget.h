@@ -34,9 +34,6 @@ public:
     virtual void setLineType(int value);
 
     /// delegate to internal Widget parts added by derived classes
-    virtual void setAlpha(uchar value);
-
-    /// delegate to internal Widget parts added by derived classes
     virtual void setVisible(bool value);
 
     /// delegate to internal Widget parts added by derived classes

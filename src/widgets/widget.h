@@ -95,7 +95,7 @@ public:
     uchar getAlpha() const;
 
     /// set the alpha value used for the widge background [0,255] => [transparent,opaque]
-    virtual void setAlpha(uchar value);
+    void setAlpha(uchar value);
 
     /**
      * @brief The Anchor enum

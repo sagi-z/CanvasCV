@@ -18,6 +18,7 @@ shared_ptr<SelectionBox> selectionBox;
 // This is needed for user interaction - creating/editing choosing shapes.
 // Clicking on interactive widgets.
 // We don't need this code if we only want to display "on screen" messages and "status bar" messages.
+// see also Canvas::setMouseCallback()
 static void mouseCB(int event, int x, int y, int flags, void* userData) {
     (void)flags;
     Canvas *pCanvas=reinterpret_cast<Canvas*>(userData);
