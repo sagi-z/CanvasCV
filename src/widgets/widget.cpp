@@ -46,6 +46,7 @@ Widget::Widget(Layout &layoutVal, const Point &pos)
       flowAnchor(TOP_LEFT),
       stretchX(false),
       stretchY(false),
+      isSelectable(false),
       layout(nullptr),
       state(LEAVE),
       isDirty(false),
@@ -628,6 +629,7 @@ void Widget::readInternals(const FileNode &node)
     node["flowAnchor"] >> (int) flowAnchor;
     node["stretchX"] >> stretchX;
     node["stretchY"] >> stretchY;
+    node["isSelectable"] >> isSelectable;
     node["statusMsg"] >> statusMsg;
     state = LEAVE;
     if (id == 0)
@@ -658,6 +660,7 @@ void Widget::writeInternals(FileStorage &fs) const
           "flowAnchor" << flowAnchor <<
           "stretchX" << stretchX <<
           "stretchY" << stretchY <<
+          "isSelectable" << isSelectable <<
           "statusMsg" << statusMsg;
 }
 

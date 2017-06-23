@@ -1,5 +1,5 @@
-#ifndef THEMEDARK_H
-#define THEMEDARK_H
+#ifndef TWOCOLOREDTHEME_H
+#define TWOCOLOREDTHEME_H
 
 #include "theme.h"
 
@@ -7,9 +7,9 @@ namespace canvascv
 {
 
 /**
- * @brief The ThemeDark class implements a dark theme of orange over dark gray colors
+ * @brief The ThemeDark class implements a 2 colored theme base class
  */
-class ThemeDark : public Theme
+class TwoColoredTheme : public Theme
 {
 public:
     virtual void applyStyle(Widget *widget);
@@ -20,7 +20,14 @@ public:
     virtual void raised(cv::Mat &bg, const cv::Scalar &color);
     virtual void sunken(cv::Mat &bg, const cv::Scalar &color);
     virtual void selected(cv::Mat &bg, const cv::Scalar &color);
+
+protected:
+    TwoColoredTheme(const cv::Scalar &fgColorVal, const cv::Scalar &bgColorVal);
+
+    const cv::Scalar fgColor;
+    const cv::Scalar bgColor;
 };
 
 }
-#endif // THEMEDARK_H
+
+#endif // TWOCOLOREDTHEME_H

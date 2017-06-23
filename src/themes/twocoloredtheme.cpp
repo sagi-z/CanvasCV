@@ -1,4 +1,4 @@
-#include "themedark.h"
+#include "twocoloredtheme.h"
 #include "widgets/widget.h"
 #include "shapes/shape.h"
 #include "shapes/linecrossing.h"
@@ -8,12 +8,10 @@ using namespace cv;
 namespace canvascv
 {
 
-const Scalar THM_DARK_GRAY(32,32,32,255);
 const Scalar THM_LIGHT_GRAY(160,160,160,255);
 const Scalar THM_BLACK(0,0,0,255);
-const Scalar THM_ORANGE(0,165,255,255);
 
-void ThemeDark::allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar &color)
+void TwoColoredTheme::allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar &color)
 {
     if (size.width == 0 || size.height == 0)
     {
@@ -26,14 +24,14 @@ void ThemeDark::allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar 
     }
 }
 
-void ThemeDark::flat(Mat &bg, const Scalar &color)
+void TwoColoredTheme::flat(Mat &bg, const Scalar &color)
 {
-    Scalar myDarkGray = THM_DARK_GRAY;
+    Scalar myDarkGray = bgColor;
     myDarkGray[3] = color[3];
     cv::rectangle(bg, {0, 0}, {bg.cols - 1, bg.rows - 1}, myDarkGray, 2, LINE_AA);
 }
 
-void ThemeDark::raised(Mat &bg, const Scalar &color)
+void TwoColoredTheme::raised(Mat &bg, const Scalar &color)
 {
     Scalar myLightGray = THM_LIGHT_GRAY;
     Scalar myBlack = THM_BLACK;
@@ -51,7 +49,7 @@ void ThemeDark::raised(Mat &bg, const Scalar &color)
     cv::line(bg, {0,bg.rows - 1}, {0,0}, myBlack, 2, LINE_AA);
 }
 
-void ThemeDark::sunken(Mat &bg, const Scalar &color)
+void TwoColoredTheme::sunken(Mat &bg, const Scalar &color)
 {
     Scalar myLightGray = THM_LIGHT_GRAY;
     Scalar myBlack = THM_BLACK;
@@ -70,30 +68,36 @@ void ThemeDark::sunken(Mat &bg, const Scalar &color)
     cv::line(bg, {0,bg.rows - 1}, {0,0}, myLightGray, 2, LINE_AA);
 }
 
-void ThemeDark::selected(Mat &bg, const Scalar &color)
+void TwoColoredTheme::selected(Mat &bg, const Scalar &color)
 {
-    Scalar myOrange = THM_ORANGE;
+    Scalar myOrange = fgColor;
     myOrange[3] = color[3];
     cv::rectangle(bg, {0, 0}, {bg.cols - 1, bg.rows - 1}, myOrange, 2, LINE_AA);
 }
 
-void ThemeDark::applyStyle(Widget *widget)
+TwoColoredTheme::TwoColoredTheme(const Scalar &fgColorVal, const Scalar &bgColorVal)
+    : fgColor(fgColorVal),
+      bgColor(bgColorVal)
 {
-   widget->setOutlineColor(THM_ORANGE);
-   widget->setFillColor(THM_DARK_GRAY);
-   widget->setThickness(1);
-   widget->setSelectColor(THM_ORANGE);
 }
 
-void ThemeDark::applyStyle(Shape *shape)
+void TwoColoredTheme::applyStyle(Widget *widget)
 {
-   shape->setOutlineColor(THM_DARK_GRAY);
-   shape->setFillColor(THM_ORANGE);
+   widget->setOutlineColor(fgColor);
+   widget->setFillColor(bgColor);
+   widget->setThickness(1);
+   widget->setSelectColor(fgColor);
+}
+
+void TwoColoredTheme::applyStyle(Shape *shape)
+{
+   shape->setOutlineColor(bgColor);
+   shape->setFillColor(fgColor);
    shape->setThickness(2);
    if (shape->getType() == LineCrossing::type)
    {
        ((LineCrossing*)shape)->setArrowMagnitude(30);
-       ((LineCrossing*)shape)->getArrow()->setOutlineColor(THM_ORANGE);
+       ((LineCrossing*)shape)->getArrow()->setOutlineColor(fgColor);
    }
    else if (shape->getType() == Handle::type)
    {
@@ -101,7 +105,7 @@ void ThemeDark::applyStyle(Shape *shape)
    }
    else if (shape->getType() == TextBox::type)
    {
-       ((TextBox*)shape)->setFontColor(THM_ORANGE);
+       ((TextBox*)shape)->setFontColor(fgColor);
    }
 }
 

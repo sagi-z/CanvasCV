@@ -64,11 +64,11 @@ void ThemeRepository::applyCurrentTheme(Widget *widget)
 }
 
 // add include files here if needed
-#include "themedark.h"
+#include "themedarkorange.h"
 
 namespace canvascv
 {
 
-REGISTER_THEME(ThemeDark);
+REGISTER_THEME(ThemeDarkOrange);
 
 }
