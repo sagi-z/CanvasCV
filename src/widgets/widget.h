@@ -211,9 +211,17 @@ public:
         SUNKEN
     };
 
+    /// get if the widget should appear as selected when the mouse is over it
+    bool getIsSelectable() const;
+
+    /// set if the widget should appear as selected when the mouse is over it
+    void setIsSelectable(bool value);
+
 protected:
 
     void mergeMats(cv::Mat &roiSrc, cv::Mat &roiDst);
+
+    void paintRelief();
 
     Relief getRelief() const;
     void setRelief(const Relief &value);
@@ -303,6 +311,7 @@ protected:
     Anchor flowAnchor;
     bool stretchX;
     bool stretchY;
+    bool isSelectable;
     std::string statusMsg;
     Layout *layout;
 

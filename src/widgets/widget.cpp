@@ -282,6 +282,16 @@ void Widget::stretchHeight(int height)
     }
 }
 
+bool Widget::getIsSelectable() const
+{
+    return isSelectable;
+}
+
+void Widget::setIsSelectable(bool value)
+{
+    isSelectable = value;
+}
+
 Widget::Relief Widget::getRelief() const
 {
     return relief;
@@ -385,26 +395,9 @@ void Widget::mergeMats(Mat &roiSrc, Mat &roiDst)
     }
 }
 
-void Widget::mousePressed()
+void Widget::paintRelief()
 {
-}
-
-void Widget::mouseReleased()
-{
-}
-
-void Widget::mouseEnter()
-{
-}
-
-void Widget::mouseLeave()
-{
-}
-
-void Widget::allocateBG(const Size &size)
-{
-    ThemeRepository::getCurrentTheme()->allocateBG(bg, size, fillColor);
-    switch (relief)
+     switch (relief)
     {
     case FLAT:
         ThemeRepository::getCurrentTheme()->flat(bg, fillColor);
@@ -416,6 +409,33 @@ void Widget::allocateBG(const Size &size)
         ThemeRepository::getCurrentTheme()->sunken(bg, fillColor);
         break;
     }
+}
+
+void Widget::mousePressed()
+{
+}
+
+void Widget::mouseReleased()
+{
+}
+
+void Widget::mouseEnter()
+{
+    if (isSelectable)
+    {
+        selectedWidget();
+    }
+}
+
+void Widget::mouseLeave()
+{
+    paintRelief();
+}
+
+void Widget::allocateBG(const Size &size)
+{
+    ThemeRepository::getCurrentTheme()->allocateBG(bg, size, fillColor);
+    paintRelief();
 }
 
 bool Widget::getStretchY() const
