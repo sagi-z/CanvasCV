@@ -3,6 +3,8 @@
 #include "shapes/shapefactory.h"
 #include "shapes/shape.h"
 #include "shapes/shapesconnector.h"
+#include "themes/themerepository.h"
+#include "themes/theme.h"
 
 #include <opencv2/highgui.hpp>
 #include <algorithm>
@@ -499,6 +501,20 @@ int Canvas::waitKeyEx(int delay)
     int key = cv::waitKeyEx(delay);
     consumeKey(key);
     return key;
+}
+
+void Canvas::applyTheme()
+{
+    Theme *currentTheme = ThemeRepository::getCurrentTheme();
+    for (auto &shape : shapes)
+    {
+        currentTheme->applyStyle(shape.get());
+    }
+
+    for (auto &widget : widgets)
+    {
+        currentTheme->applyStyle(widget.get());
+    }
 }
 
 bool Canvas::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)

@@ -9,8 +9,8 @@ namespace canvascv
 {
 
 ThemeDarkOrange::ThemeDarkOrange()
-    : TwoColoredTheme(Scalar(0,165,255,255), // dark gray
-                      Scalar(32,32,32,255))  // orange
+    : TwoColoredTheme(Colors::Orange,
+                      Scalar(32,32,32)) // special dark gray
 {
 }
 

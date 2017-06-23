@@ -61,14 +61,26 @@ void ThemeRepository::applyCurrentTheme(Widget *widget)
     }
 }
 
+vector<string> ThemeRepository::availThemes()
+{
+    vector<string> result;
+    for (auto &item : themes)
+    {
+        result.push_back(item.first);
+    }
+    return result;
+}
+
 }
 
 // add include files here if needed
 #include "themedarkorange.h"
+#include "themedarkblue.h"
 
 namespace canvascv
 {
 
 REGISTER_THEME(ThemeDarkOrange);
+REGISTER_THEME(ThemeDarkBlue);
 
 }

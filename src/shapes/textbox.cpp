@@ -168,6 +168,7 @@ cv::Scalar TextBox::getFontColor() const
 void TextBox::setFontColor(const cv::Scalar &value)
 {
     fontColor = value;
+    fontColor[3] = 255; // shape colors are opaque
 }
 
 int TextBox::getFontThickness() const

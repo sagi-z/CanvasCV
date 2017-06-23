@@ -71,6 +71,7 @@ Scalar Shape::getOutlineColor() const
 void Shape::setOutlineColor(const Scalar &value)
 {
     outlineColor = value;
+    outlineColor[3] = 255; // shape colors are opaque
 }
 
 Scalar Shape::getFillColor() const
@@ -81,6 +82,7 @@ Scalar Shape::getFillColor() const
 void Shape::setFillColor(const Scalar &value)
 {
     fillColor = value;
+    fillColor[3] = 255; // shape colors are opaque
 }
 
 bool Shape::getLocked() const

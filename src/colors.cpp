@@ -2,6 +2,9 @@
 
 namespace canvascv {
 
+const cv::Scalar Colors::OPAQUE(0,0,0,255);
+const cv::Scalar Colors::TRANSPARENT(0,0,0,0);
+
 const cv::Scalar Colors::AliceBlue(255,248,240); // #F0F8FF
 const cv::Scalar Colors::AntiqueWhite(215,235,250); // #FAEBD7
 const cv::Scalar Colors::Aqua(255,255,0); // #00FFFF

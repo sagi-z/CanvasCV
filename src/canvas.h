@@ -236,6 +236,9 @@ public:
      */
     int waitKeyEx(int delay = 0);
 
+    /// apply the current theme to all existing widgets and shapes in the canvas
+    void applyTheme();
+
 protected:
     virtual void recalc() {}
 

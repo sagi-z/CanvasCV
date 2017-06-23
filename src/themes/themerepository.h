@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <map>
+#include <vector>
 #include <string>
 
 namespace canvascv
@@ -49,6 +50,9 @@ public:
     /// used automatically by the WidgetFactory when creating a widget
     static void applyCurrentTheme(Widget *widget);
 
+    /// get a list of available theme names
+    static std::vector<std::string> availThemes();
+
 private:
 
     typedef std::map<std::string,Theme *> ThemeMap;
@@ -60,6 +64,6 @@ private:
 
 }
 
-#define REGISTER_THEME(NAME) bool regTheme##X = canvascv::ThemeRepository::addTheme(#NAME, new NAME())
+#define REGISTER_THEME(X) bool regTheme##X = canvascv::ThemeRepository::addTheme(#X, new X())
 
 #endif // THEMEREPOSITORY_H

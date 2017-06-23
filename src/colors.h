@@ -10,6 +10,9 @@ class Colors
 {
 public:
 
+    static const cv::Scalar OPAQUE; /// can be added to other colors
+    static const cv::Scalar TRANSPARENT; /// can be added to other colors
+
     static const cv::Scalar Maroon; ///< <SPAN style="background: #800000;">&nbsp;&nbsp;</SPAN> RGB: (128,0,0)  HEX: #800000
     static const cv::Scalar DarkRed; ///< <SPAN style="background: #8B0000;">&nbsp;&nbsp;</SPAN> RGB: (139,0,0)  HEX: #8B0000
     static const cv::Scalar Brown; ///< <SPAN style="background: #A52A2A;">&nbsp;&nbsp;</SPAN> RGB: (165,42,42)  HEX: #A52A2A
