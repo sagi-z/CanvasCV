@@ -505,7 +505,7 @@ int Canvas::waitKeyEx(int delay)
 
 void Canvas::applyTheme(bool applyToCanvasText)
 {
-    Theme *currentTheme = ThemeRepository::instance()->getCurrentTheme();
+    Theme *currentTheme = ThemeRepository::getCurrentTheme();
     for (auto &shape : shapes)
     {
         currentTheme->applyStyle(shape.get());

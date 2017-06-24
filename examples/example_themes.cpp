@@ -50,13 +50,13 @@ int main(int argc, char **argv)
         RadioButtons *rb = (RadioButtons*)w;
         string themeName = rb->getTextAt(index);
         s << "User selected theme '" << index << "': '" << themeName << "'\n";
-        ThemeRepository::instance()->setCurrentTheme(themeName);
+        ThemeRepository::setCurrentTheme(themeName);
         c.applyTheme();
         c.setScreenText(s.str());
     };
 
-    vector<string> availThemes = ThemeRepository::instance()->availThemes();
-    auto iter = std::find(availThemes.begin(), availThemes.end(), ThemeRepository::instance()->getCurrentThemeName());
+    vector<string> availThemes = ThemeRepository::availThemes();
+    auto iter = std::find(availThemes.begin(), availThemes.end(), ThemeRepository::getCurrentThemeName());
     int i = std::distance(availThemes.begin(), iter);
     auto radioButtons = RadioButtons::create(c, availThemes, i, cb,
                                              Point(image.cols / 2., image.rows / 2.));

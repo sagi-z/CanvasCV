@@ -52,7 +52,7 @@ template <class T>
 T *ShapeFactoryT<T>::newShape(const cv::Point &pos)
 {
    T *shape = new T(pos);
-   ThemeRepository::instance()->applyCurrentTheme(shape);
+   ThemeRepository::applyCurrentTheme(shape);
    return shape;
 }
 

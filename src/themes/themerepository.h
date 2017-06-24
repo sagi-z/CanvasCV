@@ -21,8 +21,6 @@ class Theme;
 class ThemeRepository
 {
 public:
-    static ThemeRepository * instance();
-
     /**
      * @brief addTheme add a Theme to the repository
      * @param name is the name of the theme (to overide a theme, add something instead with the same name)
@@ -31,40 +29,41 @@ public:
      * @note that you cannot delete the Theme pointer while it's in use.
      * @see setCurrentTheme()
      */
-    bool addTheme(const std::string &name, Theme *theme);
+    static bool addTheme(const std::string &name, Theme *theme);
 
     /**
      * @brief setCurrentTheme sets a previously added theme
      * @param name is the name of the Theme to set as default
      * @note if the theme doesn't exist then nothing happens
      */
-    void setCurrentTheme(const std::string &name);
+    static void setCurrentTheme(const std::string &name);
 
     /// returns the current theme
-    Theme *getCurrentTheme();
+    static Theme *getCurrentTheme();
 
     /// returns the current theme name
-    std::string getCurrentThemeName();
+    static std::string getCurrentThemeName();
 
     /// used automatically by the ShapeFactory when creating a shape
-    void applyCurrentTheme(Shape *shape);
+    static void applyCurrentTheme(Shape *shape);
 
     /// used automatically by the WidgetFactory when creating a widget
-    void applyCurrentTheme(Widget *widget);
+    static void applyCurrentTheme(Widget *widget);
 
     /// get a list of available theme names
-    std::vector<std::string> availThemes();
+    static std::vector<std::string> availThemes();
 
 private:
-    ThemeRepository();
 
     typedef std::map<std::string,Theme *> ThemeMap;
 
-    ThemeMap themes;
-    std::string currentThemeName;
-    Theme *currentTheme;
+    static ThemeMap themes;
+    static std::string currentThemeName;
+    static Theme *currentTheme;
 };
 
 }
+
+#define REGISTER_THEME(X) static bool regTheme##X = canvascv::ThemeRepository::addTheme(#X, new X())
 
 #endif // THEMEREPOSITORY_H

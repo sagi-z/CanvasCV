@@ -92,7 +92,7 @@ std::shared_ptr<T> WidgetFactoryT<T>::newWidget(Layout &layoutVal, const cv::Poi
 {
    std::shared_ptr<T> widget(new T(layoutVal, pos));
    WidgetFactory::postConstuct(layoutVal, widget);
-   ThemeRepository::instance()->applyCurrentTheme(widget.get());
+   ThemeRepository::applyCurrentTheme(widget.get());
    return widget;
 }
 

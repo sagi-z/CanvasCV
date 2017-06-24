@@ -80,17 +80,17 @@ int main(int argc, char **argv)
         RadioButtons *rb = (RadioButtons*)w;
         string themeName = rb->getTextAt(index);
         s << "User selected theme '" << index << "': '" << themeName << "'\n";
-        ThemeRepository::instance()->setCurrentTheme(themeName);
+        ThemeRepository::setCurrentTheme(themeName);
         c.applyTheme();
         layout->at<Text>(0)->setMsg(s.str());
     };
 
-    ThemeRepository::instance()->addTheme("MyTheme1", new MyTheme(Colors::Red, Colors::Pink, 10));
-    ThemeRepository::instance()->addTheme("MyTheme2", new MyTheme(Colors::Red, Colors::Pink, 20));
-    ThemeRepository::instance()->addTheme("MyTheme3", new MyTheme(Colors::Blue, Colors::Green, 20));
-    vector<string> availThemes = ThemeRepository::instance()->availThemes();
+    ThemeRepository::addTheme("MyTheme1", new MyTheme(Colors::Red, Colors::Pink, 10));
+    ThemeRepository::addTheme("MyTheme2", new MyTheme(Colors::Red, Colors::Pink, 20));
+    ThemeRepository::addTheme("MyTheme3", new MyTheme(Colors::Blue, Colors::Green, 20));
+    vector<string> availThemes = ThemeRepository::availThemes();
 
-    auto iter = std::find(availThemes.begin(), availThemes.end(), ThemeRepository::instance()->getCurrentThemeName());
+    auto iter = std::find(availThemes.begin(), availThemes.end(), ThemeRepository::getCurrentThemeName());
     int i = std::distance(availThemes.begin(), iter);
 
     auto text = Text::create(*layout, "", Widget::TOP, Widget::CENTER);

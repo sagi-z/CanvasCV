@@ -14,7 +14,7 @@ shared_ptr<Widget> WidgetFactory::newWidget(string type, Layout &layoutVal, cons
     assert (i != allocators->end());
     shared_ptr<Widget> widget(i->second(layoutVal, pos));
     postConstuct(layoutVal, widget);
-    ThemeRepository::instance()->applyCurrentTheme(widget.get());
+    ThemeRepository::applyCurrentTheme(widget.get());
     return widget;
 }
 
