@@ -3,6 +3,9 @@
 // **Optional
 // These are used to create widgets
 #include "widgets/radiobuttons.h"
+#include "widgets/text.h"
+#include "widgets/button.h"
+#include "widgets/hframe.h"
 #include "themes/themerepository.h"
 #include "themes/twocoloredtheme.h"
 
@@ -15,6 +18,32 @@ using namespace std;
 using namespace cv;
 using namespace canvascv;
 
+class MyTheme : public TwoColoredTheme
+{
+public:
+    MyTheme(Scalar fgColor, Scalar bgColor, int widthVal)
+        : TwoColoredTheme(fgColor, bgColor),
+          width(widthVal)
+    {}
+
+    virtual void allocateBG(Mat &dst, const Size &size, const Scalar &color)
+    {
+        TwoColoredTheme::allocateBG(dst, size, color);
+        if (! dst.empty())
+        {
+            Point pFrom(0,0);
+            Point pTo(0,size.height);
+            int spacing = width * 2;
+            for (pFrom.x = 0, pTo.x = pFrom.x - size.height ; pTo.x < size.width; pFrom.x += spacing, pTo.x += spacing)
+            {
+                cv::line(dst, pFrom, pTo, color*1.5, width, LINE_AA);
+            }
+        }
+    }
+private:
+    int width;
+};
+
 int main(int argc, char **argv)
 {
     --argc;
@@ -23,7 +52,8 @@ int main(int argc, char **argv)
     if (argc)
     {
         Mat orig = imread(argv[0]);
-        if (orig.empty()) {
+        if (orig.empty())
+        {
             cerr << "Cannot load image " << argv[0] << endl;
             return -1;
         }
@@ -44,22 +74,31 @@ int main(int argc, char **argv)
     }
 
     Canvas c(image.size());
-    c.enableScreenText();
-    Widget::CBUserSelection cb = [&c](Widget *w, int index) {
+    auto layout = HFrame::create(c, Point(5, image.rows / 2.));
+    Widget::CBUserSelection cb = [&c, &layout](Widget *w, int index) {
         stringstream s;
         RadioButtons *rb = (RadioButtons*)w;
         string themeName = rb->getTextAt(index);
         s << "User selected theme '" << index << "': '" << themeName << "'\n";
         ThemeRepository::instance()->setCurrentTheme(themeName);
         c.applyTheme();
-        c.setScreenText(s.str());
+        layout->at<Text>(0)->setMsg(s.str());
     };
 
+    ThemeRepository::instance()->addTheme("MyTheme1", new MyTheme(Colors::Red, Colors::Pink, 10));
+    ThemeRepository::instance()->addTheme("MyTheme2", new MyTheme(Colors::Red, Colors::Pink, 20));
+    ThemeRepository::instance()->addTheme("MyTheme3", new MyTheme(Colors::Blue, Colors::Green, 20));
     vector<string> availThemes = ThemeRepository::instance()->availThemes();
+
     auto iter = std::find(availThemes.begin(), availThemes.end(), ThemeRepository::instance()->getCurrentThemeName());
     int i = std::distance(availThemes.begin(), iter);
-    auto radioButtons = RadioButtons::create(c, availThemes, i, cb,
-                                             Point(image.cols / 2., image.rows / 2.));
+
+    auto text = Text::create(*layout, "", Widget::TOP, Widget::CENTER);
+    text->setMaxWidth(100);
+    text->setAlpha(0);
+    RadioButtons::create(*layout, availThemes, i, cb);
+    Button::create(*layout, "First button")->setLayoutAnchor(Widget::CENTER);
+    Button::create(*layout, "Second button")->setLayoutAnchor(Widget::CENTER);
 
     namedWindow("Canvas", WINDOW_AUTOSIZE);
     c.setMouseCallback("Canvas"); // optional for mouse usage see also (example_selectbox.cpp)
@@ -67,7 +106,7 @@ int main(int argc, char **argv)
     int delay = 1000/25;
     int key = 0;
     Mat out; // keeping it out of the loop is a little more efficient
-    while (radioButtons->getSelection() != 3 && key != 'q')
+    while (key != 'q')
     {
         c.redrawOn(image, out);
         imshow("Canvas", out);
@@ -77,3 +116,5 @@ int main(int argc, char **argv)
     destroyAllWindows();
     return 0;
 }
+
+

@@ -2,14 +2,20 @@
 #include "theme.h"
 #include <cstring>
 
+// add theme include files here if needed
+#include "themedarkorange.h"
+#include "themedarkblue.h"
+
 using namespace std;
 
 namespace canvascv
 {
 
-ThemeRepository::ThemeMap ThemeRepository::themes;
-string ThemeRepository::currentThemeName;
-Theme *ThemeRepository::currentTheme;
+ThemeRepository *ThemeRepository::instance()
+{
+   static ThemeRepository *inst = new ThemeRepository();
+   return inst;
+}
 
 bool ThemeRepository::addTheme(const string &name, Theme *theme)
 {
@@ -71,16 +77,13 @@ vector<string> ThemeRepository::availThemes()
     return result;
 }
 
-}
+#define REGISTER_THEME(X) canvascv::ThemeRepository::addTheme(#X, new X())
 
-// add include files here if needed
-#include "themedarkorange.h"
-#include "themedarkblue.h"
-
-namespace canvascv
+ThemeRepository::ThemeRepository()
+    :currentTheme(nullptr)
 {
-
-REGISTER_THEME(ThemeDarkOrange);
-REGISTER_THEME(ThemeDarkBlue);
+    REGISTER_THEME(ThemeDarkOrange);
+    REGISTER_THEME(ThemeDarkBlue);
+}
 
 }

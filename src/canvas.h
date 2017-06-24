@@ -236,8 +236,12 @@ public:
      */
     int waitKeyEx(int delay = 0);
 
-    /// apply the current theme to all existing widgets and shapes in the canvas
-    void applyTheme();
+    /**
+     * @brief applyTheme
+     * apply the current theme to all existing widgets and shapes in the canvas
+     * @param applyToCanvasText should be usually false (make it true to affect Status&UserText of Canvas).
+     */
+    void applyTheme(bool applyToCanvasText = false);
 
 protected:
     virtual void recalc() {}

@@ -92,13 +92,13 @@ std::shared_ptr<T> WidgetFactoryT<T>::newWidget(Layout &layoutVal, const cv::Poi
 {
    std::shared_ptr<T> widget(new T(layoutVal, pos));
    WidgetFactory::postConstuct(layoutVal, widget);
-   ThemeRepository::applyCurrentTheme(widget.get());
+   ThemeRepository::instance()->applyCurrentTheme(widget.get());
    return widget;
 }
 
 }
 
-#define REGISTER_WIDGET(X) bool regWidget##X = canvascv::WidgetFactoryT<X>::addType(#X)
+#define REGISTER_WIDGET(X) static bool regWidget##X = canvascv::WidgetFactoryT<X>::addType(#X)
 
 
 #endif // WIDGETFACTORY_H

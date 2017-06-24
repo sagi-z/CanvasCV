@@ -401,13 +401,13 @@ void Widget::paintRelief()
      switch (relief)
     {
     case FLAT:
-        ThemeRepository::getCurrentTheme()->flat(bg, fillColor);
+        ThemeRepository::instance()->getCurrentTheme()->flat(bg, fillColor);
         break;
     case RAISED:
-        ThemeRepository::getCurrentTheme()->raised(bg, fillColor);
+        ThemeRepository::instance()->getCurrentTheme()->raised(bg, fillColor);
         break;
     case SUNKEN:
-        ThemeRepository::getCurrentTheme()->sunken(bg, fillColor);
+        ThemeRepository::instance()->getCurrentTheme()->sunken(bg, fillColor);
         break;
     }
 }
@@ -435,7 +435,7 @@ void Widget::mouseLeave()
 
 void Widget::allocateBG(const Size &size)
 {
-    ThemeRepository::getCurrentTheme()->allocateBG(bg, size, fillColor);
+    ThemeRepository::instance()->getCurrentTheme()->allocateBG(bg, size, fillColor);
     paintRelief();
 }
 
@@ -455,22 +455,22 @@ void Widget::setStretchY(bool value)
 
 void Widget::flatWidget()
 {
-    ThemeRepository::getCurrentTheme()->flat(bg, fillColor);
+    ThemeRepository::instance()->getCurrentTheme()->flat(bg, fillColor);
 }
 
 void Widget::raisedWidget()
 {
-    ThemeRepository::getCurrentTheme()->raised(bg, fillColor);
+    ThemeRepository::instance()->getCurrentTheme()->raised(bg, fillColor);
 }
 
 void Widget::sunkenWidget()
 {
-    ThemeRepository::getCurrentTheme()->sunken(bg, fillColor);
+    ThemeRepository::instance()->getCurrentTheme()->sunken(bg, fillColor);
 }
 
 void Widget::selectedWidget()
 {
-    ThemeRepository::getCurrentTheme()->selected(bg, selectColor);
+    ThemeRepository::instance()->getCurrentTheme()->selected(bg, selectColor);
 }
 
 void Widget::renderOn(Mat &dst)

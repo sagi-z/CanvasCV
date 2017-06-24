@@ -15,7 +15,7 @@ void TwoColoredTheme::allocateBG(cv::Mat &dst, const cv::Size &size, const cv::S
 {
     if (size.width == 0 || size.height == 0)
     {
-        dst = cv::Mat();
+        dst.release();
     }
     else
     {
@@ -78,6 +78,10 @@ void TwoColoredTheme::selected(Mat &bg, const Scalar &color)
 TwoColoredTheme::TwoColoredTheme(const Scalar &fgColorVal, const Scalar &bgColorVal)
     : fgColor(fgColorVal),
       bgColor(bgColorVal)
+{
+}
+
+TwoColoredTheme::~TwoColoredTheme()
 {
 }
 

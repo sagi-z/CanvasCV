@@ -23,6 +23,7 @@ public:
 
 protected:
     TwoColoredTheme(const cv::Scalar &fgColorVal, const cv::Scalar &bgColorVal);
+    virtual ~TwoColoredTheme();
 
     const cv::Scalar fgColor;
     const cv::Scalar bgColor;

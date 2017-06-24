@@ -52,13 +52,13 @@ template <class T>
 T *ShapeFactoryT<T>::newShape(const cv::Point &pos)
 {
    T *shape = new T(pos);
-   ThemeRepository::applyCurrentTheme(shape);
+   ThemeRepository::instance()->applyCurrentTheme(shape);
    return shape;
 }
 
 }
 
-#define REGISTER_SHAPE(X) bool regShape##X = canvascv::ShapeFactoryT<X>::addType(#X)
+#define REGISTER_SHAPE(X) static bool regShape##X = canvascv::ShapeFactoryT<X>::addType(#X)
 
 
 #endif // SHAPEFACTORY_H

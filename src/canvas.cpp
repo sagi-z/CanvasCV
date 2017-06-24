@@ -503,9 +503,9 @@ int Canvas::waitKeyEx(int delay)
     return key;
 }
 
-void Canvas::applyTheme()
+void Canvas::applyTheme(bool applyToCanvasText)
 {
-    Theme *currentTheme = ThemeRepository::getCurrentTheme();
+    Theme *currentTheme = ThemeRepository::instance()->getCurrentTheme();
     for (auto &shape : shapes)
     {
         currentTheme->applyStyle(shape.get());
@@ -513,7 +513,11 @@ void Canvas::applyTheme()
 
     for (auto &widget : widgets)
     {
-        currentTheme->applyStyle(widget.get());
+        if (applyToCanvasText || (widget.get() != screenText.get() &&
+                                  widget.get() != statusMsg.get()))
+        {
+            currentTheme->applyStyle(widget.get());
+        }
     }
 }
 
