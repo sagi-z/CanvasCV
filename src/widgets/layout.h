@@ -22,23 +22,20 @@ protected:
     /**
      * @brief rmvWidget
      * @param widget will be removed from this Layout
-     * @return true if widget was a part of this Layout and false otherwise
+     * @return filled shared_ptr to removed widget or empty if not found
      * @note
      * Widgets must be in layouts to be displayed correctly.
      */
-    virtual bool rmvWidget(const std::shared_ptr<Widget> &widget) = 0;
+    virtual std::shared_ptr<Widget> rmvWidget(const std::shared_ptr<Widget> &widget) = 0;
 
     friend class WidgetFactory;
+    template <class T> friend class WidgetFactoryT;
     friend class Widget;
 
-    virtual bool rmvWidget(Widget* widget) = 0;
+    virtual std::shared_ptr<Widget> rmvWidget(Widget* widget) = 0;
     virtual const cv::Rect getBoundaries() const = 0;
     virtual bool addDirtyWidget(Widget *widget) = 0;
     virtual void rmvDirtyWidget(Widget *widget) = 0;
-
-    // takes the shared_ptr added in the widget CTOR and replace it
-    // with the fully constructed one (doing nothing else)
-    virtual bool replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget) = 0;
 
     virtual void updateDirtyWidgets() = 0;
 };

@@ -55,32 +55,6 @@ Widget::Widget(Layout &layoutVal, const Point &pos)
     outlineColor[3] = 255; // FG is always opaque
     selectColor[3] = 255; // select is opaque
     fillColor[3] = 128; // BG is semi transparent by default
-    shared_ptr<Widget> toBeReplacedOnFactoryCall(this, [](Widget*){});
-    layoutVal.addWidget(toBeReplacedOnFactoryCall);
-}
-
-Widget::Widget(const Widget &other)
-    : id(genId()),
-      location(other.location),
-      outlineColor(other.outlineColor),
-      fillColor(other.fillColor),
-      selectColor(other.selectColor),
-      relief(other.relief),
-      visible(other.visible),
-      thickness(other.thickness),
-      lineType(other.lineType),
-      forcedWidth(other.forcedWidth),
-      forcedHeight(other.forcedHeight),
-      flowAnchor(other.layoutAnchor),
-      stretchX(other.stretchX),
-      stretchY(other.stretchY),
-      layout(nullptr),
-      state(LEAVE),
-      isDirty(other.isDirty),
-      delayedUpdate(true)
-{
-    shared_ptr<Widget> toBeReplacedOnFactoryCall(this, [](Widget*){});
-    other.layout->addWidget(toBeReplacedOnFactoryCall);
 }
 
 Widget::~Widget()
@@ -364,13 +338,10 @@ void Widget::mergeMats(Mat &roiSrc, Mat &roiDst)
                 for (int c = 0; c < roiDst.cols; ++c)
                 {
                     alpha = pSrcRow[c][3] / 255.;
-//                    alphaOrig = pDstRow[c][3] / 255.;
-//                    beta = alphaOrig * (1. - alpha);
                     beta = 1. - alpha;
                     pDstRow[c][0] = pSrcRow[c][0]*alpha + pDstRow[c][0]*beta;
                     pDstRow[c][1] = pSrcRow[c][1]*alpha + pDstRow[c][1]*beta;
                     pDstRow[c][2] = pSrcRow[c][2]*alpha + pDstRow[c][2]*beta;
-//                    pDstRow[c][3] = pSrcRow[c][3];
                 }
             }
         }
@@ -408,6 +379,9 @@ void Widget::paintRelief()
         break;
     case SUNKEN:
         ThemeRepository::getCurrentTheme()->sunken(bg, fillColor);
+        break;
+    case SELECTED:
+        ThemeRepository::getCurrentTheme()->selected(bg, fillColor);
         break;
     }
 }
@@ -543,13 +517,15 @@ int Widget::genId()
     return ++idGenerator;
 }
 
-void Widget::rmvFromLayout()
+shared_ptr<Widget> Widget::rmvFromLayout()
 {
-   if (layout)
-   {
-       layout->rmvWidget(this);
-       layout = 0;
-   }
+    shared_ptr<Widget> result;
+    if (layout)
+    {
+        result = layout->rmvWidget(this);
+        layout = nullptr;
+    }
+    return result;
 }
 
 bool Widget::getIsDirty() const
@@ -578,7 +554,7 @@ bool Widget::setDirty()
         if (! isDirty)
         {
             isDirty = true;
-            if (! layout->addDirtyWidget(this))
+            if (layout && ! layout->addDirtyWidget(this))
             {
                 isDirty = false;
                 recalc();

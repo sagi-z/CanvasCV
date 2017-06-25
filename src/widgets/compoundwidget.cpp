@@ -72,30 +72,14 @@ void CompoundWidget::update()
     Widget::update();
 }
 
-bool CompoundWidget::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
-{
-    auto i = find_if(widgets.begin(),
-                     widgets.end(),
-                     [widget](const shared_ptr<Widget> &item)->bool
-    {
-        return item.get() == widget.get();
-    });
-    if (i != widgets.end())
-    {
-        i->reset();
-        *i = widget;
-        return true;
-    }
-    return false;
-}
-
 bool CompoundWidget::setDirtyLayout()
 {
     return setDirty();
 }
 
-bool CompoundWidget::rmvWidget(Widget *widget)
+shared_ptr<Widget> CompoundWidget::rmvWidget(Widget *widget)
 {
+    shared_ptr<Widget> result;
     auto i = find_if(widgets.begin(),
                      widgets.end(),
                      [widget](const shared_ptr<Widget> &item)->bool
@@ -104,6 +88,7 @@ bool CompoundWidget::rmvWidget(Widget *widget)
     });
     if (i != widgets.end())
     {
+        result = *i;
         widgets.erase(i);
         rmvDirtyWidget(widget);
         if (widget == active.get())
@@ -111,12 +96,11 @@ bool CompoundWidget::rmvWidget(Widget *widget)
             active.reset();
         }
         setDirty();
-        return true;
     }
-    return false;
+    return result;
 }
 
-bool CompoundWidget::rmvWidget(const std::shared_ptr<Widget> &widget)
+shared_ptr<Widget> CompoundWidget::rmvWidget(const std::shared_ptr<Widget> &widget)
 {
     return rmvWidget(widget.get());
 }
@@ -231,6 +215,8 @@ void CompoundWidget::recalc()
         rect.width = xMax - xMin;
         rect.height = yMax - yMin;
     }
+    if (forcedWidth) rect.width = forcedWidth;
+    if (forcedHeight) rect.height = forcedHeight;
 }
 
 CompoundWidget::CompoundWidget(Layout &layoutVal, const Point &pos)

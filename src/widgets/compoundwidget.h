@@ -51,7 +51,7 @@ protected:
     virtual void recalc();
 
     virtual void addWidget(const std::shared_ptr<Widget> &widget);
-    virtual bool rmvWidget(const std::shared_ptr<Widget> &widget);
+    virtual std::shared_ptr<Widget> rmvWidget(const std::shared_ptr<Widget> &widget);
 
     virtual const cv::Rect getBoundaries() const;
 
@@ -65,11 +65,9 @@ protected:
     virtual void reloadPointers(std::list<Widget*>::const_iterator &)
     {}
 
-    virtual bool rmvWidget(Widget* widget);
+    virtual std::shared_ptr<Widget> rmvWidget(Widget* widget);
 
     virtual void update();
-
-    virtual bool replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget);
 
     /* TODO - write/read widgets to file for a designer app
     virtual void writeInternals(cv::FileStorage &fs) const;

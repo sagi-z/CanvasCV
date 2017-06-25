@@ -211,7 +211,7 @@ public:
     cv::Size getSize();
 
     virtual void addWidget(const std::shared_ptr<Widget> &widget);
-    virtual bool rmvWidget(const std::shared_ptr<Widget> &widget);
+    virtual std::shared_ptr<Widget> rmvWidget(const std::shared_ptr<Widget> &widget);
 
     /// is redrawOn() on/off?
     bool getOn() const;
@@ -246,11 +246,10 @@ public:
 protected:
     virtual void recalc() {}
 
-    virtual bool rmvWidget(Widget *widget);
+    virtual std::shared_ptr<Widget> rmvWidget(Widget *widget);
 
 
     virtual const cv::Rect getBoundaries() const;
-    virtual bool replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget);
 
 private:
 

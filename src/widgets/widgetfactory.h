@@ -41,7 +41,6 @@ protected:
 private:
     template <class T> friend class WidgetFactoryT;
 
-    static bool postConstuct(Layout &layout, const std::shared_ptr<Widget> &widget);
     typedef std::map<std::string,Allocator> AllocatorsMap;
     static AllocatorsMap *allocators;
 };
@@ -90,10 +89,10 @@ bool WidgetFactoryT<T>::addType(std::string name)
 template <class T>
 std::shared_ptr<T> WidgetFactoryT<T>::newWidget(Layout &layoutVal, const cv::Point &pos)
 {
-   std::shared_ptr<T> widget(new T(layoutVal, pos));
-   WidgetFactory::postConstuct(layoutVal, widget);
-   ThemeRepository::applyCurrentTheme(widget.get());
-   return widget;
+    std::shared_ptr<T> widget(new T(layoutVal, pos));
+    layoutVal.addWidget(widget);
+    ThemeRepository::applyCurrentTheme(widget.get());
+    return widget;
 }
 
 }

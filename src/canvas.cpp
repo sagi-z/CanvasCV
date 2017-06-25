@@ -521,23 +521,6 @@ void Canvas::applyTheme(bool applyToCanvasText)
     }
 }
 
-bool Canvas::replaceTmpSharedPtr(const std::shared_ptr<Widget> &widget)
-{
-    auto i = find_if(widgets.begin(),
-                     widgets.end(),
-                     [widget](const shared_ptr<Widget> &item)->bool
-    {
-        return item.get() == widget.get();
-    });
-    if (i != widgets.end())
-    {
-        i->reset();
-        *i = widget;
-        return true;
-    }
-    return false;
-}
-
 const Rect Canvas::getBoundaries() const
 {
     return boundaries;
@@ -604,8 +587,9 @@ void read(const FileNode& node, Canvas& x, const Canvas&)
     }
 }
 
-bool Canvas::rmvWidget(Widget *widget)
+shared_ptr<Widget> Canvas::rmvWidget(Widget *widget)
 {
+    shared_ptr<Widget> result;
     auto i = find_if(widgets.begin(),
                      widgets.end(),
                      [widget](const shared_ptr<Widget> &item)->bool
@@ -614,15 +598,15 @@ bool Canvas::rmvWidget(Widget *widget)
     });
     if (i != widgets.end())
     {
+        result = *i;
         widgets.erase(i);
         rmvDirtyWidget(widget);
         if (widget == activeWidget.get())
         {
             activeWidget.reset();
         }
-        return true;
     }
-    return false;
+    return result;
 }
 
 void Canvas::addWidget(const shared_ptr<Widget> &widget)
@@ -632,14 +616,14 @@ void Canvas::addWidget(const shared_ptr<Widget> &widget)
     widgets.push_back(widget);
 }
 
-bool Canvas::rmvWidget(const shared_ptr<Widget> &widget)
+shared_ptr<Widget> Canvas::rmvWidget(const shared_ptr<Widget> &widget)
 {
     return rmvWidget(widget.get());
 }
 
 bool Canvas::setDirtyLayout()
 {
-    return ! isDuringUpdate();
+    return true; // we'll always try to updateDirtyWidgets
 }
 
 }

@@ -15,7 +15,8 @@ LayoutBase::~LayoutBase()
 
 bool LayoutBase::addDirtyWidget(Widget *widget)
 {
-    if (isDuringUpdate()) return false;
+    if (isDuringUpdate())
+        return false;
 
     if (setDirtyLayout())
     {

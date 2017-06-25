@@ -13,7 +13,7 @@ shared_ptr<Widget> WidgetFactory::newWidget(string type, Layout &layoutVal, cons
     AllocatorsMap::const_iterator i = allocators->find(type);
     assert (i != allocators->end());
     shared_ptr<Widget> widget(i->second(layoutVal, pos));
-    postConstuct(layoutVal, widget);
+    layoutVal.addWidget(widget);
     ThemeRepository::applyCurrentTheme(widget.get());
     return widget;
 }
@@ -25,13 +25,6 @@ void WidgetFactory::addWidget(string name, WidgetFactory::Allocator a)
         allocators = new AllocatorsMap;
     }
     (*allocators)[name] = a;
-}
-
-bool WidgetFactory::postConstuct(Layout &layout, const std::shared_ptr<Widget> &widget)
-{
-     bool mustBeTrue = layout.replaceTmpSharedPtr(widget);
-     assert(mustBeTrue);
-     return mustBeTrue;
 }
 
 }

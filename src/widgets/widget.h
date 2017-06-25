@@ -40,9 +40,6 @@ public:
     /// constructor
     Widget(Layout &layoutVal, const cv::Point &pos = cv::Point(0,0));
 
-    /// copy constructor
-    Widget(const Widget &other);
-
     /// virtual destructor
     virtual ~Widget();
 
@@ -201,14 +198,15 @@ public:
     virtual void setSelectColor(const cv::Scalar &value);
 
     /// get rid of the widget
-    void rmvFromLayout();
+    std::shared_ptr<Widget> rmvFromLayout();
 
     /// Control the widget BG relieft style
     enum Relief
     {
         FLAT,
         RAISED,
-        SUNKEN
+        SUNKEN,
+        SELECTED
     };
 
     /// get if the widget should appear as selected when the mouse is over it
