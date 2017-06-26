@@ -66,14 +66,21 @@ public:
     /// returns the number of widgets in the layout
     size_t size() const;
 
+    /// get if the layout will wrap widgets past forcedWidth / forcedHeight
+    bool getWrap() const;
+
+    /// set if the layout will wrap widgets past forcedWidth / forcedHeight
+    void setWrap(bool value);
+
 protected:
 
-    AutoLayout(Layout &layoutVal, const cv::Point& pos);
+    AutoLayout(const cv::Point& pos);
 
-    virtual bool isDuringUpdate() const;
-    virtual void recalc();
+    void recalcAndAllocate();
+    virtual const cv::Rect getBoundaries() const;
 
     int padding;
+    bool wrap;
 };
 
 // simplest case is the special case

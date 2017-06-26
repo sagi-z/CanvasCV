@@ -19,8 +19,8 @@ const char *RadioButtons::type = "RadioButtons";
  *      ...
  */
 
-RadioButtons::RadioButtons(Layout &layoutVal, const Point &pos)
-    :CompoundWidget(layoutVal, pos),
+RadioButtons::RadioButtons(const Point &pos)
+    :CompoundWidget(pos),
       selection(-1)
 {
     frame = VFrame::create(*this, pos);
@@ -52,7 +52,7 @@ void RadioButtons::addRadioButton(const string &txt, Widget::CBUserSelection cbU
     setDirty();
 }
 
-void RadioButtons::recalc()
+void RadioButtons::recalcCompound()
 {
     radioSelected.release();
     radioNotSelected.release();
@@ -66,8 +66,9 @@ void RadioButtons::recalc()
         {
             drawings[i]->setMat(getRadioNotSelected());
         }
+        drawings[i]->update();
     }
-    CompoundWidget::recalc();
+    recalcRect();
 }
 
 cv::Mat RadioButtons::getRadioSelected()

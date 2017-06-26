@@ -63,13 +63,10 @@ void CompoundWidget::setVisible(bool value)
     }
 }
 
-void CompoundWidget::update()
+void CompoundWidget::recalc()
 {
-    for (auto &widget : widgets)
-    {
-        widget->update();
-    }
-    Widget::update();
+    updateDirtyWidgets();
+    recalcCompound();
 }
 
 bool CompoundWidget::setDirtyLayout()
@@ -191,7 +188,7 @@ const string &CompoundWidget::getStatusMsg() const
    }
 }
 
-void CompoundWidget::recalc()
+void CompoundWidget::recalcRect()
 {
     int xMin = INT_MAX;
     int yMin = INT_MAX;
@@ -219,9 +216,10 @@ void CompoundWidget::recalc()
     if (forcedHeight) rect.height = forcedHeight;
 }
 
-CompoundWidget::CompoundWidget(Layout &layoutVal, const Point &pos)
-    :Widget(layoutVal, pos),
-      fillBG(false)
+CompoundWidget::CompoundWidget(const Point &pos)
+    :Widget(pos),
+      fillBG(false),
+      recalcCalled(0)
 {
     rect.x = location.x;
     rect.y = location.y;

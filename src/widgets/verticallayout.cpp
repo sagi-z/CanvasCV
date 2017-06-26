@@ -20,8 +20,8 @@ void VerticalLayout::setSpacing(int value)
     setDirty();
 }
 
-VerticalLayout::VerticalLayout(Layout &layoutVal, const Point &pos)
-    : AutoLayout(layoutVal, pos),
+VerticalLayout::VerticalLayout(const Point &pos)
+    : AutoLayout(pos),
       spacing(5)
 {
 }
@@ -47,9 +47,14 @@ void VerticalLayout::readInternals(const FileNode &node)
 }
 */
 
-void VerticalLayout::recalc()
+void VerticalLayout::recalcCompound()
 {
-    updateDirtyWidgets();
+    if (wrap)
+    {
+        Rect boundaries = getLayoutBoundaries();
+        forcedHeight = boundaries.height - location.y;
+    }
+    int maxWidthWrap = 0;
     int maxWidth = 0;
     int maxHeight = 0;
     for (auto &widget : widgets)
@@ -63,32 +68,49 @@ void VerticalLayout::recalc()
     if (flowAnchor & BOTTOM) pos.y -= padding;
     else pos.y += padding;
 
+    int posYStart = pos.y;
+    int currentPosX = location.x;
     for (auto &widget : widgets)
     {
+        if (wrap && forcedHeight)
+        {
+            if (abs(pos.y - posYStart) + padding + widget->getRect().height > forcedHeight)
+            {
+                // update X
+                if (flowAnchor & RIGHT) currentPosX -= maxWidthWrap - spacing;
+                else currentPosX += maxWidthWrap + spacing;
+
+                // reset Y
+                pos.y = posYStart;
+
+                maxWidthWrap = 0;
+            }
+        }
+
         Anchor widgetLayoutAnchor = widget->getLayoutAnchor();
         if (widgetLayoutAnchor & RIGHT)
         {
-            // Align to the right - location.x is rightmost position
-            pos.x = location.x + padding + maxWidth - widget->getRect().width;
+            // Align to the right - currentPosX is rightmost position
+            pos.x = currentPosX + padding + maxWidth - widget->getRect().width;
             if (flowAnchor & RIGHT)
             {
-                pos.x = location.x - padding;
+                pos.x = currentPosX - padding;
             }
         }
         else if (widgetLayoutAnchor & CENTER)
         {
-            pos.x = location.x + padding + maxWidth / 2. - widget->getRect().width / 2.;
+            pos.x = currentPosX + padding + maxWidth / 2. - widget->getRect().width / 2.;
             if (flowAnchor & RIGHT)
             {
-                pos.x = location.x - padding - maxWidth / 2. + widget->getRect().width / 2.;
+                pos.x = currentPosX - padding - maxWidth / 2. + widget->getRect().width / 2.;
             }
         }
         else
         {   // default is LEFT
-            pos.x = location.x + padding;
+            pos.x = currentPosX + padding;
             if (flowAnchor & RIGHT)
             {
-                pos.x = location.x - padding - maxWidth + widget->getRect().width;
+                pos.x = currentPosX - padding - maxWidth + widget->getRect().width;
             }
         }
 
@@ -104,6 +126,7 @@ void VerticalLayout::recalc()
         widget->setLocation(pos);
         if (widget->getStretchX()) widget->stretchWidth(maxWidth);
         if (widget->getStretchY()) widget->stretchHeight(maxHeight);
+        widget->update();
 
         // prepare for the next iteration
         if (flowAnchor & BOTTOM)
@@ -115,9 +138,10 @@ void VerticalLayout::recalc()
         {
             pos.y += widget->getRect().height + spacing;
         }
+        maxWidthWrap = max(maxWidthWrap, widget->getRect().width);
     }
 
-    AutoLayout::recalc();
+    AutoLayout::recalcAndAllocate();
 }
 
 }

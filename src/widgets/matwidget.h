@@ -46,7 +46,7 @@ protected:
     virtual const cv::Rect &getRect();
     virtual const cv::Rect &getMinimalRect();
 
-    MatWidget(Layout &layoutVal, const cv::Point &pos);
+    MatWidget(const cv::Point &pos);
 
     virtual void recalc();
 

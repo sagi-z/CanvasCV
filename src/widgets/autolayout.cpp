@@ -6,31 +6,64 @@ using namespace std;
 namespace canvascv
 {
 
-AutoLayout::AutoLayout(Layout &layoutVal, const Point &pos)
-    : CompoundWidget(layoutVal, pos),
-      padding(2)
+AutoLayout::AutoLayout(const Point &pos)
+    : CompoundWidget(pos),
+      padding(2),
+      wrap(false)
 {
     fillBG = false;
 }
 
-bool AutoLayout::isDuringUpdate() const
+void AutoLayout::recalcAndAllocate()
 {
-    return delayedUpdate == false;
-}
-
-void AutoLayout::recalc()
-{
-    CompoundWidget::recalc();
+    recalcRect();
     if (fillBG)
     {
         if (padding)
         {
+            // restore the padding that recalcRect() removed
             rect.x -= padding;
             rect.y -= padding;
             rect.width += padding*2;
             rect.height += padding*2;
         }
         allocateBG(rect.size());
+    }
+}
+
+const Rect AutoLayout::getBoundaries() const
+{
+    if (padding)
+    {
+        Rect boundaries = CompoundWidget::getBoundaries();
+        boundaries.x += padding;
+        boundaries.y += padding;
+        boundaries.width -= 2 * padding;
+        boundaries.height -= 2 * padding;
+        return boundaries;
+    }
+    else
+    {
+        return CompoundWidget::getBoundaries();
+    }
+}
+
+bool AutoLayout::getWrap() const
+{
+    return wrap;
+}
+
+void AutoLayout::setWrap(bool value)
+{
+    if (wrap != value)
+    {
+        wrap = value;
+        if (wrap)
+        {
+            setStretchX(false);
+            setStretchY(false);
+        }
+        setDirty();
     }
 }
 

@@ -49,7 +49,7 @@ if(BUILD_EXAMPLES)
         GET_FILENAME_COMPONENT( target_name ${file} NAME_WE )
         MESSAGE ( "Example '${target_name}' will be created")
         add_executable(${target_name} ${file})
-        target_link_libraries (${target_name} canvascv ${OpenCV_LIBS})
+        target_link_libraries (${target_name} canvascv -lstdc++fs ${OpenCV_LIBS})
     ENDFOREACH()
 endif()
 

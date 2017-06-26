@@ -12,9 +12,9 @@ shared_ptr<Widget> WidgetFactory::newWidget(string type, Layout &layoutVal, cons
 {
     AllocatorsMap::const_iterator i = allocators->find(type);
     assert (i != allocators->end());
-    shared_ptr<Widget> widget(i->second(layoutVal, pos));
-    layoutVal.addWidget(widget);
+    shared_ptr<Widget> widget(i->second(pos));
     ThemeRepository::applyCurrentTheme(widget.get());
+    layoutVal.addWidget(widget);
     return widget;
 }
 

@@ -16,14 +16,17 @@ LayoutBase::~LayoutBase()
 bool LayoutBase::addDirtyWidget(Widget *widget)
 {
     if (isDuringUpdate())
-        return false;
-
-    if (setDirtyLayout())
     {
-        dirtyWidgets.push_back(widget);
-        return true;
+        return false;
     }
-    return false;
+
+    if (! setDirtyLayout())
+    {
+        return false;
+    }
+
+    dirtyWidgets.push_back(widget);
+    return true;
 }
 
 void LayoutBase::rmvDirtyWidget(Widget *widget)

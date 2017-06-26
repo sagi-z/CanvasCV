@@ -19,8 +19,8 @@ const char *CheckBoxes::type = "CheckBoxes";
  *      ...
  */
 
-CheckBoxes::CheckBoxes(Layout &layoutVal, const Point &pos)
-    :CompoundWidget(layoutVal, pos)
+CheckBoxes::CheckBoxes(const Point &pos)
+    :CompoundWidget(pos)
 {
     frame = VFrame::create(*this, pos);
     frame->setFrameRelief(RAISED);
@@ -53,7 +53,7 @@ void CheckBoxes::addCheckBox(const string &txt, Widget::CBUserSelection cbUserSe
     setDirty();
 }
 
-void CheckBoxes::recalc()
+void CheckBoxes::recalcCompound()
 {
     checkBoxSelected.release();
     checkBoxNotSelected.release();
@@ -67,8 +67,9 @@ void CheckBoxes::recalc()
         {
             drawings[i]->setMat(getCheckBoxNotSelected());
         }
+        drawings[i]->update();
     }
-    CompoundWidget::recalc();
+    recalcRect();
 }
 
 cv::Mat CheckBoxes::getCheckBoxSelected()

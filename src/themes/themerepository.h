@@ -66,4 +66,8 @@ private:
 
 #define REGISTER_THEME(X) static bool regTheme##X = canvascv::ThemeRepository::addTheme(#X, new X())
 
+/** @example example_add_theme.cpp
+ * This is an example of how to add a theme.
+ */
+
 #endif // THEMEREPOSITORY_H

@@ -40,7 +40,7 @@ protected:
     friend class WidgetFactory;
     template <class T> friend class WidgetFactoryT;
 
-    HFrame(Layout &layoutVal, const cv::Point &pos);
+    HFrame(const cv::Point &pos);
 };
 
 }

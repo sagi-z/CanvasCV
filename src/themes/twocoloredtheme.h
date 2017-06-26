@@ -31,4 +31,8 @@ protected:
 
 }
 
+/** @example example_add_theme.cpp
+ * This is an example of how to add a theme.
+ */
+
 #endif // TWOCOLOREDTHEME_H

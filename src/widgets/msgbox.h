@@ -69,9 +69,11 @@ protected:
     friend class WidgetFactory;
     template <class T> friend class WidgetFactoryT;
 
-    MsgBox(Layout &layoutVal, const cv::Point &pos);
+    MsgBox(const cv::Point &pos);
 
     void setMsg(const std::string &msg);
+
+    virtual void recalcCompound();
 
 private:
     int userSelection;

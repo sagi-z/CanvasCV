@@ -38,7 +38,7 @@ public:
     typedef std::function<void(Widget*, int)> CBUserSelection;
 
     /// constructor
-    Widget(Layout &layoutVal, const cv::Point &pos = cv::Point(0,0));
+    Widget(const cv::Point &pos = cv::Point(0,0));
 
     /// virtual destructor
     virtual ~Widget();
@@ -215,6 +215,24 @@ public:
     /// set if the widget should appear as selected when the mouse is over it
     void setIsSelectable(bool value);
 
+    /// get the forced width for this widget
+    int getForcedWidth() const;
+
+    /// set the forced width for this widget
+    void setForcedWidth(int value);
+
+    /// get the forced height for this widget
+    int getForcedHeight() const;
+
+    /// set the forced height for this widget
+    void setForcedHeight(int value);
+
+    /// removes 'dirty' state and invokes the derived 'recalc/recalcCompound'
+    void update();
+
+    /// returns true if the widget has no layout and false if it does
+    bool isRemoved() const;
+
 protected:
 
     void mergeMats(cv::Mat &roiSrc, cv::Mat &roiDst);
@@ -224,7 +242,7 @@ protected:
     Relief getRelief() const;
     void setRelief(const Relief &value);
 
-    const cv::Rect getLayoutBoundaries() const;
+    cv::Rect getLayoutBoundaries() const;
 
     /// widgets like buttons change bg on mouse events
     void setStateChangesBG();
@@ -279,9 +297,6 @@ protected:
     bool setDirty();
 
     bool getIsDirty() const;
-
-    /// Removes 'dirty' state and invokes the user defined 'recalc'
-    virtual void update();
 
     /**
      * @brief isAtPos
@@ -371,7 +386,7 @@ private:
     cv::Mat fg;
     State state;
     bool isDirty;
-    bool delayedUpdate;
+    int updateCalls;
     std::list<CBWidgetState> changeNotifs;
 };
 

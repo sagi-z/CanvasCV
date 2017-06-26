@@ -85,12 +85,12 @@ protected:
     friend class WidgetFactory;
     template <class T> friend class WidgetFactoryT;
 
-    CheckBoxes(Layout &layoutVal, const cv::Point &pos);
+    CheckBoxes(const cv::Point &pos);
 
     void addCheckBox(const std::string &txt,
                      Widget::CBUserSelection cbUserSelection);
 
-    virtual void recalc();
+    virtual void recalcCompound();
 
 private:
 

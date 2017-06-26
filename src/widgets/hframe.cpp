@@ -9,8 +9,8 @@ namespace canvascv
 
 const char * HFrame::type = "HFrame";
 
-HFrame::HFrame(Layout &layoutVal, const Point &pos)
-    : HorizontalLayout(layoutVal, pos)
+HFrame::HFrame(const Point &pos)
+    : HorizontalLayout(pos)
 {
     fillBG = true;
 }

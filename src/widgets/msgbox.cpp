@@ -20,8 +20,8 @@ const char *MsgBox::type = "MsgBox";
  *          ...
  */
 
-MsgBox::MsgBox(Layout &layoutVal, const Point &pos)
-    :CompoundWidget(layoutVal, pos),
+MsgBox::MsgBox(const Point &pos)
+    :CompoundWidget(pos),
       userSelection(-1)
 {
     frame = VFrame::create(*this, pos);
@@ -35,7 +35,11 @@ MsgBox::MsgBox(Layout &layoutVal, const Point &pos)
 
 void MsgBox::setMsg(const string &msg)
 {
-   frame->at<Text>(0)->setMsg(msg);
+    frame->at<Text>(0)->setMsg(msg);
+}
+
+void MsgBox::recalcCompound()
+{
 }
 
 const char *MsgBox::getType() const
@@ -63,7 +67,7 @@ shared_ptr<MsgBox> MsgBox::create(Canvas &canvas, const string &msg, vector<stri
         });
     }
 
-    // this part could have been done by implementing 'recalc' - START
+    // this part could have been done by implementing 'recalcCompound' - START
     msgBox->update();
     if (pos.x < 0 || pos.y < 0)
     {
@@ -71,7 +75,7 @@ shared_ptr<MsgBox> MsgBox::create(Canvas &canvas, const string &msg, vector<stri
         msgBox->setLocation(Point(screenSize.width / 2. - msgBox->getRect().width / 2.,
                                   screenSize.height / 2. - msgBox->getRect().height / 2.));
     }
-    // this part could have been done by implementing 'recalc' - END
+    // this part could have been done by implementing 'recalcCompound' - END
 
 
     return msgBox;

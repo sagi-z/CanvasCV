@@ -16,13 +16,17 @@ const char *SelectionBox::type = "SelectionBox";
  *          ...
  */
 
-SelectionBox::SelectionBox(Layout &layoutVal, const Point &pos)
-    :CompoundWidget(layoutVal, pos)
+SelectionBox::SelectionBox(const Point &pos)
+    :CompoundWidget(pos)
 {
     frame = VFrame::create(*this, pos);
     frame->setFrameRelief(RAISED);
     frame->setPadding(2);
     frame->setSpacing(3);
+}
+
+void SelectionBox::recalcCompound()
+{
 }
 
 const char *SelectionBox::getType() const

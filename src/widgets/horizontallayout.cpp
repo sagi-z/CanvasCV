@@ -20,8 +20,8 @@ void HorizontalLayout::setSpacing(int value)
     setDirty();
 }
 
-HorizontalLayout::HorizontalLayout(Layout &layoutVal, const Point &pos)
-    : AutoLayout(layoutVal, pos),
+HorizontalLayout::HorizontalLayout(const Point &pos)
+    : AutoLayout(pos),
       spacing(5)
 {
 }
@@ -47,9 +47,14 @@ void HorizontalLayout::readInternals(const FileNode &node)
 }
 */
 
-void HorizontalLayout::recalc()
+void HorizontalLayout::recalcCompound()
 {
-    updateDirtyWidgets();
+    if (wrap)
+    {
+        Rect boundaries = getLayoutBoundaries();
+        forcedWidth = boundaries.width - location.x;
+    }
+    int maxHeightWrap = 0;
     int maxWidth = 0;
     int maxHeight = 0;
     for (auto &widget : widgets)
@@ -63,32 +68,49 @@ void HorizontalLayout::recalc()
     if (flowAnchor & RIGHT) pos.x -= padding;
     else pos.x += padding;
 
+    int posXStart = pos.x;
+    int currentPosY = location.y;
     for (auto &widget : widgets)
     {
+        if (wrap && forcedWidth)
+        {
+            if (abs(pos.x - posXStart) + padding + widget->getRect().width > forcedWidth)
+            {
+                // update Y
+                if (flowAnchor & BOTTOM) currentPosY -= maxHeightWrap - spacing ;
+                else currentPosY += maxHeightWrap + spacing;
+
+                // reset X
+                pos.x = posXStart;
+
+                maxHeightWrap = 0;
+            }
+        }
+
         Anchor widgetLayoutAnchor = widget->getLayoutAnchor();
         if (widgetLayoutAnchor & BOTTOM)
         {
-            // Align to the bottom - location.y is bottom-most position
-            pos.y = location.y + padding + maxHeight - widget->getRect().height;
+            // Align to the bottom - currentPosY is bottom-most position
+            pos.y = currentPosY + padding + maxHeight - widget->getRect().height;
             if (flowAnchor & BOTTOM)
             {
-                pos.y = location.y - padding;
+                pos.y = currentPosY - padding;
             }
         }
         else if (widgetLayoutAnchor & CENTER)
         {
-            pos.y = location.y + padding + maxHeight / 2. - widget->getRect().height / 2.;
+            pos.y = currentPosY + padding + maxHeight / 2. - widget->getRect().height / 2.;
             if (flowAnchor & BOTTOM)
             {
-                pos.y = location.y - padding - maxHeight / 2. + widget->getRect().height / 2.;
+                pos.y = currentPosY - padding - maxHeight / 2. + widget->getRect().height / 2.;
             }
         }
         else
         {   // default is TOP
-            pos.y = location.y + padding;
+            pos.y = currentPosY + padding;
             if (flowAnchor & BOTTOM)
             {
-                pos.y = location.y - padding - maxHeight + widget->getRect().height;
+                pos.y = currentPosY - padding - maxHeight + widget->getRect().height;
             }
         }
 
@@ -104,6 +126,7 @@ void HorizontalLayout::recalc()
         widget->setLocation(pos);
         if (widget->getStretchX()) widget->stretchWidth(maxWidth);
         if (widget->getStretchY()) widget->stretchHeight(maxHeight);
+        widget->update();
 
         // prepare for the next iteration
         if (flowAnchor & RIGHT)
@@ -115,9 +138,10 @@ void HorizontalLayout::recalc()
         {
             pos.x += widget->getRect().width + spacing;
         }
+        maxHeightWrap = max(maxHeightWrap, widget->getRect().height);
     }
 
-    AutoLayout::recalc();
+    AutoLayout::recalcAndAllocate();
 }
 
 }

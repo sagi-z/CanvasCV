@@ -66,7 +66,9 @@ protected:
     friend class WidgetFactory;
     template <class T> friend class WidgetFactoryT;
 
-    SelectionBox(Layout &layoutVal, const cv::Point &pos);
+    SelectionBox(const cv::Point &pos);
+
+    virtual void recalcCompound();
 
 private:
     std::shared_ptr<VFrame> frame;

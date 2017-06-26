@@ -10,8 +10,8 @@ namespace canvascv
 
 const char *MatWidget::type = "MatWidget";
 
-MatWidget::MatWidget(Layout &layoutVal, const Point &pos)
-    : Widget(layoutVal, pos)
+MatWidget::MatWidget(const Point &pos)
+    : Widget(pos)
 {
 }
 

@@ -13,7 +13,7 @@ const Scalar THM_BLACK(0,0,0,255);
 
 void TwoColoredTheme::allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar &color)
 {
-    if (size.width == 0 || size.height == 0)
+    if (size.width <= 0 || size.height <= 0)
     {
         dst.release();
     }

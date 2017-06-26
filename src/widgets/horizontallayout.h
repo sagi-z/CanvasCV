@@ -45,7 +45,7 @@ public:
      * @return a smart pointer copy of the object kept in the Layout
      */
     static std::shared_ptr<HorizontalLayout> create(Layout &layout,
-                                                  const cv::Point &pos = cv::Point(0,0));
+                                                    const cv::Point &pos = cv::Point(0,0));
 
     virtual const char *getType() const;
 
@@ -61,9 +61,9 @@ protected:
     friend class WidgetFactory;
     template <class T> friend class WidgetFactoryT;
 
-    HorizontalLayout(Layout &layoutVal, const cv::Point &pos);
+    HorizontalLayout(const cv::Point &pos);
 
-    virtual void recalc();
+    virtual void recalcCompound();
 
     /* TODO - write/read widgets to file for a designer app
     virtual void writeInternals(FileStorage &fs) const;

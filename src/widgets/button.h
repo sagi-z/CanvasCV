@@ -16,7 +16,8 @@ namespace canvascv
 class Button : public Text
 {
 public:
-    virtual const char *getType() const;
+    /// signature of a callback which gets the State
+    typedef std::function<void(Widget*)> CBPress;
 
     /**
      * @brief create a button widget
@@ -31,16 +32,23 @@ public:
                                           const cv::Point &pos,
                                           const std::string &buttonText,
                                           const std::string &statusMsg="",
+                                          CBPress cbVal = CBPress(),
                                           int maxWidthVal = 0);
 
     /// a convinient version to the above without the 'pos' argument
     static std::shared_ptr<Button> create(Layout &layout,
                                           const std::string &buttonText,
                                           const std::string &statusMsg="",
+                                          CBPress cbVal = CBPress(),
                                           int maxWidthVal = 0);
 
     /// The button will always have a FLAT relief
     void setFlatButton();
+
+    /// Call a user CB when pressed
+    void onPress(CBPress value);
+
+    virtual const char *getType() const;
 
     static const char *type;
 
@@ -48,7 +56,7 @@ protected:
 
     friend class WidgetFactory;
     template <class T> friend class WidgetFactoryT;
-    Button(Layout &layoutVal, const cv::Point &pos);
+    Button(const cv::Point &pos);
 
     /* TODO - write/read widgets to file for a designer app
     virtual void writeInternals(cv::FileStorage &fs) const
@@ -66,6 +74,8 @@ private:
     virtual void mouseReleased();
     virtual void mouseEnter();
     virtual void mouseLeave();
+
+    CBPress cb;
 };
 
 }

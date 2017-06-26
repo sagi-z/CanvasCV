@@ -10,11 +10,15 @@ namespace canvascv
 
 const char *Button::type = "Button";
 
-Button::Button(Layout &layoutVal, const Point &pos)
-    : Text(layoutVal, pos)
+Button::Button(const Point &pos)
+    : Text(pos)
 {
     setRelief(RAISED);
     setFlowAnchor(CENTER_TOP);
+    notifyOnChange([this](Widget*, State state)
+    {
+       if (state == PRESS && cb) cb(this);
+    });
 }
 
 const char *Button::getType() const
@@ -26,23 +30,30 @@ shared_ptr<Button> Button::create(Layout &layout,
                                   const Point &pos,
                                   const string &buttonText,
                                   const string &statusMsg,
+                                  CBPress cbVal,
                                   int maxWidthVal)
 {
     shared_ptr<Button> widget(WidgetFactoryT<Button>::newWidget(layout, pos));
     widget->setMsg(buttonText);
-    widget->setMaxWidth(maxWidthVal);
     widget->setStatusMsg(statusMsg);
+    widget->onPress(cbVal);
+    widget->setMaxWidth(maxWidthVal);
     return widget;
 }
 
-std::shared_ptr<Button> Button::create(Layout &layout, const string &buttonText, const string &statusMsg, int maxWidthVal)
+std::shared_ptr<Button> Button::create(Layout &layout, const string &buttonText, const string &statusMsg, CBPress cbVal, int maxWidthVal)
 {
-    return create(layout, Point(0, 0), buttonText, statusMsg, maxWidthVal);
+    return create(layout, Point(0, 0), buttonText, statusMsg, cbVal, maxWidthVal);
 }
 
 void Button::setFlatButton()
 {
-   setRelief(FLAT);
+    setRelief(FLAT);
+}
+
+void Button::onPress(Button::CBPress value)
+{
+    cb = value;
 }
 
 void Button::mousePressed()

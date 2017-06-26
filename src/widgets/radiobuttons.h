@@ -80,12 +80,12 @@ protected:
     friend class WidgetFactory;
     template <class T> friend class WidgetFactoryT;
 
-    RadioButtons(Layout &layoutVal, const cv::Point &pos);
+    RadioButtons(const cv::Point &pos);
 
     void addRadioButton(const std::string &txt,
                         Widget::CBUserSelection cbUserSelection);
 
-    virtual void recalc();
+    virtual void recalcCompound();
 
 private:
 

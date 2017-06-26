@@ -19,7 +19,7 @@ protected:
     virtual bool addDirtyWidget(Widget *widget);
     virtual void rmvDirtyWidget(Widget *widget);
     virtual void updateDirtyWidgets();
-    virtual bool isDuringUpdate() const;
+    bool isDuringUpdate() const;
 
 private:
     virtual bool setDirtyLayout() = 0;

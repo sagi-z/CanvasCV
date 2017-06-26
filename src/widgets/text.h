@@ -74,7 +74,7 @@ public:
     virtual const cv::Rect &getRect();
     virtual const cv::Rect &getMinimalRect();
 
-    Text(Layout &layoutVal, const cv::Point &pos);
+    Text(const cv::Point &pos);
 
     virtual void recalc();
 

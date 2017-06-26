@@ -65,9 +65,9 @@ protected:
     friend class WidgetFactory;
     template <class T> friend class WidgetFactoryT;
 
-    VerticalLayout(Layout &layoutVal, const cv::Point &pos);
+    VerticalLayout(const cv::Point &pos);
 
-    virtual void recalc();
+    virtual void recalcCompound();
 
     /* TODO - write/read widgets to file for a designer app
     virtual void writeInternals(FileStorage &fs) const;

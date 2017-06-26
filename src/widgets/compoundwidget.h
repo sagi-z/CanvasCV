@@ -44,11 +44,21 @@ public:
 
 protected:
     // force inheritance
-    CompoundWidget(Layout &layoutVal, const cv::Point &pos);
+    CompoundWidget(const cv::Point &pos);
     virtual ~CompoundWidget() {}
 
     /// delegate to internal Widget parts added by derived classes
-    virtual void recalc();
+    virtual void recalc() final;
+    void recalcRect();
+
+    /**
+     * @brief recalcCompound
+     * Your BG size recalculation/allocation and FG drawing is done here.
+     * It is done semi automatically. Is you invoke setters in this method
+     * on your internal widgets, then make sure to update them and/or their
+     * layout
+     */
+    virtual void recalcCompound() = 0;
 
     virtual void addWidget(const std::shared_ptr<Widget> &widget);
     virtual std::shared_ptr<Widget> rmvWidget(const std::shared_ptr<Widget> &widget);
@@ -67,8 +77,6 @@ protected:
 
     virtual std::shared_ptr<Widget> rmvWidget(Widget* widget);
 
-    virtual void update();
-
     /* TODO - write/read widgets to file for a designer app
     virtual void writeInternals(cv::FileStorage &fs) const;
     virtual void readInternals(const cv::FileNode &node);
@@ -85,6 +93,7 @@ private:
     virtual void layoutResized(const cv::Rect &boundaries);
 
     std::shared_ptr<Widget> active;
+    int recalcCalled;
 };
 
 }

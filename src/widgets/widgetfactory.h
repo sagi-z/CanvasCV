@@ -35,7 +35,7 @@ public:
     static std::shared_ptr<Widget> newWidget(std::string type, Layout &layoutVal, const cv::Point &pos);
 
 protected:
-    typedef std::function<Widget*(Layout &layoutVal, const cv::Point &)> Allocator;
+    typedef std::function<Widget*(const cv::Point &)> Allocator;
     static void addWidget(std::string name, Allocator a);
 
 private:
@@ -80,7 +80,7 @@ bool WidgetFactoryT<T>::addType(std::string name)
     static bool doneOnce;
     if (! doneOnce)
     {
-        addWidget(name, [](Layout &layoutVal, const cv::Point& pos)->Widget*{ return new T(layoutVal, pos);});
+        addWidget(name, [](const cv::Point& pos)->Widget*{return new T(pos);});
         doneOnce = true;
     }
     return true;
@@ -89,9 +89,9 @@ bool WidgetFactoryT<T>::addType(std::string name)
 template <class T>
 std::shared_ptr<T> WidgetFactoryT<T>::newWidget(Layout &layoutVal, const cv::Point &pos)
 {
-    std::shared_ptr<T> widget(new T(layoutVal, pos));
-    layoutVal.addWidget(widget);
+    std::shared_ptr<T> widget(new T(pos));
     ThemeRepository::applyCurrentTheme(widget.get());
+    layoutVal.addWidget(widget);
     return widget;
 }
 
@@ -99,5 +99,9 @@ std::shared_ptr<T> WidgetFactoryT<T>::newWidget(Layout &layoutVal, const cv::Poi
 
 #define REGISTER_WIDGET(X) static bool regWidget##X = canvascv::WidgetFactoryT<X>::addType(#X)
 
+
+/** @example example_add_widget.cpp
+ * This is an example of how to add a widget.
+ */
 
 #endif // WIDGETFACTORY_H

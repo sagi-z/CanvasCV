@@ -30,7 +30,7 @@ void read(const FileNode& node, Widget*& x, const Widget *default_value)
 }
 */
 
-Widget::Widget(Layout &layoutVal, const Point &pos)
+Widget::Widget(const Point &pos)
     : id(genId()),
       location(pos),
       outlineColor(Colors::Green),
@@ -50,7 +50,7 @@ Widget::Widget(Layout &layoutVal, const Point &pos)
       layout(nullptr),
       state(LEAVE),
       isDirty(false),
-      delayedUpdate(true)
+      updateCalls(0)
 {
     outlineColor[3] = 255; // FG is always opaque
     selectColor[3] = 255; // select is opaque
@@ -241,18 +241,38 @@ Widget::State Widget::getState() const
 
 void Widget::stretchWidth(int width)
 {
-    if (width != forcedWidth)
-    {
-        forcedWidth = width;
-        setDirty();
-    }
+    setForcedWidth(width);
 }
 
 void Widget::stretchHeight(int height)
 {
-    if (height != forcedHeight)
+    setForcedHeight(height);
+}
+
+int Widget::getForcedHeight() const
+{
+    return forcedHeight;
+}
+
+void Widget::setForcedHeight(int value)
+{
+    if (forcedHeight != value)
     {
-        forcedHeight = height;
+        forcedHeight = value;
+        setDirty();
+    }
+}
+
+int Widget::getForcedWidth() const
+{
+    return forcedWidth;
+}
+
+void Widget::setForcedWidth(int value)
+{
+    if (forcedWidth != value)
+    {
+        forcedWidth = value;
         setDirty();
     }
 }
@@ -281,9 +301,16 @@ void Widget::setRelief(const Relief &value)
     }
 }
 
-const Rect Widget::getLayoutBoundaries() const
+Rect Widget::getLayoutBoundaries() const
 {
-   return layout->getBoundaries();
+    if (layout)
+    {
+        return layout->getBoundaries();
+    }
+    else
+    {
+        return Rect();
+    }
 }
 
 Scalar Widget::getSelectColor() const
@@ -549,40 +576,29 @@ void Widget::translate(const Point &translation)
 
 bool Widget::setDirty()
 {
-    if (delayedUpdate)
+    if (! isDirty)
     {
-        if (! isDirty)
+        if (layout)
         {
-            isDirty = true;
-            if (layout && ! layout->addDirtyWidget(this))
+            if (layout->addDirtyWidget(this))
             {
-                isDirty = false;
-                recalc();
+                isDirty = true; // only if we're in a dirty layout
             }
         }
-        else
-        {
-            // already dirty - do nothing
-        }
     }
-    else
-    {
-        // We're already during an update.
-        // Returning false will cause out caller to recalc()
-        isDirty = false;
-    }
-    return isDirty;
+    return true;
 }
 
 void Widget::update()
 {
-   if (isDirty)
-   {
-       delayedUpdate = false;
-       isDirty = false;
-       recalc();
-       delayedUpdate = true;
-   }
+    isDirty = false;
+    recalc();
+    isDirty = false;
+}
+
+bool Widget::isRemoved() const
+{
+    return layout == nullptr;
 }
 
 void Widget::setLocation(const Point &value)

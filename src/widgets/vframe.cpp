@@ -9,8 +9,8 @@ namespace canvascv
 
 const char * VFrame::type = "VFrame";
 
-VFrame::VFrame(Layout &layoutVal, const Point &pos)
-    : VerticalLayout(layoutVal, pos)
+VFrame::VFrame(const Point &pos)
+    : VerticalLayout(pos)
 {
     fillBG = true;
 }

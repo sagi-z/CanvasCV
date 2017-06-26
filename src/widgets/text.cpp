@@ -10,8 +10,8 @@ namespace canvascv
 
 const char *Text::type = "Text";
 
-Text::Text(Layout &layoutVal, const Point &pos)
-    : Widget(layoutVal, pos),
+Text::Text(const Point &pos)
+    : Widget(pos),
       padding(2),
       doublePadding(padding*2),
       msg(),
