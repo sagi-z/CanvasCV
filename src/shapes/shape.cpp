@@ -237,6 +237,7 @@ void Shape::readInternals(const FileNode &node)
     node["visible"] >> visible;
     node["thickness"] >> thickness;
     node["lineType"] >> lineType;
+    node["ready"] >> ready;
     editing = false;
     if (id == 0)
     {
@@ -260,7 +261,8 @@ void Shape::writeInternals(FileStorage &fs) const
           "locked" << locked <<
           "visible" << visible <<
           "thickness" << thickness <<
-          "lineType" << lineType;
+          "lineType" << lineType <<
+          "ready" << ready;
 }
 
 ostream &operator<<(ostream &o, const Shape &shape)

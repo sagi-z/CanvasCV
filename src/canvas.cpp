@@ -559,7 +559,10 @@ void write(FileStorage& fs, const std::string&, const Canvas& x)
     fs << "shapes" << "[";
     for (auto &shape : x.shapes)
     {
-        fs << *shape;
+        if (shape->isReady())
+        {
+            fs << *shape;
+        }
     }
     fs << "]";
     fs << "}";
