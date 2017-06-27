@@ -15,7 +15,7 @@ What makes it unique?
 --------------------
 * Easily extendable - create your own Shapes, Widgets and Themes and share them with others here if you want.
 * The X/Y coordination system is the same as the OpenCV coordination system. This way, if you detect someting at a position, you can start showing
-some FloatingText at that exact postion, Or if you want the user to mark someting on the image, you get back the exact coordinates.
+some Text at that exact postion, Or if you want the user to mark someting on the image, you get back the exact coordinates.
 * No external dependencies - **your code is compatible to all OpenCV environments**.
 
 ## Supported Shapes, Widgets and capabilities
@@ -32,25 +32,34 @@ some FloatingText at that exact postion, Or if you want the user to mark sometin
 * LabeledShapesConnector
 
 ### Supported widgets:
-* FloatingText
+* Text
 * Button
 * RadioButton
 * SelectionBox
 * MsgBox
+* CheckBoxes
+* RadioButtons
 * Layouts: VerticalLayout, HorizontalLayout, Canvas (actually canvas is not a widget, but it is a layout)
 * VFrame (VerticalLayout based Frame)
 * HFrame (HorizontalLayout based Frame)
+* (FileBrowser - primitive implementation as an example of adding a widget)
 
 ### Capabilities:
 * Widgets are semi transparent by default.
 * All shapes are draggable.
 * All shapes are editable.
-* Callbacks both for all shapes (create/change/delete).
+* Can save/load shapes to/from a file (if the user has set landmarks, we can save them).
+* Callbacks for all shapes (create/change/delete).
 * Callbacks per shapes (selected/unselected/removed).
 * Callbacks per widget events (enter/leave/press/release).
 * There is a a theme framework with a predefined theme. User external themes are supported.
 * Simple auto lower screen status msg for shapes, widgets and you.
 * Upper screen area user messages for you.
-* Can save shapes to file (if the user has set landmarks, we can save them).
 
+### Many short examples:
+* Example of using shapes.
+* Example per widget.
+* Example of adding a widget.
+* Example of adding themes.
+* Example of shapes and widgets together.
 
