@@ -90,6 +90,26 @@ bool ShapesConnector::mouseReleased(const Point &pos)
     return Line::mouseReleased(pos);
 }
 
+const string &ShapesConnector::getCreateStatusMsg() const
+{
+   static const string msg = "Hover over a shape, then click on it's circled handle.";
+   return msg;
+}
+
+const string &ShapesConnector::getEditStatusMsg() const
+{
+   static const string notConnectedMsg = "Drag an edge over a shape, then release on it's circled handle.";
+   static const string connectedMsg = "Dragging the connecter will drag along it's coonnected shapes.";
+   if (tailShape && headShape)
+   {
+       return connectedMsg;
+   }
+   else
+   {
+       return notConnectedMsg;
+   }
+}
+
 list<Handle *> ShapesConnector::getConnectionTargets()
 {
     return  list<Handle *>({center});
@@ -219,9 +239,20 @@ void ShapesConnector::translate(const Point &offset)
 {
     Shape *pHead = getHeadShape();
     if (pHead && pHead->getLocked()) return;
+
     Shape *pTail = getTailShape();
     if (pTail && pTail->getLocked()) return;
-    return CompoundShape::translate(offset);
+
+    if (pHead && pTail)
+    {
+        pHead->translate(offset);
+        pTail->translate(offset);
+    }
+    else
+    {
+        if (!pHead && getActive() == pt2) pt2->translate(offset);
+        else if (!pTail && getActive() == pt1) pt1->translate(offset);
+    }
 }
 
 void ShapesConnector::writeInternals(FileStorage &fs) const

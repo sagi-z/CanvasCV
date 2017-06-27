@@ -49,6 +49,9 @@ protected:
     virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);
     virtual bool mouseReleased(const cv::Point &pos);
 
+    virtual const string &getCreateStatusMsg() const;
+    virtual const string &getEditStatusMsg() const;
+
     Handle *center;
 
     virtual void writeInternals(cv::FileStorage &fs) const;

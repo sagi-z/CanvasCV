@@ -125,7 +125,7 @@ bool Rectangle::mouseReleased(const Point &pos)
 
 const string &Rectangle::getEditStatusMsg() const
 {
-   const static string editMsg = "Drag corner buttons to resize.\nRotat by dragging edges.";
+   const static string editMsg = "Drag corner buttons to resize.\nRotate by dragging edges.";
    return editMsg;
 }
 
