@@ -100,7 +100,7 @@ string RadioButtons::getTextAt(int index) const
 {
     if (index >= 0 && index < frame->size())
     {
-        return frame->at<HorizontalLayout>(index)->at<Text>(1)->getMsg();
+        return frame->at<HorizontalLayout>(index)->at<Text>(1)->getText();
     }
     return "";
 }

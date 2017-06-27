@@ -42,7 +42,8 @@ public:
 
     /**
      * @brief redrawOn draws the shapes on dst
-     * @param src can be also dst, in which case it is drawn on.
+     * Draws src with shapes and widgets onto dst. src is upgraded to 3 channels if it has 1 channel.
+     * @param src can be also dst, in which case it is drawn on. src is BGR/BGRA/GRAY.
      * @param dst if different than src, then src is cloned to it and drawn on.
      */
     void redrawOn(const cv::Mat &src, cv::Mat &dst);

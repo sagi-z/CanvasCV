@@ -82,7 +82,7 @@ int main(int argc, char **argv)
         s << "User selected theme '" << index << "': '" << themeName << "'\n";
         ThemeRepository::setCurrentTheme(themeName);
         c.applyTheme();
-        layout->at<Text>(0)->setMsg(s.str());
+        layout->at<Text>(0)->setText(s.str());
     };
 
     ThemeRepository::addTheme("MyTheme1", new MyTheme(Colors::Red, Colors::Pink, 10));

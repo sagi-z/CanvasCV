@@ -35,7 +35,7 @@ MsgBox::MsgBox(const Point &pos)
 
 void MsgBox::setMsg(const string &msg)
 {
-    frame->at<Text>(0)->setMsg(msg);
+    frame->at<Text>(0)->setText(msg);
 }
 
 void MsgBox::recalcCompound()

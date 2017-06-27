@@ -60,7 +60,7 @@ string SelectionBox::getTextAt(int index) const
 {
     if (index >= 0 && index < frame->size())
     {
-        return frame->at<Button>(index)->getMsg();
+        return frame->at<Button>(index)->getText();
     }
     return "";
 }

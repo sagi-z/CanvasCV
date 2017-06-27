@@ -167,8 +167,8 @@ int main(int argc, char **argv)
     --argc;
     ++argv;
     Mat image;
-    if (argc) {
-//        Mat orig = imread(argv[0]);
+    if (argc)
+    {
         Mat orig = imread(argv[0], IMREAD_UNCHANGED);
         if (orig.empty()) {
             cerr << "Cannot load image " << argv[0] << endl;
@@ -183,8 +183,10 @@ int main(int argc, char **argv)
         {
             image = orig;
         }
-    } else {
-        image.create(640,480,CV_8UC3);
+    }
+    else
+    {
+        image.create(600, 800, CV_8UC3);
         image = Colors::White;
     }
 

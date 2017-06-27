@@ -157,7 +157,7 @@ private:
 
     // It's enough to keep pointers.
     // The layout is holding the smart pointers,
-    //  and that's keeps the reference count up.
+    //  and that's keeping the reference count up.
     VFrame *top;
     HFrame *pathFrame;
     list<Button*> path;
@@ -216,7 +216,7 @@ int main(int argc, char **argv)
     c.setMouseCallback("Canvas"); // optional for mouse usage see also (example_selectbox.cpp)
 
     shared_ptr<FileBrowser> fb;
-    Widget::CBUserSelection cb = [&image](Widget *w, int)
+    Widget::CBUserSelection cb = [&c, &image](Widget *w, int)
     {
         cout << "CB: Got user selection '" << ((FileBrowser*)w)->getUserSelection() << "'" << endl;
         Mat tmp = readImg(((FileBrowser*)w)->getUserSelection());
@@ -227,6 +227,7 @@ int main(int argc, char **argv)
         else
         {
             image = tmp;
+            c.setSize(image.size());
         }
     };
 

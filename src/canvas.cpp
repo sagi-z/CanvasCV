@@ -37,6 +37,12 @@ void Canvas::redrawOn(const Mat &src, Mat &dst)
         src.copyTo(dst);
     }
     if (! on) return;
+
+    if (src.channels() == 1)
+    {
+        cv::cvtColor(src, dst, CV_GRAY2BGR);
+    }
+
     for (auto &shape : shapes)
     {
         if (shape->getVisible())
@@ -402,7 +408,7 @@ void Canvas::setStatusMsg(const string &msg)
 {
     if (hasStatusMsg)
     {
-        statusMsg->setMsg(msg);
+        statusMsg->setText(msg);
     }
 }
 
@@ -410,7 +416,7 @@ void Canvas::setScreenText(const string &msg)
 {
     if (hasScreenText)
     {
-        screenText->setMsg(msg);
+        screenText->setText(msg);
     }
 }
 

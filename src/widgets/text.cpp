@@ -12,7 +12,7 @@ const char *Text::type = "Text";
 
 Text::Text(const Point &pos)
     : Widget(pos),
-      padding(2),
+      padding(4),
       doublePadding(padding*2),
       msg(),
       maxWidth(0),
@@ -31,7 +31,7 @@ shared_ptr<Text> Text::create(Layout &layout,
                               Anchor layoutAnchor)
 {
     shared_ptr<Text> widget(WidgetFactoryT<Text>::newWidget(layout, pos));
-    widget->setMsg(text);
+    widget->setText(text);
     widget->setFlowAnchor(flowAnchor);
     widget->setLayoutAnchor(layoutAnchor);
     return widget;
@@ -50,12 +50,12 @@ const char *Text::getType() const
     return type;
 }
 
-string Text::getMsg() const
+string Text::getText() const
 {
     return msg;
 }
 
-void Text::setMsg(const string &value)
+void Text::setText(const string &value)
 {
     if (msg != value)
     {

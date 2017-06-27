@@ -42,11 +42,11 @@ public:
 
     virtual const char *getType() const;
 
-    /// get the current text of the FLoatingText
-    std::string getMsg() const;
+    /// get the current text of the Text
+    std::string getText() const;
 
-    /// set the current text of the FLoatingText
-    void setMsg(const std::string &value);
+    /// set the current text of the Text
+    void setText(const std::string &value);
 
     /// get the OpenCV font used
     int getFontFace() const;

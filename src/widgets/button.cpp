@@ -34,7 +34,7 @@ shared_ptr<Button> Button::create(Layout &layout,
                                   int maxWidthVal)
 {
     shared_ptr<Button> widget(WidgetFactoryT<Button>::newWidget(layout, pos));
-    widget->setMsg(buttonText);
+    widget->setText(buttonText);
     widget->setStatusMsg(statusMsg);
     widget->onPress(cbVal);
     widget->setMaxWidth(maxWidthVal);
