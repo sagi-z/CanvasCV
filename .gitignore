@@ -1,7 +1,7 @@
-# Generated files
 doxygen_header.html
+doxygen_header.html.in
 doxygen_style.css
 Doxyfile
-
+doc/
 build/
 CMakeLists.txt.user
