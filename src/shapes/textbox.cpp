@@ -20,7 +20,7 @@ TextBox::TextBox(const Point &pos) :
     fontThickness(1),
     fontColor(outlineColor)
 {
-    topLeft.reset(dynamic_cast<Handle*>(ShapeFactoryT<Handle>::newShape(pos)));
+    topLeft.reset(ShapeFactoryT<Handle>::newShape(pos));
     topLeft->setLocked(true);
     recalcRect();
     registerCBs();

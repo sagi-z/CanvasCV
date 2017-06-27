@@ -172,7 +172,7 @@ const Point &Line::getHead() const
 
 bool Line::keyPressed(int &key)
 {
-    if (isReady()) return true;
+    if (isReady()) return CompoundShape::keyPressed(key);
 
     if (key == 27)
     { // ESC

@@ -308,7 +308,7 @@ void Rectangle::setRect(const RotatedRect &rect)
 
 bool Rectangle::keyPressed(int &key)
 {
-    if (isReady()) return true;
+    if (isReady()) return CompoundShape::keyPressed(key);
 
     if (key == 27)
     { // ESC
