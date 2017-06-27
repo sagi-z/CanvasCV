@@ -248,6 +248,10 @@ void ShapesConnector::translate(const Point &offset)
         pHead->translate(offset);
         pTail->translate(offset);
     }
+    else if (!pHead && !pTail)
+    {
+        CompoundShape::translate(offset);
+    }
     else
     {
         if (!pHead && getActive() == pt2) pt2->translate(offset);
