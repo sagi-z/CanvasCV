@@ -22,6 +22,8 @@ public:
 
     void setRect(const cv::RotatedRect &rect);
 
+    virtual bool keyPressed(int &key);
+
     bool isPointInRectangle(cv::Point pos)
     {
         std::vector<Point> pts(4);

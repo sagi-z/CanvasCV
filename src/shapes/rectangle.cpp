@@ -306,6 +306,18 @@ void Rectangle::setRect(const RotatedRect &rect)
     updatePoints();
 }
 
+bool Rectangle::keyPressed(int &key)
+{
+    if (isReady()) return true;
+
+    if (key == 27)
+    { // ESC
+        key = -1; // consume key
+        return false; // lostFocus() => the canvas will delete us
+    }
+    return true;
+}
+
 void Rectangle::translate(const Point &offset)
 {
     Shape *shape = getActive();
