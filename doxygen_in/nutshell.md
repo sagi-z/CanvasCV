@@ -33,7 +33,7 @@ int main()
     {
         c.redrawOn(image, out);
         imshow("Canvas", out);
-        key = c.waitKeyEx(delay); // optional - method to encapsulate 2 calls
+        key = c.waitKeyEx(delay);
     } while (msgBox->getUserSelection() != -1);
     cout << "user choose option with index " << msgBox->getUserSelection() << endl;
 

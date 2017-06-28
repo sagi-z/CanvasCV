@@ -81,7 +81,7 @@ ENDFOREACH()
 set(CPACK_PACKAGE_NAME "canvascv")
 set(CPACK_PACKAGE_VENDOR "theimpossiblecode.com")
 set(CPACK_PACKAGE_CONTACT "sagi@theimpossiblecode.com")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Interactive canvas widget for OpenCV 3.X")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Interactive canvas with shapes and widget for OpenCV 3.X")
 set(CPACK_PACKAGE_VERSION "1.0.0")
 set(CPACK_PACKAGE_VERSION_MAJOR "1")
 set(CPACK_PACKAGE_VERSION_MINOR "0")
@@ -116,7 +116,7 @@ if(BUILD_DOCUMENTATION)
       SET(CMAKE_DOXYGEN_EXTRA_CSS "${CMAKE_CURRENT_SOURCE_DIR}/doxygen_style.css")
   endif()
 
-  # 3 variables are used in Doxyfile.in (must be defined at this point):
+  # These variables are used in Doxyfile.in (must be defined at this point):
   # CMAKE_DOXYGEN_EXTRA_CSS
   # CMAKE_DOXYGEN_HTML_HEADER
   # CMAKE_GIT_REPO

@@ -236,6 +236,9 @@ public:
     /// returns true if the widget has no layout and false if it does
     bool isRemoved() const;
 
+    /// Actual size the widget is occupying due to Layout manager
+    virtual const cv::Rect &getRect() = 0;
+
 protected:
 
     void mergeMats(cv::Mat &roiSrc, cv::Mat &roiDst);
@@ -279,9 +282,6 @@ protected:
 
     /// helper method which delgates to drawFG for derived
     void callDrawFG(bool preAllocateMat=true);
-
-    /// Actual size the widget is occupying due to Layout manager
-    virtual const cv::Rect &getRect() = 0;
 
     /// Minimal size the widget coould have occupy
     virtual const cv::Rect &getMinimalRect() = 0;

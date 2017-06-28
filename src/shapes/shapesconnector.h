@@ -6,6 +6,10 @@
 namespace canvascv
 {
 
+/**
+ * @brief The ShapesConnector class
+ * Allows visually connecting 2 shapes from the code or by mouse
+ */
 class ShapesConnector : public Line
 {
 public:

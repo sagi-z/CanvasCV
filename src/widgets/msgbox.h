@@ -21,7 +21,7 @@ public:
 
     /**
      * @brief create a message box widget which is closed automatically
-     * @param layout must be a Canvas reference for a MsgBox
+     * @param canvas must be a Canvas reference for a MsgBox
      * @param msg what to display in the MsgBox
      * @param buttonNames automatically create buttons with names of buttonNames
      * @param cbUserSelection a callback to invoke with index of pressed button
@@ -50,13 +50,28 @@ public:
         }
      * @endcode
      * Or you could use the callback version (see the example)
-     * @see getSelectedButton
+     * @see getUserSelection
      */
     static std::shared_ptr<MsgBox> create(Canvas &canvas,
                                           const std::string &msg,
                                           std::vector<std::string> buttonNames = {"Ok"},
                                           Widget::CBUserSelection cbUserSelection = Widget::CBUserSelection(),
                                           const cv::Point &pos = cv::Point(-1,-1));
+
+    /**
+     * @brief createModal
+     * opens a MsgBox in it's own window and immediatly waits for a user selection.
+     * @param title is the title of the new window
+     * @param msg what to display in the MsgBox
+     * @param buttonNames automatically create buttons with names of buttonNames
+     * @param cbUserSelection a callback to invoke with index of pressed button
+     * @return return result of getUserSelection()
+     * @sa getUserSelection()
+     */
+    static int createModal(const std::string &title,
+                           const std::string &msg,
+                           std::vector<std::string> buttonNames = {"Ok"},
+                           Widget::CBUserSelection cbUserSelection = Widget::CBUserSelection());
 
     /// returns pressed button index or -1 if not pressed
     int getUserSelection();

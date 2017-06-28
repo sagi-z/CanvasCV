@@ -170,9 +170,9 @@ int main(int argc, char **argv)
     if (argc)
     {
         Mat orig = imread(argv[0], IMREAD_UNCHANGED);
-        if (orig.empty()) {
-            cerr << "Cannot load image " << argv[0] << endl;
-            return -1;
+        if (orig.empty())
+        {
+            Canvas::fatal(string("Cannot load image ") + argv[0], -1);
         }
         if (orig.cols > 1024)
         {

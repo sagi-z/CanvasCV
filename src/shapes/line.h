@@ -12,7 +12,7 @@ namespace canvascv
 
 /**
  * @brief The Line class
- * One of the basic shapes is a line.
+ * Allows you to draw a line by mouse or from code
  */
 class Line : public CompoundShape
 {

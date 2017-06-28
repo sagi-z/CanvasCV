@@ -65,13 +65,6 @@ public:
     std::shared_ptr<T> createShape(const cv::Point &pos = cv::Point(0,0));
 
     /**
-     * @brief consumeKey takes a key value and tries to use it in a shape or widget
-     * @param key is the key value received from the user.
-     * It will change to -1 if it was consumed by a shape or widget.
-     */
-    void consumeKey(int &key);
-
-    /**
      * @brief get default shape type to draw
      * @return returns the default current shape to create on mouse press
      */
@@ -227,15 +220,15 @@ public:
     void readShapesFromFile(const std::string &filepath);
 
     /// utility method to handle mouse events on window winName
-    void setMouseCallback(const char * winName);
+    void setMouseCallback(const string &winName);
 
     /**
      * @brief waitKeyEx
      * utility method to handle key strokes, your get the keystroke
-     * @param delay
+     * @param delay in milliseconds must be bigger than 0, or it will be 66 (15 FPS)
      * @return the key press or -1 if a shape/widget consumed it
      */
-    int waitKeyEx(int delay = 0);
+    int waitKeyEx(int delay = 66);
 
     /**
      * @brief applyTheme
@@ -243,6 +236,16 @@ public:
      * @param applyToCanvasText should be usually false (make it true to affect Status&UserText of Canvas).
      */
     void applyTheme(bool applyToCanvasText = false);
+
+    /**
+     * @brief fatal
+     * A more elegant way for your app to exit on failures.
+     * A dedicated opencv window with a MsgBox wil show your message.
+     * The error code will be used with _Exit();
+     * @param errorMsg will be
+     * @param exitStatus
+     */
+    static void fatal(string errorMsg, int exitStatus);
 
 protected:
     virtual void recalc() {}
@@ -278,6 +281,12 @@ private:
     };
     friend class StatusMsgGrd;
 
+    /**
+     * @brief consumeKey takes a key value and tries to use it in a shape or widget
+     * @param key is the key value received from the user.
+     * It will change to -1 if it was consumed by a shape or widget.
+     */
+    void consumeKey(int &key);
 
     void setStatusMsg(const std::string &msg);
 

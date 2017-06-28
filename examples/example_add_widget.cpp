@@ -197,14 +197,12 @@ int main(int argc, char **argv)
         image = readImg(argv[0]);
         if (image.empty())
         {
-            cerr << "Cannot load image " << argv[0] << endl;
-            return -1;
+            Canvas::fatal(string("Cannot load image ") + argv[0], -1);
         }
     }
     else
     {
-        cout << "Must get a path to an image as a parameter" << endl;
-        return -1;
+        Canvas::fatal("Must get a path to an image as a parameter" , -1);
     }
 
     fs::path startPath(argv[0]);

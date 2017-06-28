@@ -66,8 +66,7 @@ int main(int argc, char **argv)
     {
         Mat orig = imread(argv[0]);
         if (orig.empty()) {
-            cerr << "Cannot load image " << argv[0] << endl;
-            return -1;
+            Canvas::fatal(string("Cannot load image ") + argv[0], -1);
         }
         if (orig.cols > 1024)
         {
@@ -81,8 +80,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        cout << "Must get a path to an image as a parameter" << endl;
-        return -1;
+        Canvas::fatal("Must get a path to an image as a parameter" , -1);
     }
 
     Canvas c(image.size());

@@ -7,6 +7,10 @@
 namespace canvascv
 {
 
+/**
+ * @brief The Rectangle class
+ * Allows you to draw a rotatable rectangle by mouse or from code
+ */
 class Rectangle : public CompoundShape
 {
 public:
@@ -18,12 +22,15 @@ public:
     virtual std::list<Handle *> getConnectionTargets();
     virtual const char *getType() const;
 
+    /// get the OpenCV representation of this shape
     cv::RotatedRect getRect() const;
 
+    /// set this shape from the OpenCV representation
     void setRect(const cv::RotatedRect &rect);
 
     virtual bool keyPressed(int &key);
 
+    /// returns true if pos is in the rectangle representated by this shape
     bool isPointInRectangle(cv::Point pos)
     {
         std::vector<Point> pts(4);

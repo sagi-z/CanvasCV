@@ -6,8 +6,11 @@
 #include "themes/themerepository.h"
 #include "themes/theme.h"
 
+#include "widgets/msgbox.h"
+
 #include <opencv2/highgui.hpp>
 #include <algorithm>
+#include <cstdlib>
 
 using namespace std;
 using namespace cv;
@@ -497,13 +500,14 @@ static void mouseCB(int event, int x, int y, int flags, void* userData) {
     }
 }
 
-void Canvas::setMouseCallback(const char *winName)
+void Canvas::setMouseCallback(const string &winName)
 {
     cv::setMouseCallback(winName, mouseCB, this);
 }
 
 int Canvas::waitKeyEx(int delay)
 {
+    if (delay <= 0) delay = 66;
 #if OPENCV_HAS_WAITKEYEX
     int key = cv::waitKeyEx(delay);
 #else
@@ -529,6 +533,12 @@ void Canvas::applyTheme(bool applyToCanvasText)
             currentTheme->applyStyle(widget.get());
         }
     }
+}
+
+void Canvas::fatal(string errorMsg, int exitStatus)
+{
+    string header = "Fatal Error:\n";
+    MsgBox::createModal("Fatal Error", header + errorMsg , {"Exit"}, [exitStatus](Widget*,int) {_Exit(exitStatus);});
 }
 
 const Rect Canvas::getBoundaries() const

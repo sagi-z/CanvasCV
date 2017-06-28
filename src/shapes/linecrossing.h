@@ -10,6 +10,11 @@
 namespace canvascv
 {
 
+/**
+ * @brief The LineCrossing class
+ * - Helps us know when something we tracked passed over a line.
+ * - We also need to know if it passed in one direction or another.
+ */
 class LineCrossing : public CompoundShape
 {
 public:
@@ -21,10 +26,13 @@ public:
     virtual std::list<Handle *> getConnectionTargets();
     virtual const char *getType() const;
 
+    /// -1 or 1
     int getDirection() const;
 
+    /// gets the text from the attached TextBox
     const std::string &getName() const;
 
+    /// sets the text in the attached TextBox
     void setName(const std::string &value) const;
 
     int getArrowMagnitude() const;

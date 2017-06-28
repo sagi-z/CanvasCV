@@ -54,6 +54,7 @@ public:
      */
     void doForAll(CBWidget cb);
 
+    virtual const cv::Rect &getRect();
 protected:
     // force inheritance
     CompoundWidget(const cv::Point &pos);
@@ -81,7 +82,6 @@ protected:
     virtual void drawFG(cv::Mat &dst);
     virtual bool isAtPos(const cv::Point &pos);
 
-    virtual const cv::Rect &getRect();
     virtual const cv::Rect &getMinimalRect();
 
     virtual void reloadPointers(std::list<Widget*>::const_iterator &)

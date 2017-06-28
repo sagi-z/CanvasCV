@@ -6,6 +6,10 @@
 namespace canvascv
 {
 
+/**
+ * @brief The Ellipse class
+ * Allows you to draw a rotatable ellipse by mouse or from code
+ */
 class Ellipse : public Rectangle
 {
 public:

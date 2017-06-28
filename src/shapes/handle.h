@@ -11,6 +11,10 @@
 namespace canvascv
 {
 
+/**
+ * @brief The Handle class
+ * The vertices by which the shape is defined and edited
+ */
 class Handle : public Shape
 {
 public:
@@ -32,21 +36,34 @@ public:
 
     virtual const char *getType() const;
 
+    /// return the Point location of this Handle
     const cv::Point &operator()() const {
         return pt;
     }
 
+    /**
+     * @brief setPos
+     * set the location of this handle
+     * @param pos is the new location to change to
+     * @param notify determines if other cbs which want to know when we change should be notified (mostly 'true')
+     */
     void setPos(const cv::Point &pos, bool notify = true);
 
     virtual void translate(const cv::Point &offset);
 
+    /// return the radius of this circled handle
     int getRadius() const;
 
+    /// register to be notified when this handle changes
     CBID addPosChangedCB(PosChangedCB cb);
 
+    /// unregister to be notified when this handle changes
     void delPosChangedCB(const CBID &id);
 
+    /// connect to a handle to change when we change
     void connect(Handle &other);
+
+    /// disconnect from a handle that needed to change with us
     void disconnect(Handle &other);
 
     static const char * type;
