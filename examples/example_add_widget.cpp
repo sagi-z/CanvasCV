@@ -88,30 +88,30 @@ protected:
     {
         fs::path pathObj(getCurrentPath());
         if (fs::is_directory(pathObj) &&
-                currentDir != pathObj)
+                currentDir != pathObj.string())
         {
             for (auto f : files) { f->rmvFromLayout(); }
             files.clear();
-            currentDir = pathObj;
+            currentDir = pathObj.string();
             for(auto& p: fs::directory_iterator(getCurrentPath()))
             {
                 if (fs::is_directory(p))
                 {
-                    Button *dir = Button::create(*filesFrame, p.path().filename()).get();
+                    Button *dir = Button::create(*filesFrame, p.path().filename().string()).get();
                     dir->notifyOnChange([this, p](Widget *, Widget::State state) {
                         if (state == Widget::PRESS) {
-                            setCurrentPath(p.path());
+                            setCurrentPath(p.path().string());
                         }
                     });
                     files.push_back(dir);
                 }
                 else
                 {
-                    Button *file = Button::create(*filesFrame, p.path().filename()).get();
+                    Button *file = Button::create(*filesFrame, p.path().filename().string()).get();
                     file->setFlatButton();
                     file->notifyOnChange([this, p](Widget *, Widget::State state) {
                         if (state == Widget::PRESS) {
-                            setCurrentPath(p.path());
+                            setCurrentPath(p.path().string());
                         }
                     });
                     files.push_back(file);
@@ -125,22 +125,22 @@ protected:
         {
             parts.push_front(pathObj);
             pathObj = pathObj.parent_path();
-        } while (string(pathObj).length());
+        } while (pathObj.string().length());
         for (auto &p : parts)
         {
             if (fs::is_directory(p))
             {
-                Button *dir = Button::create(*pathFrame, p.filename()).get();
+                Button *dir = Button::create(*pathFrame, p.filename().string()).get();
                 dir->notifyOnChange([this, p](Widget *, Widget::State state) {
                     if (state == Widget::PRESS) {
-                        setCurrentPath(p);
+                        setCurrentPath(p.string());
                     }
                 });
                 path.push_back(dir);
             }
             else
             {
-                Button *file = Button::create(*pathFrame, p.filename()).get();
+                Button *file = Button::create(*pathFrame, p.filename().string()).get();
                 file->setFlatButton();
                 path.push_back(file);
             }

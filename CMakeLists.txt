@@ -7,6 +7,9 @@ SET(CMAKE_GIT_REPO "CanvasCV")
 
 if(NOT WIN32)
     add_definitions(-Werror=return-type)
+    set(CXX_11_FS_LIB "-lstdc++fs")
+else()
+    set(CXX_11_FS_LIB "")
 endif()
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_CXX_STANDARD 11)
@@ -15,6 +18,7 @@ SET(CMAKE_CXX_STANDARD 11)
 INCLUDE_DIRECTORIES(
     ${PROJECT_SOURCE_DIR}/src
     ${PROJECT_SOURCE_DIR}/examples
+    ${OpenCV_INCLUDE_DIRS}
 )
 
 FILE(GLOB_RECURSE LIB_HEADERS
@@ -57,7 +61,7 @@ if(BUILD_EXAMPLES)
         GET_FILENAME_COMPONENT( target_name ${file} NAME_WE )
         MESSAGE ( "Example '${target_name}' will be created")
         add_executable(${target_name} ${file})
-        target_link_libraries (${target_name} canvascv -lstdc++fs ${OpenCV_LIBS})
+        target_link_libraries (${target_name} canvascv ${CXX_11_FS_LIB} ${OpenCV_LIBS})
     ENDFOREACH()
 endif()
 

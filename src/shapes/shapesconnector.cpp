@@ -1,6 +1,8 @@
 #include "shapesconnector.h"
 #include "canvas.h"
 
+#include <iterator>
+
 using namespace std;
 using namespace cv;
 
