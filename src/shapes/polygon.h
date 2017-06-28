@@ -7,18 +7,16 @@
 namespace canvascv
 {
 
+/**
+ * @brief The Polygon class
+ * Allows you to draw a polygon by mouse or from code
+ * @sa
+ */
 class Polygon : public CompoundShape
 {
 public:
-    virtual bool isAtPos(const cv::Point &pos)
-    {
-        return isPointInPoly(pos);
-    }
-    virtual std::list<Handle *> getConnectionTargets();
-    virtual const char *getType() const;
 
-    virtual bool keyPressed(int &key);
-
+    /// returns true if pos is in the polygon
     bool isPointInPoly(const cv::Point &pos) const
     {
         if (isReady())
@@ -29,10 +27,24 @@ public:
         return false;
     }
 
+    /**
+     * @brief getPoints
+     * return the vertices of the polygon
+     * @param out will contain the vertices on return
+     */
     template <typename _TP>
     void getPoints(vector<Point_<_TP>> &out);
 
+    virtual bool isAtPos(const cv::Point &pos)
+    {
+        return isPointInPoly(pos);
+    }
+    virtual std::list<Handle *> getConnectionTargets();
+
+    virtual bool keyPressed(int &key);
     virtual void translate(const cv::Point &offset);
+
+    virtual const char *getType() const;
 
     static const char * type;
 
@@ -68,5 +80,9 @@ void Polygon::getPoints(vector<Point_<_TP> > &out)
 }
 
 }
+
+/** @example example_shapes.cpp
+ * This is an example of how to create shapes by mouse.
+ */
 
 #endif // POLYGON_H

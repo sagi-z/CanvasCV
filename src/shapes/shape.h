@@ -227,4 +227,8 @@ std::ostream & operator<<(std::ostream& o, const Shape &shape);
 
 }
 
+/** @example example_shapes.cpp
+ * This is an example of how to create shapes by mouse.
+ */
+
 #endif // SHAPE_H

@@ -17,28 +17,32 @@ namespace canvascv
 class Line : public CompoundShape
 {
 public:
-    virtual std::list<Handle *> getConnectionTargets();
-
-    virtual const char *getType() const;
-
+    /// set if to lock the tail (Handle) of the line
     void lockTail(bool isLocked);
 
+    /// set if to lock the head (Handle) of the line
     void lockHead(bool isLocked);
 
+    /// set if to show the tail (Handle) of the line
     void showTail(bool isVisible);
 
+    /// set if to show the head (Handle) of the line
     void showHead(bool isVisible);
 
+    /// will move the tail (Handle) of the line to pos
     void setTailPos(const cv::Point& pos);
 
+    /// will move the head (Handle) of the line to pos
     void setHeadPos(const cv::Point& pos);
 
+    /// returns the length of the line in pixels
     double length() const {
         const cv::Point &p1 = (*pt1)();
         const cv::Point &p2 = (*pt2)();
         return sqrt(pow(p2.y-p1.y,2)+pow(p2.x-p1.x,2));
     }
 
+    /// returns true if the point 'p3' is on the line, give or take 'threshold' pixels
     bool isPointOnLine(const cv::Point &p3, int threshold=3) const
     {
         threshold += thickness/2;
@@ -68,12 +72,16 @@ public:
         return true;
     }
 
+    /// get the Handle to the tail of the
     Handle &getPT1();
 
+    /// get the Handle to the head of the
     Handle &getPT2();
 
+    /// get the Point position og the tail Handle
     const cv::Point &getTail() const;
 
+    /// get the Point position og the head Handle
     const cv::Point &getHead() const;
 
     virtual bool isAtPos(const cv::Point &pos)
@@ -82,6 +90,10 @@ public:
     }
 
     virtual bool keyPressed(int &key);
+
+    virtual std::list<Handle *> getConnectionTargets();
+
+    virtual const char *getType() const;
 
     static const char * type;
 
@@ -103,5 +115,9 @@ protected:
 };
 
 }
+
+/** @example example_shapes.cpp
+ * This is an example of how to create shapes by mouse.
+ */
 
 #endif // LINE_H

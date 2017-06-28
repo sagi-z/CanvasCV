@@ -20,7 +20,7 @@ public:
 
     /**
      * @brief create a radio buttons widget
-     * @param layout widgets are placed in layouts Canvas/VFrame/HFrame/...
+     * @param layoutVal widgets are placed in layouts Canvas/VFrame/HFrame/...
      * @param buttonNames automatically create items with names of buttonNames
      * @param defaultSelection is the index to show as selected on start
      * @param cbUserSelection a callback to invoke with index of pressed button

@@ -18,7 +18,7 @@ public:
 
     /**
      * @brief create a selection box widget
-     * @param layout widgets are placed in layouts Canvas/VFrame/HFrame/...
+     * @param layoutVal widgets are placed in layouts Canvas/VFrame/HFrame/...
      * @param selectionNames automatically create items with names of selectionNames
      * @param cbUserSelection a callback to invoke with index of pressed button
      * @param pos location in the Layout (if the layout supports Point locations)

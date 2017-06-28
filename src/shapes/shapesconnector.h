@@ -13,42 +13,63 @@ namespace canvascv
 class ShapesConnector : public Line
 {
 public:
-    ShapesConnector(const cv::Point &pos);
 
-    virtual std::list<Handle *> getConnectionTargets();
-    virtual const char *getType() const;
-
+    /// get the spacing of the dotted connecting line
     int getSpacing() const;
+
+    /// set the spacing of the dotted connecting line
     void setSpacing(int value);
 
+    /// Connect 'shape' with it's Handle 'handle' to our own tail Handle
     void connectTail(Shape &shape, Handle &handle);
+
+    /// Connect 'shape' with it's Handle 'handle' to our own head Handle
     void connectHead(Shape &shape, Handle &handle);
+
+    /// disconnect our own tail Handle from any previously connected shape
     void disconnectTail();
+
+    /// disconnect our own head Handle from any previously connected shape
     void disconnectHead();
 
-    // called after read of Canvas from file
+    /// called after read of Canvas from file, assuming internals are fileld, but not connected
     void reconnect();
 
+    /// get the id of the shape connected to our tail Handle
     int getTailShapeId()
     {
         return tailShape;
     }
 
+    /// get the id of the shape connected to our head Handle
     int getHeadShapeId()
     {
         return headShape;
     }
 
+    /// get the shape connected to our tail Handle
     Shape *getTailShape();
+
+    /// get the shape connected to our head Handle
     Shape *getHeadShape();
 
+    /// disconnect a previouslt connected shape with an 'id'
     void disconnectShape(int id);
 
     virtual void translate(const cv::Point &offset);
 
+    virtual std::list<Handle *> getConnectionTargets();
+
+    virtual const char *getType() const;
+
     static const char * type;
 
 protected:
+    friend class ShapeFactory;
+    template <class T> friend class ShapeFactoryT;
+
+    ShapesConnector(const cv::Point &pos);
+
     virtual void draw(Mat &canvas);
     virtual bool mousePressed(const cv::Point &pos, bool onCreate = false);
     virtual bool mouseReleased(const cv::Point &pos);
@@ -93,5 +114,9 @@ private:
 };
 
 }
+
+/** @example example_shapes_widgets.cpp
+ * This is an example of how to create shapes by code and mouse.
+ */
 
 #endif // SHAPESCONNECTOR_H

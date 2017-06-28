@@ -14,13 +14,6 @@ namespace canvascv
 class Rectangle : public CompoundShape
 {
 public:
-    virtual bool isAtPos(const cv::Point &pos)
-    {
-        return isPointInRectangle(pos);
-    }
-
-    virtual std::list<Handle *> getConnectionTargets();
-    virtual const char *getType() const;
 
     /// get the OpenCV representation of this shape
     cv::RotatedRect getRect() const;
@@ -41,9 +34,18 @@ public:
         return cv::pointPolygonTest(pts, pos, false) >= 0;
     }
 
-    static const char * type;
+    virtual bool isAtPos(const cv::Point &pos)
+    {
+        return isPointInRectangle(pos);
+    }
+
+    virtual std::list<Handle *> getConnectionTargets();
 
     virtual void translate(const cv::Point &offset);
+
+    virtual const char *getType() const;
+
+    static const char * type;
 
 protected:
     friend class ShapeFactory;

@@ -29,4 +29,8 @@ protected:
 
 }
 
+/** @example example_shapes.cpp
+ * This is an example of how to create shapes by mouse.
+ */
+
 #endif // ARROW_H

@@ -21,21 +21,6 @@ public:
     typedef std::function<void(const cv::Point &)> PosChangedCB;
     typedef std::list<PosChangedCB>::iterator CBID;
 
-    // force compiler to generate default cctor inspite of the ctor
-    //  we defined above
-    Handle(const Handle &) = default;
-
-    virtual ~Handle();
-
-    virtual bool isAtPos(const cv::Point &pos)
-    {
-        return isPoint(pos);
-    }
-
-    virtual std::list<Handle *> getConnectionTargets();
-
-    virtual const char *getType() const;
-
     /// return the Point location of this Handle
     const cv::Point &operator()() const {
         return pt;
@@ -66,7 +51,18 @@ public:
     /// disconnect from a handle that needed to change with us
     void disconnect(Handle &other);
 
+    virtual bool isAtPos(const cv::Point &pos)
+    {
+        return isPoint(pos);
+    }
+
+    virtual std::list<Handle *> getConnectionTargets();
+
+    virtual const char *getType() const;
+
     static const char * type;
+
+    virtual ~Handle();
 
 protected:
     friend class ShapeFactory;

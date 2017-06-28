@@ -11,9 +11,46 @@
 namespace canvascv
 {
 
+/**
+ * @brief The TextBox class
+ * Allows you to draw a line by mouse or from code
+ */
 class TextBox : public Shape
 {
 public:
+    /// get the displayed text
+    const std::string & getText() const;
+
+    /// set the displayed text
+    void setText(const std::string &value);
+
+    /// set position (top left corner)
+    void setTL(const cv::Point &value);
+
+    /// get the font used
+    int getFontFace() const;
+
+    /// set the font used
+    void setFontFace(int value);
+
+    /// get the scale of the used font
+    double getFontScale() const;
+
+    /// set the scale of the used font
+    void setFontScale(double value);
+
+    /// get the thickness of the font
+    int getFontThickness() const;
+
+    /// set the thickness of the font
+    void setFontThickness(int value);
+
+    /// get the font color
+    cv::Scalar getFontColor() const;
+
+    /// set the font color
+    void setFontColor(const cv::Scalar &value);
+
     virtual bool isAtPos(const cv::Point &pos)
     {
         return rect.contains(pos);
@@ -22,31 +59,11 @@ public:
     virtual std::list<Handle *> getConnectionTargets();
     virtual std::shared_ptr<Shape> getShape(int id);
 
-    virtual const char *getType() const;
-
-    const std::string & getText() const;
-
-    void setText(const std::string &value);
-
-    void setTL(const cv::Point &value);
-
-    int getFontFace() const;
-
-    void setFontFace(int value);
-
-    double getFontScale() const;
-
-    void setFontScale(double value);
-
     virtual void translate(const cv::Point &offset);
 
+    virtual const char *getType() const;
+
     static const char * type;
-
-    int getFontThickness() const;
-    void setFontThickness(int value);
-
-    cv::Scalar getFontColor() const;
-    void setFontColor(const cv::Scalar &value);
 
 protected:
     friend class ShapeFactory;
@@ -83,5 +100,9 @@ private:
 };
 
 }
+
+/** @example example_shapes_widgets.cpp
+ * This is an example of how to create shapes by code and mouse.
+ */
 
 #endif // TEXTBOX_H

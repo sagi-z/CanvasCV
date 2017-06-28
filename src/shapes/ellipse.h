@@ -28,4 +28,8 @@ protected:
 
 }
 
+/** @example example_shapes_widgets.cpp
+ * This is an example of how to create shapes by code and mouse.
+ */
+
 #endif // ELLIPSE_H

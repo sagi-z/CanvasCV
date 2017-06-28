@@ -18,13 +18,6 @@ namespace canvascv
 class LineCrossing : public CompoundShape
 {
 public:
-    virtual bool isAtPos(const cv::Point &pos)
-    {
-        return line->isAtPos(pos);
-    }
-
-    virtual std::list<Handle *> getConnectionTargets();
-    virtual const char *getType() const;
 
     /// -1 or 1
     int getDirection() const;
@@ -73,6 +66,13 @@ public:
      */
     int isCrossedBySegment(const Point &lineStart, const Point &lineEnd) const;
 
+    virtual bool isAtPos(const cv::Point &pos)
+    {
+        return line->isAtPos(pos);
+    }
+
+    virtual std::list<Handle *> getConnectionTargets();
+    virtual const char *getType() const;
     static const char * type;
 
 protected:
