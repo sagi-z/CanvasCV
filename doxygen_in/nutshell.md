@@ -1,5 +1,4 @@
-
-Usage in a nutshell
+Usage in a nutshell {#nutshell}
 ===================
 ~~~~~~~{.cpp}
 #include <opencv2/highgui.hpp>
@@ -41,3 +40,4 @@ int main()
     return 0;
 }
 ~~~~~~~
+
