@@ -20,9 +20,8 @@ public:
 
     /**
      * @brief create a check box widget
-     * @param layout widgets are placed in layouts Canvas/VFrame/HFrame/...
+     * @param layoutVal widgets are placed in layouts Canvas/VFrame/HFrame/...
      * @param checkBoxNames automatically create items with names of checkBoxNames
-     * @param defaultSelection is the index to show as selected on start
      * @param cbUserSelection a callback to invoke with index of pressed checkBox
      * @param pos location in the Layout (if the layout supports Point locations)
      * @return a smart pointer copy of the object kept in the Layout

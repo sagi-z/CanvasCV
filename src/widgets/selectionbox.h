@@ -76,7 +76,7 @@ private:
 
 }
 
-/** @example example_selectionbox.cpp
+/** @example example_selectbox.cpp
  * This is an example of how to use the SelectionBox Widget.
  */
 
