@@ -61,6 +61,17 @@ public:
     /// returns pressed button index or -1 if not pressed
     int getUserSelection();
 
+    /**
+     * @brief getTextAt
+     * return the text at index index
+     * @param index is the index you want the text for
+     * @return return the text at index index or empty string if invalid index
+     */
+    std::string getTextAt(int index) const;
+
+    /// return nunmber of buttons
+    size_t size() const;
+
     virtual const char *getType() const;
 
     static const char *type;
@@ -77,8 +88,8 @@ protected:
 
 private:
     int userSelection;
-    std::shared_ptr<VFrame> frame;
-    std::shared_ptr<HorizontalLayout> buttons;
+    VFrame *frame;
+    HorizontalLayout *buttons;
 };
 
 }

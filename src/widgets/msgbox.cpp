@@ -24,12 +24,12 @@ MsgBox::MsgBox(const Point &pos)
     :CompoundWidget(pos),
       userSelection(-1)
 {
-    frame = VFrame::create(*this, pos);
+    frame = VFrame::create(*this, pos).get();
     frame->setFrameRelief(RAISED);
     frame->setPadding(5);
     auto text = Text::create(*frame, "", CENTER_TOP, CENTER);
     text->setAlpha(0); // transpaernt backgound
-    buttons = HorizontalLayout::create(*frame);
+    buttons = HorizontalLayout::create(*frame).get();
     buttons->setLayoutAnchor(CENTER);
 }
 
@@ -84,6 +84,20 @@ shared_ptr<MsgBox> MsgBox::create(Canvas &canvas, const string &msg, vector<stri
 int MsgBox::getUserSelection()
 {
     return userSelection;
+}
+
+string MsgBox::getTextAt(int index) const
+{
+    if (index >= 0 && index < size())
+    {
+        return buttons->at<Button>(index)->getText();
+    }
+    return "";
+}
+
+size_t MsgBox::size() const
+{
+    return buttons->size();
 }
 
 }

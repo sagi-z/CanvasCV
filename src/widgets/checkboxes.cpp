@@ -135,7 +135,7 @@ bool CheckBoxes::isChecked(int index) const
 
 string CheckBoxes::getTextAt(int index) const
 {
-    if (index >= 0 && index < selections.size())
+    if (index >= 0 && index < size())
     {
         return frame->at<HorizontalLayout>(index)->at<Text>(1)->getText();
     }

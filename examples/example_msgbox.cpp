@@ -82,7 +82,9 @@ int main(int argc, char **argv)
     {
         if (msgBox->getUserSelection() != -1)
         {
-            cout << "MsgBox was pressed with key index " << msgBox->getUserSelection() << endl;
+            int selection = msgBox->getUserSelection();
+            cout << "MsgBox was pressed with key index " << selection <<
+                    "(" << msgBox->getTextAt(selection) << ")" << endl;
             msgBox = MsgBox::create(c,
                                     "Do you really want to exit?",
                                     {"Yes", "No"},

@@ -58,7 +58,7 @@ shared_ptr<SelectionBox> SelectionBox::create(Layout &layoutVal, vector<string> 
 
 string SelectionBox::getTextAt(int index) const
 {
-    if (index >= 0 && index < frame->size())
+    if (index >= 0 && index < size())
     {
         return frame->at<Button>(index)->getText();
     }
