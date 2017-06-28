@@ -103,7 +103,7 @@ void Text::drawFG(Mat &dst)
             Point textPos(padding, y); // aligh to left by default
             if (flowAnchor & CENTER)
             {
-                textPos.x += (int) (dst.cols - strRow.width) / 2.;
+                textPos.x += (dst.cols - strRow.width) / 2.;
             }
             else if (flowAnchor & RIGHT)
             {
@@ -189,11 +189,11 @@ void Text::prepareMsgParts()
                     ratio = (double) lineData.width / rectWidth;
                     realWidth = rectWidth;
                 }
-                int stringPartsLen = (int) floor(lineData.str.length() / ratio);
+                int stringPartsLen = floor(lineData.str.length() / ratio);
                 for (int i = 0; i < numRows; ++i)
                 {
                     int start = i * stringPartsLen;
-                    int left = (int) lineData.str.length() - start;
+                    int left = lineData.str.length() - start;
                     int len = left > stringPartsLen ? stringPartsLen : left;
                     rows.push_back({lineData.str.substr(start, len), realWidth});
                 }

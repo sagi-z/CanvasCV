@@ -238,7 +238,7 @@ int main(int argc, char **argv)
     {
         if (! fb)
         {
-            fb = FileBrowser::create(c, startPath, cb);
+            fb = FileBrowser::create(c, startPath.string(), cb);
             fb->setFillColor(Colors::RoyalBlue);
             fb->setAlpha(128);
         }
@@ -251,7 +251,7 @@ int main(int argc, char **argv)
             cout << "Starting a new FileBrowser" << endl;
             startPath = fb->getUserSelection();
             if (! fs::is_directory(startPath)) startPath = startPath.parent_path();
-            fb = FileBrowser::create(c, startPath, cb);
+            fb = FileBrowser::create(c, startPath.string(), cb);
             fb->setFillColor(Colors::RoyalBlue);
             fb->setAlpha(128);
         }

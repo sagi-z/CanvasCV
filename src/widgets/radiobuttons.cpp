@@ -31,7 +31,7 @@ RadioButtons::RadioButtons(const Point &pos)
 
 void RadioButtons::addRadioButton(const string &txt, Widget::CBUserSelection cbUserSelection)
 {
-    int i = (int) frame->size();
+    int i = frame->size();
     auto row = HorizontalLayout::create(*frame);
     auto button = MatWidget::create(*row, getRadioNotSelected());
     auto text = Text::create(*row, txt);

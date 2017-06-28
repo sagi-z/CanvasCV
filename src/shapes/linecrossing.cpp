@@ -116,10 +116,10 @@ void LineCrossing::arrowTailHead(Point &tail, Point &head)
         // calculate the (x,y) of the left side normal unit vector
         double x = -direction*(p2.y-head.y)/len;
         double y = direction*(p2.x-head.x)/len;
-        head.x=head.x+x*10;
-        head.y=head.y+y*10;
-        tail.x=head.x+x*arrowMagnitude;
-        tail.y=head.y+y*arrowMagnitude;
+        head.x = head.x+x*10;
+        head.y = head.y+y*10;
+        tail.x = head.x+x*arrowMagnitude;
+        tail.y = head.y+y*arrowMagnitude;
     }
 }
 

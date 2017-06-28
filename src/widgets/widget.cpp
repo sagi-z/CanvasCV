@@ -617,8 +617,8 @@ void Widget::readInternals(const FileNode &node)
     node["visible"] >> visible;
     node["thickness"] >> thickness;
     node["lineType"] >> lineType;
-    node["layoutAnchor"] >> (int) layoutAnchor;
-    node["flowAnchor"] >> (int) flowAnchor;
+    node["layoutAnchor"] >> layoutAnchor;
+    node["flowAnchor"] >> flowAnchor;
     node["stretchX"] >> stretchX;
     node["stretchY"] >> stretchY;
     node["isSelectable"] >> isSelectable;

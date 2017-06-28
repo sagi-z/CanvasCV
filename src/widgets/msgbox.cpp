@@ -72,8 +72,8 @@ shared_ptr<MsgBox> MsgBox::create(Canvas &canvas, const string &msg, vector<stri
     if (pos.x < 0 || pos.y < 0)
     {
         Size screenSize = canvas.getSize();
-        msgBox->setLocation(Point((int) screenSize.width / 2. - msgBox->getRect().width / 2.,
-                                  (int) screenSize.height / 2. - msgBox->getRect().height / 2.));
+        msgBox->setLocation(Point(screenSize.width / 2. - msgBox->getRect().width / 2.,
+                                  screenSize.height / 2. - msgBox->getRect().height / 2.));
     }
     // this part could have been done by implementing 'recalcCompound' - END
 
