@@ -99,10 +99,10 @@ void VerticalLayout::recalcCompound()
         }
         else if (widgetLayoutAnchor & CENTER)
         {
-            pos.x = currentPosX + padding + maxWidth / 2. - widget->getRect().width / 2.;
+            pos.x = (int) currentPosX + padding + maxWidth / 2. - widget->getRect().width / 2.;
             if (flowAnchor & RIGHT)
             {
-                pos.x = currentPosX - padding - maxWidth / 2. + widget->getRect().width / 2.;
+                pos.x = (int) currentPosX - padding - maxWidth / 2. + widget->getRect().width / 2.;
             }
         }
         else

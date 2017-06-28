@@ -34,13 +34,25 @@ public:
     virtual void setLineType(int value);
 
     /// delegate to internal Widget parts added by derived classes
-    virtual void setVisible(bool value);
+    virtual void setAlpha(uchar value);
 
     /// delegate to internal Widget parts added by derived classes
+    virtual void setVisible(bool value);
+
+    /// delegate to active widget or to our derived class if none active
     virtual const std::string &getStatusMsg() const;
 
     /// delegate to internal Widget parts added by derived classes
     virtual void translate(const cv::Point &translation);
+
+    /**
+     * @brief doForAll
+     * invoke the cb for all included widgets (not on self).
+     * This is usually not necessary since the above methods delegate to both
+     * contained widgets and self.
+     * @param cb
+     */
+    void doForAll(CBWidget cb);
 
 protected:
     // force inheritance

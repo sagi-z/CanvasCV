@@ -110,7 +110,7 @@ int main(int argc, char **argv)
     {
         c.redrawOn(image, out);
         imshow("Canvas", out);
-        key = waitKeyEx(delay); // GUI and callbacks happen here
+        key = c.waitKeyEx(delay); // GUI and callbacks happen here
     }
 
     destroyAllWindows();

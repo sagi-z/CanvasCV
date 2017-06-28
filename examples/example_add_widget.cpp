@@ -239,10 +239,12 @@ int main(int argc, char **argv)
         if (! fb)
         {
             fb = FileBrowser::create(c, startPath, cb);
+            fb->setFillColor(Colors::RoyalBlue);
+            fb->setAlpha(128);
         }
         c.redrawOn(image, out);
         imshow("Canvas", out);
-        key = waitKeyEx(delay); // GUI and callbacks happen here
+        key = c.waitKeyEx(delay); // GUI and callbacks happen here
         if (fb->getUserSelection().length())
         {
             cout << "Loop: Got user selection '" << fb->getUserSelection() << "'" << endl;
@@ -250,6 +252,8 @@ int main(int argc, char **argv)
             startPath = fb->getUserSelection();
             if (! fs::is_directory(startPath)) startPath = startPath.parent_path();
             fb = FileBrowser::create(c, startPath, cb);
+            fb->setFillColor(Colors::RoyalBlue);
+            fb->setAlpha(128);
         }
         if (fb->isRemoved() && ! fb->getUserSelection().length())
         {

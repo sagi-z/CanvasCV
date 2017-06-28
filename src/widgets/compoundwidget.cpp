@@ -54,6 +54,15 @@ void CompoundWidget::setLineType(int value)
     }
 }
 
+void CompoundWidget::setAlpha(uchar value)
+{
+    Widget::setAlpha(value);
+    for (auto &widget : widgets)
+    {
+        widget->setAlpha(value);
+    }
+}
+
 void CompoundWidget::setVisible(bool value)
 {
     Widget::setVisible(value);
@@ -287,6 +296,17 @@ void CompoundWidget::translate(const Point &translation)
             widget->translate(translation);
         }
         setDirty();
+    }
+}
+
+void CompoundWidget::doForAll(Widget::CBWidget cb)
+{
+    if (cb)
+    {
+        for (auto &widget : widgets)
+        {
+            cb(widget.get());
+        }
     }
 }
 

@@ -30,7 +30,7 @@ CheckBoxes::CheckBoxes(const Point &pos)
 
 void CheckBoxes::addCheckBox(const string &txt, Widget::CBUserSelection cbUserSelection)
 {
-    int i = frame->size();
+    int i = (int) frame->size();
     auto row = HorizontalLayout::create(*frame);
     auto checkBox = MatWidget::create(*row, getCheckBoxNotSelected());
     auto text = Text::create(*row, txt);

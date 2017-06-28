@@ -16,8 +16,7 @@ namespace canvascv
 class Button : public Text
 {
 public:
-    /// signature of a callback which gets the State
-    typedef std::function<void(Widget*)> CBPress;
+    typedef std::function<void(Widget*)> CBWidget;
 
     /**
      * @brief create a button widget
@@ -32,21 +31,21 @@ public:
                                           const cv::Point &pos,
                                           const std::string &buttonText,
                                           const std::string &statusMsg="",
-                                          CBPress cbVal = CBPress(),
+                                          CBWidget cbVal = CBWidget(),
                                           int maxWidthVal = 0);
 
     /// a convinient version to the above without the 'pos' argument
     static std::shared_ptr<Button> create(Layout &layout,
                                           const std::string &buttonText,
                                           const std::string &statusMsg="",
-                                          CBPress cbVal = CBPress(),
+                                          CBWidget cbVal = CBWidget(),
                                           int maxWidthVal = 0);
 
     /// The button will always have a FLAT relief
     void setFlatButton();
 
     /// Call a user CB when pressed
-    void onPress(CBPress value);
+    void onPress(CBWidget value);
 
     virtual const char *getType() const;
 
@@ -75,7 +74,7 @@ private:
     virtual void mouseEnter();
     virtual void mouseLeave();
 
-    CBPress cb;
+    CBWidget cb;
 };
 
 }

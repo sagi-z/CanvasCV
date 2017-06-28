@@ -504,7 +504,11 @@ void Canvas::setMouseCallback(const char *winName)
 
 int Canvas::waitKeyEx(int delay)
 {
+#if OPENCV_HAS_WAITKEYEX
     int key = cv::waitKeyEx(delay);
+#else
+    int key = cv::waitKey(delay);
+#endif
     consumeKey(key);
     return key;
 }

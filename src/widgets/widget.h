@@ -31,6 +31,9 @@ public:
         RELEASE ///< mouse left
     };
 
+    /// signature of a callback which only gets the widget
+    typedef std::function<void(Widget*)> CBWidget;
+
     /// signature of a callback which gets the State
     typedef std::function<void(Widget*, State)> CBWidgetState;
 
@@ -92,7 +95,7 @@ public:
     uchar getAlpha() const;
 
     /// set the alpha value used for the widge background [0,255] => [transparent,opaque]
-    void setAlpha(uchar value);
+    virtual void setAlpha(uchar value);
 
     /**
      * @brief The Anchor enum

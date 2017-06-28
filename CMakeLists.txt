@@ -5,8 +5,10 @@ project (canvascv)
 find_package(OpenCV 3.1.0 REQUIRED)
 SET(CMAKE_GIT_REPO "CanvasCV")
 
-add_definitions(-std=c++11 -Werror=return-type)
-SET( CMAKE_CXX_STANDARD_REQUIRED ON )
+if(NOT WIN32)
+    add_definitions(-Werror=return-type)
+endif()
+SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_CXX_STANDARD 11)
 
 # add include directories to the project
@@ -28,6 +30,12 @@ FILE(GLOB_RECURSE EXAMPLE_SRCS
     "examples/*.h"
     "examples/*.cpp"
 )
+
+if(${OpenCV_VERSION} VERSION_GREATER "3.1.0")
+    ADD_DEFINITIONS(-DOPENCV_HAS_WAITKEYEX=1)
+else()
+    ADD_DEFINITIONS(-DOPENCV_HAS_WAITKEYEX=0)
+endif()
 
 # Allow the developer to select if Dynamic or Static libraries are built
 option(BUILD_SHARED_LIBS "Build Shared Libraries" OFF)

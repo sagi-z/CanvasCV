@@ -99,10 +99,10 @@ void HorizontalLayout::recalcCompound()
         }
         else if (widgetLayoutAnchor & CENTER)
         {
-            pos.y = currentPosY + padding + maxHeight / 2. - widget->getRect().height / 2.;
+            pos.y = (int) currentPosY + padding + maxHeight / 2. - widget->getRect().height / 2.;
             if (flowAnchor & BOTTOM)
             {
-                pos.y = currentPosY - padding - maxHeight / 2. + widget->getRect().height / 2.;
+                pos.y = (int) currentPosY - padding - maxHeight / 2. + widget->getRect().height / 2.;
             }
         }
         else

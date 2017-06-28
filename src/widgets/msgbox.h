@@ -46,7 +46,7 @@ public:
             }
             c.redrawOn(...);
             imshow(...);
-            key = waitKeyEx(...);
+            key = c.waitKeyEx(...); // GUI and callbacks happen here
         }
      * @endcode
      * Or you could use the callback version (see the example)

@@ -33,7 +33,7 @@ public:
 
     void setHeadPos(const cv::Point& pos);
 
-    int length() const {
+    double length() const {
         const cv::Point &p1 = (*pt1)();
         const cv::Point &p2 = (*pt2)();
         return sqrt(pow(p2.y-p1.y,2)+pow(p2.x-p1.x,2));

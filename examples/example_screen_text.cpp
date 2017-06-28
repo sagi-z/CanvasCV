@@ -94,9 +94,7 @@ int main(int argc, char **argv)
 
         imshow("Canvas", out);
 
-        // key = c.waitKeyEx(delay); // optionally - could use this insetad of the next 2 lines
-
-        key = waitKeyEx(delay);
+        key = c.waitKeyEx(delay); // GUI and callbacks happen here
         c.consumeKey(key);
 
     } while (key != 'q');

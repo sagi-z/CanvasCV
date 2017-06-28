@@ -162,7 +162,7 @@ int main(int argc, char **argv)
 
         c.redrawOn(image, out);
         imshow("Canvas", out);
-        key = c.waitKeyEx(delay); // optional - method to encapsulate 2 calls
+        key = c.waitKeyEx(delay); // GUI and callbacks happen here
     }
 
     destroyAllWindows();

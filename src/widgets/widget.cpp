@@ -136,7 +136,7 @@ void Widget::setLineType(int value)
 
 uchar Widget::getAlpha() const
 {
-    return fillColor[3];
+    return (uchar) fillColor[3];
 }
 
 void Widget::setAlpha(uchar value)
@@ -357,7 +357,7 @@ void Widget::mergeMats(Mat &roiSrc, Mat &roiDst)
         {
             Vec4b *pSrcRow;
             Vec4b *pDstRow;
-            double alpha, alphaOrig, beta;
+            double alpha, beta;
             for (int r = 0; r < roiDst.rows; ++r)
             {
                 pSrcRow = roiSrc.ptr<Vec4b>(r);
@@ -366,9 +366,9 @@ void Widget::mergeMats(Mat &roiSrc, Mat &roiDst)
                 {
                     alpha = pSrcRow[c][3] / 255.;
                     beta = 1. - alpha;
-                    pDstRow[c][0] = pSrcRow[c][0]*alpha + pDstRow[c][0]*beta;
-                    pDstRow[c][1] = pSrcRow[c][1]*alpha + pDstRow[c][1]*beta;
-                    pDstRow[c][2] = pSrcRow[c][2]*alpha + pDstRow[c][2]*beta;
+                    pDstRow[c][0] = (uchar) pSrcRow[c][0]*alpha + pDstRow[c][0]*beta;
+                    pDstRow[c][1] = (uchar) pSrcRow[c][1]*alpha + pDstRow[c][1]*beta;
+                    pDstRow[c][2] = (uchar) pSrcRow[c][2]*alpha + pDstRow[c][2]*beta;
                 }
             }
         }
@@ -385,9 +385,9 @@ void Widget::mergeMats(Mat &roiSrc, Mat &roiDst)
                 {
                     alpha = pSrcRow[c][3] / 255.;
                     beta = 1. - alpha;
-                    pDstRow[c][0] = pSrcRow[c][0]*alpha + pDstRow[c][0]*beta;
-                    pDstRow[c][1] = pSrcRow[c][1]*alpha + pDstRow[c][1]*beta;
-                    pDstRow[c][2] = pSrcRow[c][2]*alpha + pDstRow[c][2]*beta;
+                    pDstRow[c][0] = (uchar) pSrcRow[c][0]*alpha + pDstRow[c][0]*beta;
+                    pDstRow[c][1] = (uchar) pSrcRow[c][1]*alpha + pDstRow[c][1]*beta;
+                    pDstRow[c][2] = (uchar) pSrcRow[c][2]*alpha + pDstRow[c][2]*beta;
                 }
             }
         }
