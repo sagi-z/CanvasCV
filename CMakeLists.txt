@@ -74,7 +74,7 @@ install(TARGETS canvascv
 FOREACH ( file ${LIB_HEADERS} )
     GET_FILENAME_COMPONENT( dir ${file} DIRECTORY )
     STRING(REPLACE "${CMAKE_SOURCE_DIR}/src/" "" subdir ${dir})
-    MESSAGE ( "${file} will be installed in include/${subdir}")
+    #MESSAGE ( "${file} will be installed in include/${subdir}")
     INSTALL( FILES ${file} DESTINATION include/${subdir} )
 ENDFOREACH()
 
@@ -123,11 +123,13 @@ if(BUILD_DOCUMENTATION)
   # CPACK_PACKAGE_VERSION
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_linux.md.in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_linux.md @ONLY)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_windows.md.in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_windows.md @ONLY)
+  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/doxygen_header.html.in")
+      set(CMAKE_DOXYGEN_HTML_HEADER "${CMAKE_SOURCE_DIR}/doxygen_header.html")
+  endif()
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/Doxyfile.in ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile @ONLY)
 
   # Allow html header changes
-  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/doxygen_header.html.in")
-      set(CMAKE_DOXYGEN_HTML_HEADER "${CMAKE_SOURCE_DIR}/doxygen_header.html")
+  if(${CMAKE_DOXYGEN_HTML_HEADER})
       add_custom_target (doc ALL
           COMMAND ${DOXYGEN_EXECUTABLE} -w html ${CMAKE_BINARY_DIR}/doxygen_header_orig.html.in ${CMAKE_BINARY_DIR}/ignore_footer.html ${CMAKE_BINARY_DIR}/ignore_css.css
           COMMAND ${CMAKE_COMMAND} -D SRC1=${CMAKE_CURRENT_SOURCE_DIR}/doxygen_header.html.in
@@ -140,7 +142,6 @@ if(BUILD_DOCUMENTATION)
           WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
           )
   else()
-      set(CMAKE_DOXYGEN_HTML_HEADER "")
       add_custom_target (doc ALL
           COMMAND ${CMAKE_COMMAND} -E remove_directory doc
           COMMAND ${CMAKE_COMMAND} -E make_directory doc
