@@ -16,7 +16,7 @@
 title: CanvasCV
 #email: your-email@domain.com
 description: > # this means to ignore newlines until "baseurl:"
-  CanvasCV is an OpenCV GUI system for simple user ineraction. It works
+  CanvasCV is an OpenCV GUI framework for simple user ineraction. It works
   inside the OpenCV native windows. It provides interactive shapes and widgets
   in a non intrusive design.
 baseurl: "/CanvasCV" # the subpath of your site, e.g. /blog
