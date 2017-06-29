@@ -5,3 +5,4 @@ Doxyfile
 doc/
 build/
 CMakeLists.txt.user
+*.swp
