@@ -125,24 +125,26 @@ if(BUILD_DOCUMENTATION)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_windows.md.in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_windows.md @ONLY)
   if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/doxygen_header.html.in")
       set(CMAKE_DOXYGEN_HTML_HEADER "${CMAKE_SOURCE_DIR}/doxygen_header.html")
+  else()
+      set(CMAKE_DOXYGEN_HTML_HEADER "")
   endif()
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/Doxyfile.in ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile @ONLY)
 
   # Allow html header changes
-  if(${CMAKE_DOXYGEN_HTML_HEADER})
-      add_custom_target (doc ALL
-          COMMAND ${DOXYGEN_EXECUTABLE} -w html ${CMAKE_BINARY_DIR}/doxygen_header_orig.html.in ${CMAKE_BINARY_DIR}/ignore_footer.html ${CMAKE_BINARY_DIR}/ignore_css.css
-          COMMAND ${CMAKE_COMMAND} -D SRC1=${CMAKE_CURRENT_SOURCE_DIR}/doxygen_header.html.in
-                                       -D SRC2=${CMAKE_BINARY_DIR}/doxygen_header_orig.html.in
-                                       -D DST=${CMAKE_SOURCE_DIR}/doxygen_header.html
-                                       -P ${CMAKE_BINARY_DIR}/concat.cmake
+  if(CMAKE_DOXYGEN_HTML_HEADER STREQUAL "")
+      add_custom_target (doc
           COMMAND ${CMAKE_COMMAND} -E remove_directory doc
           COMMAND ${CMAKE_COMMAND} -E make_directory doc
           COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
           WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
           )
   else()
-      add_custom_target (doc ALL
+      add_custom_target (doc
+          COMMAND ${DOXYGEN_EXECUTABLE} -w html ${CMAKE_BINARY_DIR}/doxygen_header_orig.html.in ${CMAKE_BINARY_DIR}/ignore_footer.html ${CMAKE_BINARY_DIR}/ignore_css.css
+          COMMAND ${CMAKE_COMMAND} -D SRC1=${CMAKE_CURRENT_SOURCE_DIR}/doxygen_header.html.in
+                                       -D SRC2=${CMAKE_BINARY_DIR}/doxygen_header_orig.html.in
+                                       -D DST=${CMAKE_SOURCE_DIR}/doxygen_header.html
+                                       -P ${CMAKE_BINARY_DIR}/concat.cmake
           COMMAND ${CMAKE_COMMAND} -E remove_directory doc
           COMMAND ${CMAKE_COMMAND} -E make_directory doc
           COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
