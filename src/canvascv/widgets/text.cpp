@@ -207,6 +207,34 @@ void Text::prepareMsgParts()
     allocateBG(rect.size());
 }
 
+void Text::setFontHeight(int value)
+{
+    static const string testStr("/");
+
+    if (fontHeight != value)
+    {
+        int height = fontHeight;
+        while (height < value)
+        {
+            fontScale += 0.005;
+            int baseline=0;
+            Size textSize = getTextSize(testStr, fontFace,
+                                        fontScale, thickness,
+                                        &baseline);
+            height = textSize.height + baseline + padding;
+        }
+        while (height > value)
+        {
+            fontScale -= 0.005;
+            int baseline=0;
+            Size textSize = getTextSize(testStr, fontFace,
+                                        fontScale, thickness,
+                                        &baseline);
+            height = textSize.height + baseline + padding;
+        }
+    }
+}
+
 int Text::getPadding() const
 {
     return padding;

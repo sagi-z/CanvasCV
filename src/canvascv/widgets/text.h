@@ -60,8 +60,11 @@ public:
     /// set the OpenCV scale used for te font
     void setFontScale(double value);
 
-    /// get the calculated for height
+    /// get the calculated font height (with padding and internal font spaces)
     int getFontHeight() const;
+
+    /// set the font scale from a requested pixel height (with padding and internal font spaces)
+    void setFontHeight(int value);
 
     /// get the maxuimum allowed width of rows in pixels (0 means it's disabled)
     int getMaxWidth() const;

@@ -66,7 +66,7 @@ int main(int argc, char **argv)
     help(c);
 
     namedWindow("Canvas",
-                WINDOW_AUTOSIZE); // diable mouse resize since resizing
+                WINDOW_AUTOSIZE); // disable mouse resize since resizing
                                   // the window will stretch the widgets
 
     int delay = 1000/25;

@@ -51,7 +51,7 @@ const char *MsgBox::getType() const
 }
 
 shared_ptr<MsgBox> MsgBox::create(Canvas &canvas, const string &msg, vector<string> buttonNames,
-                                       CBUserSelection cbUserSelection, const Point &pos)
+                                  CBUserSelection cbUserSelection, const Point &pos)
 {
     shared_ptr<MsgBox> msgBox(WidgetFactoryT<MsgBox>::newWidget(canvas, pos));
     msgBox->setMsg(msg);
@@ -64,7 +64,7 @@ shared_ptr<MsgBox> MsgBox::create(Canvas &canvas, const string &msg, vector<stri
         button->notifyOnChange([msgBox, i, cbUserSelection](Widget *w, Widget::State state) {
             if (state == Widget::PRESS) {
                 msgBox->userSelection = i;
-                if (cbUserSelection) cbUserSelection(w, i);
+                if (cbUserSelection) cbUserSelection(msgBox.get(), i);
                 msgBox->rmvFromLayout();
             }
         });
@@ -95,12 +95,13 @@ int MsgBox::createModal(const string &title, const string &msg, std::vector<stri
     namedWindow(title, WINDOW_AUTOSIZE | WINDOW_GUI_NORMAL);
     c.setMouseCallback(title);
     Mat out;
-    while(true)
+    while(! msgBox->isRemoved())
     {
         c.redrawOn(image, out);
         imshow(title, out);
         c.waitKeyEx();
     }
+    destroyWindow(title);
     return msgBox->getUserSelection();
 }
 

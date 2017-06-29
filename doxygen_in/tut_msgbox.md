@@ -1,43 +1,187 @@
 Using the MsgBox {#tutmsgbox}
 ================
+The `canvascv::MsgBox` is a little different from other widgets, because it is very high level.
+
+This makes it easy to use and a good starting example for widgets that get mouse input.
+
+The `MsgBox` is a "one shot user pressed and widget died" kind of widget.
+
+[TOC]
+
+@section sec1 reminder of main loop
+Just to remind you from the previous tutotial, the main loop looks something like this:
 ~~~~~~~{.cpp}
-#include <opencv2/highgui.hpp>
+#include "canvascv/canvas.h"
+#include "canvascv/widgets/msgbox.h"
 
-#include "canvas.h"
-#include "colors.h"
-#include "widgets/msgbox.h"
-
-using namespace std;
-using namespace cv;
 using namespace canvascv;
 
-int main()
+int main(int argc, char **argv)
 {
-    Mat image(600, 800, CV_8UC3);
-    image = Colors::White;
+    --argc;
+    ++argv;
+    if (! argc)
+    {
+        Canvas::fatal("Must get a path to an image as a parameter" , -1);
+    }
+
+    Mat image = imread(argv[0]);
+    if (image.empty())
+    {
+        Canvas::fatal(string("Cannot load image ") + argv[0], -2);
+    }
 
     Canvas c(image.size());
+    c.enableScreenText();
 
-    namedWindow("Canvas",
-                WINDOW_AUTOSIZE); // diable mouse resize since resizing
-                                  // the window will stretch the widgets
-
-    c.setMouseCallback("Canvas"); // optional for mouse usage (see also example_selectbox.cpp)
-
-    auto msgBox = MsgBox::create(c, "Do you really want to do that?", {"Yes", "No"});
+    namedWindow("MsgBox example", WINDOW_AUTOSIZE | WINDOW_GUI_NORMAL );
 
     int delay = 1000/25;
-    int key = -1;
+    int key = 0;
     Mat out;
     do
     {
-        c.redrawOn(image, out);
-        imshow("Canvas", out);
-        key = c.waitKeyEx(delay);
-    } while (msgBox->getUserSelection() != -1);
-    cout << "user choose option with index " << msgBox->getUserSelection() << endl;
+        c.redrawOn(image, out);  // draw the canvas on the image copy
+
+        imshow("MsgBox example", out);
+
+        key = c.waitKeyEx(delay); // GUI and callbacks happen here
+    } while (key != 'q');
+
+    destroyAllWindows();
 
     return 0;
 }
 ~~~~~~~
 
+We want to work on top of an existing image so you can see the transparency.
+
+Let's add the real code now.
+
+@section sec2 a non modal MsgBox
+
+Remeber thah the MsgBox is a "one shot user pressed and widget died" kind of widget.
+
+If you wan to see code using the `MsgBox` without callback then see @ref example_msgbox.cpp.
+
+Here we'll be working with callbacks. The callback is called when the user presses a button.
+
+After the callback is called the MsgBox will be destroyed automatically by the framework.
+
+In our callback we'll immediatly create a new MsgBox with the same callback, just changing the message.
+
+Add these lines after creating the `namedWindow`:
+~~~~~~~{.cpp}
+using namespace canvascv;
+    //...
+
+    c.setMouseCallback("MsgBox example"); // optional for mouse usage (see also example_selectbox.cpp)
+
+    Widget::CBUserSelection  cb;
+    int cnt = 0;
+
+    // initialize the cb with a C++11 lambda expression.
+    // this will be given to the MsgBoxes we'll create.
+    cb = [&c, &cb, &cnt](Widget *w, int index)
+    {
+        MsgBox *pMsgBox = (MsgBox*) w;
+
+        stringstream userText;
+        userText << "User pressed option numer '" << index << "'\n" <<
+                    "The button text is '" << pMsgBox->getTextAt(index) << "'\n\n" <<
+                    "(press q to exit)";
+        c.setScreenText(userText.str());
+
+        stringstream msgBoxText;
+        msgBoxText << "Do you really want to do that? " <<
+                      "(" << ++cnt << ")";
+
+        // create a new MsgBox
+        MsgBox::create(c, msgBoxText.str(), {"Yes", "No"}, cb);
+    };
+
+    // the first MsgBox the user will see is this one.
+    // when it ends by a mouse press, the cb will be called to create a new MsgBox.
+    MsgBox::create(c, "Do you really want to do that?", {"Yes", "No"}, cb);
+
+    //...
+~~~~~~~
+
+Notes:
+* All widgets have a static `create` methods, which is the only way to create them.
+* The `canvascv::MsgBox::create` will return a `shared_ptr<MsgBox>` instance, which you don't have to keep since another one is kept by the `canvascv::Layout`.
+* This tutorial is using C++11 lambda expressions as callbacks, but anything which has the `void(Widget*,int)` signature will work.
+* We needed `canvascv::Canvas::setMouseCallback` since the Canvas will intercept mouse events for the MsgBox now.
+* When executed with a path to an image, this gives you (depends on your image):
+@image html tut_msgbox.png
+
+@section sec3 a modal MsgBox
+Since a `MsgBox` usually requires immediate user attention, you have a way to block other GUI while waiting for a user reaction.
+
+This opens an new independent OpenCV window, occupying just the MsgBox, and waiting for a user response.
+
+This is a blocking API, the code will wait for a user button press.
+
+(You actually saw something like this when we explained the `canvascv::Canvas::fatal()` in a previous tutorial)
+
+
+~~~~~~~{.cpp}
+#include "canvascv/canvas.h"
+#include "canvascv/widgets/msgbox.h"
+
+using namespace canvascv;
+
+int main(int argc, char **argv)
+{
+    --argc;
+    ++argv;
+    if (! argc)
+    {
+        Canvas::fatal("Must get a path to an image as a parameter" , -1);
+    }
+
+    Mat image = imread(argv[0]);
+    if (image.empty())
+    {
+        Canvas::fatal(string("Cannot load image ") + argv[0], -2);
+    }
+
+    Canvas c(image.size());
+    c.enableScreenText();
+
+    namedWindow("MsgBox example", WINDOW_AUTOSIZE | WINDOW_GUI_NORMAL );
+
+    c.setMouseCallback("MsgBox example"); // optional for mouse usage (see also example_selectbox.cpp)
+
+    int delay = 1000/25;
+    int key = 0;
+    Mat out;
+    int userSelection = 0;
+    do
+    {
+        c.redrawOn(image, out);  // draw the canvas on the image copy
+
+        imshow("MsgBox example", out);
+
+        userSelection = MsgBox::createModal("Modal MsgBox", "Notice this window", {"Ok", "Whatever"});
+        stringstream s;
+        s << "User pressed button with index '" << userSelection << "'\n\n" <<
+             "(Choose 'Whatever' to exit)";
+        c.setScreenText(s.str());
+
+        key = c.waitKeyEx(delay); // GUI and callbacks happen here
+    } while (userSelection == 0);
+
+    destroyAllWindows();
+
+    return 0;
+}
+~~~~~~~
+
+Notes:
+* Again - this is a blocking API. The line which is using `canvascv::MsgBox::createModal` waits for a response.
+* Currently there is no control of where the OpenCV window will be opened.
+* When executed with a path to an image, this gives you (depends on your image):
+@image html tut_msgbox_modal.png
+
+**That's all for this tutorial**

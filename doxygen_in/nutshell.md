@@ -34,7 +34,7 @@ int main()
         c.redrawOn(image, out);
         imshow("Canvas", out);
         key = c.waitKeyEx(delay);
-    } while (msgBox->getUserSelection() != -1);
+    } while (msgBox->getUserSelection() == -1);
     cout << "user choose option with index " << msgBox->getUserSelection() << endl;
 
     return 0;
