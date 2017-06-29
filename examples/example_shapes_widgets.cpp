@@ -1,19 +1,17 @@
 // Mandator include file
-#include "canvas.h"
+#include "canvascv/canvas.h"
 
-// **Optional
 // We don't need these includes for shape based interaction with the user.
 // We need these if we want to customize or create shapes on canvas form the code.
-#include "shapes/linecrossing.h"
-#include "shapes/textbox.h"
-#include "shapes/shapesconnector.h"
-#include "shapes/ellipse.h"
+#include "canvascv/shapes/linecrossing.h"
+#include "canvascv/shapes/textbox.h"
+#include "canvascv/shapes/shapesconnector.h"
+#include "canvascv/shapes/ellipse.h"
 
-// **Optional
 // These are used to create widgets
-#include "widgets/button.h"
-#include "widgets/vframe.h"
-#include "widgets/hframe.h"
+#include "canvascv/widgets/button.h"
+#include "canvascv/widgets/vframe.h"
+#include "canvascv/widgets/hframe.h"
 
 #include <iostream>
 #include <iterator>

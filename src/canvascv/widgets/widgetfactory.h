@@ -6,7 +6,7 @@
 #include <memory>
 #include <functional>
 #include "layout.h"
-#include "themes/themerepository.h"
+#include "canvascv/themes/themerepository.h"
 
 namespace canvascv
 {

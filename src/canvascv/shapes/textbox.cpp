@@ -1,5 +1,5 @@
 #include "textbox.h"
-#include "colors.h"
+#include "canvascv/colors.h"
 
 #include <opencv2/imgproc.hpp>
 
@@ -15,10 +15,10 @@ TextBox::TextBox(const Point &pos) :
     Shape(),
     text("text"),
     prevText(text),
-    fontFace(FONT_HERSHEY_COMPLEX_SMALL),
-    fontScale(0.5),
-    fontThickness(1),
-    fontColor(outlineColor)
+    fontFace(Consts::DEFAULT_FONT),
+    fontScale(Consts::DEFAULT_FONT_SCALE),
+    fontThickness(Consts::DEFAULT_FONT_THICKNESS),
+    fontColor(Consts::DEFAULT_FONT_COLOR)
 {
     topLeft.reset(ShapeFactoryT<Handle>::newShape(pos));
     topLeft->setLocked(true);

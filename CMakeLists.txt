@@ -73,8 +73,8 @@ install(TARGETS canvascv
 
 FOREACH ( file ${LIB_HEADERS} )
     GET_FILENAME_COMPONENT( dir ${file} DIRECTORY )
-    STRING(REPLACE "${CMAKE_SOURCE_DIR}/src" ${PROJECT_NAME} subdir ${dir})
-#    MESSAGE ( "${file} will be installed in include/${subdir}")
+    STRING(REPLACE "${CMAKE_SOURCE_DIR}/src/" "" subdir ${dir})
+    MESSAGE ( "${file} will be installed in include/${subdir}")
     INSTALL( FILES ${file} DESTINATION include/${subdir} )
 ENDFOREACH()
 

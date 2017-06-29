@@ -1,6 +1,9 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
+#include "canvascv/colors.h"
+#include "canvascv/consts.h"
+
 #include "shapes/shape.h"
 #include "widgets/widget.h"
 #include "shapes/shapefactory.h"
@@ -167,10 +170,10 @@ public:
      */
     void enableScreenText(cv::Scalar color = Colors::Black,
                           cv::Scalar bgColor = Colors::LightGray,
-                          double scale = 0.5,
-                          int thickness = 1,
+                          double scale = Consts::DEFAULT_FONT_SCALE,
+                          int thickness = Consts::DEFAULT_FONT_THICKNESS,
                           uchar alpha = 80,
-                          int fontFace = FONT_HERSHEY_COMPLEX_SMALL);
+                          int fontFace = Consts::DEFAULT_FONT);
 
     /**
      * @brief enableStatusMsg enables the bottom left text area for auto status messages
@@ -184,10 +187,10 @@ public:
      */
     void enableStatusMsg(cv::Scalar color = Colors::Orange,
                          cv::Scalar bgColor = Colors::LightGray,
-                         double scale = 0.5,
-                         int thickness = 1,
+                         double scale = Consts::DEFAULT_FONT_SCALE,
+                         int thickness = Consts::DEFAULT_FONT_THICKNESS,
                          uchar alpha = 80,
-                         int fontFace = FONT_HERSHEY_COMPLEX_SMALL);
+                         int fontFace = Consts::DEFAULT_FONT);
 
     /// set the default status message (active widget and shapes will override it)
     void setDefaultStatusMsg(const std::string &msg);

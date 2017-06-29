@@ -16,12 +16,12 @@ Text::Text(const Point &pos)
       doublePadding(padding*2),
       msg(),
       maxWidth(0),
-      fontScale(0.5),
-      fontFace(FONT_HERSHEY_COMPLEX_SMALL),
+      fontScale(Consts::DEFAULT_FONT_SCALE),
+      fontFace(Consts::DEFAULT_FONT),
       fontHeight(0)
 {
-    setOutlineColor(Colors::Black);
-    setFillColor(Colors::LightGray);
+    setOutlineColor(Consts::DEFAULT_FONT_COLOR);
+    setFillColor(Consts::DEFAULT_BG_COLOR);
 }
 
 shared_ptr<Text> Text::create(Layout &layout,

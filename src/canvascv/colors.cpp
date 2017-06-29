@@ -1,6 +1,7 @@
 #include "colors.h"
 
-namespace canvascv {
+namespace canvascv
+{
 
 const cv::Scalar Colors::OPAQUE(0,0,0,255);
 const cv::Scalar Colors::TRANSPARENT(0,0,0,0);

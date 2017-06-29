@@ -1,11 +1,13 @@
 Leaving the console {#tutscreentext}
 ===================
-OpenCV examples and tutorials make heavy use of the console to commuincate with the user.  
+OpenCV examples and tutorials make heavy use of the console to commuincate with the user.
+
 To start using the GUI instead of the console the first thing you need is to get to know the Canvas class.
 
 Introducing the CanvasCV class
 ------------------------------
-The Canvas class is associated with an OpenCV window and it gives you another virtual layer on top of your displayed Mat.  
+The Canvas class is associated with an OpenCV window and it gives you another virtual layer on top of your displayed Mat.
+
 This canvas class encapsulates **a lot** of work for you, so you can focus on the CV. It also handles key presses
 and mouse events.
 
@@ -50,7 +52,7 @@ Your application/utility might need command line arguments, or cannot continue f
  A simple write to the console before exiting is usually not enough to get the user attention.  
 For these simple cases you have a simple shortcut in Canvas::fatal():
 ~~~~~~~{.cpp}
-#include "canvas.h"
+#include "canvascv/canvas.h"
 
 using namespace canvascv;
 
@@ -67,5 +69,5 @@ int main(int argc, char **argv)
 ~~~~~~~
 
 which gives you:
-![CanvasCV]({{ site.baseurl }}/assets/img/screenshots/example_selectbox.png)
+@image html tut_fatal.png
 

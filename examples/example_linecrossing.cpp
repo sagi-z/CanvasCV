@@ -1,10 +1,9 @@
 // Mandator include file
-#include "canvas.h"
+#include "canvascv/canvas.h"
 
-// **Optional
 // We need specific linecrossing and arrow features here
-#include "shapes/linecrossing.h"
-#include "shapes/arrow.h"
+#include "canvascv/shapes/linecrossing.h"
+#include "canvascv/shapes/arrow.h"
 
 #include <iostream>
 #include <iterator>

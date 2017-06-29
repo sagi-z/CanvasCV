@@ -1,4 +1,4 @@
-#include "colors.h"
+#include "canvascv/colors.h"
 #include "compoundwidget.h"
 
 #include <algorithm>

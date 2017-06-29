@@ -1,8 +1,7 @@
-#include "canvas.h"
+#include "canvascv/canvas.h"
 
-// **Optional
 // These are used to create widgets
-#include "widgets/radiobuttons.h"
+#include "canvascv/widgets/radiobuttons.h"
 
 #include <iostream>
 #include <iterator>

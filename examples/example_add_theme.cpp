@@ -1,13 +1,12 @@
-#include "canvas.h"
+#include "canvascv/canvas.h"
 
-// **Optional
 // These are used to create widgets
-#include "widgets/radiobuttons.h"
-#include "widgets/text.h"
-#include "widgets/button.h"
-#include "widgets/hframe.h"
-#include "themes/themerepository.h"
-#include "themes/twocoloredtheme.h"
+#include "canvascv/widgets/radiobuttons.h"
+#include "canvascv/widgets/text.h"
+#include "canvascv/widgets/button.h"
+#include "canvascv/widgets/hframe.h"
+#include "canvascv/themes/themerepository.h"
+#include "canvascv/themes/twocoloredtheme.h"
 
 #include <iostream>
 #include <iterator>

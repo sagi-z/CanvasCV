@@ -1,5 +1,5 @@
 #include "themedarkblue.h"
-#include "colors.h"
+#include "canvascv/colors.h"
 
 using namespace cv;
 

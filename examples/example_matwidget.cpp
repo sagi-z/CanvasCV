@@ -1,8 +1,7 @@
-#include "canvas.h"
+#include "canvascv/canvas.h"
 
-// **Optional
 // These are used to create widgets
-#include "widgets/matwidget.h"
+#include "canvascv/widgets/matwidget.h"
 
 #include <iostream>
 #include <iterator>
@@ -14,7 +13,7 @@ using namespace cv;
 using namespace canvascv;
 
 shared_ptr<MatWidget> matWidget;
-// **Optional
+
 // This is needed for user interaction - creating/editing choosing shapes.
 // Clicking on interactive widgets.
 // We don't need this code if we only want to display "on screen" messages and "status bar" messages.

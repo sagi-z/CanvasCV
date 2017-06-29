@@ -1,6 +1,6 @@
 #include "shape.h"
 #include "shapefactory.h"
-#include "canvas.h"
+#include "canvascv/canvas.h"
 
 using namespace std;
 using namespace cv;
@@ -28,12 +28,12 @@ void read(const FileNode& node, Shape*& x, const Shape *default_value)
 
 Shape::Shape()
     : id(genId()),
-      outlineColor(Colors::Green),
+      outlineColor(Consts::DEFAULT_FG_COLOR),
       fillColor(outlineColor),
       locked(false),
       visible(true),
       editing(false),
-      thickness(1),
+      thickness(Consts::DEFAULT_THICKNESS),
       lineType(cv::LINE_AA),
       canvas(nullptr),
       deleted(false),

@@ -1,5 +1,5 @@
 // Mandator include file
-#include "canvas.h"
+#include "canvascv/canvas.h"
 
 #include <iostream>
 #include <iterator>

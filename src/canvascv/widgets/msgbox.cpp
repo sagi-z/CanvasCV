@@ -1,7 +1,7 @@
 #include "msgbox.h"
 #include "text.h"
 #include "button.h"
-#include "canvas.h"
+#include "canvascv/canvas.h"
 
 #include <opencv2/highgui.hpp>
 

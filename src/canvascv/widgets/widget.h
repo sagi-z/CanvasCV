@@ -1,7 +1,8 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include "colors.h"
+#include "canvascv/colors.h"
+#include "canvascv/consts.h"
 
 #include <opencv2/core/mat.hpp>
 #include <string>

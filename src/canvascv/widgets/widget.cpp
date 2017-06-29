@@ -1,8 +1,8 @@
 #include "widget.h"
 #include "widgetfactory.h"
 #include "layout.h"
-#include "themes/theme.h"
-#include "themes/themerepository.h"
+#include "canvascv/themes/theme.h"
+#include "canvascv/themes/themerepository.h"
 
 using namespace std;
 using namespace cv;
@@ -33,12 +33,12 @@ void read(const FileNode& node, Widget*& x, const Widget *default_value)
 Widget::Widget(const Point &pos)
     : id(genId()),
       location(pos),
-      outlineColor(Colors::Green),
-      fillColor(Colors::Black),
-      selectColor(Colors::Orange),
+      outlineColor(Consts::DEFAULT_FG_COLOR),
+      fillColor(Consts::DEFAULT_BG_COLOR),
+      selectColor(Consts::DEFAULT_SELECT_COLOR),
       relief(FLAT),
       visible(true),
-      thickness(1),
+      thickness(Consts::DEFAULT_THICKNESS),
       lineType(LINE_AA),
       forcedWidth(0),
       forcedHeight(0),

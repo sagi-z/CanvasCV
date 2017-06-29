@@ -3,9 +3,9 @@ Usage in a nutshell {#nutshell}
 ~~~~~~~{.cpp}
 #include <opencv2/highgui.hpp>
 
-#include "canvas.h"
-#include "colors.h"
-#include "widgets/msgbox.h"
+#include "canvascv/canvas.h"
+#include "canvascv/colors.h"
+#include "canvascv/widgets/msgbox.h"
 
 using namespace std;
 using namespace cv;

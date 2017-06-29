@@ -1,7 +1,8 @@
 #ifndef SHAPE_H
 #define SHAPE_H
 
-#include "colors.h"
+#include "canvascv/colors.h"
+#include "canvascv/consts.h"
 
 #include <opencv2/core/mat.hpp>
 #include <string>

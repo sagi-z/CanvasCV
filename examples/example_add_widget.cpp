@@ -1,12 +1,11 @@
-#include "canvas.h"
+#include "canvascv/canvas.h"
 
-// **Optional
 // These are used to create widgets
-#include "widgets/text.h"
-#include "widgets/button.h"
-#include "widgets/hframe.h"
-#include "widgets/vframe.h"
-#include "widgets/widgetfactory.h"
+#include "canvascv/widgets/text.h"
+#include "canvascv/widgets/button.h"
+#include "canvascv/widgets/hframe.h"
+#include "canvascv/widgets/vframe.h"
+#include "canvascv/widgets/widgetfactory.h"
 
 #include <iostream>
 

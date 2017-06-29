@@ -1,5 +1,5 @@
 #include "shapesconnector.h"
-#include "canvas.h"
+#include "canvascv/canvas.h"
 
 #include <iterator>
 

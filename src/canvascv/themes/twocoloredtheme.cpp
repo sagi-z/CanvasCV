@@ -1,7 +1,7 @@
 #include "twocoloredtheme.h"
-#include "widgets/widget.h"
-#include "shapes/shape.h"
-#include "shapes/linecrossing.h"
+#include "canvascv/widgets/widget.h"
+#include "canvascv/shapes/shape.h"
+#include "canvascv/shapes/linecrossing.h"
 
 using namespace cv;
 

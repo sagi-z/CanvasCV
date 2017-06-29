@@ -3,7 +3,7 @@
 
 #include "shape.h"
 #include "shapefactory.h"
-#include "colors.h"
+#include "canvascv/colors.h"
 
 #include <list>
 #include <memory>

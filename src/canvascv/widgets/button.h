@@ -3,7 +3,7 @@
 
 #include <opencv2/opencv.hpp>
 #include <list>
-#include "colors.h"
+#include "canvascv/colors.h"
 #include "text.h"
 
 namespace canvascv

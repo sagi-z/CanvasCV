@@ -1,4 +1,4 @@
-#include "canvas.h" // 1. CanvasCV: mandatory include file
+#include "canvascv/canvas.h"
 
 #include <iostream>
 
@@ -15,7 +15,6 @@ static string gHelpMsg =
 "*: toggle canvas on/off\n"
 "q: exit";
 
-// 5. CanvasCV: Using the setScreenText()
 void help(Canvas &c)
 {
     static bool showHelp = true;
@@ -58,10 +57,7 @@ int main(int argc, char **argv)
         Canvas::fatal("Must get a path to an image as a parameter" , -1);
     }
 
-    // 2. CanvasCV: initializing the canvas
     Canvas c(image.size());
-
-    // 4. CanvasCV: enabling screen text messages
 
     // Enabling on screen text with changes from defaults
     c.enableScreenText(Colors::Black, // fg
@@ -88,7 +84,6 @@ int main(int argc, char **argv)
             break;
         }
 
-        // 3. CanvasCV: using the canvas to draw on the Mat
         c.redrawOn(image, out);
 
         imshow("Canvas", out);
