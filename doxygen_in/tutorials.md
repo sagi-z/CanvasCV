@@ -1,8 +1,7 @@
 CanvasCV Tutorials {#tutorials}
 ==================
 (see also the examples section)
-* @subpage tutfatal
-* @subpage tutscreentext
+* @subpage tutscreentext (start here)
 * @subpage tutmsgbox
 * @subpage tutshapes
 * @subpage tutpersistency

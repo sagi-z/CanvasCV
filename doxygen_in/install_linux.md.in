@@ -1,5 +1,5 @@
-Installation {#install}
-============
+Linux installation {#installlinux}
+==================
 
 Build and install
 -----------------
@@ -69,7 +69,3 @@ TARGET_LINK_LIBRARIES (myapp ${CanvasCV_LIB} ${OpenCV_LIBS})
 
 ### Windows
 make sure the include path and link path and library are set correctly.
-
-### C++ code example
-See example files in the doxygen Docs
-

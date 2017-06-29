@@ -240,10 +240,11 @@ public:
     /**
      * @brief fatal
      * A more elegant way for your app to exit on failures.
-     * A dedicated opencv window with a MsgBox wil show your message.
-     * The error code will be used with _Exit();
-     * @param errorMsg will be
-     * @param exitStatus
+     * - A dedicated opencv window with a MsgBox wil show your message.
+     * - The error code will be used with _Exit()
+     * - The errorMsg will also be written to the standard error
+     * @param errorMsg will be displayed to the user
+     * @param exitStatus will be used with _Exit()
      */
     static void fatal(string errorMsg, int exitStatus);
 

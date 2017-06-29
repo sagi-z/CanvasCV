@@ -537,6 +537,7 @@ void Canvas::applyTheme(bool applyToCanvasText)
 
 void Canvas::fatal(string errorMsg, int exitStatus)
 {
+    cerr << errorMsg << endl;
     string header = "Fatal Error:\n";
     MsgBox::createModal("Fatal Error", header + errorMsg , {"Exit"}, [exitStatus](Widget*,int) {_Exit(exitStatus);});
 }

@@ -121,7 +121,8 @@ if(BUILD_DOCUMENTATION)
   # CMAKE_DOXYGEN_HTML_HEADER
   # CMAKE_GIT_REPO
   # CPACK_PACKAGE_VERSION
-  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install.md.in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install.md @ONLY)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_linux.md.in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_linux.md @ONLY)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_windows.md.in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_windows.md @ONLY)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/Doxyfile.in ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile @ONLY)
 
   # Allow html header changes
