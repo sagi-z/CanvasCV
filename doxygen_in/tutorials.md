@@ -1,5 +1,5 @@
-CanvasCV Tutorials {#tutorials}
-==================
+Tutorials {#tutorials}
+=========
 (see also the examples section)
 * @subpage tutscreentext (start here)
 * @subpage tutmsgbox

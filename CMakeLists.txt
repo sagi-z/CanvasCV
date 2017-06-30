@@ -116,6 +116,12 @@ if(BUILD_DOCUMENTATION)
       SET(CMAKE_DOXYGEN_EXTRA_CSS "${CMAKE_CURRENT_SOURCE_DIR}/doxygen_style.css")
   endif()
 
+  # Allow header changes
+  set(CMAKE_DOXYGEN_HTML_HEADER "")
+  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/doxygen_header.html.in")
+      set(CMAKE_DOXYGEN_HTML_HEADER "${CMAKE_SOURCE_DIR}/doxygen_header.html")
+  endif()
+
   # These variables are used in Doxyfile.in (must be defined at this point):
   # CMAKE_DOXYGEN_EXTRA_CSS
   # CMAKE_DOXYGEN_HTML_HEADER
@@ -123,11 +129,6 @@ if(BUILD_DOCUMENTATION)
   # CPACK_PACKAGE_VERSION
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_linux.md.in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_linux.md @ONLY)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_windows.md.in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_windows.md @ONLY)
-  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/doxygen_header.html.in")
-      set(CMAKE_DOXYGEN_HTML_HEADER "${CMAKE_SOURCE_DIR}/doxygen_header.html")
-  else()
-      set(CMAKE_DOXYGEN_HTML_HEADER "")
-  endif()
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/Doxyfile.in ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile @ONLY)
 
   # Allow html header changes

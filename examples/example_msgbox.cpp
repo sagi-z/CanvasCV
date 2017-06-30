@@ -58,7 +58,7 @@ int main(int argc, char **argv)
         Canvas::fatal("Must get a path to an image as a parameter" , -1);
     }
 
-    Canvas c(image.size());
+    Canvas c("Canvas", image.size());
     auto msgBox = MsgBox::create(c,
                                  "This is a MsgBox example\n"
                                  "with 2 lines", {

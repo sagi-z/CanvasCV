@@ -70,7 +70,7 @@ int main(int argc, char **argv)
         Canvas::fatal("Must get a path to an image as a parameter" , -1);
     }
 
-    Canvas c(image.size());
+    Canvas c("Canvas", image.size());
     auto layout = HFrame::create(c, Point(5, image.rows / 2.));
     Widget::CBUserSelection cb = [&c, &layout](Widget *w, int index) {
         stringstream s;
@@ -98,7 +98,7 @@ int main(int argc, char **argv)
     Button::create(*layout, "Second button")->setLayoutAnchor(Widget::CENTER);
 
     namedWindow("Canvas", WINDOW_AUTOSIZE);
-    c.setMouseCallback("Canvas"); // optional for mouse usage see also (example_selectbox.cpp)
+    c.setMouseCallback(); // optional for mouse usage see also (example_selectbox.cpp)
 
     int delay = 1000/25;
     int key = 0;

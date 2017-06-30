@@ -21,6 +21,8 @@ public:
 
     /**
      * @brief create a message box widget which is closed automatically
+     * The MsgBox is not modal - does not block input to other widgets.
+     * For a modal MsgBox inside a Canvas use create() and getUserSelection(true).
      * @param canvas must be a Canvas reference for a MsgBox
      * @param msg what to display in the MsgBox
      * @param buttonNames automatically create buttons with names of buttonNames
@@ -60,21 +62,27 @@ public:
 
     /**
      * @brief createModal
-     * opens a MsgBox in it's own window and immediatly waits for a user selection.
+     * opens a modal (blocking) MsgBox in it's own window and immediatly waits for a user selection.
+     * For a modal MsgBox inside a Canvas use create() and getUserSelection(true).
      * @param title is the title of the new window
      * @param msg what to display in the MsgBox
      * @param buttonNames automatically create buttons with names of buttonNames
      * @param cbUserSelection a callback to invoke with index of pressed button
      * @return return result of getUserSelection()
-     * @sa getUserSelection()
+     * @sa getUserSelection(true)
      */
     static int createModal(const std::string &title,
                            const std::string &msg,
                            std::vector<std::string> buttonNames = {"Ok"},
                            Widget::CBUserSelection cbUserSelection = Widget::CBUserSelection());
 
-    /// returns pressed button index or -1 if not pressed
-    int getUserSelection();
+    /**
+     * @brief getUserSelection
+     * get what the user pressed
+     * @param blocking if true, block waiting on the MsgBox until a button is pressed
+     * @return returns pressed button index or -1 if not pressed
+     */
+    int getUserSelection(bool blocking = false);
 
     /**
      * @brief getTextAt

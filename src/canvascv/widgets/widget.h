@@ -18,6 +18,11 @@ class Layout;
 
 /**
  * @brief The Widget class
+ * @note
+ * All widgets have a static `create` methods, which is the only way to create them.
+ * The `create` will return a `shared_ptr<T>` instance, which you don't have to keep
+ * since another one is kept by the `Layout` in which the widget is placed. Never use
+ * delete on a Widget pointer.
  */
 class Widget
 {
@@ -311,6 +316,8 @@ protected:
 
     State getState() const;
 
+    Layout* getLayout();
+
     /// Used by Layout managers
     void stretchWidth(int width);
     void stretchHeight(int height);
@@ -369,7 +376,6 @@ private:
     int genId();
 
     void setLayout(Layout &value);
-    Layout* getLayout();
 
     virtual void layoutResized(const cv::Rect &boundaries);
 

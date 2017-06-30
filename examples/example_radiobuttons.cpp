@@ -39,7 +39,7 @@ int main(int argc, char **argv)
         Canvas::fatal("Must get a path to an image as a parameter" , -1);
     }
 
-    Canvas c(image.size());
+    Canvas c("Canvas", image.size());
     c.enableScreenText();
     Widget::CBUserSelection cb = [&c](Widget *w, int index) {
         stringstream s;
@@ -70,7 +70,7 @@ int main(int argc, char **argv)
     radioButtons->setOutlineColor(Colors::Blue);
 
     namedWindow("Canvas", WINDOW_AUTOSIZE);
-    c.setMouseCallback("Canvas"); // optional for mouse usage see also (example_selectbox.cpp)
+    c.setMouseCallback(); // optional for mouse usage see also (example_selectbox.cpp)
 
     int delay = 1000/25;
     int key = 0;

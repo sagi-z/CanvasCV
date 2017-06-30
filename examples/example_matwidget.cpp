@@ -82,7 +82,7 @@ int main(int argc, char **argv)
         Canvas::fatal("Must get a path to an image as a parameter" , -1);
     }
 
-    Canvas c(image.size());
+    Canvas c("Canvas", image.size());
     Mat smily = drawSmily();
     matWidget = MatWidget::create(c, smily);
     matWidget->setVisible(false);

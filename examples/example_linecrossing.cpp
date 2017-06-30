@@ -90,7 +90,7 @@ int main(int argc, char **argv)
         image = Colors::White;
     }
 
-    Canvas c(image.size());
+    Canvas c("Canvas", image.size());
     c.setShapeType("Arrow"); // default shape type for direct GUI creation
     c.enableScreenText();
     c.enableStatusMsg();
@@ -141,7 +141,7 @@ int main(int argc, char **argv)
     c.notifyOnShapeDelete([&lc](Shape *shape) { if (shape->getType() == LineCrossing::type) lc.reset(); });
 
     namedWindow("Canvas", WINDOW_AUTOSIZE);
-    c.setMouseCallback("Canvas"); // optional for mouse usage see also (example_selectbox.cpp)
+    c.setMouseCallback(); // optional for mouse usage see also (example_selectbox.cpp)
 
     int delay = 1000/25;
     int key = 0;

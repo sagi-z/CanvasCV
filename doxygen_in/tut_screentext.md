@@ -2,30 +2,30 @@ Leaving the console {#tutscreentext}
 ===================
 OpenCV examples and tutorials make heavy use of the console to commuincate with the user.
 
-To start using the GUI instead of the console the first thing you need is to get to know the Canvas class.
+To start using the GUI instead of the console the first thing you need is to get to know the `canvascv::Canvas` class.
 
 [TOC]
 
-@section sec1 Introducing the CanvasCV class
+@section tstsec1 Introducing the CanvasCV class
 The Canvas class is associated with an OpenCV window and it gives you another virtual layer on top of your displayed Mat.
 
 This canvas class encapsulates **a lot** of work for you, so you can focus on the CV. It also handles key presses
 and mouse events.
 
 The basic flow is:
-* Define a Canvas of a specific size, usually to match the image you're displayng.
+* Define a Canvas for a window of a specific size, usually to match the image you're displayng.
 ~~~~~~~{.cpp}
-Canvas c(frame.size());
+Canvas c("winName", frame.size());
 ~~~~~~~
 
-* Create an OpenCV window without resizing
+* Create an OpenCV window without resizing so the widgets cannot be stretched
 ~~~~~~~{.cpp}
-    namedWindow("MyWindowName", WINDOW_AUTOSIZE); // disable mouse resize
+    namedWindow("winName", WINDOW_AUTOSIZE); // disable mouse resize
 ~~~~~~~
 
 * Let the CanvasCV handle your mouse events
 ~~~~~~~{.cpp}
-    c.setMouseCallback("MyWindowName"); // optional for mouse usage (see also example_selectbox.cpp)
+    c.setMouseCallback(); // optional for mouse usage (see also example_selectbox.cpp)
 ~~~~~~~
 
 * Create you widget on the Canvas (or in a frame/layout) for example:
@@ -41,12 +41,12 @@ Canvas c(frame.size());
     while (true)
     {
         c.redrawOn(frame, out);   // draws your virtual GUI layer on top of the 'frame'
-        imshow("MyWindowName", out);
+        c.imshow(out);            // you can also use imshow directly for "winName"
         key = c.waitKeyEx(delay); // forwards key presses to widgets and shapes
     }
 ~~~~~~~
 
-@section sec2 Some real use cases
+@section tstsec2 Some real use cases
 @subsection sub1 Exiting on fatal errors
 Your application/utility might need command line arguments, or cannot continue for some reason.
 
@@ -116,7 +116,7 @@ int main(int argc, char **argv)
         Canvas::fatal(string("Cannot load image ") + argv[0], -2);
     }
 
-    Canvas c(image.size());
+    Canvas c("Canvas", image.size());
     c.enableScreenText(); // see it's documentation
 
     help(c);
@@ -138,9 +138,9 @@ int main(int argc, char **argv)
             break;
         }
 
-        c.redrawOn(image, out);  // draw the canvas on the image copy
+        c.redrawOn(image, out);   // draw the canvas on the image copy
 
-        imshow("Canvas", out);
+        imshow("Canvas", out);    // using cv::imshow works fine
 
         key = c.waitKeyEx(delay); // GUI and callbacks happen here
 

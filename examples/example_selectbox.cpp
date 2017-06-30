@@ -71,7 +71,7 @@ int main(int argc, char **argv)
         Canvas::fatal("Must get a path to an image as a parameter" , -1);
     }
 
-    Canvas c(image.size());
+    Canvas c("Canvas", image.size());
     selectionBox = SelectionBox::create(c, {
                                             "Long Option1",     // index 0
                                             "Option2\n2 lines", // index 1

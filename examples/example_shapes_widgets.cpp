@@ -101,18 +101,18 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
     auto buttons = VFrame::create(c, (*head)());
 
     Text::create(*msgs,
-                         "aligned to top",
-                         Widget::BOTTOM)->setLayoutAnchor(Widget::TOP);
+                 "aligned to top",
+                 Widget::BOTTOM)->setLayoutAnchor(Widget::TOP);
     Text::create(*msgs,
-                         "aligned to center",
-                         Widget::BOTTOM)->setLayoutAnchor(Widget::CENTER);
+                 "aligned to center",
+                 Widget::BOTTOM)->setLayoutAnchor(Widget::CENTER);
     Text::create(*msgs,
-                         "These 3 objects where precreated.\n"
-                         "They are an Ellipse,\n"
-                         " ShapesConnector and a TextBox.\n"
-                         "You select/edit/move/delete them.\n"
-                         "The Ellipse is locked.",
-                         Widget::BOTTOM);
+                 "These 3 objects where precreated.\n"
+                 "They are an Ellipse,\n"
+                 " ShapesConnector and a TextBox.\n"
+                 "You select/edit/move/delete them.\n"
+                 "The Ellipse is locked.",
+                 Widget::BOTTOM);
 
     Button::create(*buttons, "right\naligned",
                    "button 1\n"
@@ -189,7 +189,7 @@ int main(int argc, char **argv)
     }
 
     cout << "image number of channels is " << image.channels() << endl;
-    Canvas c(image.size());
+    Canvas c("Canvas", image.size());
     c.setShapeType("Line"); // default shape type for direct GUI creation
     c.enableScreenText();
     c.enableStatusMsg();
@@ -209,7 +209,7 @@ int main(int argc, char **argv)
     createShapesFromCodeExample(c, Point(image.cols / 2, image.rows / 2));
 
     namedWindow("Canvas", WINDOW_AUTOSIZE);
-    c.setMouseCallback("Canvas"); // optional for mouse usage see also (example_selectbox.cpp)
+    c.setMouseCallback(); // optional for mouse usage see also (example_selectbox.cpp)
 
 
     int delay = 1000/25;

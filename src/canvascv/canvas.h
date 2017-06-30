@@ -35,10 +35,11 @@ public:
     /**
      * @brief Canvas
      * This class is associated with an OpenCV window of a certain size.
+     * @param winNameVal is the name of the OpenCV window (it doesn't have to exist yet)
      * @param sizeVal is the size of the OpenCV window
      * @see setSize()
      */
-    Canvas(cv::Size sizeVal = cv::Size());
+    Canvas(const std::string &winNameVal, cv::Size sizeVal = cv::Size());
 
     /// release all shapes and widgets. Shape callbacks are invoked doe delete.
     ~Canvas();
@@ -51,6 +52,9 @@ public:
      */
     void redrawOn(const cv::Mat &src, cv::Mat &dst);
 
+    /// A utility method that uses latest Mat used as 'src' in the redrawOn above
+    void redrawOn(cv::Mat &dst);
+
     /// You should delegate OpenCV mouse callback events to this method - returns true if did something at pos
     bool onMousePress(const cv::Point &pos);
 
@@ -60,10 +64,25 @@ public:
     /// You should delegate OpenCV mouse callback events to this method
     void onMouseMove(const cv::Point &pos);
 
-    /// Create shape by name on the canvas directly from code (instead of by the user using the mouse)
+    /**
+     * @brief createShape
+     * Create shape by name on the canvas directly from code (instead of by the user using the mouse)
+     * @param type name of the Shape
+     * @param pos shape position
+     * @return This method will return a `shared_ptr<T>` instance, which you don't have to keep
+     * since another one is kept by the `Canvas` in which the shape is placed. Never use
+     * delete on a Shape pointer.
+     */
     std::shared_ptr<Shape> createShape(std::string type, const cv::Point &pos = cv::Point(0,0));
 
-    /// Create shape by type on the canvas directly from code (instead of by the user using the mouse)
+    /**
+     * @brief createShape
+     * Create shape by type on the canvas directly from code (instead of by the user using the mouse)
+     * @param pos shape position
+     * @return This method will return a `shared_ptr<T>` instance, which you don't have to keep
+     * since another one is kept by the `Canvas` in which the shape is placed. Never use
+     * delete on a Shape pointer.
+     */
     template <class T>
     std::shared_ptr<T> createShape(const cv::Point &pos = cv::Point(0,0));
 
@@ -222,8 +241,11 @@ public:
     /// load all the from a file into the canvas (removing all current shapes in the process)
     void readShapesFromFile(const std::string &filepath);
 
-    /// utility method to handle mouse events on window winName
-    void setMouseCallback(const string &winName);
+    /// utility method to handle mouse events on the associated window
+    void setMouseCallback();
+
+    /// utility method which uses the winName encapsulated in Canvas
+    void imshow(InputArray mat);
 
     /**
      * @brief waitKeyEx
@@ -260,6 +282,8 @@ protected:
     virtual const cv::Rect getBoundaries() const;
 
 private:
+
+    Canvas();
 
     class StatusMsgGrd
     {
@@ -311,6 +335,8 @@ private:
     std::string defaultStatusMsg;
     std::string shapeType;
     cv::Point dragPos;
+    cv::Mat latestFrameSrc;
+    std::string winName;
     std::list<std::shared_ptr<Shape>> shapes;
     std::list<std::shared_ptr<Widget>> widgets;
     std::shared_ptr<Shape> activeShape;
@@ -319,6 +345,12 @@ private:
     std::list<CBType> modifyNotifs;
     std::list<CBType> deleteNotifs;
 
+    friend void operator >> (const cv::FileNode& n, Canvas& value)
+    {
+        read( n, value, Canvas());
+    }
+
+//    template <class T> friend void operator >> (const cv::FileNode& n, T& value);
     friend void write(cv::FileStorage& fs, const std::string&, const Canvas& x);
     friend void read(const cv::FileNode& node, Canvas& x, const Canvas&);
 };

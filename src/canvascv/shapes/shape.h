@@ -20,8 +20,13 @@ class Canvas;
 /**
  * @brief The Shape class hierarchy is for geomertric user interaction.
  * Use shapes to get on screen selections and landmark settings from your user.
- * @see ThemeRepository for using themes. The default theme will
- * overide some CTOR values.
+ * @see ThemeRepository for using themes.
+ * @see Canvas for creating shapes.
+ * @note
+ * All shapes are create either with the mouse or by the Canvas::createShape() methods.
+ * This method will return a `shared_ptr<T>` instance, which you don't have to keep
+ * since another one is kept by the `Canvas` in which the shape is placed. Never use
+ * delete on a Shape pointer.
  */
 class Shape
 {

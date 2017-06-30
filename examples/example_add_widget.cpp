@@ -207,10 +207,10 @@ int main(int argc, char **argv)
     fs::path startPath(argv[0]);
     startPath = startPath.parent_path();
 
-    Canvas c(image.size());
+    Canvas c("Canvas", image.size());
 
     namedWindow("Canvas", WINDOW_AUTOSIZE);
-    c.setMouseCallback("Canvas"); // optional for mouse usage see also (example_selectbox.cpp)
+    c.setMouseCallback(); // optional for mouse usage see also (example_selectbox.cpp)
 
     shared_ptr<FileBrowser> fb;
     Widget::CBUserSelection cb = [&c, &image](Widget *w, int)

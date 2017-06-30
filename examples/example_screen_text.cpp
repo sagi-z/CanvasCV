@@ -57,7 +57,7 @@ int main(int argc, char **argv)
         Canvas::fatal("Must get a path to an image as a parameter" , -1);
     }
 
-    Canvas c(image.size());
+    Canvas c("Canvas", image.size());
 
     // Enabling on screen text with changes from defaults
     c.enableScreenText(Colors::Black, // fg

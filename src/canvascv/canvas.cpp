@@ -18,13 +18,19 @@ using namespace cv;
 namespace canvascv
 {
 
-Canvas::Canvas(Size sizeVal)
+Canvas::Canvas(const string &winNameVal, Size sizeVal)
     : on(true),
       boundaries(Point(0,0), sizeVal),
       hasScreenText(false),
       hasStatusMsg(false),
-      dragPos(0,0)
+      dragPos(0,0),
+      winName(winNameVal)
 {
+    if (sizeVal.width && sizeVal.height)
+    {
+        latestFrameSrc.create(sizeVal, CV_8UC3);
+        latestFrameSrc = Colors::White;
+    }
 }
 
 Canvas::~Canvas()
@@ -40,6 +46,8 @@ void Canvas::redrawOn(const Mat &src, Mat &dst)
         src.copyTo(dst);
     }
     if (! on) return;
+
+    latestFrameSrc = src;
 
     if (src.channels() == 1)
     {
@@ -76,6 +84,11 @@ void Canvas::redrawOn(const Mat &src, Mat &dst)
         statusMsg->setLocation(Point(5, dst.rows - 5));
         static_cast<Widget*>(statusMsg.get())->renderOn(dst);
     }
+}
+
+void Canvas::redrawOn(Mat &dst)
+{
+   redrawOn(latestFrameSrc, dst);
 }
 
 bool Canvas::onMousePress(const Point &pos)
@@ -500,9 +513,14 @@ static void mouseCB(int event, int x, int y, int flags, void* userData) {
     }
 }
 
-void Canvas::setMouseCallback(const string &winName)
+void Canvas::setMouseCallback()
 {
     cv::setMouseCallback(winName, mouseCB, this);
+}
+
+void Canvas::imshow(InputArray mat)
+{
+   cv::imshow(winName, mat);
 }
 
 int Canvas::waitKeyEx(int delay)
@@ -547,12 +565,25 @@ const Rect Canvas::getBoundaries() const
     return boundaries;
 }
 
+Canvas::Canvas()
+    : on(true),
+      hasScreenText(false),
+      hasStatusMsg(false),
+      dragPos(0,0)
+{
+}
+
 void Canvas::setSize(const Size &value)
 {
     if (boundaries.size() != value)
     {
         boundaries.width = value.width;
         boundaries.height = value.height;
+        if (value.width && value.height)
+        {
+            latestFrameSrc.create(value, CV_8UC3);
+            latestFrameSrc = Colors::White;
+        }
         for (auto &widget : widgets)
         {
             widget->layoutResized(boundaries);
@@ -571,6 +602,7 @@ void write(FileStorage& fs, const std::string&, const Canvas& x)
     {
     }
     fs << "{";
+    fs << "winName" << x.winName;
     fs << "shapes" << "[";
     for (auto &shape : x.shapes)
     {
@@ -588,6 +620,7 @@ void write(FileStorage& fs, const std::string&, const Canvas& x)
 void read(const FileNode& node, Canvas& x, const Canvas&)
 {
     x.clearShapes();
+    node["winName"] >> x.winName;
     FileNode n = node["shapes"];
     FileNodeIterator it = n.begin(), it_end = n.end();
     for (; it != it_end; )

@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     }
 
     cout << "image number of channels is " << image.channels() << endl;
-    Canvas c(image.size());
+    Canvas c("Canvas", image.size());
     c.setShapeType("Line"); // default shape type for direct GUI creation
     c.enableScreenText();
     c.enableStatusMsg();
@@ -84,7 +84,7 @@ int main(int argc, char **argv)
 
     namedWindow("Canvas", WINDOW_AUTOSIZE);
 
-    c.setMouseCallback("Canvas"); // optional for mouse usage see also (example_selectbox.cpp)
+    c.setMouseCallback(); // optional for mouse usage see also (example_selectbox.cpp)
 
     int delay = 1000/25;
     int key = 0;

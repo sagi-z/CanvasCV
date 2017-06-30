@@ -85,7 +85,7 @@ shared_ptr<MsgBox> MsgBox::create(Canvas &canvas, const string &msg, vector<stri
 
 int MsgBox::createModal(const string &title, const string &msg, std::vector<string> buttonNames, Widget::CBUserSelection cbUserSelection)
 {
-    Canvas c(Size(1024, 768));
+    Canvas c(title, Size(1024, 768));
     auto msgBox = create(c, msg, buttonNames, cbUserSelection);
     msgBox->update();
     Mat image(msgBox->getRect().size(), CV_8UC3);
@@ -93,7 +93,7 @@ int MsgBox::createModal(const string &title, const string &msg, std::vector<stri
     c.setSize(image.size());
     msgBox->setLocation({0,0});
     namedWindow(title, WINDOW_AUTOSIZE | WINDOW_GUI_NORMAL);
-    c.setMouseCallback(title);
+    c.setMouseCallback();
     Mat out;
     while(! msgBox->isRemoved())
     {
@@ -105,8 +105,20 @@ int MsgBox::createModal(const string &title, const string &msg, std::vector<stri
     return msgBox->getUserSelection();
 }
 
-int MsgBox::getUserSelection()
+int MsgBox::getUserSelection(bool blocking)
 {
+    if (blocking)
+    {
+        update();
+        Canvas *c = (Canvas*) getLayout();
+        Mat out;
+        while(! isRemoved())
+        {
+            c->redrawOn(out);
+            c->imshow(out);
+            c->waitKeyEx();
+        }
+    }
     return userSelection;
 }
 
