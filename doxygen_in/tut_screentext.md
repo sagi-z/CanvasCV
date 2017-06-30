@@ -2,7 +2,7 @@ Leaving the console {#tutscreentext}
 ===================
 OpenCV examples and tutorials make heavy use of the console to commuincate with the user.
 
-To start using the GUI instead of the console the first thing you need is to get to know the `canvascv::Canvas` class.
+To start using the GUI instead of the console the first thing you need is to get to know the canvascv::Canvas class.
 
 [TOC]
 
@@ -153,19 +153,19 @@ int main(int argc, char **argv)
 ~~~~~~~
 
 Some notes here:
-* Note the continued use of `canvascv::Canvas::fatal()`.
-* Note that we didn't need to use `canvascv::Canvas::setMouseCallback()` or create a widget of own own here.
-* When you `enableScreenText()` you can configure it's display.
-* As you can see the `Canvas` instance can be completely turned on and off with the `canvascv::Canvas::setOn()` method.
+* Note the continued use of canvascv::Canvas::fatal().
+* Note that we didn't need to use canvascv::Canvas::setMouseCallback() or create a widget of own own here.
+* When you enableScreenText() you can configure it's display.
+* As you can see the Canvas instance can be completely turned on and off with the canvascv::Canvas::setOn() method.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_screentext.png
 
 @subsection sub3 Displaying text where ever you want
-To display text where you want you need the `canvascv::Text` widget.
+To display text where you want you need the canvascv::Text widget.
 
-You can create position it on the `Canvas` at any XY location.
+You can create position it on the Canvas at any XY location.
 
-Add these lines to the previous example, after creating the `namedWindow`:
+Add these lines to the previous example, after creating the namedWindow():
 ~~~~~~~{.cpp}
 using namespace canvascv;
     //...
@@ -180,10 +180,10 @@ using namespace canvascv;
 ~~~~~~~
 
 Notes:
-* All widgets have a static `create` methods, which is the only way to create them.
-* The `canvascv::Text::create` will return a `shared_ptr<Text>` instance, which you don't have to keep since another one is kept by the `canvascv::Layout`.
-* There are many `Colors` constants to choose from, see `canvascv::Colors`.
-* The `canvascv::Widget::setLocation` gives specific XY postion, but a `canvascv::HorizontalLayout` could help us put this in the CENTER.
+* All widgets have a static create methods, which is the only way to create them.
+* The canvascv::Text::create will return a shared_ptr<Text> instance, which you don't have to keep since another one is kept by the canvascv::Layout.
+* There are many Colors constants to choose from, see canvascv::Colors.
+* The canvascv::Widget::setLocation gives specific XY postion, but a canvascv::HorizontalLayout could help us put this in the CENTER.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_text.png
 

@@ -1,10 +1,10 @@
 Using the MsgBox {#tutmsgbox}
 ----------------
-The `canvascv::MsgBox` is a little different from other widgets, because it is very high level.
+The canvascv::MsgBox is a little different from other widgets, because it is very high level.
 
 This makes it easy to use and a good starting example for widgets that get mouse input.
 
-The `MsgBox` is a "one shot user pressed and widget died" kind of widget.
+The MsgBox is a "one shot user pressed and widget died" kind of widget.
 
 [TOC]
 
@@ -59,14 +59,14 @@ We want to work on top of an existing image so you can see the transparency.
 Let's add the real code now.
 
 @section tmbsec2 A simple modal MsgBox
-Since a `MsgBox` usually requires immediate user attention, you have a way to block other GUI while waiting for a user reaction.
+Since a MsgBox usually requires immediate user attention, you have a way to block other GUI while waiting for a user reaction.
 
 Remeber thah the MsgBox is a "one shot user pressed and widget died" kind of widget. Here we're recreating the MsgBox
 each time it dies.
 
 By default a MsgBox will be placed at the center of the screen.
 
-You can poll it at each loop with `canvascv::MsgBox::getUserSelection()` or you can use it
+You can poll it at each loop with canvascv::MsgBox::getUserSelection() or you can use it
 in a modal way, in which you block everything else and wait on that line of code for the user selection.
 
 This is what we'll do here, with this code:
@@ -126,10 +126,10 @@ int main(int argc, char **argv)
 }
 ~~~~~~~
 Notes:
-* We needed `canvascv::Canvas::setMouseCallback` since the Canvas will intercept mouse events for the MsgBox now.
-* All widgets have a static `create` methods, which is the only way to create them.
-* The `canvascv::MsgBox::create` will return a `shared_ptr<MsgBox>` instance, which you don't have to keep since another one is kept by the `canvascv::Layout`.
-* Here we're using `getUserSelection(true)` immediatly on that `shared_ptr`, and by passing true we're blocked at that line of code.
+* We needed canvascv::Canvas::setMouseCallback since the Canvas will intercept mouse events for the MsgBox now.
+* All widgets have a static create methods, which is the only way to create them.
+* The canvascv::MsgBox::create will return a shared_ptr<MsgBox> instance, which you don't have to keep since another one is kept by the canvascv::Layout.
+* Here we're using getUserSelection(true) immediatly on that shared_ptr, and by passing true we're blocked at that line of code.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_msgbox_modal.png
 
@@ -138,7 +138,7 @@ Notes:
 Remeber thah the MsgBox is a "one shot user pressed and widget died" kind of widget. Here we're recreating the MsgBox
 each time it dies, but with callbacks.
 
-If you wan to see code also using the `MsgBox` without callback (polling) then see @ref example_msgbox.cpp.
+If you wan to see code also using the MsgBox without callback (polling) then see @ref example_msgbox.cpp.
 
 Here we'll be working with callbacks. The callback is called when the user presses a button.
 
@@ -146,7 +146,7 @@ After the callback is called the MsgBox will be destroyed automatically by the f
 
 In our callback we'll immediatly create a new MsgBox with the same callback, just changing the message.
 
-Add these lines to the 'main loop reminder code' above, after creating the `namedWindow`:
+Add these lines to the 'main loop reminder code' above, after creating the namedWindow():
 ~~~~~~~{.cpp}
 using namespace canvascv;
     //...
@@ -184,21 +184,21 @@ using namespace canvascv;
 ~~~~~~~
 
 Notes:
-* All widgets have a static `create` methods, which is the only way to create them.
-* The `canvascv::MsgBox::create` will return a `shared_ptr<MsgBox>` instance, which you don't have to keep since another one is kept by the `canvascv::Layout`.
-* This tutorial is using C++11 lambda expressions as callbacks, but anything which has the `void(Widget*,int)` signature will work.
-* We needed `canvascv::Canvas::setMouseCallback` since the Canvas will intercept mouse events for the MsgBox now.
+* All widgets have a static create methods, which is the only way to create them.
+* The canvascv::MsgBox::create will return a shared_ptr<MsgBox> instance, which you don't have to keep since another one is kept by the canvascv::Layout.
+* This tutorial is using C++11 lambda expressions as callbacks, but anything which has the void(Widget*,int) signature will work.
+* We needed canvascv::Canvas::setMouseCallback since the Canvas will intercept mouse events for the MsgBox now.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_msgbox.png
 
 @section tmbsec4 An external window modal MsgBox
-Since a `MsgBox` usually requires immediate user attention, you have another way to block other GUI while waiting for a user reaction.
+Since a MsgBox usually requires immediate user attention, you have another way to block other GUI while waiting for a user reaction.
 
 This API opens an new independent OpenCV window, occupying just the MsgBox, and waiting for a user response.
 
 This is a blocking API, the code will wait for a user button press.
 
-(You actually saw something like this when we explained the `canvascv::Canvas::fatal()` in a previous tutorial)
+(You actually saw something like this when we explained the canvascv::Canvas::fatal() in a previous tutorial)
 
 
 ~~~~~~~{.cpp}
@@ -255,7 +255,7 @@ int main(int argc, char **argv)
 ~~~~~~~
 
 Notes:
-* Again - this is a blocking API. The line which is using `canvascv::MsgBox::createModal` waits for a response.
+* Again - this is a blocking API. The line which is using canvascv::MsgBox::createModal waits for a response.
 * Currently there is no control of where the OpenCV window will be opened.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_msgbox_modal_external.png
