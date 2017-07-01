@@ -155,7 +155,7 @@ int main(int argc, char **argv)
 
 Some notes here:
 * Note the continued use of canvascv::Canvas::fatal().
-* Note that we didn't need to use canvascv::Canvas::setMouseCallback() or create a widget of own own here.
+* Note that we didn't need to use canvascv::Canvas::setMouseCallback() or create a widget of our own here.
 * When you enableScreenText() you can configure it's display.
 * As you can see the Canvas instance can be completely turned on and off with the canvascv::Canvas::setOn() method.
 * When executed with a path to an image, this gives you (depends on your image):
