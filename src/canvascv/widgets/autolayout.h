@@ -52,7 +52,6 @@ public:
         | G     PADDING      G |
         +----------------------+
      \endverbatim
-     * @return
      */
     void setPadding(int value);
 
