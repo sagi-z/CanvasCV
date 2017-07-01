@@ -69,8 +69,8 @@ public:
      * Create shape by name on the canvas directly from code (instead of by the user using the mouse)
      * @param type name of the Shape
      * @param pos shape position
-     * @return This method will return a `shared_ptr<T>` instance, which you don't have to keep
-     * since another one is kept by the `Canvas` in which the shape is placed. Never use
+     * @return This method will return a shared_ptr<T> instance, which you don't have to keep
+     * since another one is kept by the Canvas in which the shape is placed. Never use
      * delete on a Shape pointer.
      */
     std::shared_ptr<Shape> createShape(std::string type, const cv::Point &pos = cv::Point(0,0));
@@ -79,8 +79,8 @@ public:
      * @brief createShape
      * Create shape by type on the canvas directly from code (instead of by the user using the mouse)
      * @param pos shape position
-     * @return This method will return a `shared_ptr<T>` instance, which you don't have to keep
-     * since another one is kept by the `Canvas` in which the shape is placed. Never use
+     * @return This method will return a shared_ptr<T> instance, which you don't have to keep
+     * since another one is kept by the Canvas in which the shape is placed. Never use
      * delete on a Shape pointer.
      */
     template <class T>
