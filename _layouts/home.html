@@ -4,16 +4,29 @@ layout: default
 
 <div class="home">
 
-  {{ content }}
-
-  <img src="{{ site.baseurl }}/assets/img/project_logo.jpg" alt="opencv gui system">
-  <h1>A simple OpenCV GUI framework</h1>
-  <h4>Because OpenCV needs a GUI</h4>
+  <h1 class="page-heading">A simple OpenCV GUI framework</h1>
   <li>
 	  <a href="https://github.com/sagi-z/CanvasCV/releases">Browse Releases</a>
   </li>
-  <li>
-	  <a href="https://github.com/sagi-z/CanvasCV">View on GitHub</a>
-  </li>
+  <img src="{{ site.baseurl }}/assets/img/project_logo.jpg" alt="opencv gui system">
+
+  <h1>Announcements</h1>
+
+  {{ content }}
+
+  <ul class="post-list">
+    {% for post in site.posts %}
+      <li>
+        {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
+        <span class="post-meta">{{ post.date | date: date_format }}</span>
+
+        <h2>
+          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        </h2>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
 
 </div>

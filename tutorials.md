@@ -4,6 +4,5 @@ title: Tutorials
 permalink: /tutorials/
 ---
 
-Most up to date tutorials
--------------------------
-Comming soon
+* [Tutorials included with the latest version]({{ site.baseurl }}/doc/html/tutorials.html)
+* More comming soon

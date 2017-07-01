@@ -1,0 +1,82 @@
+div.line
+{
+    background-color: black;
+}
+
+small
+{
+    color: #e8e8e8;
+}
+
+a.page-link
+{
+    font-size: 16px;
+}
+
+div.trigger {
+    line-height: 54px;
+}
+
+div.fragment
+{
+    background-color: black;
+    overflow: auto;
+}
+
+.page-content, .site-footer, .site-header, .headertitle, div, .directory td
+{
+    background-color: #323232;
+}
+
+body {
+    background-color: #323232;
+    color: #e8e8e8;
+}
+
+.icon {
+    background-color: transparent;
+}
+
+.mdescLeft, .mdescRight,
+.memItemLeft, .memItemRight,
+.memTemplItemLeft, .memTemplItemRight,
+.memTemplParams
+{
+    background-color: black;
+}
+
+div.memdoc
+{
+    background-color: black;
+    text-shadow: none;
+}
+
+td.memname
+{
+    background-color: black;
+    text-shadow: none;
+}
+
+.memproto, dl.reflist dt
+{
+    background-image: none;
+    background-color: black;
+    text-shadow: none;
+}
+
+.memdoc, dl.reflist dd
+{
+    background-image: none;
+    background-color: black;
+    text-shadow: none;
+}
+
+span.lineno
+{
+    background-color: black
+}
+
+pre.fragment
+{
+    background-color: black
+}

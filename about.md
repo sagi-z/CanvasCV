@@ -65,7 +65,6 @@ some Text at that exact postion, or if you want the user to mark someting on the
 * Example of shapes and widgets together.
 
 ### List of things left to do
--------------------------
 * Improve current widgets (sub selection lists, icons on buttons, ...)
 * Add widgets (Bars, Seperators, Diagrams, Table, ...)
 * Add themes
