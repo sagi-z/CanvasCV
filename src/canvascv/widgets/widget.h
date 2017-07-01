@@ -18,6 +18,7 @@ class Layout;
 
 /**
  * @brief The Widget class
+ * 
  * @note
  * All widgets have a static create methods, which is the only way to create them.
  * The create will return a shared_ptr<T> instance, which you don't have to keep
@@ -54,12 +55,14 @@ public:
 
     /**
      * @brief getType is always implemented by derived to return the same static pointer per widget.
+     * 
      * @return const char * pointer to string with widget type name
      */
     virtual const char *getType() const = 0;
 
     /**
      * @brief used to register for notifications on a widget
+     * 
      * @param cb to invoke on widget state change
      */
     void notifyOnChange(CBWidgetState cb);
@@ -105,6 +108,7 @@ public:
 
     /**
      * @brief The Anchor enum
+     * 
      * Used for both aligment in the Layout we belong to and internal widget alignments
      * @see getLayoutAnchor(), setLayoutAnchor(), getFlowAnchor(), setFlowAnchor()
      */
@@ -127,6 +131,7 @@ public:
 
     /**
      * @brief getLayoutAnchor returns the anchor for using in the Layout we're in
+     * 
      * @return the Anchor related to the Layout we're in
      * @see VerticalLayout, HorizontalLayout
      */
@@ -137,6 +142,7 @@ public:
 
     /**
      * @brief setLayoutAnchor sets the anchor for using in the Layout we're in
+     * 
      * @param value is used to set the layoutAnchor
      * @see VerticalLayout, HorizontalLayout
      */
@@ -144,6 +150,7 @@ public:
 
     /**
      * @brief getFlowAnchor affects internal widget alignment and direction of growth
+     * 
      * @return the Anchor of our own flow
      * @see VerticalLayout, HorizontalLayout, Text
      */
@@ -154,6 +161,7 @@ public:
 
     /**
      * @brief setFlowAnchor affects internal widget alignment and direction of growth
+     * 
      * @param value is used to set the flowAnchor
      * @see VerticalLayout, HorizontalLayout, Text
      */
@@ -167,6 +175,7 @@ public:
 
     /**
      * @brief getStatusMsg
+     * 
      * @return a message to display during mouse hover
      * @see Canvas::enableStatusMsg
      */
@@ -174,6 +183,7 @@ public:
 
     /**
      * @brief setStatusMsg
+     * 
      * @param value a message to display during mouse hover
      * @see Canvas::enableStatusMsg
      */
@@ -279,6 +289,7 @@ protected:
 
     /**
      * @brief render the widget to dst
+     * 
      * @param dst is the full size image
      */
     virtual void renderOn(cv::Mat &dst);
@@ -300,6 +311,7 @@ protected:
 
     /**
      * @brief setDirty
+     * 
      * Mark us as 'dirty' so before the next draw, our 'update' will be called
      * @return true if marked as dirty for later or false if changes were done on the spot
      */
@@ -309,6 +321,7 @@ protected:
 
     /**
      * @brief isAtPos
+     * 
      * @param pos
      * @return true or false if at location
      */
@@ -351,24 +364,28 @@ private:
 
     /**
      * @brief mousePressed
+     * 
      * Called by layout when mouse pressed on us
      */
     virtual void mousePressed();
 
     /**
      * @brief mouseReleased
+     * 
      * Called by layout when mouse released from us
      */
     virtual void mouseReleased();
 
     /**
      * @brief mouseEnter
+     * 
      * Called by layout when mouse entered
      */
     virtual void mouseEnter();
 
     /**
      * @brief mouseEnter
+     * 
      * Called by layout when mouse left
      */
     virtual void mouseLeave();

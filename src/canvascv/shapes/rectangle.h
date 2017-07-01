@@ -9,6 +9,7 @@ namespace canvascv
 
 /**
  * @brief The Rectangle class
+ * 
  * Allows you to draw a rotatable rectangle by mouse or from code
  */
 class Rectangle : public CompoundShape

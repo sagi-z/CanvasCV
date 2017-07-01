@@ -17,6 +17,7 @@ class Shape;
 
 /**
  * @brief The ShapeFactory class
+ * 
  * Holds shape creation methods. Don't use directly. Use Canvas::createShape() instead.
  * @sa Canvas::createShape()
  */
@@ -36,6 +37,7 @@ private:
 
 /**
  * @brief The ShapeFactoryT class
+ * 
  * Holds shape creation methods. Don't use directly. Use Canvas::createShape() instead.
  * @sa Canvas::createShape()
  */

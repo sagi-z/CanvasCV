@@ -9,6 +9,7 @@ namespace canvascv
 
 /**
  * @brief The Polygon class
+ * 
  * Allows you to draw a polygon by mouse or from code
  * @sa
  */
@@ -29,6 +30,7 @@ public:
 
     /**
      * @brief getPoints
+     * 
      * return the vertices of the polygon
      * @param out will contain the vertices on return
      */

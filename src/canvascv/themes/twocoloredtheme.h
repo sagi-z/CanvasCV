@@ -8,6 +8,7 @@ namespace canvascv
 
 /**
  * @brief The ThemeDark class implements a 2 colored theme base class
+ * 
  */
 class TwoColoredTheme : public Theme
 {

@@ -11,6 +11,7 @@ class Shape;
 
 /**
  * @brief The Theme controls appearance of widgets and shapes
+ * 
  * Themes are added to the ThemeRepository. You can add your own external themes.
  */
 class Theme
@@ -18,18 +19,21 @@ class Theme
 public:
     /**
      * @brief applyStyle is called for every new widget created by the WidgetFactory
+     * 
      * @param widget will have setters invoked according to the theme
      */
     virtual void applyStyle(Widget *widget) = 0;
 
     /**
      * @brief applyStyle is called for every new Shape created by the ShapeFactory
+     * 
      * @param shape will have setters invoked according to the theme
      */
     virtual void applyStyle(Shape *shape) = 0;
 
     /**
      * @brief allocateBG creates the rect background for widgets
+     * 
      * @param dst is a Mat dedicated to hold the background will be filled with 4 channels
      * @param size will be the size of dst when done
      * @param color is the requested color, with alpha, which the theme is allowed to ignore
@@ -38,6 +42,7 @@ public:
 
     /**
      * @brief flat will cause bg to appear flat
+     * 
      * @param bg was previously allocated by allocateBG()
      * @param color could be used for drawing, but the theme is allowed to ignore it
      */
@@ -45,6 +50,7 @@ public:
 
     /**
      * @brief raised will cause bg to appear raised
+     * 
      * @param bg was previously allocated by allocateBG()
      * @param color could be used for drawing, but the theme is allowed to ignore it
      */
@@ -52,6 +58,7 @@ public:
 
     /**
      * @brief sunken will cause bg to appear sunken
+     * 
      * @param bg was previously allocated by allocateBG()
      * @param color could be used for drawing, but the theme is allowed to ignore it
      */
@@ -60,6 +67,7 @@ public:
 
     /**
      * @brief selected will cause bg to appear selecte
+     * 
      * @param bg was previously allocated by allocateBG()
      * @param color could be used for drawing, but the theme is allowed to ignore it
      */

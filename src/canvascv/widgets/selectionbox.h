@@ -10,6 +10,7 @@ namespace canvascv
 
 /**
  * @brief The SelectionBox class
+ * 
  * Use a message box with any number of buttons on an OpenCV window
  */
 class SelectionBox : public CompoundWidget
@@ -18,6 +19,7 @@ public:
 
     /**
      * @brief create a selection box widget
+     * 
      * @param layoutVal widgets are placed in layouts Canvas/VFrame/HFrame/...
      * @param selectionNames automatically create items with names of selectionNames
      * @param cbUserSelection a callback to invoke with index of pressed button
@@ -49,6 +51,7 @@ public:
 
     /**
      * @brief getTextAt
+     * 
      * return the text at index index
      * @param index is the index you want the text for
      * @return return the text at index index or empty string if invalid index

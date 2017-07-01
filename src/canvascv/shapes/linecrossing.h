@@ -12,6 +12,7 @@ namespace canvascv
 
 /**
  * @brief The LineCrossing class
+ * 
  * - Helps us know when something we tracked passed over a line.
  * - We also need to know if it passed in one direction or another.
  */
@@ -47,6 +48,7 @@ public:
 
     /**
      * @brief wasCrossed
+     * 
      * Use cross product and predefined direction to tell if a given point
      * is accross the <b> endless line </b> represented by this segment.
      * @param pt is the point we're going to examine
@@ -56,6 +58,7 @@ public:
 
     /**
      * @brief isCrossedBy
+     * 
      * Use cross product and predefined direction to tell if a given line
      * path, starting at lineStart and ending at lineEnd is crossing this
      * specific <b> line segment </b>.

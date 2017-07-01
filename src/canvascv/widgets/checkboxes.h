@@ -12,6 +12,7 @@ class MatWidget;
 
 /**
  * @brief The CheckBoxes class
+ * 
  * Use a check box to get a user selection for multiple options
  */
 class CheckBoxes : public CompoundWidget
@@ -20,6 +21,7 @@ public:
 
     /**
      * @brief create a check box widget
+     * 
      * @param layoutVal widgets are placed in layouts Canvas/VFrame/HFrame/...
      * @param checkBoxNames automatically create items with names of checkBoxNames
      * @param cbUserSelection a callback to invoke with index of pressed checkBox
@@ -51,6 +53,7 @@ public:
 
     /**
      * @brief setSelection
+     * 
      * make a certain box checked
      * @param index is box index
      * @param checked is true or false for checked or unchecked
@@ -59,6 +62,7 @@ public:
 
     /**
      * @brief isChecked
+     * 
      * is a box at index checked
      * @param index is box index
      * @return true or flase for checked or unchecked
@@ -67,6 +71,7 @@ public:
 
     /**
      * @brief getTextAt
+     * 
      * return the text at index index
      * @param index is the index you want the text for
      * @return return the text at index index or empty string if invalid index

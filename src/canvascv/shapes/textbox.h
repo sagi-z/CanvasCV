@@ -13,6 +13,7 @@ namespace canvascv
 
 /**
  * @brief The TextBox class
+ * 
  * Allows you to draw a line by mouse or from code
  */
 class TextBox : public Shape

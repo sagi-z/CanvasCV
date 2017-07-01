@@ -8,6 +8,7 @@ namespace canvascv
 
 /**
  * @brief The ThemeDarkBlue class implements a dark theme of blue over dark gray colors
+ * 
  */
 class ThemeDarkBlue : public TwoColoredTheme
 {

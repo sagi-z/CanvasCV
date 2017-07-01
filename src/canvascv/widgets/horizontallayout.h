@@ -8,6 +8,7 @@ namespace canvascv
 
 /**
  * @brief The HorizontalLayout class
+ * 
  * A Layout implementation which lays it's internal widgets horizontally
  * with a predefined spacing between widgets.
  * - Horizontal layout is automatic according to widget size and spacing.
@@ -40,6 +41,7 @@ public:
 
     /**
      * @brief create a HorizontalLayout widget
+     * 
      * @param layout widgets are placed in layouts Canvas/VFrame/HFrame/...
      * @param pos location in the Layout (Layouts can ignore that)
      * @return a smart pointer copy of the object kept in the Layout

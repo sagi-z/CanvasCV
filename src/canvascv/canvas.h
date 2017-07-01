@@ -20,6 +20,7 @@ namespace canvascv
 
 /**
  * @brief The Canvas class is the entry point into CanvasCV
+ * 
  * This is conceptually a canvas layer on top of your frame.
  *  - It can be turned on and off.
  *  - It can show your messages on screen with a semi transparent background.
@@ -34,6 +35,7 @@ public:
 
     /**
      * @brief Canvas
+     * 
      * This class is associated with an OpenCV window of a certain size.
      * @param winNameVal is the name of the OpenCV window (it doesn't have to exist yet)
      * @param sizeVal is the size of the OpenCV window
@@ -46,6 +48,7 @@ public:
 
     /**
      * @brief redrawOn draws the shapes on dst
+     * 
      * Draws src with shapes and widgets onto dst. src is upgraded to 3 channels if it has 1 channel.
      * @param src can be also dst, in which case it is drawn on. src is BGR/BGRA/GRAY.
      * @param dst if different than src, then src is cloned to it and drawn on.
@@ -66,6 +69,7 @@ public:
 
     /**
      * @brief createShape
+     * 
      * Create shape by name on the canvas directly from code (instead of by the user using the mouse)
      * @param type name of the Shape
      * @param pos shape position
@@ -77,6 +81,7 @@ public:
 
     /**
      * @brief createShape
+     * 
      * Create shape by type on the canvas directly from code (instead of by the user using the mouse)
      * @param pos shape position
      * @return This method will return a shared_ptr<T> instance, which you don't have to keep
@@ -88,6 +93,7 @@ public:
 
     /**
      * @brief get default shape type to draw
+     * 
      * @return returns the default current shape to create on mouse press
      */
     std::string getShapeType() const
@@ -97,6 +103,7 @@ public:
 
     /**
      * @brief set default shape type to draw (could be "")
+     * 
      * @param value will be the default current shape to create on mouse press
      */
     void setShapeType(std::string value)
@@ -106,44 +113,52 @@ public:
 
     /**
      * @brief delete shape currenty selected
+     * 
      */
     void deleteActive();
 
     /**
      * @brief delete specific shape
+     * 
      */
     void deleteShape(const std::shared_ptr<Shape> &shape);
 
     /**
      * @brief delete specific widget
+     * 
      */
     void deleteWidget(const std::shared_ptr<Widget> &widget);
 
     /**
      * @brief used to register for notifications on shape creation
+     * 
      * @param cb to invoke on shape creation
      */
     void notifyOnShapeCreate(CBType cb);
 
     /**
      * @brief used to register for notifications on shape modification (actually when it is deselected)
+     * 
      * @param cb to invoke on shape modification
      */
     void notifyOnShapeModify(CBType cb);
 
     /**
      * @brief used to register for notifications on shape deletion
+     * 
      * @param cb to invoke on shape deletion
      */
     void notifyOnShapeDelete(CBType cb);
 
     /**
      * @brief clear all shapes from Canvas
+     * 
      */
     void clearShapes();
 
     /**
      * @brief getShapes of a specific type
+     * 
      * @param result will contain alll shapes of the T on return
      * @note these are internal shapes used in the canvas, so changing them affects what
      *  is drawn on the Canvas.
@@ -153,6 +168,7 @@ public:
 
     /**
      * @brief getShape
+     * 
      * @param id
      * @return shape with requested id
      */
@@ -160,6 +176,7 @@ public:
 
     /**
      * @brief getShapes
+     * 
      * @param pos is position to search for shapes
      * @param result is all the shapes at pos
      */
@@ -179,6 +196,7 @@ public:
 
     /**
      * @brief enableScreenText enables the top left text area for manual user messages
+     * 
      * During enable of this feature you can overide some default values
      * @param color is font color
      * @param bgColor is rect bg color
@@ -196,6 +214,7 @@ public:
 
     /**
      * @brief enableStatusMsg enables the bottom left text area for auto status messages
+     * 
      * During enable of this feature you can overide some default values
      * @param color is font color
      * @param bgColor is rect bg color
@@ -249,6 +268,7 @@ public:
 
     /**
      * @brief waitKeyEx
+     * 
      * utility method to handle key strokes, your get the keystroke
      * @param delay in milliseconds must be bigger than 0, or it will be 66 (15 FPS)
      * @return the key press or -1 if a shape/widget consumed it
@@ -257,6 +277,7 @@ public:
 
     /**
      * @brief applyTheme
+     * 
      * apply the current theme to all existing widgets and shapes in the canvas
      * @param applyToCanvasText should be usually false (make it true to affect Status&UserText of Canvas).
      */
@@ -264,6 +285,7 @@ public:
 
     /**
      * @brief fatal
+     * 
      * A more elegant way for your app to exit on failures.
      * - A dedicated opencv window with a MsgBox wil show your message.
      * - The error code will be used with _Exit()
@@ -311,6 +333,7 @@ private:
 
     /**
      * @brief consumeKey takes a key value and tries to use it in a shape or widget
+     * 
      * @param key is the key value received from the user.
      * It will change to -1 if it was consumed by a shape or widget.
      */

@@ -8,6 +8,7 @@ namespace canvascv
 
 /**
  * @brief The Colors class
+ * 
  * The place for color constants
  */
 class Colors

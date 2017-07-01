@@ -13,6 +13,7 @@ class Canvas;
 
 /**
  * @brief The MsgBox class
+ * 
  * Use a message box with any number of buttons on an OpenCV window
  */
 class MsgBox : public CompoundWidget
@@ -21,6 +22,7 @@ public:
 
     /**
      * @brief create a message box widget which is closed automatically
+     * 
      * The MsgBox is not modal - does not block input to other widgets.
      * For a modal MsgBox inside a Canvas use create() and getUserSelection(true).
      * @param canvas must be a Canvas reference for a MsgBox
@@ -62,6 +64,7 @@ public:
 
     /**
      * @brief createModal
+     * 
      * opens a modal (blocking) MsgBox in it's own window and immediatly waits for a user selection.
      * For a modal MsgBox inside a Canvas use create() and getUserSelection(true).
      * @param title is the title of the new window
@@ -78,6 +81,7 @@ public:
 
     /**
      * @brief getUserSelection
+     * 
      * get what the user pressed
      * @param blocking if true, block waiting on the MsgBox until a button is pressed
      * @return returns pressed button index or -1 if not pressed
@@ -86,6 +90,7 @@ public:
 
     /**
      * @brief getTextAt
+     * 
      * return the text at index index
      * @param index is the index you want the text for
      * @return return the text at index index or empty string if invalid index

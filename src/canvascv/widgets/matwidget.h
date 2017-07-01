@@ -11,6 +11,7 @@ namespace canvascv
 
 /**
  * @brief The MatWidget class
+ * 
  * Displaying a Mat on an OpenCV window, with alpha channel support.
  */
 class MatWidget : public Widget
@@ -18,6 +19,7 @@ class MatWidget : public Widget
 public:
     /**
      * @brief create a MatWidget widget
+     * 
      * @param layout widgets are placed in layouts Canvas/VFrame/HFrame/...
      * @param mat will be referenced by this widget (not copied)
      * @param pos location in the Layout (Layouts can ignore that)
@@ -32,6 +34,7 @@ public:
 
     /**
      * @brief setMat
+     * 
      * set the FG Mat which is displayed by the widget
      * @param value will assigned (not copied) to an internal Mat
      */

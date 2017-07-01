@@ -8,6 +8,7 @@ namespace canvascv
 
 /**
  * @brief The Consts class
+ * 
  * The place for global constants constants
  */
 class Consts

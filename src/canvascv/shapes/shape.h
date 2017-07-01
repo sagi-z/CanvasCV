@@ -19,6 +19,7 @@ class Canvas;
 
 /**
  * @brief The Shape class hierarchy is for geomertric user interaction.
+ * 
  * Use shapes to get on screen selections and landmark settings from your user.
  * @see ThemeRepository for using themes.
  * @see Canvas for creating shapes.
@@ -43,6 +44,7 @@ public:
 
     /**
      * @brief The CBEvent enum will let you know what just happended to the shape
+     * 
      */
     enum CBEvent
     {
@@ -56,6 +58,7 @@ public:
 
     /**
      * @brief used to register for notifications on shape
+     * 
      * @param cb to invoke on shape event
      */
     void notifyOnEvent(CBType cb);
@@ -63,6 +66,7 @@ public:
 
     /**
      * @brief getConnectionTargets
+     * 
      * Return a list of Handles this shape allows to connect to from other shapes (mainly for ShapesConnector)
      * @return list of Handle pointers we ShapesConnector can use to connect
      */
@@ -95,6 +99,7 @@ public:
 
     /**
      * @brief getType is always implemented by derived to return the same static pointer per shape.
+     * 
      * @return const char * pointer to string with shape type name
      */
     virtual const char *getType() const = 0;
@@ -127,6 +132,7 @@ protected:
 
     /**
      * @brief mousePressed
+     * 
      * @param pos
      * @param onCreate is true if this is the mouse press which cerated this shape
      * @return true for keep in focus, false for leave focus
@@ -135,6 +141,7 @@ protected:
 
     /**
      * @brief mouseMoved
+     * 
      *
      * 1. Was a mouse moved over this shape?
      * 2. If shape is during edit, then these are the mouse position.
@@ -145,6 +152,7 @@ protected:
 
     /**
      * @brief getShape
+     * 
      * Get internal shapes, which Canvas doesn't know of.
      * @param id
      * @return internal sub shape with requested id
@@ -153,6 +161,7 @@ protected:
 
     /**
      * @brief keyPressed will be called by Canvas for active shapes
+     * 
      * @param key was pressed. You must set it to -1 if you consumed it.
      * @return true if we want to stay in focus and false otherwise
      */
@@ -160,11 +169,13 @@ protected:
 
     /**
      * @brief lostFocus is called by Canvas if we're in it and just became non-active
+     * 
      */
     virtual void lostFocus();
 
     /**
      * @brief mouseReleased
+     * 
      * @param pos
      * @return true for keep in focus, false for leave focus
      */
@@ -174,6 +185,7 @@ protected:
 
     /**
      * @brief draw shape on the canvas
+     * 
      * @param canvas
      */
     virtual void draw(cv::Mat &canvas) = 0;

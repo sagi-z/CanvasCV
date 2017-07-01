@@ -13,6 +13,7 @@ namespace canvascv
 
 /**
  * @brief The CompoundShape class
+ * 
  * A utility class used by shapes which are the
  * combination of other shapes
  */

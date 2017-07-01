@@ -9,6 +9,7 @@ namespace canvascv
 
 /**
  * @brief The AutoLayout class
+ * 
  * Base class for all Layout managers which are also widgets (not the Canvas class)
  */
 class AutoLayout : public CompoundWidget
@@ -17,6 +18,7 @@ public:
 
     /**
      * @brief getPadding get number of pixels to pad from Layout rect during layout
+     * 
      * \verbatim
         +----------------------+
         |       PADDING        |
@@ -36,6 +38,7 @@ public:
 
     /**
      * @brief setPadding set number of pixels to pad from Layout rect during layout
+     * 
      * \verbatim
         +----------------------+
         |       PADDING        |

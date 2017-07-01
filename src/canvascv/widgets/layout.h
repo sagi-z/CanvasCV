@@ -10,6 +10,7 @@ namespace canvascv
 
 /**
  * @brief The Layout class
+ * 
  * This is the layout interface class. All widgets must go into a Layout.
  * All Layouts are also widgets except for the Canvas class.
  */
@@ -21,6 +22,7 @@ protected:
 
     /**
      * @brief rmvWidget
+     * 
      * @param widget will be removed from this Layout
      * @return filled shared_ptr to removed widget or empty if not found
      * @note

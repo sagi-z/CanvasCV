@@ -8,6 +8,7 @@ namespace canvascv
 
 /**
  * @brief The VerticalLayout class
+ * 
  * A Layout implementation which lays it's internal widgets vertically
  * with a predefined spacing between widgets.
  * - Vertical layout is automatic according to widget size and spacing.
@@ -44,6 +45,7 @@ public:
 
     /**
      * @brief create a VerticalLayout widget
+     * 
      * @param layout widgets are placed in layouts Canvas/VFrame/HFrame/...
      * @param pos location in the Layout (Layouts can ignore that)
      * @return a smart pointer copy of the object kept in the Layout

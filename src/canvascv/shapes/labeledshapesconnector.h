@@ -9,6 +9,7 @@ namespace canvascv
 
 /**
  * @brief The LabeledShapesConnector class
+ * 
  * Allows visually connecting 2 shapes from the code or by mouse.
  * There is an additional label (aka TextBox) for this type.
  */

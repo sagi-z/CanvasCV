@@ -13,6 +13,7 @@ namespace canvascv
 
 /**
  * @brief The Handle class
+ * 
  * The vertices by which the shape is defined and edited
  */
 class Handle : public Shape
@@ -28,6 +29,7 @@ public:
 
     /**
      * @brief setPos
+     * 
      * set the location of this handle
      * @param pos is the new location to change to
      * @param notify determines if other cbs which want to know when we change should be notified (mostly 'true')

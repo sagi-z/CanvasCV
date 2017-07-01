@@ -8,6 +8,7 @@ namespace canvascv
 
 /**
  * @brief The LayoutBase class
+ * 
  * Common base class for all Layout classes
  */
 class LayoutBase : public Layout

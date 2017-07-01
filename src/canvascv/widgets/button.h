@@ -11,6 +11,7 @@ namespace canvascv
 
 /**
  * @brief The Button class
+ * 
  * a button widget to use on the OpenCV Window
  */
 class Button : public Text
@@ -20,6 +21,7 @@ public:
 
     /**
      * @brief create a button widget
+     * 
      * @param layout widgets are placed in layouts Canvas/VFrame/HFrame/...
      * @param pos location in the Layout (Layouts can ignore that)
      * @param buttonText what to write on the button

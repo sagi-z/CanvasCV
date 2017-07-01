@@ -8,6 +8,7 @@ namespace canvascv
 
 /**
  * @brief The Arrow class
+ * 
  * A line in which the head has an arrow shape
  */
 class Arrow : public Line

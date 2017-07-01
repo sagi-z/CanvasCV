@@ -8,6 +8,7 @@ namespace canvascv
 
 /**
  * @brief The VFrame class
+ * 
  * A frame with a background of a selected relief type. This is also
  * a Layout for other Widgets and it lays them vertically.
  * @see VerticalLayout
@@ -18,6 +19,7 @@ public:
 
     /**
      * @brief create a VFrame widget
+     * 
      * @param layout widgets are placed in layouts Canvas/VFrame/HFrame/...
      * @param pos location in the Layout (Layouts can ignore that)
      * @return a smart pointer copy of the object kept in the Layout
@@ -27,6 +29,7 @@ public:
 
     /**
      * @brief setFrameRelief
+     * 
      * @param value is one of the supported relief types
      * @see Widget::Relief
      */

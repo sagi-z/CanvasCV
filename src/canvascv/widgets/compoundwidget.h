@@ -12,6 +12,7 @@ namespace canvascv
 
 /**
  * @brief The CompoundWidget class
+ * 
  * Utility class to help easy creation of complex widgets and Layout managers.
  */
 class CompoundWidget : public Widget, public LayoutBase
@@ -47,6 +48,7 @@ public:
 
     /**
      * @brief doForAll
+     * 
      * invoke the cb for all included widgets (not on self).
      * This is usually not necessary since the above methods delegate to both
      * contained widgets and self.
@@ -66,6 +68,7 @@ protected:
 
     /**
      * @brief recalcCompound
+     * 
      * Your BG size recalculation/allocation and FG drawing is done here.
      * It is done semi automatically. Is you invoke setters in this method
      * on your internal widgets, then make sure to update them and/or their

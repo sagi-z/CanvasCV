@@ -12,6 +12,7 @@ class MatWidget;
 
 /**
  * @brief The RadioButtons class
+ * 
  * Use a radio buttons to get a user selection for multiple options
  */
 class RadioButtons : public CompoundWidget
@@ -20,6 +21,7 @@ public:
 
     /**
      * @brief create a radio buttons widget
+     * 
      * @param layoutVal widgets are placed in layouts Canvas/VFrame/HFrame/...
      * @param buttonNames automatically create items with names of buttonNames
      * @param defaultSelection is the index to show as selected on start
@@ -53,6 +55,7 @@ public:
 
     /**
      * @brief setSelection
+     * 
      * make a certain option selected
      * @param value will be shown as selected
      */
@@ -63,6 +66,7 @@ public:
 
     /**
      * @brief getTextAt
+     * 
      * return the text at index index
      * @param index is the index you want the text for
      * @return return the text at index index or empty string if invalid index

@@ -11,6 +11,7 @@ namespace canvascv
 
 /**
  * @brief The Text class
+ * 
  * Displaying text on the OpenCV Window with/without a hilighting background.
  */
 class Text : public Widget
@@ -18,6 +19,7 @@ class Text : public Widget
 public:
     /**
      * @brief create a Text widget
+     * 
      * @param layout widgets are placed in layouts Canvas/VFrame/HFrame/...
      * @param pos location in the Layout (Layouts can ignore that)
      * @param text what to write (accepts newline)

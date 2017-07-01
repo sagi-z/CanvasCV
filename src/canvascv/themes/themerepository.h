@@ -15,6 +15,7 @@ class Theme;
 
 /**
  * @brief The ThemeRepository is used to add and get themes for Widget and Shape objects
+ * 
  * This class must have at least a single theme. Themes can be a part of this library, or
  * external to it, suplied by the user and added with ThemeRepository::addTheme()
  */
@@ -23,6 +24,7 @@ class ThemeRepository
 public:
     /**
      * @brief addTheme add a Theme to the repository
+     * 
      * @param name is the name of the theme (to overide a theme, add something instead with the same name)
      * @param theme is the theme associated with this name
      * @return true if theme is not null
@@ -33,6 +35,7 @@ public:
 
     /**
      * @brief setCurrentTheme sets a previously added theme
+     * 
      * @param name is the name of the Theme to set as default
      * @note if the theme doesn't exist then nothing happens
      */

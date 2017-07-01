@@ -16,6 +16,7 @@ class Layout;
 
 /**
  * @brief The WidgetFactory class
+ * 
  * Widget prototypes are added to this class with the help of the WidgetFactoryT class.
  * You can create widgets with newWidget() of this class, but if you supply a wrong
  * name you'll get back a null pointer.
@@ -25,6 +26,7 @@ class WidgetFactory
 public:
     /**
      * @brief newWidget
+     * 
      * Use this to create widgets by name.
      * @param type is the name of the concrete Widget sub type.
      * @param layoutVal is the parent layout
@@ -47,6 +49,7 @@ private:
 
 /**
  * @brief The WidgetFactoryT class
+ * 
  * This is the compile-time type-safe version of the WidgetFactory.
  * Types added here with addType() are guranteed to exist at compile time.
  * Types created by newWidget() are guranteed to exist at compile time.
@@ -57,6 +60,7 @@ class WidgetFactoryT : public WidgetFactory
 public:
     /**
      * @brief addType adds type 'T' under name 'name'
+     * 
      * @param name
      * @return true if type 'T' is registering for the first time ot false otherwise
      * @see REGISTER_WIDGET macro in WidgetFactory.h
@@ -65,6 +69,7 @@ public:
 
     /**
      * @brief newWidget
+     * 
      * Use this to create widgets by compile-time type.
      * @param layoutVal is the parent layout
      * @param pos is an intial location for the Widget on the Layout
