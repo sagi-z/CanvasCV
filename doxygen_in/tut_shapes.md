@@ -17,7 +17,7 @@ frame.
 
 There could be various reasons for that:
 * Since the camera is capturing a large area and we want to operate
-our algorithm on a subset of it.
+our algorithm on a relevant dynamic subset of it.
 * The user selects a polygon area that triggers an alert when tracked
 objects are inside it.
 * etc.
@@ -117,18 +117,19 @@ int main(int argc, char **argv)
 ~~~~~~~
 Notes:
 * canvascv::Canvas::enableStatusMsg() is optional, but recommended when
-using Shapes and Widgets. It takes a small portion of the screen area,
+using shapes and widgets. It takes a small portion of the screen area,
 but gives helpful information to the user.
 * canvascv::Canvas::setDefaultStatusMsg() is optional. There are built
-in status messages that are displayed during Shape creation and editing.
+in status messages that are displayed during shape creation and editing.
 When nothing is selected, then your default status message will be
 displayed.
 * The Canvas needs to know what shape to create when the user left
 clicks with the mouse. This is done with
 canvascv::Canvas::setShapeType().
-* The Canvas lets you register for create/modify/delete notification on
+* You can register for Canvas create/modify/delete notification on
 the Shapes that it creates/modify/deletes. This is the place to react to
 the user's GUI actions.
+* When executed with a path to an image, this gives you (depends on your image):
 @image html tut_shapes_gui.png
 <BR>
 

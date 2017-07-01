@@ -15,6 +15,10 @@
 #include <memory>
 #include <functional>
 
+#if ! OPENCV_HAS_WINDOW_GUI_NORMAL
+#define WINDOW_GUI_NORMAL 0
+#endif
+
 namespace canvascv
 {
 

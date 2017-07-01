@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0.2)
 
 project (canvascv)
 
@@ -39,6 +39,22 @@ if(${OpenCV_VERSION} VERSION_GREATER "3.1.0")
     ADD_DEFINITIONS(-DOPENCV_HAS_WAITKEYEX=1)
 else()
     ADD_DEFINITIONS(-DOPENCV_HAS_WAITKEYEX=0)
+endif()
+
+set(CMAKE_REQUIRED_LIBRARIES ${OpenCV_LIBS})
+include(CheckCXXSourceCompiles)
+check_cxx_source_compiles("
+#include <opencv2/highgui.hpp>
+int main()
+{
+cv::namedWindow(\"\", cv::WINDOW_AUTOSIZE | cv::WINDOW_GUI_NORMAL);
+return 0;
+}" HAS_WINDOW_GUI_NORMAL
+)
+if(HAS_WINDOW_GUI_NORMAL)
+    ADD_DEFINITIONS(-DOPENCV_HAS_WINDOW_GUI_NORMAL=1)
+else()
+    ADD_DEFINITIONS(-DOPENCV_HAS_WINDOW_GUI_NORMAL=0)
 endif()
 
 # Allow the developer to select if Dynamic or Static libraries are built
