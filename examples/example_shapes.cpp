@@ -74,7 +74,6 @@ int main(int argc, char **argv)
         image = Colors::White;
     }
 
-    cout << "image number of channels is " << image.channels() << endl;
     Canvas c("Canvas", image.size());
     c.setShapeType("Line"); // default shape type for direct GUI creation
     c.enableScreenText();

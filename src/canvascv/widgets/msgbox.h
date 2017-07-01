@@ -32,7 +32,7 @@ public:
      * @param pos location in the Canvas (the default is the center of the Canvas)
      * @return a smart pointer copy of the object kept in the Layout
      * @code
-        Canvas c(image.size());
+        Canvas c(winName, image.size());
         auto msgBox = MsgBox::create(c,
                                      "This is a MsgBox example\n"
                                      "with 2 lines", {

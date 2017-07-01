@@ -31,7 +31,8 @@ namespace canvascv
 class Canvas : public LayoutBase
 {
 public:
-    typedef std::function<void(Shape*)> CBType;
+    /// notification on shapes create/modify/delete from this Canvas instance
+    typedef std::function<void(Shape*)> CBCanvasShape;
 
     /**
      * @brief Canvas
@@ -134,21 +135,21 @@ public:
      * 
      * @param cb to invoke on shape creation
      */
-    void notifyOnShapeCreate(CBType cb);
+    void notifyOnShapeCreate(CBCanvasShape cb);
 
     /**
      * @brief used to register for notifications on shape modification (actually when it is deselected)
      * 
      * @param cb to invoke on shape modification
      */
-    void notifyOnShapeModify(CBType cb);
+    void notifyOnShapeModify(CBCanvasShape cb);
 
     /**
      * @brief used to register for notifications on shape deletion
      * 
      * @param cb to invoke on shape deletion
      */
-    void notifyOnShapeDelete(CBType cb);
+    void notifyOnShapeDelete(CBCanvasShape cb);
 
     /**
      * @brief clear all shapes from Canvas
@@ -364,9 +365,9 @@ private:
     std::list<std::shared_ptr<Widget>> widgets;
     std::shared_ptr<Shape> activeShape;
     std::shared_ptr<Widget> activeWidget;
-    std::list<CBType> createNotifs;
-    std::list<CBType> modifyNotifs;
-    std::list<CBType> deleteNotifs;
+    std::list<CBCanvasShape> createNotifs;
+    std::list<CBCanvasShape> modifyNotifs;
+    std::list<CBCanvasShape> deleteNotifs;
 
     friend void operator >> (const cv::FileNode& n, Canvas& value)
     {

@@ -29,7 +29,7 @@ public:
      * @param pos location in the Layout (if the layout supports Point locations)
      * @return a smart pointer copy of the object kept in the Layout
      * @code
-        Canvas c(image.size());
+        Canvas c(winName, image.size());
         auto selectionBox = RadioButtons::create(c, {
                                                 "Long Option1",     // index 0
                                                 "Option2\n2 lines", // index 1

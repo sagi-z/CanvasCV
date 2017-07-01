@@ -198,6 +198,7 @@ void Canvas::onMouseRelease(const Point &pos)
 
     if (activeShape.get())
     {
+        bool wasReady = activeShape->isReady();
         if (! activeShape->mouseReleased(pos))
         {
             activeShape->lostFocus();
@@ -211,6 +212,10 @@ void Canvas::onMouseRelease(const Point &pos)
             {
                 activeShape.reset();
             }
+        }
+        if (! wasReady && activeShape->isReady())
+        {
+            broadcastCreate(activeShape.get());
         }
     }
 }
@@ -253,6 +258,7 @@ void Canvas::onMouseMove(const Point &pos)
             Point offset = pos - dragPos;
             activeShape->translate(offset);
             dragPos = pos;
+            broadcastModify(activeShape.get());
         }
         else
         {
@@ -281,6 +287,7 @@ void Canvas::consumeKey(int &key)
     {
         if (activeShape.get())
         {
+            bool wasReady = activeShape->isReady();
             if (! activeShape->keyPressed(key))
             {
                 activeShape->lostFocus();
@@ -293,6 +300,10 @@ void Canvas::consumeKey(int &key)
                 {
                     activeShape.reset();
                 }
+            }
+            if (! wasReady && activeShape->isReady())
+            {
+                broadcastCreate(activeShape.get());
             }
         }
     }
@@ -327,17 +338,17 @@ void Canvas::deleteWidget(const std::shared_ptr<Widget> &widget)
     widgets.erase(find(widgets.begin(),widgets.end(),widget));
 }
 
-void Canvas::notifyOnShapeCreate(Canvas::CBType cb)
+void Canvas::notifyOnShapeCreate(Canvas::CBCanvasShape cb)
 {
     createNotifs.push_back(cb);
 }
 
-void Canvas::notifyOnShapeModify(Canvas::CBType cb)
+void Canvas::notifyOnShapeModify(Canvas::CBCanvasShape cb)
 {
     modifyNotifs.push_back(cb);
 }
 
-void Canvas::notifyOnShapeDelete(Canvas::CBType cb)
+void Canvas::notifyOnShapeDelete(Canvas::CBCanvasShape cb)
 {
     deleteNotifs.push_back(cb);
 }
@@ -465,7 +476,7 @@ void Canvas::processNewShape()
     StatusMsgGrd(*this);
     activeShape = shapes.back();
     activeShape->setCanvas(*this);
-    broadcastCreate(activeShape.get());
+    if (activeShape->isReady()) broadcastCreate(activeShape.get());
 }
 
 std::string Canvas::getDefaultStatusMsg() const

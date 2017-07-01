@@ -16,13 +16,13 @@ int main()
     Mat image(600, 800, CV_8UC3);
     image = Colors::White;
 
-    Canvas c(image.size());
+    Canvas c("Canvas", image.size());
 
     namedWindow("Canvas",
                 WINDOW_AUTOSIZE); // diable mouse resize since resizing
                                   // the window will stretch the widgets
 
-    c.setMouseCallback("Canvas"); // optional for mouse usage (see also example_selectbox.cpp)
+    c.setMouseCallback(); // optional for mouse usage (see also example_selectbox.cpp)
 
     auto msgBox = MsgBox::create(c, "Do you really want to do that?", {"Yes", "No"});
 
