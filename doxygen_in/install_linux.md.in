@@ -11,61 +11,72 @@ Make sure these are installed first and that their executables are **in your pat
 
 ### Prepare to build
 
-```
-git clone https://github.com/sagi-z/CanvasCV.git
-cd CanvasCV
-git checkout tags/@CPACK_PACKAGE_VERSION@
-mkdir build
-cd build
-```
+    git clone https://github.com/sagi-z/CanvasCV.git
+    cd CanvasCV
+    git checkout tags/@CPACK_PACKAGE_VERSION@
+    mkdir build
+    cd build
 
 ### By default cmake is building without the C++ examples
 
-```
-cmake ..
-make
-```
+    cmake ..
+    make
 
 ### Here is how to build the examples
 
-```
-cmake -DBUILD_EXAMPLES=ON ..
-make
-```
+    cmake -DBUILD_EXAMPLES=ON ..
+    make
 
 ### Install option 1 for Linux (from the build directory):
 
-```
-sudo make install
-```
+    sudo make install
 
 ### C++ Install option 2 for Linux - cleaner (from the build directory):
 
-```
-cpack -G DEB
-sudo dpkg -i ./canvascv-@CPACK_PACKAGE_VERSION@-Linux.deb
-```
+    cpack -G DEB
+    sudo dpkg -i ./canvascv-@CPACK_PACKAGE_VERSION@-Linux.deb
 
 C++ Usage
 ---------
 ### Linux
 Assuming installation in '/usr/local', add to cflags '-I/usr/local/include' and to link flags '-L/usr/local/lib -lcanvascv'
 
-Here is a minimal *CMakeLists.txt* example:
+Here is a *CMakeLists.txt* example, from what used for the tutorials:
+
 ```
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8)
 
-PROJECT(myapp)
+project (canvascv-tutorials)
 
-FIND_PACKAGE(OpenCV 3.1.0 REQUIRED)
+find_package(OpenCV 3.1.0 REQUIRED)
 
-INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS} "/usr/local/include")
+if(NOT WIN32)
+    set(CXX_11_FS_LIB "-lstdc++fs")
+else()
+    set(CXX_11_FS_LIB "")
+endif()
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 11)
 
-ADD_EXECUTABLE(myapp main.cpp)
+# add include directories to the project
+include_directories(
+    ${PROJECT_SOURCE_DIR}/tutorials
+    ${OpenCV_INCLUDE_DIRS}
+    /usr/local/include
+)
 
-FIND_LIBRARY(CanvasCV_LIB canvascv "/usr/local/lib")
-TARGET_LINK_LIBRARIES (myapp ${CanvasCV_LIB} ${OpenCV_LIBS})
+file(GLOB_RECURSE TUTORIAL_SRCS
+    "tutorials/*.h"
+    "tutorials/*.cpp"
+)
+
+find_library(CanvasCV_LIB canvascv "/usr/local/lib")
+
+message ("Building these tutorials:")
+foreach ( file ${TUTORIAL_SRCS} )
+    get_filename_component( target_name ${file} NAME_WE )
+    message ( "Example '${target_name}' will be created")
+    add_executable(${target_name} ${file})
+    target_link_libraries (${target_name} ${CanvasCV_LIB} ${CXX_11_FS_LIB} ${OpenCV_LIBS})
+endforeach()
 ```
-
-### Windows
-make sure the include path and link path and library are set correctly.

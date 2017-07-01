@@ -11,8 +11,9 @@ Make sure these are installed first and that their executables are **in your pat
 
 ### Building
 
-* This should be done from a **"Developer Command Prompt for VS2015"** (Open it from the *Start* menu):
-```
+* This should be done from a **Developer Command Prompt for VS2015** (Open it from the *Start* menu):
+
+\verbatim
 REM check dependencies are in path/exist
 REM ====================================
 cd c:\users\sagiz
@@ -46,5 +47,4 @@ msbuild PACKAGE.vcxproj
 REM run the installer
 REM =================
 .\canvascv-@CPACK_PACKAGE_VERSION@-win64.exe
-
-```
+\endverbatim
