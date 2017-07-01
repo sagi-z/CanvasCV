@@ -1,44 +1,48 @@
 Linux installation {#installlinux}
 ==================
 
-### Build dependencies
+[TOC]
+
+# Build dependencies {#ilsec1}
 Make sure these are installed first and that their executables are **in your path**:
 * **cmake** - should already be installed since you built OpenCV by yourself.
 * **git** (optional) - you can also download the sources from GitHub.
+<BR>
 
-### Prepare to build
+
+# Prepare to build {#ilsec2}
 
     git clone https://github.com/sagi-z/CanvasCV.git
     cd CanvasCV
     git checkout tags/@CPACK_PACKAGE_VERSION@
     mkdir build
     cd build
+<BR>
 
-
-### By default cmake is building without the C++ examples
+# Building without the C++ examples {#ilsec3}
 
     cmake ..
     make
+<BR>
 
-
-### Here is how to build the examples
+# Build with the examples {#ilsec4}
 
     cmake -DBUILD_EXAMPLES=ON ..
     make
+<BR>
 
-
-### Install option 1 for Linux (from the build directory):
+# Install option 1 {#ilsec5}
 
     sudo make install
+<BR>
 
-
-### C++ Install option 2 for Linux - cleaner (from the build directory):
+# Install option 2 - cleaner {#ilsec6}
 
     cpack -G DEB
     sudo dpkg -i ./canvascv-@CPACK_PACKAGE_VERSION@-Linux.deb
+<BR>
 
-
-### C++ Usage
+# C++ Usage {#ilsec7}
 Assuming installation in '/usr/local', add to cflags '-I/usr/local/include' and to link flags '-L/usr/local/lib -lcanvascv'
 
 Here is a *CMakeLists.txt* example, from what used for the tutorials:

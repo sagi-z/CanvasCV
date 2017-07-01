@@ -72,6 +72,7 @@ int main(int argc, char **argv)
 
 which, besides an output to STDERR, gives you:
 @image html tut_fatal.png
+<BR>
 
 @subsection sub2 Displaying user text in a fixed location
 Instead of displaying the help message or any other fixed text to the console use the enableScreenText and setScreenText(string) methods.
@@ -159,6 +160,7 @@ Some notes here:
 * As you can see the Canvas instance can be completely turned on and off with the canvascv::Canvas::setOn() method.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_screentext.png
+<BR>
 
 @subsection sub3 Displaying text where ever you want
 To display text where you want you need the canvascv::Text widget.
@@ -186,5 +188,6 @@ Notes:
 * The canvascv::Widget::setLocation gives specific XY postion, but a canvascv::HorizontalLayout could help us put this in the CENTER.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_text.png
+<BR>
 
 **That's all for this tutorial**

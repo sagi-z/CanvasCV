@@ -132,6 +132,7 @@ Notes:
 * Here we're using getUserSelection(true) immediatly on that shared_ptr, and by passing true we're blocked at that line of code.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_msgbox_modal.png
+<BR>
 
 @section tmbsec3 A non modal MsgBox
 
@@ -190,6 +191,7 @@ Notes:
 * We needed canvascv::Canvas::setMouseCallback since the Canvas will intercept mouse events for the MsgBox now.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_msgbox.png
+<BR>
 
 @section tmbsec4 An external window modal MsgBox
 Since a MsgBox usually requires immediate user attention, you have another way to block other GUI while waiting for a user reaction.
@@ -259,5 +261,6 @@ Notes:
 * Currently there is no control of where the OpenCV window will be opened.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_msgbox_modal_external.png
+<BR>
 
 **That's all for this tutorial**

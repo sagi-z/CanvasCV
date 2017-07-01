@@ -1,14 +1,17 @@
 Windows installation {#installwindows}
 ====================
 
-### Build dependencies
+[TOC]
+
+# Build dependencies {#iwsec1}
 Make sure these are installed first and that their executables are **in your path**:
 * **cmake** - should already be installed if you built OpenCV by yourself (configure *OPENCV\_DIR* as required for build using OpenCV with cmake).
 * **Visual Studio** - a C++ compiler - I'm using *Visual Studio 2015*.
 * **git** (optional) - you can also download the sources from GitHub.
 * **NSIS** (optional) - if you want to build a package installer.
+<BR>
 
-### Building
+# Building {#iwsec2}
 
 * This should be done from a **Developer Command Prompt for VS2015** (Open it from the *Start* menu):
 
