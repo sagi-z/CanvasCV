@@ -1,7 +1,6 @@
 Windows installation {#installwindows}
 ====================
 
-## Windows build and install
 ### Build dependencies
 Make sure these are installed first and that their executables are **in your path**:
 * **cmake** - should already be installed if you built OpenCV by yourself (configure *OPENCV\_DIR* as required for build using OpenCV with cmake).

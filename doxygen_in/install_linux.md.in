@@ -1,9 +1,6 @@
 Linux installation {#installlinux}
 ==================
 
-Build and install
------------------
-## Linux Building / Installing
 ### Build dependencies
 Make sure these are installed first and that their executables are **in your path**:
 * **cmake** - should already be installed since you built OpenCV by yourself.
@@ -17,28 +14,31 @@ Make sure these are installed first and that their executables are **in your pat
     mkdir build
     cd build
 
+
 ### By default cmake is building without the C++ examples
 
     cmake ..
     make
+
 
 ### Here is how to build the examples
 
     cmake -DBUILD_EXAMPLES=ON ..
     make
 
+
 ### Install option 1 for Linux (from the build directory):
 
     sudo make install
+
 
 ### C++ Install option 2 for Linux - cleaner (from the build directory):
 
     cpack -G DEB
     sudo dpkg -i ./canvascv-@CPACK_PACKAGE_VERSION@-Linux.deb
 
-C++ Usage
----------
-### Linux
+
+### C++ Usage
 Assuming installation in '/usr/local', add to cflags '-I/usr/local/include' and to link flags '-L/usr/local/lib -lcanvascv'
 
 Here is a *CMakeLists.txt* example, from what used for the tutorials:
