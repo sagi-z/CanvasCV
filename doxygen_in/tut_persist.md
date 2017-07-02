@@ -3,9 +3,9 @@ Persisting shapes {#tutpersistency}
 ~~~~~~~{.cpp}
 #include <opencv2/highgui.hpp>
 
-#include "canvas.h"
-#include "colors.h"
-#include "widgets/msgbox.h"
+#include <canvas.h>
+#include <colors.h>
+#include <widgets/msgbox.h>
 
 using namespace std;
 using namespace cv;

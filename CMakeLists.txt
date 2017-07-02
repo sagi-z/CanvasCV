@@ -14,6 +14,11 @@ endif()
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_CXX_STANDARD 11)
 
+# Default build is 'Release'
+IF(NOT CMAKE_BUILD_TYPE)
+    SET(CMAKE_BUILD_TYPE Release)
+ENDIF(NOT CMAKE_BUILD_TYPE)
+
 # add include directories to the project
 INCLUDE_DIRECTORIES(
     ${PROJECT_SOURCE_DIR}/src
@@ -145,6 +150,7 @@ if(BUILD_DOCUMENTATION)
   # CPACK_PACKAGE_VERSION
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_linux.md.in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_linux.md @ONLY)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_windows.md.in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/install_windows.md @ONLY)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/cmake.md.in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/cmake.md @ONLY)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen_in/Doxyfile.in ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile @ONLY)
 
   # Allow html header changes

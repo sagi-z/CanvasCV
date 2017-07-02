@@ -54,7 +54,7 @@ A simple write to the console before exiting is usually not enough to get the us
 
 For these simple cases you have a simple shortcut in Canvas::fatal():
 ~~~~~~~{.cpp}
-#include "canvascv/canvas.h"
+#include <canvascv/canvas.h>
 
 using namespace canvascv;
 
@@ -81,7 +81,7 @@ This flow is a little closer to the regular usage of the Canvas, but you don't n
 
 Adding to the previous example (we want to display this on an image):
 ~~~~~~~{.cpp}
-#include "canvascv/canvas.h"
+#include <canvascv/canvas.h>
 
 using namespace canvascv;
 
@@ -158,6 +158,8 @@ Some notes here:
 * Note that we didn't need to use canvascv::Canvas::setMouseCallback() or create a widget of our own here.
 * When you enableScreenText() you can configure it's display.
 * As you can see the Canvas instance can be completely turned on and off with the canvascv::Canvas::setOn() method.
+* canvascv::Canvas::waitKeyEx knows to update it's internal shapes and
+  widgets even if you pass 0 as a blocking delay indicator.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_screentext.png
 <BR>

@@ -42,10 +42,8 @@ int main(int argc, char **argv)
     Canvas c("Canvas", image.size());
     c.enableScreenText();
     Widget::CBUserSelection cb = [&c](Widget *w, int index) {
-        stringstream s;
         RadioButtons *rb = (RadioButtons*)w;
-        s << "User selected option '" << index << "': '" << rb->getTextAt(index) << "'\n";
-        c.setScreenText(s.str());
+        c.setScreenText(CCV_STR("User selected option '" << index << "': '" << rb->getTextAt(index) << "'\n"));
         switch (index)
         {
         case 0:

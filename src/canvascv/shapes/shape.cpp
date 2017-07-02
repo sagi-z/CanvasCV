@@ -58,7 +58,7 @@ Shape::~Shape()
 {
 }
 
-void Shape::notifyOnEvent(Shape::CBType cb)
+void Shape::notifyOnEvent(Shape::CBPerShape cb)
 {
     cbs.push_back(cb);
 }
@@ -202,7 +202,7 @@ bool Shape::isEditing()
     return editing;
 }
 
-void Shape::broadcastEvent(CBEvent event)
+void Shape::broadcastEvent(Event event)
 {
     for (auto &cb : cbs)
     {

@@ -230,6 +230,15 @@ void CompoundShape::readInternals(const FileNode &node)
     reloadPointers(shapesTmp, i);
 }
 
+void CompoundShape::setReady()
+{
+    Shape::setReady();
+    for (auto &shape : shapes)
+    {
+        shape->setReady();
+    }
+}
+
 bool CompoundShape::keyPressed(int &key)
 {
     if (active.get())

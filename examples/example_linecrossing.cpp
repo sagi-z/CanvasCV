@@ -110,6 +110,7 @@ int main(int argc, char **argv)
         {
             Arrow *arrow = (Arrow*) arrowShape;
             Scalar defaultColor = arrowShape->getOutlineColor();
+            setArrowColors(*lc, *arrow, defaultColor);
             Handle::PosChangedCB cb = [arrow, defaultColor, lc](const Point&)
             {
                 setArrowColors(*lc, *arrow, defaultColor);

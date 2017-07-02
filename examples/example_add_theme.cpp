@@ -73,13 +73,11 @@ int main(int argc, char **argv)
     Canvas c("Canvas", image.size());
     auto layout = HFrame::create(c, Point(5, image.rows / 2.));
     Widget::CBUserSelection cb = [&c, &layout](Widget *w, int index) {
-        stringstream s;
         RadioButtons *rb = (RadioButtons*)w;
         string themeName = rb->getTextAt(index);
-        s << "User selected theme '" << index << "': '" << themeName << "'\n";
         ThemeRepository::setCurrentTheme(themeName);
         c.applyTheme();
-        layout->at<Text>(0)->setText(s.str());
+        layout->at<Text>(0)->setText(CCV_STR("User selected theme '" << index << "': '" << themeName << "'\n"));
     };
 
     ThemeRepository::addTheme("MyTheme1", new MyTheme(Colors::Red, Colors::Pink, 10));

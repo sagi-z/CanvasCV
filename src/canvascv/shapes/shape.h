@@ -43,25 +43,25 @@ public:
     virtual ~Shape();
 
     /**
-     * @brief The CBEvent enum will let you know what just happended to the shape
+     * @brief The Event enum will let you know what just happended to the shape
      * 
      */
-    enum CBEvent
+    enum Event
     {
         SELECT,   ///< shape selected
         UNSELECT, ///< shape unselected
         REMOVED   ///< shape removed
     };
 
-    /// signature of a callback which gets the CBEvent
-    typedef std::function<void(Shape*, CBEvent)> CBType;
+    /// signature of a callback which gets the Event
+    typedef std::function<void(Shape*, Event)> CBPerShape;
 
     /**
      * @brief used to register for notifications on shape
      * 
      * @param cb to invoke on shape event
      */
-    void notifyOnEvent(CBType cb);
+    void notifyOnEvent(CBPerShape cb);
 
 
     /**
@@ -203,7 +203,7 @@ protected:
 
     bool isDeleted();
 
-    void setReady();
+    virtual void setReady();
 
     int id;
     cv::Scalar outlineColor;
@@ -221,7 +221,7 @@ private:
     friend class CompoundShape;
 
     /// called when events happen
-    void broadcastEvent(CBEvent event);
+    void broadcastEvent(Event event);
 
     int genId();
 
@@ -231,7 +231,7 @@ private:
     void write(cv::FileStorage& fs) const;
     void read(const cv::FileNode& node);
 
-    std::list<CBType> cbs;
+    std::list<CBPerShape> cbs;
     bool deleted;
     bool ready;
 };

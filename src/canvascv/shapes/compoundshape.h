@@ -59,6 +59,8 @@ protected:
     virtual void writeInternals(cv::FileStorage &fs) const;
     virtual void readInternals(const cv::FileNode &node);
 
+    virtual void setReady();
+
 private:
     std::shared_ptr<Shape> active;
     std::list<std::shared_ptr<Shape>> shapes;

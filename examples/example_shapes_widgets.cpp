@@ -139,7 +139,7 @@ static void createShapesFromCodeExample(Canvas &c, Point center)
         cout << "widget " << w << " at(1) got state " << state << endl;
     });
 
-    ellipse->notifyOnEvent([buttons, msgs, &c](Shape *shape, Shape::CBEvent event)
+    ellipse->notifyOnEvent([buttons, msgs, &c](Shape *shape, Shape::Event event)
     {
         cout << "ellipse event is "   << event << endl;
         if (event == Shape::SELECT)
@@ -211,7 +211,6 @@ int main(int argc, char **argv)
     c.setMouseCallback(); // optional for mouse usage see also (example_selectbox.cpp)
 
 
-    int delay = 1000/25;
     int key = 0;
     Mat out; // keeping it out of the loop is a little more efficient
     do
@@ -271,7 +270,7 @@ int main(int argc, char **argv)
 
         c.redrawOn(image, out);
         imshow("Canvas", out);
-        key = c.waitKeyEx(delay); // GUI and callbacks happen here
+        key = c.waitKeyEx(); // GUI and callbacks happen here
     } while (key != 'q');
 
     destroyAllWindows();

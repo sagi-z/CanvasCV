@@ -114,6 +114,7 @@ bool Canvas::onMousePress(const Point &pos)
     // delegate to active shape
     if (activeShape.get())
     {
+        bool wasReady = activeShape->isReady();
         if (! activeShape->mousePressed(pos))
         {
             activeShape->lostFocus();
@@ -131,6 +132,10 @@ bool Canvas::onMousePress(const Point &pos)
         else if (activeShape->isReady() && activeShape->getVisible() && ! activeShape->getLocked())
         {   // note that only active shapes can be dragged
             dragPos = pos;
+        }
+        if (! wasReady && activeShape && activeShape->isReady())
+        {
+            broadcastCreate(activeShape.get());
         }
         return false;
     }
@@ -213,7 +218,7 @@ void Canvas::onMouseRelease(const Point &pos)
                 activeShape.reset();
             }
         }
-        if (! wasReady && activeShape->isReady())
+        if (! wasReady && activeShape && activeShape->isReady())
         {
             broadcastCreate(activeShape.get());
         }
@@ -301,7 +306,7 @@ void Canvas::consumeKey(int &key)
                     activeShape.reset();
                 }
             }
-            if (! wasReady && activeShape->isReady())
+            if (! wasReady && activeShape && activeShape->isReady())
             {
                 broadcastCreate(activeShape.get());
             }
@@ -360,6 +365,15 @@ void Canvas::clearShapes()
     while(shapes.size())
     {
        deleteShape(shapes.back());
+    }
+}
+
+void Canvas::clearWidgets()
+{
+    setStatusMsg(defaultStatusMsg);
+    while(widgets.size())
+    {
+       rmvWidget(widgets.back());
     }
 }
 
@@ -536,13 +550,39 @@ void Canvas::imshow(InputArray mat)
 
 int Canvas::waitKeyEx(int delay)
 {
-    if (delay <= 0) delay = 66;
+    bool delayZero = false;
+    if (delay <= 0)
+    {
+        delayZero = true;
+        delay = 1000/25.; // ~ 25 FPS
+    }
+    int key = -1;
+    auto start = std::chrono::high_resolution_clock::now();
+    Mat internalOut;
+    do
+    {
 #if OPENCV_HAS_WAITKEYEX
-    int key = cv::waitKeyEx(delay);
+        key = cv::waitKeyEx(delay);
 #else
-    int key = cv::waitKey(delay);
+        key = cv::waitKey(delay);
 #endif
-    consumeKey(key);
+        consumeKey(key);
+        if (! delayZero)
+        {   // check timeout on delay
+            auto end = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double, std::milli> diff = end-start;
+            if (diff.count() >= delay) break;
+        }
+        if (key == -1)
+        {
+            redrawOn(internalOut);
+            imshow(internalOut);
+        }
+        else
+        {
+            break;
+        }
+    } while (true);
     return key;
 }
 

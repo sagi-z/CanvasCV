@@ -8,11 +8,11 @@ The MsgBox is a "one shot user pressed and widget died" kind of widget.
 
 [TOC]
 
-@section tmbsec1 Reminder of main loop
+@section tmbsec1 Remember the main loop
 Just to remind you from the previous tutotial, the main loop looks something like this:
 ~~~~~~~{.cpp}
-#include "canvascv/canvas.h"
-#include "canvascv/widgets/msgbox.h"
+#include <canvascv/canvas.h>
+#include <canvascv/widgets/msgbox.h>
 
 using namespace canvascv;
 
@@ -34,7 +34,7 @@ int main(int argc, char **argv)
     Canvas c("MsgBox example", image.size());
     c.enableScreenText();
 
-    namedWindow("MsgBox example", WINDOW_AUTOSIZE | WINDOW_GUI_NORMAL );
+    namedWindow("MsgBox example", WINDOW_AUTOSIZE);
 
     int delay = 1000/25;
     int key = 0;
@@ -71,8 +71,8 @@ in a modal way, in which you block everything else and wait on that line of code
 
 This is what we'll do here, with this code:
 ~~~~~~~{.cpp}
-#include "canvascv/canvas.h"
-#include "canvascv/widgets/msgbox.h"
+#include <canvascv/canvas.h>
+#include <canvascv/widgets/msgbox.h>
 
 using namespace canvascv;
 
@@ -94,7 +94,7 @@ int main(int argc, char **argv)
     Canvas c("MsgBox example", image.size());
     c.enableScreenText();
 
-    namedWindow("MsgBox example", WINDOW_AUTOSIZE | WINDOW_GUI_NORMAL );
+    namedWindow("MsgBox example", WINDOW_AUTOSIZE);
 
     c.setMouseCallback(); // optional for mouse usage (see also example_selectbox.cpp)
 
@@ -204,8 +204,8 @@ This is a blocking API, the code will wait for a user button press.
 
 
 ~~~~~~~{.cpp}
-#include "canvascv/canvas.h"
-#include "canvascv/widgets/msgbox.h"
+#include <canvascv/canvas.h>
+#include <canvascv/widgets/msgbox.h>
 
 using namespace canvascv;
 
@@ -227,7 +227,7 @@ int main(int argc, char **argv)
     Canvas c("MsgBox example", image.size());
     c.enableScreenText();
 
-    namedWindow("MsgBox example", WINDOW_AUTOSIZE | WINDOW_GUI_NORMAL );
+    namedWindow("MsgBox example", WINDOW_AUTOSIZE);
 
     c.setMouseCallback(); // optional for mouse usage (see also example_selectbox.cpp)
 

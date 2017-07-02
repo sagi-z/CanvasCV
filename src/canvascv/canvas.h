@@ -14,10 +14,7 @@
 #include <list>
 #include <memory>
 #include <functional>
-
-#if ! OPENCV_HAS_WINDOW_GUI_NORMAL
-#define WINDOW_GUI_NORMAL 0
-#endif
+#include <sstream>
 
 namespace canvascv
 {
@@ -157,9 +154,15 @@ public:
 
     /**
      * @brief clear all shapes from Canvas
-     * 
+     *
      */
     void clearShapes();
+
+    /**
+     * @brief clear all widgets from Canvas
+     * 
+     */
+    void clearWidgets();
 
     /**
      * @brief getShapes of a specific type
@@ -274,11 +277,11 @@ public:
     /**
      * @brief waitKeyEx
      * 
-     * utility method to handle key strokes, your get the keystroke
-     * @param delay in milliseconds must be bigger than 0, or it will be 66 (15 FPS)
-     * @return the key press or -1 if a shape/widget consumed it
+     * utility method to handle key strokes - you get the keystroke if a widget/shape didn't consume it
+     * @param delay in milliseconds
+     * @return the key press or -1 if the timeout reached
      */
-    int waitKeyEx(int delay = 66);
+    int waitKeyEx(int delay = 0);
 
     /**
      * @brief applyTheme
@@ -413,9 +416,15 @@ void readShapes(const cv::FileNode& node, Canvas& x, const Canvas&);
 
 }
 
+#if ! OPENCV_HAS_WINDOW_GUI_NORMAL
+#define WINDOW_GUI_NORMAL 0
+#endif
+
+#define CCV_STR(X) ((std::stringstream&)(std::stringstream() << X)).str()
+#define CCV_C_STR(X) CCV_STR(X).c_str()
+
 /** @example example_shapes_widgets.cpp
  * This is an example of using shapes and widgets together.
  */
-
 
 #endif // CANVAS_H

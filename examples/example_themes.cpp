@@ -44,13 +44,11 @@ int main(int argc, char **argv)
     Canvas c("Canvas", image.size());
     c.enableScreenText();
     Widget::CBUserSelection cb = [&c](Widget *w, int index) {
-        stringstream s;
         RadioButtons *rb = (RadioButtons*)w;
         string themeName = rb->getTextAt(index);
-        s << "User selected theme '" << index << "': '" << themeName << "'\n";
         ThemeRepository::setCurrentTheme(themeName);
         c.applyTheme();
-        c.setScreenText(s.str());
+        c.setScreenText(CCV_STR("User selected theme '" << index << "': '" << themeName << "'\n"));
     };
 
     vector<string> availThemes = ThemeRepository::availThemes();
