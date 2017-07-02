@@ -88,18 +88,17 @@ int MsgBox::createModal(const string &title, const string &msg, std::vector<stri
     Canvas c(title, Size(1024, 768));
     auto msgBox = create(c, msg, buttonNames, cbUserSelection);
     msgBox->update();
-    Mat image(msgBox->getRect().size(), CV_8UC3);
-    image = Colors::White;
-    c.setSize(image.size());
+    c.setSize(msgBox->getRect().size());
     msgBox->setLocation({0,0});
     namedWindow(title, WINDOW_AUTOSIZE | WINDOW_GUI_NORMAL);
     c.setMouseCallback();
+    int delay = 1000 / 25; // delay because of the polling
     Mat out;
     while(! msgBox->isRemoved())
     {
-        c.redrawOn(image, out);
-        imshow(title, out);
-        c.waitKeyEx();
+        c.redrawOn(out);
+        c.imshow(out);
+        c.waitKeyEx(delay);
     }
     destroyWindow(title);
     return msgBox->getUserSelection();
@@ -109,14 +108,14 @@ int MsgBox::getUserSelection(bool blocking)
 {
     if (blocking)
     {
-        update();
         Canvas *c = (Canvas*) getLayout();
+        int delay = 1000 / 25; // delay because of the polling
         Mat out;
         while(! isRemoved())
         {
             c->redrawOn(out);
             c->imshow(out);
-            c->waitKeyEx();
+            c->waitKeyEx(delay);
         }
     }
     return userSelection;

@@ -97,7 +97,6 @@ int main(int argc, char **argv)
 
     c.setMouseCallback(); // optional for mouse usage (see also example_selectbox.cpp)
 
-    int key = 0;
     Mat out;
     int userSelection = 0;
     int cnt = 0;
@@ -107,6 +106,7 @@ int main(int argc, char **argv)
 
         imshow("MsgBox example", out);
 
+	// the blocking API handles GUI internally
         userSelection = MsgBox::create(c, string("Notice #") + to_string(++cnt) + " this msg", {
                                            "Ok", "Whatever"
                                        })->getUserSelection(true);
@@ -114,8 +114,6 @@ int main(int argc, char **argv)
         s << "User pressed button with index '" << userSelection << "'\n\n" <<
              "(Choose 'Whatever' to exit)";
         c.setScreenText(s.str());
-
-        key = c.waitKeyEx(); // GUI and callbacks happen here
     } while (userSelection == 0);
 
     destroyAllWindows();
@@ -229,7 +227,6 @@ int main(int argc, char **argv)
 
     c.setMouseCallback(); // optional for mouse usage (see also example_selectbox.cpp)
 
-    int key = 0;
     Mat out;
     int userSelection = 0;
     do
@@ -238,13 +235,12 @@ int main(int argc, char **argv)
 
         imshow("MsgBox example", out);
 
+	// the blocking API handles GUI internally
         userSelection = MsgBox::createModal("Modal MsgBox", "Notice this window", {"Ok", "Whatever"});
         stringstream s;
         s << "User pressed button with index '" << userSelection << "'\n\n" <<
              "(Choose 'Whatever' to exit)";
         c.setScreenText(s.str());
-
-        key = c.waitKeyEx(); // GUI and callbacks happen here
     } while (userSelection == 0);
 
     destroyAllWindows();
