@@ -70,8 +70,8 @@ int main(int argc, char **argv)
     namedWindow("Canvas", WINDOW_AUTOSIZE);
     c.setMouseCallback(); // optional for mouse usage see also (example_selectbox.cpp)
 
-    int delay = 1000/25;
     int key = 0;
+    int delay = 1000/25; // we use a delay for polling the radioButtons
     Mat out; // keeping it out of the loop is a little more efficient
     while (radioButtons->getSelection() != 3 && key != 'q')
     {

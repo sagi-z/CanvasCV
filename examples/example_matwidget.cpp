@@ -91,14 +91,13 @@ int main(int argc, char **argv)
     namedWindow("Canvas", WINDOW_AUTOSIZE);
     setMouseCallback("Canvas", mouseCB, &c);
 
-    int delay = 1000/25;
     int key = 0;
     Mat out; // keeping it out of the loop is a little more efficient
     while (key != 'q')
     {
         c.redrawOn(image, out);
         imshow("Canvas", out);
-        key = c.waitKeyEx(delay); // GUI and callbacks happen here
+        key = c.waitKeyEx(); // GUI and callbacks happen here
     }
 
     destroyAllWindows();

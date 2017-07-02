@@ -1,5 +1,6 @@
 #include "canvascv/colors.h"
 #include "handle.h"
+#include "canvascv/canvas.h"
 
 #include <opencv2/imgproc.hpp>
 
@@ -171,7 +172,8 @@ void Handle::setPos(const Point &pos, bool notify)
 
 void Handle::translate(const Point &offset)
 {
-   setPos(pt + offset);
+    setPos(pt + offset);
+    if (canvas) canvas->setDirty();
 }
 
 int Handle::getRadius() const

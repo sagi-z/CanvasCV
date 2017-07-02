@@ -1,5 +1,6 @@
 #include "textbox.h"
 #include "canvascv/colors.h"
+#include "canvascv/canvas.h"
 
 #include <opencv2/imgproc.hpp>
 
@@ -169,6 +170,7 @@ void TextBox::setFontColor(const cv::Scalar &value)
 {
     fontColor = value;
     fontColor[3] = 255; // shape colors are opaque
+    if (canvas) canvas->setDirty();
 }
 
 int TextBox::getFontThickness() const
@@ -179,6 +181,7 @@ int TextBox::getFontThickness() const
 void TextBox::setFontThickness(int value)
 {
     fontThickness = value;
+    if (canvas) canvas->setDirty();
 }
 
 void TextBox::writeInternals(FileStorage &fs) const
@@ -243,11 +246,13 @@ void TextBox::setText(const string &value)
 {
     text = value;
     recalcRect();
+    if (canvas) canvas->setDirty();
 }
 
 void TextBox::setTL(const Point &value)
 {
     topLeft->setPos(value);
+    if (canvas) canvas->setDirty();
 }
 
 int TextBox::getFontFace() const
@@ -259,6 +264,7 @@ void TextBox::setFontFace(int value)
 {
     fontFace = value;
     recalcRect();
+    if (canvas) canvas->setDirty();
 }
 
 double TextBox::getFontScale() const
@@ -270,6 +276,7 @@ void TextBox::setFontScale(double value)
 {
     fontScale = value;
     recalcRect();
+    if (canvas) canvas->setDirty();
 }
 
 void TextBox::translate(const Point &offset)

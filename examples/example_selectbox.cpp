@@ -91,14 +91,13 @@ int main(int argc, char **argv)
     c.enableScreenText();
     c.setScreenText("left click to open selection box. left click to select an item\n'q' to quit");
 
-    int delay = 1000/25;
     int key = 0;
     Mat out; // keeping it out of the loop is a little more efficient
     while (key != 'q')
     {
         c.redrawOn(image, out);
         imshow("Canvas", out);
-        key = c.waitKeyEx(delay); // GUI and callbacks happen here
+        key = c.waitKeyEx(); // GUI and callbacks happen here
     }
 
     destroyAllWindows();

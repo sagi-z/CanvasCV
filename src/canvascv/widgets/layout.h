@@ -39,6 +39,8 @@ protected:
     virtual bool addDirtyWidget(Widget *widget) = 0;
     virtual void rmvDirtyWidget(Widget *widget) = 0;
 
+    virtual bool hasDirtyWidgets() = 0;
+
     virtual void updateDirtyWidgets() = 0;
 };
 

@@ -35,7 +35,7 @@ Canvas c("winName", frame.size());
 
 * Redraw on your frame/image in your regular OpenCV loop, as in:
 ~~~~~~~{.cpp}
-    int delay = 1000/25;
+    int delay = 1000/25; // for a single image, delay should be 0
     int key = -1;
     Mat out;
     while (true)
@@ -124,7 +124,6 @@ int main(int argc, char **argv)
 
     namedWindow("Canvas", WINDOW_AUTOSIZE); // disable mouse resize
 
-    int delay = 1000/25;
     int key = 0;
     Mat out;
     do
@@ -143,7 +142,7 @@ int main(int argc, char **argv)
 
         imshow("Canvas", out);    // using cv::imshow works fine
 
-        key = c.waitKeyEx(delay); // GUI and callbacks happen here
+        key = c.waitKeyEx(); // GUI and callbacks happen here
 
     } while (key != 'q');
 

@@ -70,8 +70,8 @@ int main(int argc, char **argv)
     namedWindow("Canvas", WINDOW_AUTOSIZE);
     setMouseCallback("Canvas", mouseCB, &c);
 
-    int delay = 1000/25;
     int key = 0;
+    int delay = 1000/25;  // if using a polling API we need a delay
     Mat out; // keeping it out of the loop is a little more efficient
     while (msgBox && key != 'q')
     {

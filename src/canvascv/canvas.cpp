@@ -20,6 +20,7 @@ namespace canvascv
 
 Canvas::Canvas(const string &winNameVal, Size sizeVal)
     : on(true),
+      isDirty(false),
       boundaries(Point(0,0), sizeVal),
       hasScreenText(false),
       hasStatusMsg(false),
@@ -84,6 +85,8 @@ void Canvas::redrawOn(const Mat &src, Mat &dst)
         statusMsg->setLocation(Point(5, dst.rows - 5));
         static_cast<Widget*>(statusMsg.get())->renderOn(dst);
     }
+
+    isDirty = false;
 }
 
 void Canvas::redrawOn(Mat &dst)
@@ -94,6 +97,7 @@ void Canvas::redrawOn(Mat &dst)
 bool Canvas::onMousePress(const Point &pos)
 {
     if (! on) return false;
+    isDirty = true;
     StatusMsgGrd(*this);
 
     // widgets have preference over shapes
@@ -181,6 +185,7 @@ bool Canvas::onMousePress(const Point &pos)
 void Canvas::onMouseRelease(const Point &pos)
 {
     if (! on) return;
+    isDirty = true;
     StatusMsgGrd(*this);
 
     dragPos.x = dragPos.y = 0;
@@ -228,6 +233,7 @@ void Canvas::onMouseRelease(const Point &pos)
 void Canvas::onMouseMove(const Point &pos)
 {
     if (! on) return;
+    isDirty = true;
     StatusMsgGrd(*this);
 
     // widgets have preference over shapes
@@ -278,6 +284,7 @@ std::shared_ptr<Shape> Canvas::createShape(string type, const Point &pos)
     shapes.push_back(shape);
     processNewShape();
     shape->setReady();
+    shape->setLocked(false); // (Maybe better is setReady does this for the needed shape)
     shape->lostFocus();
     activeShape.reset();
     return shape;
@@ -292,6 +299,7 @@ void Canvas::consumeKey(int &key)
     {
         if (activeShape.get())
         {
+            isDirty = true;
             bool wasReady = activeShape->isReady();
             if (! activeShape->keyPressed(key))
             {
@@ -336,11 +344,13 @@ void Canvas::deleteShape(const std::shared_ptr<Shape> &shape)
         connector->disconnectShape(shape->getId());
     }
     shapes.erase(find(shapes.begin(),shapes.end(),shape));
+    isDirty = true;
 }
 
 void Canvas::deleteWidget(const std::shared_ptr<Widget> &widget)
 {
     widgets.erase(find(widgets.begin(),widgets.end(),widget));
+    isDirty = true;
 }
 
 void Canvas::notifyOnShapeCreate(Canvas::CBCanvasShape cb)
@@ -491,6 +501,7 @@ void Canvas::processNewShape()
     activeShape = shapes.back();
     activeShape->setCanvas(*this);
     if (activeShape->isReady()) broadcastCreate(activeShape.get());
+    isDirty = true;
 }
 
 std::string Canvas::getDefaultStatusMsg() const
@@ -575,8 +586,11 @@ int Canvas::waitKeyEx(int delay)
         }
         if (key == -1)
         {
-            redrawOn(internalOut);
-            imshow(internalOut);
+            if (on && (isDirty || hasDirtyWidgets()))
+            {
+                redrawOn(internalOut);
+                imshow(internalOut);
+            }
         }
         else
         {
@@ -588,6 +602,7 @@ int Canvas::waitKeyEx(int delay)
 
 void Canvas::applyTheme(bool applyToCanvasText)
 {
+    isDirty = true;
     Theme *currentTheme = ThemeRepository::getCurrentTheme();
     for (auto &shape : shapes)
     {
@@ -611,6 +626,11 @@ void Canvas::fatal(string errorMsg, int exitStatus)
     MsgBox::createModal("Fatal Error", header + errorMsg , {"Exit"}, [exitStatus](Widget*,int) {_Exit(exitStatus);});
 }
 
+void Canvas::setDirty()
+{
+    isDirty = true;
+}
+
 const Rect Canvas::getBoundaries() const
 {
     return boundaries;
@@ -618,6 +638,7 @@ const Rect Canvas::getBoundaries() const
 
 Canvas::Canvas()
     : on(true),
+      isDirty(false),
       hasScreenText(false),
       hasStatusMsg(false),
       dragPos(0,0)
@@ -713,6 +734,7 @@ shared_ptr<Widget> Canvas::rmvWidget(Widget *widget)
         {
             activeWidget.reset();
         }
+        isDirty = true;
     }
     return result;
 }
@@ -722,6 +744,7 @@ void Canvas::addWidget(const shared_ptr<Widget> &widget)
     widget->rmvFromLayout();
     widget->setLayout(*this);
     widgets.push_back(widget);
+    isDirty = true;
 }
 
 shared_ptr<Widget> Canvas::rmvWidget(const shared_ptr<Widget> &widget)
@@ -731,6 +754,7 @@ shared_ptr<Widget> Canvas::rmvWidget(const shared_ptr<Widget> &widget)
 
 bool Canvas::setDirtyLayout()
 {
+    isDirty = true;
     return true; // we'll always try to updateDirtyWidgets
 }
 

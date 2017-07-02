@@ -93,7 +93,6 @@ int main(int argc, char **argv)
     namedWindow("Shapes", WINDOW_AUTOSIZE);
     c.setMouseCallback(); // optional for mouse usage see also (example_selectbox.cpp)
 
-    int delay = 1000/25;
     int key = 0;
     Mat out; // keeping it out of the loop is a little more efficient
     do
@@ -108,7 +107,7 @@ int main(int argc, char **argv)
 
         c.redrawOn(image, out);
         c.imshow(out);
-        key = c.waitKeyEx(delay); // GUI and callbacks happen here
+        key = c.waitKeyEx(); // GUI and callbacks happen here
     } while (key != 'q');
 
     destroyAllWindows();
@@ -220,16 +219,12 @@ static void detectAndDraw(const HOGDescriptor &hog, Mat &img, Canvas &canvas)
         shapeRect->setRect(cv::RotatedRect(Point(r.x + r.width / 2., r.y + r.height / 2.), r.size(), 0));
         shapeRect->setOutlineColor(Colors::Green);
         shapeRect->setThickness(3);
-        shapeRect->notifyOnEvent([&canvas](Shape *shape, Shape::CBEvent evt)
+        shapeRect->setLocked(true); // cannot be dragged
+        shapeRect->notifyOnEvent([&canvas](Shape *shape, Shape::Event evt)
         {
             if (evt == Shape::SELECT)
             {
-                stringstream s;
-                s << "User clicked in rect ";
-                Point2f rectPoints[4];
-                ((Rectangle*)shape)->getRect().points(rectPoints);
-                for (auto &p : rectPoints) {s << " " << p << " ";}
-                canvas.setScreenText(CCV_STR(s.str()));
+                canvas.setScreenText(CCV_STR("User clicked in rect " << ((Rectangle*)shape)->getRect().boundingRect()));
             }
         });
     }

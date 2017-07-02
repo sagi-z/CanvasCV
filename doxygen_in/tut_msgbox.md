@@ -36,7 +36,6 @@ int main(int argc, char **argv)
 
     namedWindow("MsgBox example", WINDOW_AUTOSIZE);
 
-    int delay = 1000/25;
     int key = 0;
     Mat out;
     do
@@ -45,7 +44,7 @@ int main(int argc, char **argv)
 
         imshow("MsgBox example", out);
 
-        key = c.waitKeyEx(delay); // GUI and callbacks happen here
+        key = c.waitKeyEx(); // GUI and callbacks happen here
     } while (key != 'q');
 
     destroyAllWindows();
@@ -98,7 +97,6 @@ int main(int argc, char **argv)
 
     c.setMouseCallback(); // optional for mouse usage (see also example_selectbox.cpp)
 
-    int delay = 1000/25;
     int key = 0;
     Mat out;
     int userSelection = 0;
@@ -117,7 +115,7 @@ int main(int argc, char **argv)
              "(Choose 'Whatever' to exit)";
         c.setScreenText(s.str());
 
-        key = c.waitKeyEx(delay); // GUI and callbacks happen here
+        key = c.waitKeyEx(); // GUI and callbacks happen here
     } while (userSelection == 0);
 
     destroyAllWindows();
@@ -231,7 +229,6 @@ int main(int argc, char **argv)
 
     c.setMouseCallback(); // optional for mouse usage (see also example_selectbox.cpp)
 
-    int delay = 1000/25;
     int key = 0;
     Mat out;
     int userSelection = 0;
@@ -247,7 +244,7 @@ int main(int argc, char **argv)
              "(Choose 'Whatever' to exit)";
         c.setScreenText(s.str());
 
-        key = c.waitKeyEx(delay); // GUI and callbacks happen here
+        key = c.waitKeyEx(); // GUI and callbacks happen here
     } while (userSelection == 0);
 
     destroyAllWindows();

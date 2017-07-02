@@ -228,7 +228,7 @@ int main(int argc, char **argv)
         }
     };
 
-    int delay = 1000/25;
+    int delay = 1000/25; // if using a polling API we need a delay
     int key = 0;
     Mat out; // keeping it out of the loop is a little more efficient
     while (key != 'q')

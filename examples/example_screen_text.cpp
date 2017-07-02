@@ -69,7 +69,6 @@ int main(int argc, char **argv)
                 WINDOW_AUTOSIZE); // disable mouse resize since resizing
                                   // the window will stretch the widgets
 
-    int delay = 1000/25;
     int key = 0;
     Mat out; // keeping it out of the loop is a little more efficient
     do
@@ -88,7 +87,7 @@ int main(int argc, char **argv)
 
         imshow("Canvas", out);
 
-        key = c.waitKeyEx(delay); // GUI and callbacks happen here
+        key = c.waitKeyEx(); // GUI and callbacks happen here
 
     } while (key != 'q');
 

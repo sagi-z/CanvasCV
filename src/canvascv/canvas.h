@@ -303,6 +303,9 @@ public:
      */
     static void fatal(string errorMsg, int exitStatus);
 
+    /// while waiting for events the Canvas is redrawn only if it is dirty
+    void setDirty();
+
 protected:
     virtual void recalc() {}
 
@@ -358,6 +361,7 @@ private:
     void processNewShape();
 
     bool on;
+    bool isDirty;
     cv::Rect boundaries;
     bool hasScreenText;
     bool hasStatusMsg;
@@ -381,7 +385,6 @@ private:
         read( n, value, Canvas());
     }
 
-//    template <class T> friend void operator >> (const cv::FileNode& n, T& value);
     friend void write(cv::FileStorage& fs, const std::string&, const Canvas& x);
     friend void read(const cv::FileNode& node, Canvas& x, const Canvas&);
 };
@@ -393,6 +396,7 @@ std::shared_ptr<T> Canvas::createShape(const cv::Point &pos)
     shapes.push_back(shape);
     processNewShape();
     ((Shape*)shape.get())->setReady();
+    ((Shape*)shape.get())->setLocked(false); // (Maybe better is setReady does this for the needed shape)
     ((Shape*)shape.get())->lostFocus();
     activeShape.reset();
     return shape;

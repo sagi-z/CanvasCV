@@ -52,6 +52,11 @@ void LayoutBase::updateDirtyWidgets()
     }
 }
 
+bool LayoutBase::hasDirtyWidgets()
+{
+   return ! dirtyWidgets.empty();
+}
+
 bool LayoutBase::isDuringUpdate() const
 {
    return duringDirtyHandling;

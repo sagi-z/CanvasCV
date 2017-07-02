@@ -72,6 +72,7 @@ void Shape::setOutlineColor(const Scalar &value)
 {
     outlineColor = value;
     outlineColor[3] = 255; // shape colors are opaque
+    if (canvas) canvas->setDirty();
 }
 
 Scalar Shape::getFillColor() const
@@ -83,6 +84,7 @@ void Shape::setFillColor(const Scalar &value)
 {
     fillColor = value;
     fillColor[3] = 255; // shape colors are opaque
+    if (canvas) canvas->setDirty();
 }
 
 bool Shape::getLocked() const
@@ -103,6 +105,7 @@ bool Shape::getVisible() const
 void Shape::setVisible(bool value)
 {
     visible = value;
+    if (canvas) canvas->setDirty();
 }
 
 int Shape::getThickness() const
@@ -113,6 +116,7 @@ int Shape::getThickness() const
 void Shape::setThickness(int value)
 {
     thickness = value;
+    if (canvas) canvas->setDirty();
 }
 
 int Shape::getLineType() const
@@ -123,6 +127,7 @@ int Shape::getLineType() const
 void Shape::setLineType(int value)
 {
     lineType = value;
+    if (canvas) canvas->setDirty();
 }
 
 void Shape::drawHelper(Mat &canvas, Shape *other)

@@ -20,6 +20,7 @@ protected:
     virtual bool addDirtyWidget(Widget *widget);
     virtual void rmvDirtyWidget(Widget *widget);
     virtual void updateDirtyWidgets();
+    virtual bool hasDirtyWidgets();
     bool isDuringUpdate() const;
 
 private:
