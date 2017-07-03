@@ -30,20 +30,18 @@ shared_ptr<Button> Button::create(Layout &layout,
                                   const Point &pos,
                                   const string &buttonText,
                                   const string &statusMsg,
-                                  CBWidget cbVal,
-                                  int maxWidthVal)
+                                  CBWidget cbVal)
 {
     shared_ptr<Button> widget(WidgetFactoryT<Button>::newWidget(layout, pos));
     widget->setText(buttonText);
     widget->setStatusMsg(statusMsg);
     widget->onPress(cbVal);
-    widget->setMaxWidth(maxWidthVal);
     return widget;
 }
 
-std::shared_ptr<Button> Button::create(Layout &layout, const string &buttonText, const string &statusMsg, CBWidget cbVal, int maxWidthVal)
+std::shared_ptr<Button> Button::create(Layout &layout, const string &buttonText, const string &statusMsg, CBWidget cbVal)
 {
-    return create(layout, Point(0, 0), buttonText, statusMsg, cbVal, maxWidthVal);
+    return create(layout, Point(0, 0), buttonText, statusMsg, cbVal);
 }
 
 void Button::setFlatButton()

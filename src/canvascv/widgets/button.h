@@ -33,15 +33,13 @@ public:
                                           const cv::Point &pos,
                                           const std::string &buttonText,
                                           const std::string &statusMsg="",
-                                          CBWidget cbVal = CBWidget(),
-                                          int maxWidthVal = 0);
+                                          CBWidget cbVal = CBWidget());
 
     /// a convinient version to the above without the 'pos' argument
     static std::shared_ptr<Button> create(Layout &layout,
                                           const std::string &buttonText,
                                           const std::string &statusMsg="",
-                                          CBWidget cbVal = CBWidget(),
-                                          int maxWidthVal = 0);
+                                          CBWidget cbVal = CBWidget());
 
     /// The button will always have a FLAT relief
     void setFlatButton();
