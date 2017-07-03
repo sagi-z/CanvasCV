@@ -63,7 +63,7 @@ public:
      * 
      * @param name
      * @return true if type 'T' is registering for the first time ot false otherwise
-     * @see REGISTER_WIDGET macro in WidgetFactory.h
+     * @see CCV_REGISTER_WIDGET macro in WidgetFactory.h
      */
     static bool addType(std::string name);
 
@@ -102,7 +102,7 @@ std::shared_ptr<T> WidgetFactoryT<T>::newWidget(Layout &layoutVal, const cv::Poi
 
 }
 
-#define REGISTER_WIDGET(X) static bool regWidget##X = canvascv::WidgetFactoryT<X>::addType(#X)
+#define CCV_REGISTER_WIDGET(X) static bool regWidget##X = canvascv::WidgetFactoryT<X>::addType(#X)
 
 
 /** @example example_add_widget.cpp

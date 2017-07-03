@@ -165,7 +165,7 @@ private:
 };
 const char *FileBrowser::type = "FileBrowser";
 
-REGISTER_WIDGET(FileBrowser);
+CCV_REGISTER_WIDGET(FileBrowser);
 
 static Mat readImg(const string &name)
 {

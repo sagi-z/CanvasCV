@@ -12,6 +12,10 @@
 #include <algorithm>
 #include <cstdlib>
 
+#if ! OPENCV_HAS_WINDOW_GUI_NORMAL
+#define WINDOW_GUI_NORMAL 0
+#endif
+
 using namespace std;
 using namespace cv;
 
@@ -91,7 +95,14 @@ void Canvas::redrawOn(const Mat &src, Mat &dst)
 
 void Canvas::redrawOn(Mat &dst)
 {
-   redrawOn(latestFrameSrc, dst);
+    redrawOn(latestFrameSrc, dst);
+}
+
+void Canvas::setImage(const Mat &img)
+{
+    latestFrameSrc = img;
+    setSize(img.size());
+    isDirty = true;
 }
 
 bool Canvas::onMousePress(const Point &pos)
@@ -651,7 +662,7 @@ void Canvas::setSize(const Size &value)
     {
         boundaries.width = value.width;
         boundaries.height = value.height;
-        if (value.width && value.height)
+        if (latestFrameSrc.size() != value)
         {
             latestFrameSrc.create(value, CV_8UC3);
             latestFrameSrc = Colors::White;

@@ -45,7 +45,7 @@ template <class T>
 class ShapeFactoryT : public ShapeFactory
 {
 public:
-    /// add a shape by compile time type - use the macro REGISTER_SHAPE
+    /// add a shape by compile time type - use the macro CCV_REGISTER_SHAPE
     static bool addType(std::string name);
 
     /// create a shape by compile time type at a certain initial pos (don't use directly. Use Canvas::createShape() instead)
@@ -75,7 +75,7 @@ T *ShapeFactoryT<T>::newShape(const cv::Point &pos)
 }
 
 /// add a shape to the factory in a way that it's compile time type matches it's string name
-#define REGISTER_SHAPE(X) static bool regShape##X = canvascv::ShapeFactoryT<X>::addType(#X)
+#define CCV_REGISTER_SHAPE(X) static bool regShape##X = canvascv::ShapeFactoryT<X>::addType(#X)
 
 
 #endif // SHAPEFACTORY_H

@@ -54,11 +54,28 @@ public:
      * Draws src with shapes and widgets onto dst. src is upgraded to 3 channels if it has 1 channel.
      * @param src can be also dst, in which case it is drawn on. src is BGR/BGRA/GRAY.
      * @param dst if different than src, then src is cloned to it and drawn on.
+     * @sa setImage
      */
     void redrawOn(const cv::Mat &src, cv::Mat &dst);
 
-    /// A utility method that uses latest Mat used as 'src' in the redrawOn above
+
+    /**
+     * @brief redrawOn
+     *
+     * A utility method that uses latest Mat used as 'src' in the redrawOn above.
+     * This methos is also used internally on waitKeyEx(0)
+     * @param dst will be used as output.
+     * @sa waitKeyEx
+     */
     void redrawOn(cv::Mat &dst);
+
+    /**
+     * @brief setImage
+     *
+     * sets the internal 'latestFrameSrc' used for GUI updates while waitKeyEx(0) is used, or with redrawOn(cv::Mat&)
+     * @param img will be used to setSize and update internal latestFrameSrc
+     */
+    void setImage(const cv::Mat &img);
 
     /// You should delegate OpenCV mouse callback events to this method - returns true if did something at pos
     bool onMousePress(const cv::Point &pos);
@@ -277,9 +294,11 @@ public:
     /**
      * @brief waitKeyEx
      * 
-     * utility method to handle key strokes - you get the keystroke if a widget/shape didn't consume it
-     * @param delay in milliseconds
+     * utility method to handle key strokes - you get the keystroke if a widget/shape didn't consume it.
+     * @param delay in milliseconds. If delay is 0, then the latest image used as input will be the
+     * background for internal updates. If you want to change it from a callback, then use setImage
      * @return the key press or -1 if the timeout reached
+     * @sa setImage
      */
     int waitKeyEx(int delay = 0);
 
@@ -419,10 +438,6 @@ void writeShapes(cv::FileStorage& fs, const std::string&, const Canvas& x);
 void readShapes(const cv::FileNode& node, Canvas& x, const Canvas&);
 
 }
-
-#if ! OPENCV_HAS_WINDOW_GUI_NORMAL
-#define WINDOW_GUI_NORMAL 0
-#endif
 
 #define CCV_STR(X) ((std::stringstream&)(std::stringstream() << X)).str()
 #define CCV_C_STR(X) CCV_STR(X).c_str()

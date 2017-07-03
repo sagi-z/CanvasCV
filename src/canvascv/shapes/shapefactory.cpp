@@ -39,15 +39,15 @@ void ShapeFactory::addShape(std::string name, ShapeFactory::Allocator a)
 namespace canvascv
 {
 
-REGISTER_SHAPE(Handle);
-REGISTER_SHAPE(Line);
-REGISTER_SHAPE(Arrow);
-REGISTER_SHAPE(TextBox);
-REGISTER_SHAPE(LineCrossing);
-REGISTER_SHAPE(Polygon);
-REGISTER_SHAPE(Rectangle);
-REGISTER_SHAPE(Ellipse);
-REGISTER_SHAPE(ShapesConnector);
-REGISTER_SHAPE(LabeledShapesConnector);
+CCV_REGISTER_SHAPE(Handle);
+CCV_REGISTER_SHAPE(Line);
+CCV_REGISTER_SHAPE(Arrow);
+CCV_REGISTER_SHAPE(TextBox);
+CCV_REGISTER_SHAPE(LineCrossing);
+CCV_REGISTER_SHAPE(Polygon);
+CCV_REGISTER_SHAPE(Rectangle);
+CCV_REGISTER_SHAPE(Ellipse);
+CCV_REGISTER_SHAPE(ShapesConnector);
+CCV_REGISTER_SHAPE(LabeledShapesConnector);
 
 }

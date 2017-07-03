@@ -44,16 +44,16 @@ void WidgetFactory::addWidget(string name, WidgetFactory::Allocator a)
 namespace canvascv
 {
 
-REGISTER_WIDGET(Text);
-REGISTER_WIDGET(Button);
-REGISTER_WIDGET(VerticalLayout);
-REGISTER_WIDGET(HorizontalLayout);
-REGISTER_WIDGET(VFrame);
-REGISTER_WIDGET(HFrame);
-REGISTER_WIDGET(MsgBox);
-REGISTER_WIDGET(SelectionBox);
-REGISTER_WIDGET(MatWidget);
-REGISTER_WIDGET(RadioButtons);
-REGISTER_WIDGET(CheckBoxes);
+CCV_REGISTER_WIDGET(Text);
+CCV_REGISTER_WIDGET(Button);
+CCV_REGISTER_WIDGET(VerticalLayout);
+CCV_REGISTER_WIDGET(HorizontalLayout);
+CCV_REGISTER_WIDGET(VFrame);
+CCV_REGISTER_WIDGET(HFrame);
+CCV_REGISTER_WIDGET(MsgBox);
+CCV_REGISTER_WIDGET(SelectionBox);
+CCV_REGISTER_WIDGET(MatWidget);
+CCV_REGISTER_WIDGET(RadioButtons);
+CCV_REGISTER_WIDGET(CheckBoxes);
 
 }

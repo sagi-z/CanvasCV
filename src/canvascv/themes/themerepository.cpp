@@ -80,7 +80,7 @@ vector<string> ThemeRepository::availThemes()
 namespace canvascv
 {
 
-REGISTER_THEME(ThemeDarkOrange);
-REGISTER_THEME(ThemeDarkBlue);
+CCV_REGISTER_THEME(ThemeDarkOrange);
+CCV_REGISTER_THEME(ThemeDarkBlue);
 
 }
