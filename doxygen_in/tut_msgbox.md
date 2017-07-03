@@ -110,10 +110,8 @@ int main(int argc, char **argv)
         userSelection = MsgBox::create(c, string("Notice #") + to_string(++cnt) + " this msg", {
                                            "Ok", "Whatever"
                                        })->getUserSelection(true);
-        stringstream s;
-        s << "User pressed button with index '" << userSelection << "'\n\n" <<
-             "(Choose 'Whatever' to exit)";
-        c.setScreenText(s.str());
+        c.setScreenText(CCV_STR("User pressed button with index '" << userSelection << "'\n\n" <<
+                                "(Choose 'Whatever' to exit)"));
     } while (userSelection == 0);
 
     destroyAllWindows();
@@ -126,6 +124,7 @@ Notes:
 * All widgets have a static create methods, which is the only way to create them.
 * The canvascv::MsgBox::create will return a shared_ptr<MsgBox> instance, which you don't have to keep since another one is kept by the canvascv::Layout.
 * Here we're using getUserSelection(true) immediatly on that shared_ptr, and by passing true we're blocked at that line of code.
+* *CCV_STR* lets you write create a string as writing into a stream.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_msgbox_modal.png
 <BR>
@@ -158,19 +157,12 @@ using namespace canvascv;
     cb = [&c, &cb, &cnt](Widget *w, int index)
     {
         MsgBox *pMsgBox = (MsgBox*) w;
-
-        stringstream userText;
-        userText << "User pressed option numer '" << index << "'\n" <<
-                    "The button text is '" << pMsgBox->getTextAt(index) << "'\n\n" <<
-                    "(press q to exit)";
-        c.setScreenText(userText.str());
-
-        stringstream msgBoxText;
-        msgBoxText << "Do you really want to do that? " <<
-                      "(" << ++cnt << ")";
-
-        // create a new MsgBox
-        MsgBox::create(c, msgBoxText.str(), {"Yes", "No"}, cb);
+        c.setScreenText(CCV_STR( "User pressed option numer '" << index << "'\n" <<
+                                 "The button text is '" << pMsgBox->getTextAt(index) << "'\n\n" <<
+                                 "(press q to exit)"));
+        MsgBox::create(c, CCV_STR("Do you really want to do that? " << "(" << ++cnt << ")"), {
+                           "Yes", "No"
+                       }, cb);
     };
 
     // the first MsgBox the user will see is this one.
@@ -185,6 +177,7 @@ Notes:
 * The canvascv::MsgBox::create will return a shared_ptr<MsgBox> instance, which you don't have to keep since another one is kept by the canvascv::Layout.
 * This tutorial is using C++11 lambda expressions as callbacks, but anything which has the void(Widget*,int) signature will work.
 * We needed canvascv::Canvas::setMouseCallback since the Canvas will intercept mouse events for the MsgBox now.
+* *CCV_STR* lets you write create a string as writing into a stream.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_msgbox.png
 <BR>
@@ -237,10 +230,8 @@ int main(int argc, char **argv)
 
 	// the blocking API handles GUI internally
         userSelection = MsgBox::createModal("Modal MsgBox", "Notice this window", {"Ok", "Whatever"});
-        stringstream s;
-        s << "User pressed button with index '" << userSelection << "'\n\n" <<
-             "(Choose 'Whatever' to exit)";
-        c.setScreenText(s.str());
+        c.setScreenText(CCV_STR("User pressed button with index '" << userSelection << "'\n\n" <<
+                                "(Choose 'Whatever' to exit)"));
     } while (userSelection == 0);
 
     destroyAllWindows();
@@ -252,6 +243,7 @@ int main(int argc, char **argv)
 Notes:
 * Again - this is a blocking API. The line which is using canvascv::MsgBox::createModal waits for a response.
 * Currently there is no control of where the OpenCV window will be opened.
+* *CCV_STR* lets you write create a string as writing into a stream.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_msgbox_modal_external.png
 <BR>

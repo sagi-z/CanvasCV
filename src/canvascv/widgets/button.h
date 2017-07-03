@@ -17,7 +17,6 @@ namespace canvascv
 class Button : public Text
 {
 public:
-    typedef std::function<void(Widget*)> CBWidget;
 
     /**
      * @brief create a button widget

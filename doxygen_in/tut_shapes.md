@@ -150,7 +150,37 @@ rectangle coordinates to the screen.
 The base code we'll be using is from *OpenCV-3.2.0/samples/cpp/peopledetect.cpp*.
 
 The modified code can be optimized for performance, but here we just
-want to show the *CanvasCV* way of doing this:
+want to show the *CanvasCV* way of doing it.
+
+You are encouraged to diff the tutorial version and the OpenCV version
+with your favorite diff tool, but the most important difference is this:
+
+~~~~~~~{.diff}
+<         rectangle(img, r.tl(), r.br(), cv::Scalar(0,255,0), 3);
+---
+>         shared_ptr<Rectangle> shapeRect = canvas.createShape<Rectangle>();
+>         shapeRect->setRect(cv::RotatedRect(Point(r.x + r.width / 2., r.y + r.height / 2.), r.size(), 0));
+>         shapeRect->setOutlineColor(Colors::Green);
+>         shapeRect->setThickness(3);
+>         shapeRect->setLocked(true); // cannot be dragged
+>         shapeRect->notifyOnEvent([&canvas](Shape *shape, Shape::Event evt)
+>         {
+>             if (evt == Shape::SELECT)
+>             {
+>                 canvas.setScreenText(CCV_STR("User clicked in rect " << ((Rectangle*)shape)->getRect().boundingRect()));
+>             }
+>         });
+~~~~~~~
+
+In the code above, instead of drawing a rectangle, we create a
+canvascv::Rectangle object on the *Canvas* and attach a callback to that
+specific instance.
+
+The canvascv::Shape::Event we want is *SELECT*, which is when a shape is
+selected with the mouse (Clicked).
+
+The full code is a little long because the original code is long:
+
 ~~~~~~~{.cpp}
 #include <iostream>
 #include <stdexcept>
@@ -361,7 +391,7 @@ int main(int argc, char** argv)
     return 0;
 }
 ~~~~~~~
-Notes for the *//CanvasCV change#...* comments above:
+Notes for the `//CanvasCV change#...` comments above:
 * Here the canvas is cleared at each frame. There are ways to optimize
   this, but first you'll need to see if this affects your performance at
   all.

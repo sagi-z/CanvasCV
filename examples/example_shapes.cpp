@@ -128,14 +128,10 @@ int main(int argc, char **argv)
             c.clearShapes();
             break;
         case 's':
-        {
             c.writeShapesToFile("config.xml");
-        }
             break;
         case 'l':
-        {
             c.readShapesFromFile("config.xml");
-        }
             break;
         case 65535:
             c.deleteActive();

@@ -246,7 +246,7 @@ void Shape::readInternals(const FileNode &node)
     editing = false;
     if (id == 0)
     {
-        // backward compatible for olde config files
+        // backward compatible for old config files
         id = genId();
     }
     else
