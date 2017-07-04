@@ -105,7 +105,6 @@ private:
     virtual bool setDirtyLayout();
 
     virtual void broadcastChange(State status);
-    virtual void layoutResized(const cv::Rect &boundaries);
 
     std::shared_ptr<Widget> active;
     int recalcCalled;

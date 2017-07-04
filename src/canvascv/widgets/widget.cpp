@@ -1,6 +1,7 @@
 #include "widget.h"
 #include "widgetfactory.h"
 #include "layout.h"
+#include "autolayout.h"
 #include "canvascv/themes/theme.h"
 #include "canvascv/themes/themerepository.h"
 
@@ -179,7 +180,7 @@ Layout *Widget::getLayout()
     return layout;
 }
 
-void Widget::layoutResized(const Rect &boundaries)
+void Widget::layoutResized(const Rect &)
 {
    setDirty();
 }
@@ -239,16 +240,6 @@ Widget::State Widget::getState() const
     return state;
 }
 
-void Widget::stretchWidth(int width)
-{
-    setForcedWidth(width);
-}
-
-void Widget::stretchHeight(int height)
-{
-    setForcedHeight(height);
-}
-
 int Widget::getForcedHeight() const
 {
     return forcedHeight;
@@ -256,6 +247,7 @@ int Widget::getForcedHeight() const
 
 void Widget::setForcedHeight(int value)
 {
+    setStretchY(false);
     if (forcedHeight != value)
     {
         forcedHeight = value;
@@ -270,6 +262,7 @@ int Widget::getForcedWidth() const
 
 void Widget::setForcedWidth(int value)
 {
+    setStretchX(false);
     if (forcedWidth != value)
     {
         forcedWidth = value;
@@ -560,7 +553,7 @@ bool Widget::getIsDirty() const
     return isDirty;
 }
 
-Point Widget::getLocation() const
+const Point &Widget::getLocation() const
 {
     return location;
 }
@@ -591,6 +584,22 @@ bool Widget::setDirty()
 
 void Widget::update()
 {
+    if (layout && (stretchX || stretchY))
+    {
+        int paddingX2 = 0;
+        AutoLayout *autoLayout = dynamic_cast<AutoLayout*>(layout);
+        if (autoLayout)
+        {
+            paddingX2 = autoLayout->getPadding() * 2;
+            if (stretchX) forcedWidth = autoLayout->getRect().width - paddingX2;
+            if (stretchY) forcedWidth = autoLayout->getRect().height - paddingX2;
+        }
+        else
+        {   // Canvas
+            if (stretchX) forcedWidth = layout->getBoundaries().width;
+            if (stretchY) forcedWidth = layout->getBoundaries().height;
+        }
+    }
     isDirty = false;
     recalc();
     isDirty = false;

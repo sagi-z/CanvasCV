@@ -64,7 +64,6 @@ void HorizontalLayout::recalcCompound()
         maxHeight = max(maxHeight, minRect.height);
     }
     if (forcedWidth) maxWidth = forcedWidth;
-    if (forcedHeight) maxHeight = forcedHeight;
 
     Point pos = location;
     if (flowAnchor & RIGHT) pos.x -= padding;
@@ -126,8 +125,6 @@ void HorizontalLayout::recalcCompound()
             // nothing to do
         }
         widget->setLocation(pos);
-        if (widget->getStretchX()) widget->stretchWidth(maxWidth);
-        if (widget->getStretchY()) widget->stretchHeight(maxHeight);
         widget->update();
 
         // prepare for the next iteration
@@ -144,6 +141,10 @@ void HorizontalLayout::recalcCompound()
     }
 
     AutoLayout::recalcAndAllocate();
+    for (auto &widget : widgets)
+    {
+        if (widget->getStretchX() || widget->getStretchY()) widget->update();
+    }
 }
 
 }

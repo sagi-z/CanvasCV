@@ -63,7 +63,6 @@ void VerticalLayout::recalcCompound()
         maxWidth = max(maxWidth, minRect.width);
         maxHeight = max(maxHeight, minRect.height);
     }
-    if (forcedWidth) maxWidth = forcedWidth;
     if (forcedHeight) maxHeight = forcedHeight;
 
     Point pos = location;
@@ -126,8 +125,6 @@ void VerticalLayout::recalcCompound()
             // do nothing
         }
         widget->setLocation(pos);
-        if (widget->getStretchX()) widget->stretchWidth(maxWidth);
-        if (widget->getStretchY()) widget->stretchHeight(maxHeight);
         widget->update();
 
         // prepare for the next iteration
@@ -144,6 +141,10 @@ void VerticalLayout::recalcCompound()
     }
 
     AutoLayout::recalcAndAllocate();
+    for (auto &widget : widgets)
+    {
+        if (widget->getStretchX() || widget->getStretchY()) widget->update();
+    }
 }
 
 }

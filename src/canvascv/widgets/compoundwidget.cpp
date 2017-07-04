@@ -177,14 +177,6 @@ void CompoundWidget::broadcastChange(State status)
     }
 }
 
-void CompoundWidget::layoutResized(const Rect &boundaries)
-{
-    for (auto &widget : widgets)
-    {
-        widget->layoutResized(boundaries);
-    }
-}
-
 const string &CompoundWidget::getStatusMsg() const
 {
    if (active.get())
@@ -264,7 +256,7 @@ void CompoundWidget::drawFG(Mat &dst)
     // * All which was 'dirty' was already updated in out kids
     //  because:
     // 1. recalc of layouts called their update first/
-    // 2. uopdate of compounds called their update first.
+    // 2. update of compounds called their update first.
     // * We don't have any FG of ourself.
 }
 

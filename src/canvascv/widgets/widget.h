@@ -190,7 +190,7 @@ public:
     void setStatusMsg(const std::string &value);
 
     /// get widget position in Canvas
-    cv::Point getLocation() const;
+    const cv::Point &getLocation() const;
 
     /// set widget position in Canvas
     virtual void setLocation(const cv::Point &value);
@@ -237,13 +237,13 @@ public:
     /// get the forced width for this widget
     int getForcedWidth() const;
 
-    /// set the forced width for this widget
+    /// set the forced width for this widget (and calls setStretchX(false))
     void setForcedWidth(int value);
 
     /// get the forced height for this widget
     int getForcedHeight() const;
 
-    /// set the forced height for this widget
+    /// set the forced height for this widget (and calls setStretchY(false))
     void setForcedHeight(int value);
 
     /// removes 'dirty' state and invokes the derived 'recalc/recalcCompound'
@@ -331,10 +331,6 @@ protected:
 
     Layout* getLayout();
 
-    /// Used by Layout managers
-    void stretchWidth(int width);
-    void stretchHeight(int height);
-
     int id;
     cv::Point location;
     cv::Scalar selectColor;
@@ -394,7 +390,7 @@ private:
 
     void setLayout(Layout &value);
 
-    virtual void layoutResized(const cv::Rect &boundaries);
+    void layoutResized(const cv::Rect &);
 
     /// called by the canvas when the widget changes state
     virtual void broadcastChange(State status);
