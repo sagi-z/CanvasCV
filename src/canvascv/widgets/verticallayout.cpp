@@ -63,6 +63,8 @@ void VerticalLayout::recalcCompound()
         maxWidth = max(maxWidth, minRect.width);
         maxHeight = max(maxHeight, minRect.height);
     }
+    if (forcedWidth) maxWidth = forcedWidth;
+    if (forcedHeight) maxHeight = forcedHeight;
 
     Point pos = location;
     if (flowAnchor & BOTTOM) pos.y -= padding;
