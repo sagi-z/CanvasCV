@@ -586,18 +586,28 @@ void Widget::update()
 {
     if (layout && (stretchX || stretchY))
     {
-        int paddingX2 = 0;
         AutoLayout *autoLayout = dynamic_cast<AutoLayout*>(layout);
         if (autoLayout)
         {
-            paddingX2 = autoLayout->getPadding() * 2;
-            if (stretchX) forcedWidth = autoLayout->getRect().width - paddingX2;
-            if (stretchY) forcedWidth = autoLayout->getRect().height - paddingX2;
+            if (stretchX)
+            {
+                forcedWidth = autoLayout->getMaxWidgetWidth();
+            }
+            if (stretchY)
+            {
+                forcedHeight = autoLayout->getMaxWidgetHeight();
+            }
         }
         else
         {   // Canvas
-            if (stretchX) forcedWidth = layout->getBoundaries().width;
-            if (stretchY) forcedWidth = layout->getBoundaries().height;
+            if (stretchX)
+            {
+                forcedWidth = layout->getBoundaries().width;
+            }
+            if (stretchY)
+            {
+                forcedHeight = layout->getBoundaries().height;
+            }
         }
     }
     isDirty = false;

@@ -74,6 +74,13 @@ public:
     /// set if the layout will wrap widgets past forcedWidth / forcedHeight
     void setWrap(bool value);
 
+
+    /// get the maximum width from all contained widgets
+    int getMaxWidgetWidth();
+
+    /// get the maximum height from all contained widgets
+    int getMaxWidgetHeight();
+
 protected:
 
     AutoLayout(const cv::Point& pos);
@@ -83,6 +90,8 @@ protected:
 
     int padding;
     bool wrap;
+    int maxWidth;
+    int maxHeight;
 };
 
 // simplest case is the special case

@@ -55,14 +55,15 @@ void VerticalLayout::recalcCompound()
         forcedHeight = boundaries.height - location.y;
     }
     int maxWidthWrap = 0;
-    int maxWidth = 0;
-    int maxHeight = 0;
+    maxWidth = 0;
+    maxHeight = 0;
     for (auto &widget : widgets)
     {
         const Rect &minRect = widget->getMinimalRect();
         maxWidth = max(maxWidth, minRect.width);
         maxHeight = max(maxHeight, minRect.height);
     }
+    if (forcedWidth) maxWidth = forcedWidth;
     if (forcedHeight) maxHeight = forcedHeight;
 
     Point pos = location;

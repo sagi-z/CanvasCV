@@ -36,8 +36,11 @@ FILE(GLOB_RECURSE LIB_SRCS
 )
 
 FILE(GLOB_RECURSE EXAMPLE_SRCS
-    "examples/*.h"
     "examples/*.cpp"
+)
+
+file(GLOB_RECURSE TUTORIAL_SRCS
+    "tutorials/*.cpp"
 )
 
 if(${OpenCV_VERSION} VERSION_GREATER "3.1.0")
@@ -80,10 +83,18 @@ if(BUILD_EXAMPLES)
     MESSAGE ("Build examples is on, building these examples:")
     FOREACH ( file ${EXAMPLE_SRCS} )
         GET_FILENAME_COMPONENT( target_name ${file} NAME_WE )
-        MESSAGE ( "Example '${target_name}' will be created")
+        MESSAGE ( "Example binary '${target_name}' will be created")
         add_executable(${target_name} ${file})
         target_link_libraries (${target_name} canvascv ${CXX_11_FS_LIB} ${OpenCV_LIBS})
     ENDFOREACH()
+
+    message ("Building these tutorials:")
+    foreach ( file ${TUTORIAL_SRCS} )
+        get_filename_component( target_name ${file} NAME_WE )
+        message ( "Tutorial binary '${target_name}' will be created")
+        add_executable(${target_name} ${file})
+        target_link_libraries (${target_name} canvascv ${OpenCV_LIBS})
+    endforeach()
 endif()
 
 install(TARGETS canvascv

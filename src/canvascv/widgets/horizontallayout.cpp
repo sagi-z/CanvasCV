@@ -55,8 +55,8 @@ void HorizontalLayout::recalcCompound()
         forcedWidth = boundaries.width - location.x;
     }
     int maxHeightWrap = 0;
-    int maxWidth = 0;
-    int maxHeight = 0;
+    maxWidth = 0;
+    maxHeight = 0;
     for (auto &widget : widgets)
     {
         const Rect &minRect = widget->getMinimalRect();
@@ -64,6 +64,7 @@ void HorizontalLayout::recalcCompound()
         maxHeight = max(maxHeight, minRect.height);
     }
     if (forcedWidth) maxWidth = forcedWidth;
+    if (forcedHeight) maxHeight = forcedHeight;
 
     Point pos = location;
     if (flowAnchor & RIGHT) pos.x -= padding;

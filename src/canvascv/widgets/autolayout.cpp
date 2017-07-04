@@ -9,7 +9,9 @@ namespace canvascv
 AutoLayout::AutoLayout(const Point &pos)
     : CompoundWidget(pos),
       padding(2),
-      wrap(false)
+      wrap(false),
+      maxWidth(0),
+      maxHeight(0)
 {
     fillBG = false;
 }
@@ -65,6 +67,16 @@ void AutoLayout::setWrap(bool value)
         }
         setDirty();
     }
+}
+
+int AutoLayout::getMaxWidgetWidth()
+{
+    return maxWidth;
+}
+
+int AutoLayout::getMaxWidgetHeight()
+{
+    return maxHeight;
 }
 
 int AutoLayout::getPadding() const
