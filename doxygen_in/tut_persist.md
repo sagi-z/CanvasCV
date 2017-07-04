@@ -11,9 +11,9 @@ from it.
 
 [TOC]
 
-# Write and read of the user Polygon
+# Write and read of the user Polygon {#persistency_s1}
 
-This is the same program as from the previous tutorial (@ref tshsec1)
+This is the same program as from the previous tutorial (@ref shapes_s1)
 
 Adding only these lines to screen text:
 

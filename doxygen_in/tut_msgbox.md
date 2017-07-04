@@ -8,7 +8,7 @@ The MsgBox is a "one shot user pressed and widget died" kind of widget.
 
 [TOC]
 
-@section tmbsec1 Remember the main loop
+@section msgbox_s1 Remember the main loop
 Just to remind you from the previous tutotial, the main loop looks something like this:
 ~~~~~~~{.cpp}
 #include <canvascv/canvas.h>
@@ -57,7 +57,7 @@ We want to work on top of an existing image so you can see the transparency.
 
 Let's add the real code now.
 
-@section tmbsec2 A simple modal MsgBox
+@section msgbox_s2 A simple modal MsgBox
 Since a MsgBox usually requires immediate user attention, you have a way to block other GUI while waiting for a user reaction.
 
 Remeber thah the MsgBox is a "one shot user pressed and widget died" kind of widget. Here we're recreating the MsgBox
@@ -129,7 +129,7 @@ Notes:
 @image html tut_msgbox_modal.png
 <BR>
 
-@section tmbsec3 A non modal MsgBox
+@section msgbox_s3 A non modal MsgBox
 
 Remeber thah the MsgBox is a "one shot user pressed and widget died" kind of widget. Here we're recreating the MsgBox
 each time it dies, but with callbacks.
@@ -182,7 +182,7 @@ Notes:
 @image html tut_msgbox.png
 <BR>
 
-@section tmbsec4 An external window modal MsgBox
+@section msgbox_s4 An external window modal MsgBox
 Since a MsgBox usually requires immediate user attention, you have another way to block other GUI while waiting for a user reaction.
 
 This API opens an new independent OpenCV window, occupying just the MsgBox, and waiting for a user response.

@@ -11,7 +11,7 @@ to which a SelectionBox widget can be applied.
 
 [TOC]
 
-# Creating a polygon from the GUI {#tshsec1}
+# Creating a polygon from the GUI {#shapes_s1}
 In this example we want to user to mark a polygon area on the image or
 frame.
 
@@ -132,7 +132,7 @@ the user's GUI actions.
 @image html tut_shapes_gui.png
 <BR>
 
-# Creating a clickable rectangle from code {#tshsec2}
+# Creating a clickable rectangle from code {#shapes_s2}
 
 As you know, in CV tracking is split into 2 phases - detection and
 tracking.

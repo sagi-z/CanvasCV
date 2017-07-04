@@ -6,7 +6,7 @@ To start using the GUI instead of the console the first thing you need is to get
 
 [TOC]
 
-@section tstsec1 Introducing the CanvasCV class
+@section screentext_s1 Introducing the CanvasCV class
 The Canvas class is associated with an OpenCV window and it gives you another virtual layer on top of your displayed Mat.
 
 This canvas class encapsulates **a lot** of work for you, so you can focus on the CV. It also handles key presses
@@ -46,8 +46,8 @@ Canvas c("winName", frame.size());
     }
 ~~~~~~~
 
-@section tstsec2 Some real use cases
-@subsection sub1 Exiting on fatal errors
+@section screentext_s2 Some real use cases
+@subsection screentext_s2_1 Exiting on fatal errors
 Your application/utility might need command line arguments, or cannot continue for some reason.
 
 A simple write to the console before exiting is usually not enough to get the user attention.  
@@ -74,7 +74,7 @@ which, besides an output to STDERR, gives you:
 @image html tut_fatal.png
 <BR>
 
-@subsection sub2 Displaying user text in a fixed location
+@subsection screentext_s2_2 Displaying user text in a fixed location
 Instead of displaying the help message or any other fixed text to the console use the enableScreenText and setScreenText(string) methods.
 
 This flow is a little closer to the regular usage of the Canvas, but you don't need to create a widget of your own.
@@ -163,7 +163,7 @@ Some notes here:
 @image html tut_screentext.png
 <BR>
 
-@subsection sub3 Displaying text where ever you want
+@subsection screentext_s2_3 Displaying text where ever you want
 To display text where you want you need the canvascv::Text widget.
 
 You can create position it on the Canvas at any XY location.

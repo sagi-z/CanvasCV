@@ -31,7 +31,7 @@ const char *MatWidget::getType() const
 
 void MatWidget::drawFG(Mat &dst)
 {
-    dst = mat;
+    dst = displayedMat;
 }
 
 const Mat &MatWidget::getMat() const
@@ -43,7 +43,7 @@ void MatWidget::setMat(const cv::Mat &value)
 {
     if (value.ptr(0) != mat.ptr(0))
     {
-        mat = value;
+        mat = displayedMat = value;
         setDirty();
     }
 }
@@ -55,15 +55,33 @@ const Rect &MatWidget::getRect()
 
 const Rect &MatWidget::getMinimalRect()
 {
-    return rect;
+    return minimalRect;
 }
 
 void MatWidget::recalc()
 {
+    minimalRect.x = location.x;
+    minimalRect.y = location.y;
+    minimalRect.width = mat.cols;
+    minimalRect.height = mat.rows;
+    double fx = 1.;
+    double fy = 1.;
+    if (forcedWidth && displayedMat.cols != forcedWidth)
+    {
+        fx = forcedWidth / mat.cols;
+    }
+    if (forcedHeight && displayedMat.rows != forcedHeight)
+    {
+        fy = forcedHeight / mat.rows;
+    }
+    if (fx != 1. || fy != 1.)
+    {
+        cv::resize(mat, displayedMat, Size(), fx, fy);
+    }
     rect.x = location.x;
     rect.y = location.y;
-    rect.width = mat.cols;
-    rect.height = mat.rows;
+    rect.width = displayedMat.cols;
+    rect.height = displayedMat.rows;
     callDrawFG(false);
 }
 

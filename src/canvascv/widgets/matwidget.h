@@ -66,7 +66,9 @@ protected:
 
 private:
     cv::Mat mat;
+    cv::Mat displayedMat;
     cv::Rect rect;
+    cv::Rect minimalRect;
 };
 
 }

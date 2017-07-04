@@ -26,7 +26,6 @@ public:
      * @param buttonText what to write on the button
      * @param statusMsg what to write during hover over the button
      * @param cbVal a callback to invoke when the button is pressed
-     * @param maxWidthVal maximum width of the text rows on the button (0 to disable max width)
      * @return a smart pointer copy of the object kept in the Layout
      */
     static std::shared_ptr<Button> create(Layout &layout,
