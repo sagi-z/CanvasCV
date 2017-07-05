@@ -9,39 +9,8 @@
 using namespace cv;
 using namespace canvascv;
 
-int main(int argc, char **argv)
+void buildDemoDialog(Canvas &c)
 {
-    --argc;
-    ++argv;
-    Mat image;
-    if (argc)
-    {
-        Mat orig = imread(argv[0]);
-        if (orig.empty())
-        {
-            Canvas::fatal(string("Cannot load image ") + argv[0], -1);
-        }
-        if (orig.cols > 1024)
-        {
-            double ratio = 1024. / orig.cols;
-            cv::resize(orig, image, Size(), ratio, ratio);
-        }
-        else
-        {
-            image = orig;
-        }
-    }
-    else
-    {
-        Canvas::fatal("Must get a path to an image as a parameter" , -2);
-    }
-
-    namedWindow("Dialog", WINDOW_AUTOSIZE | WINDOW_GUI_NORMAL); // disable mouse resize
-    moveWindow("Dialog", 10, 10);
-    Canvas c("Dialog", image.size());
-    c.setMouseCallback();
-    c.enableStatusMsg();
-
     auto topFrame = VFrame::create(c, {100,100});
     auto titleFrame = VFrame::create(*topFrame);
     auto bodyFrame = HFrame::create(*topFrame);
@@ -99,6 +68,42 @@ int main(int argc, char **argv)
         w->setStretchX(true);
         w->setLayoutAnchor(Widget::BOTTOM);
     }, 1, false);
+}
+
+int main(int argc, char **argv)
+{
+    --argc;
+    ++argv;
+    Mat image;
+    if (argc)
+    {
+        Mat orig = imread(argv[0]);
+        if (orig.empty())
+        {
+            Canvas::fatal(string("Cannot load image ") + argv[0], -1);
+        }
+        if (orig.cols > 1024)
+        {
+            double ratio = 1024. / orig.cols;
+            cv::resize(orig, image, Size(), ratio, ratio);
+        }
+        else
+        {
+            image = orig;
+        }
+    }
+    else
+    {
+        Canvas::fatal("Must get a path to an image as a parameter" , -2);
+    }
+
+    namedWindow("Dialog", WINDOW_AUTOSIZE); // disable mouse resize
+    moveWindow("Dialog", 10, 10);
+    Canvas c("Dialog", image.size());
+    c.setMouseCallback();
+    c.enableStatusMsg();
+
+    buildDemoDialog(c);
 
     int key = 0;
     c.setImage(image);
