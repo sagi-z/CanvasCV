@@ -76,6 +76,9 @@ public:
     /// return nunmber of check boxes in group
     size_t size() const;
 
+    /// cbUserSelection will be invoked per user selection
+    void setUserCB(Widget::CBUserSelection cbUserSelection);
+
     virtual const char *getType() const;
 
     static const char *type;
@@ -86,8 +89,7 @@ protected:
 
     RadioButtons(const cv::Point &pos);
 
-    void addRadioButton(const std::string &txt,
-                        Widget::CBUserSelection cbUserSelection);
+    void addRadioButton(const std::string &txt);
 
     virtual void recalcCompound();
 
@@ -101,6 +103,7 @@ private:
     cv::Mat radioNotSelected;
     cv::Mat radioSelected;
     int selection;
+    Widget::CBUserSelection userCB;
 };
 
 }

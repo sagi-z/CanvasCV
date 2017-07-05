@@ -64,6 +64,8 @@ void AutoLayout::setWrap(bool value)
         {
             setStretchX(false);
             setStretchY(false);
+            setStretchXToParent(false);
+            setStretchYToParent(false);
         }
         setDirty();
     }

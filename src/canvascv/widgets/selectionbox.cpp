@@ -25,6 +25,20 @@ SelectionBox::SelectionBox(const Point &pos)
     frame->setSpacing(3);
 }
 
+void SelectionBox::addButton(const string &txt)
+{
+    int i = frame->size();
+    auto button = Button::create(*frame, txt);
+    button->setFlowAnchor(LEFT);
+    button->setStretchX(true);
+    button->setFlatButton();
+    button->notifyOnChange([this, i](Widget *, Widget::State state) {
+        if (state == Widget::PRESS) {
+            if (userCB) userCB(this, i);
+        }
+    });
+}
+
 void SelectionBox::recalcCompound()
 {
 }
@@ -39,18 +53,11 @@ shared_ptr<SelectionBox> SelectionBox::create(Layout &layoutVal, vector<string> 
 {
     assert(selectionNames.size());
     shared_ptr<SelectionBox> selectionBox(WidgetFactoryT<SelectionBox>::newWidget(layoutVal, pos));
+    selectionBox->setUserCB(cbUserSelection);
 
     for (int i = 0; i < selectionNames.size(); ++i)
     {
-        auto button = Button::create(*selectionBox->frame, selectionNames[i]);
-        button->setFlowAnchor(LEFT);
-        button->setStretchX(true);
-        button->setFlatButton();
-        button->notifyOnChange([selectionBox, i, cbUserSelection](Widget *, Widget::State state) {
-            if (state == Widget::PRESS) {
-                if (cbUserSelection) cbUserSelection(selectionBox.get(), i);
-            }
-        });
+        selectionBox->addButton(selectionNames[i]);
     }
 
     return selectionBox;
@@ -68,6 +75,11 @@ string SelectionBox::getTextAt(int index) const
 size_t SelectionBox::size() const
 {
     return frame->size();
+}
+
+void SelectionBox::setUserCB(Widget::CBUserSelection cbUserSelection)
+{
+    userCB  = cbUserSelection;
 }
 
 }

@@ -35,7 +35,10 @@ protected:
     friend class Widget;
 
     virtual std::shared_ptr<Widget> rmvWidget(Widget* widget) = 0;
+
+    // returns the growth limit as calculated by the layout
     virtual const cv::Rect getBoundaries() const = 0;
+
     virtual bool addDirtyWidget(Widget *widget) = 0;
     virtual void rmvDirtyWidget(Widget *widget) = 0;
 

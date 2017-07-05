@@ -81,6 +81,9 @@ public:
     /// return nunmber of check boxes in group
     size_t size() const;
 
+    /// cbUserSelection will be invoked per user selection
+    void setUserCB(Widget::CBUserSelection cbUserSelection);
+
     virtual const char *getType() const;
 
     static const char *type;
@@ -91,8 +94,7 @@ protected:
 
     CheckBoxes(const cv::Point &pos);
 
-    void addCheckBox(const std::string &txt,
-                     Widget::CBUserSelection cbUserSelection);
+    void addCheckBox(const std::string &txt);
 
     virtual void recalcCompound();
 
@@ -106,6 +108,7 @@ private:
     cv::Mat checkBoxNotSelected;
     cv::Mat checkBoxSelected;
     std::vector<bool> selections;
+    Widget::CBUserSelection userCB;
 };
 
 }

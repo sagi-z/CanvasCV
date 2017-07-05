@@ -29,7 +29,7 @@ RadioButtons::RadioButtons(const Point &pos)
     frame->setSpacing(1);
 }
 
-void RadioButtons::addRadioButton(const string &txt, Widget::CBUserSelection cbUserSelection)
+void RadioButtons::addRadioButton(const string &txt)
 {
     int i = frame->size();
     auto row = HorizontalLayout::create(*frame);
@@ -40,10 +40,9 @@ void RadioButtons::addRadioButton(const string &txt, Widget::CBUserSelection cbU
     text->setFlowAnchor(LEFT);
     text->setLayoutAnchor(CENTER);
     text->setAlpha(0);
-    Widget::CBWidgetState pressCB = [button, this, i, cbUserSelection](Widget *, Widget::State state) {
+    Widget::CBWidgetState pressCB = [this, i](Widget *, Widget::State state) {
         if (state == Widget::PRESS) {
             this->setSelection(i);
-            if (cbUserSelection) cbUserSelection(this, i);
         }
     };
     button->notifyOnChange(pressCB);
@@ -110,6 +109,11 @@ size_t RadioButtons::size() const
     return frame->size();
 }
 
+void RadioButtons::setUserCB(Widget::CBUserSelection cbUserSelection)
+{
+    userCB  = cbUserSelection;
+}
+
 const char *RadioButtons::getType() const
 {
     return type;
@@ -120,10 +124,11 @@ shared_ptr<RadioButtons> RadioButtons::create(Layout &layoutVal, vector<string> 
 {
     assert(buttonNames.size());
     shared_ptr<RadioButtons> radioButtons(WidgetFactoryT<RadioButtons>::newWidget(layoutVal, pos));
+    radioButtons->setUserCB(cbUserSelection);
 
     for (int i = 0; i < buttonNames.size(); ++i)
     {
-        radioButtons->addRadioButton(buttonNames[i], cbUserSelection);
+        radioButtons->addRadioButton(buttonNames[i]);
     }
 
     radioButtons->setSelection(defaultSelection);
@@ -136,6 +141,7 @@ void RadioButtons::setSelection(int value)
    if (value != selection && value >= 0 && value < frame->size())
    {
        selection = value;
+       if (userCB) userCB(this, value);
        setDirty();
    }
 }

@@ -63,8 +63,7 @@ void VerticalLayout::recalcCompound()
         maxWidth = max(maxWidth, minRect.width);
         maxHeight = max(maxHeight, minRect.height);
     }
-    if (forcedWidth) maxWidth = forcedWidth;
-    if (forcedHeight) maxHeight = forcedHeight;
+    int alignWidth = max(maxWidth, forcedWidth);
 
     Point pos = location;
     if (flowAnchor & BOTTOM) pos.y -= padding;
@@ -93,7 +92,7 @@ void VerticalLayout::recalcCompound()
         if (widgetLayoutAnchor & RIGHT)
         {
             // Align to the right - currentPosX is rightmost position
-            pos.x = currentPosX + padding + maxWidth - widget->getRect().width;
+            pos.x = currentPosX + padding + alignWidth - widget->getRect().width;
             if (flowAnchor & RIGHT)
             {
                 pos.x = currentPosX - padding;
@@ -101,10 +100,10 @@ void VerticalLayout::recalcCompound()
         }
         else if (widgetLayoutAnchor & CENTER)
         {
-            pos.x = currentPosX + padding + maxWidth / 2. - widget->getRect().width / 2.;
+            pos.x = currentPosX + padding + alignWidth / 2. - widget->getRect().width / 2.;
             if (flowAnchor & RIGHT)
             {
-                pos.x = currentPosX - padding - maxWidth / 2. + widget->getRect().width / 2.;
+                pos.x = currentPosX - padding - alignWidth / 2. + widget->getRect().width / 2.;
             }
         }
         else
@@ -112,7 +111,7 @@ void VerticalLayout::recalcCompound()
             pos.x = currentPosX + padding;
             if (flowAnchor & RIGHT)
             {
-                pos.x = currentPosX - padding - maxWidth + widget->getRect().width;
+                pos.x = currentPosX - padding - alignWidth + widget->getRect().width;
             }
         }
 
@@ -144,7 +143,9 @@ void VerticalLayout::recalcCompound()
     AutoLayout::recalcAndAllocate();
     for (auto &widget : widgets)
     {
-        if (widget->getStretchX() || widget->getStretchY()) widget->update();
+        if (widget->getStretchX() || widget->getStretchY() ||
+                widget->getStretchXToParent() || widget->getStretchYToParent())
+            widget->update();
     }
 }
 

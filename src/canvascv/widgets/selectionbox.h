@@ -61,6 +61,9 @@ public:
     /// return nunmber of check boxes in group
     size_t size() const;
 
+    /// cbUserSelection will be invoked per user selection
+    void setUserCB(Widget::CBUserSelection cbUserSelection);
+
     virtual const char *getType() const;
 
     static const char *type;
@@ -71,10 +74,13 @@ protected:
 
     SelectionBox(const cv::Point &pos);
 
+    void addButton(const std::string &txt);
+
     virtual void recalcCompound();
 
 private:
     std::shared_ptr<VFrame> frame;
+    Widget::CBUserSelection userCB;
 };
 
 }

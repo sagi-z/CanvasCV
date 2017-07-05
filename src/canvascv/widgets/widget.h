@@ -104,7 +104,7 @@ public:
     uchar getAlpha() const;
 
     /// set the alpha value used for the widge background [0,255] => [transparent,opaque]
-    virtual void setAlpha(uchar value);
+    void setAlpha(uchar value);
 
     /**
      * @brief The Anchor enum
@@ -201,13 +201,13 @@ public:
     /// get if the Layout we're in should stretch us in the X direction
     bool getStretchX() const;
 
-    /// set if the Layout we're in should stretch us in the X direction
+    /// set if the Layout we're in should stretch us in the X direction (and calls setStretchXToParent(false))
     void setStretchX(bool value);
 
     /// get if the Layout we're in should stretch us in the Y direction
     bool getStretchY() const;
 
-    /// set if the Layout we're in should stretch us in the Y direction
+    /// set if the Layout we're in should stretch us in the Y direction (and calls setStretchYToParent(false))
     void setStretchY(bool value);
 
     /// get the color to use when a widget is selected
@@ -237,13 +237,13 @@ public:
     /// get the forced width for this widget
     int getForcedWidth() const;
 
-    /// set the forced width for this widget (and calls setStretchX(false))
+    /// set the forced width for this widget (and calls setStretchX/setStretchXToParent(false))
     void setForcedWidth(int value);
 
     /// get the forced height for this widget
     int getForcedHeight() const;
 
-    /// set the forced height for this widget (and calls setStretchY(false))
+    /// set the forced height for this widget (and calls setStretchY/setStretchYToParent(false))
     void setForcedHeight(int value);
 
     /// removes 'dirty' state and invokes the derived 'recalc/recalcCompound'
@@ -255,7 +255,21 @@ public:
     /// Actual size the widget is occupying due to Layout manager
     virtual const cv::Rect &getRect() = 0;
 
+    /// get if this widget streches to parent layout width
+    bool getStretchXToParent() const;
+
+    /// set if this widget streches to parent layout width (and calls setStretchX(false))
+    void setStretchXToParent(bool value);
+
+    /// get if this widget streches to parent layout height
+    bool getStretchYToParent() const;
+
+    /// set if this widget streches to parent layout height (and calls setStretchY(false))
+    void setStretchYToParent(bool value);
+
 protected:
+
+    virtual bool isCompoundWidget() const;
 
     void mergeMats(cv::Mat &roiSrc, cv::Mat &roiDst);
 
@@ -344,6 +358,8 @@ protected:
     Anchor flowAnchor;
     bool stretchX;
     bool stretchY;
+    bool stretchXToParent;
+    bool stretchYToParent;
     bool isSelectable;
     std::string statusMsg;
     Layout *layout;

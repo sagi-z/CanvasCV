@@ -54,15 +54,6 @@ void CompoundWidget::setLineType(int value)
     }
 }
 
-void CompoundWidget::setAlpha(uchar value)
-{
-    Widget::setAlpha(value);
-    for (auto &widget : widgets)
-    {
-        widget->setAlpha(value);
-    }
-}
-
 void CompoundWidget::setVisible(bool value)
 {
     Widget::setVisible(value);
@@ -177,6 +168,31 @@ void CompoundWidget::broadcastChange(State status)
     }
 }
 
+// expect recalcRect() to call us ('rect' is already updated)
+void CompoundWidget::recalcMinimalRect()
+{
+    minimalRect.x = rect.x;
+    minimalRect.y = rect.y;
+    int xMax = 0;
+    int yMax = 0;
+    for (auto &widget : widgets)
+    {
+        const Rect & subRect = widget->getMinimalRect();
+        if (subRect.width && subRect.height)
+        {
+            xMax = max(xMax, subRect.x + subRect.width);
+            yMax = max(yMax, subRect.y + subRect.height);
+        }
+    }
+    if (xMax)
+    {   // there was a calculation
+        minimalRect.width = xMax - minimalRect.x;
+        minimalRect.height = yMax - minimalRect.y;
+    }
+    if (forcedWidth && ! stretchX && ! stretchXToParent) minimalRect.width = forcedWidth;
+    if (forcedHeight && ! stretchY && ! stretchYToParent) minimalRect.height = forcedHeight;
+}
+
 const string &CompoundWidget::getStatusMsg() const
 {
    if (active.get())
@@ -215,15 +231,22 @@ void CompoundWidget::recalcRect()
     }
     if (forcedWidth) rect.width = forcedWidth;
     if (forcedHeight) rect.height = forcedHeight;
+    recalcMinimalRect();
 }
 
 CompoundWidget::CompoundWidget(const Point &pos)
     :Widget(pos),
-      fillBG(false),
-      recalcCalled(0)
+      fillBG(false)
 {
     rect.x = location.x;
     rect.y = location.y;
+    minimalRect.x = location.x;
+    minimalRect.y = location.y;
+}
+
+bool CompoundWidget::isCompoundWidget() const
+{
+    return true;
 }
 
 const Rect CompoundWidget::getBoundaries() const
@@ -267,7 +290,7 @@ const Rect &CompoundWidget::getRect()
 
 const Rect &CompoundWidget::getMinimalRect()
 {
-    return rect;
+    return minimalRect;
 }
 
 void CompoundWidget::addWidget(const shared_ptr<Widget> &widget)
@@ -291,13 +314,24 @@ void CompoundWidget::translate(const Point &translation)
     }
 }
 
-void CompoundWidget::doForAll(Widget::CBWidget cb)
+void CompoundWidget::doForAll(Widget::CBWidget cb, int recurseLevel, bool doOnSelf)
 {
     if (cb)
     {
-        for (auto &widget : widgets)
+        if (doOnSelf) cb(this);
+        if (recurseLevel)
         {
-            cb(widget.get());
+            for (auto &widget : widgets)
+            {
+                if (widget->isCompoundWidget())
+                {
+                    ((CompoundWidget*) widget.get())->doForAll(cb, recurseLevel - 1, true);
+                }
+                else
+                {
+                    cb(widget.get());
+                }
+            }
         }
     }
 }

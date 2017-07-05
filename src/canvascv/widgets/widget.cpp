@@ -47,6 +47,8 @@ Widget::Widget(const Point &pos)
       flowAnchor(TOP_LEFT),
       stretchX(false),
       stretchY(false),
+      stretchXToParent(false),
+      stretchYToParent(false),
       isSelectable(false),
       layout(nullptr),
       state(LEAVE),
@@ -180,9 +182,39 @@ Layout *Widget::getLayout()
     return layout;
 }
 
+bool Widget::getStretchYToParent() const
+{
+    return stretchYToParent;
+}
+
+void Widget::setStretchYToParent(bool value)
+{
+    if (stretchYToParent != value)
+    {
+        stretchYToParent = value;
+        if (stretchYToParent) stretchY = false;
+        setDirty();
+    }
+}
+
+bool Widget::getStretchXToParent() const
+{
+    return stretchXToParent;
+}
+
+void Widget::setStretchXToParent(bool value)
+{
+    if (stretchXToParent != value)
+    {
+        stretchXToParent = value;
+        if (stretchXToParent) stretchX = false;
+        setDirty();
+    }
+}
+
 void Widget::layoutResized(const Rect &)
 {
-   setDirty();
+    setDirty();
 }
 
 const string &Widget::getStatusMsg() const
@@ -248,6 +280,7 @@ int Widget::getForcedHeight() const
 void Widget::setForcedHeight(int value)
 {
     setStretchY(false);
+    setStretchYToParent(false);
     if (forcedHeight != value)
     {
         forcedHeight = value;
@@ -263,6 +296,7 @@ int Widget::getForcedWidth() const
 void Widget::setForcedWidth(int value)
 {
     setStretchX(false);
+    setStretchXToParent(false);
     if (forcedWidth != value)
     {
         forcedWidth = value;
@@ -443,6 +477,7 @@ void Widget::setStretchY(bool value)
     if (stretchY != value)
     {
         stretchY = value;
+        if (stretchY) stretchYToParent = false;
         setDirty();
     }
 }
@@ -518,6 +553,7 @@ void Widget::setStretchX(bool value)
     if (stretchX != value)
     {
         stretchX = value;
+        if (stretchX) stretchXToParent = false;
         setDirty();
     }
 }
@@ -584,32 +620,50 @@ bool Widget::setDirty()
 
 void Widget::update()
 {
-    if (layout && (stretchX || stretchY))
+    if (layout)
     {
-        AutoLayout *autoLayout = dynamic_cast<AutoLayout*>(layout);
-        if (autoLayout)
+        if (stretchXToParent || stretchYToParent)
         {
-            if (stretchX)
+            Rect parentRect;
+            int padding = 0;
+            AutoLayout *autoLayout = dynamic_cast<AutoLayout*>(layout);
+            if (autoLayout)
             {
-                forcedWidth = autoLayout->getMaxWidgetWidth();
+                padding = autoLayout->getPadding() * 2;
+                parentRect = autoLayout->getRect();
             }
-            if (stretchY)
+            else
             {
-                forcedHeight = autoLayout->getMaxWidgetHeight();
+                parentRect = layout->getBoundaries();
+            }
+            if (stretchXToParent)
+            {
+                forcedWidth = parentRect.x + parentRect.width - location.x - padding;
+                if (forcedWidth < 0) forcedWidth = 0;
+            }
+            if (stretchYToParent)
+            {
+                forcedHeight = parentRect.y + parentRect.height - location.y - padding;
+                if (forcedHeight < 0) forcedHeight = 0;
             }
         }
-        else
-        {   // Canvas
-            if (stretchX)
+        else if (stretchX || stretchY)
+        {
+            AutoLayout *autoLayout = dynamic_cast<AutoLayout*>(layout);
+            if (autoLayout)
             {
-                forcedWidth = layout->getBoundaries().width;
-            }
-            if (stretchY)
-            {
-                forcedHeight = layout->getBoundaries().height;
+                if (stretchX)
+                {
+                    forcedWidth = autoLayout->getMaxWidgetWidth();
+                }
+                if (stretchY)
+                {
+                    forcedHeight = autoLayout->getMaxWidgetHeight();
+                }
             }
         }
     }
+
     isDirty = false;
     recalc();
     isDirty = false;
@@ -618,6 +672,11 @@ void Widget::update()
 bool Widget::isRemoved() const
 {
     return layout == nullptr;
+}
+
+bool Widget::isCompoundWidget() const
+{
+   return false;
 }
 
 void Widget::setLocation(const Point &value)

@@ -63,8 +63,7 @@ void HorizontalLayout::recalcCompound()
         maxWidth = max(maxWidth, minRect.width);
         maxHeight = max(maxHeight, minRect.height);
     }
-    if (forcedWidth) maxWidth = forcedWidth;
-    if (forcedHeight) maxHeight = forcedHeight;
+    int alignHeight = max(maxHeight, forcedHeight);
 
     Point pos = location;
     if (flowAnchor & RIGHT) pos.x -= padding;
@@ -93,7 +92,7 @@ void HorizontalLayout::recalcCompound()
         if (widgetLayoutAnchor & BOTTOM)
         {
             // Align to the bottom - currentPosY is bottom-most position
-            pos.y = currentPosY + padding + maxHeight - widget->getRect().height;
+            pos.y = currentPosY + padding + alignHeight - widget->getRect().height;
             if (flowAnchor & BOTTOM)
             {
                 pos.y = currentPosY - padding;
@@ -101,10 +100,10 @@ void HorizontalLayout::recalcCompound()
         }
         else if (widgetLayoutAnchor & CENTER)
         {
-            pos.y = currentPosY + padding + maxHeight / 2. - widget->getRect().height / 2.;
+            pos.y = currentPosY + padding + alignHeight / 2. - widget->getRect().height / 2.;
             if (flowAnchor & BOTTOM)
             {
-                pos.y = currentPosY - padding - maxHeight / 2. + widget->getRect().height / 2.;
+                pos.y = currentPosY - padding - alignHeight / 2. + widget->getRect().height / 2.;
             }
         }
         else
@@ -112,7 +111,7 @@ void HorizontalLayout::recalcCompound()
             pos.y = currentPosY + padding;
             if (flowAnchor & BOTTOM)
             {
-                pos.y = currentPosY - padding - maxHeight + widget->getRect().height;
+                pos.y = currentPosY - padding - alignHeight + widget->getRect().height;
             }
         }
 
@@ -144,7 +143,9 @@ void HorizontalLayout::recalcCompound()
     AutoLayout::recalcAndAllocate();
     for (auto &widget : widgets)
     {
-        if (widget->getStretchX() || widget->getStretchY()) widget->update();
+        if (widget->getStretchX() || widget->getStretchY() ||
+                widget->getStretchXToParent() || widget->getStretchYToParent())
+            widget->update();
     }
 }
 

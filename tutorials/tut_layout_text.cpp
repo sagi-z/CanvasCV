@@ -2,8 +2,6 @@
 #include <canvascv/widgets/text.h>
 #include <canvascv/widgets/verticallayout.h>
 #include <canvascv/widgets/horizontallayout.h>
-#include <canvascv/widgets/vframe.h>
-#include <canvascv/widgets/hframe.h>
 
 using namespace canvascv;
 
@@ -47,12 +45,12 @@ int main(int argc, char **argv)
     namedWindow("LayoutTxt", WINDOW_AUTOSIZE); // disable mouse resize
 
     auto vLayout = VerticalLayout::create(c);
-    vLayout->setStretchX(true);
-    vLayout->setStretchY(true);
+    vLayout->setStretchXToParent(true);
+    vLayout->setStretchYToParent(true);
 
     auto hLayout = HorizontalLayout::create(*vLayout);
     hLayout->setLayoutAnchor(Widget::CENTER);
-    hLayout->setStretchY(true);
+    hLayout->setStretchYToParent(true);
 
     auto txt = Text::create(*hLayout, "Target Acquired!");
     txt->setLayoutAnchor(Widget::CENTER);

@@ -35,9 +35,6 @@ public:
     virtual void setLineType(int value);
 
     /// delegate to internal Widget parts added by derived classes
-    virtual void setAlpha(uchar value);
-
-    /// delegate to internal Widget parts added by derived classes
     virtual void setVisible(bool value);
 
     /// delegate to active widget or to our derived class if none active
@@ -49,18 +46,25 @@ public:
     /**
      * @brief doForAll
      * 
-     * invoke the cb for all included widgets (not on self).
+     * invoke the cb for all included widgets.
      * This is usually not necessary since the above methods delegate to both
      * contained widgets and self.
-     * @param cb
+     * @param cb is what to execute on widgets
+     * @param recurseLevel is how deep to go when updating kids:
+     *  - -1 means all decendents at all levels
+     *  -  0 means only current level (doOnSelf needs to be also 'true')
+     *  -  n>0 means up to kids at level n (1 is children, 2 is also grandchildren, etc.)
+     * @param doOnSelf is if to also invoke the cb on the first parent
      */
-    void doForAll(CBWidget cb);
+    void doForAll(CBWidget cb, int recurseLevel, bool doOnSelf);
 
     virtual const cv::Rect &getRect();
 protected:
     // force inheritance
     CompoundWidget(const cv::Point &pos);
     virtual ~CompoundWidget() {}
+
+    virtual bool isCompoundWidget() const;
 
     /// delegate to internal Widget parts added by derived classes
     virtual void recalc() final;
@@ -99,6 +103,7 @@ protected:
 
     bool fillBG;
     cv::Rect rect;
+    cv::Rect minimalRect;
 
     std::list<std::shared_ptr<Widget>> widgets;
 private:
@@ -106,8 +111,9 @@ private:
 
     virtual void broadcastChange(State status);
 
+    void recalcMinimalRect();
+
     std::shared_ptr<Widget> active;
-    int recalcCalled;
 };
 
 }

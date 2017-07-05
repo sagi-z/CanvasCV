@@ -28,7 +28,7 @@ CheckBoxes::CheckBoxes(const Point &pos)
     frame->setSpacing(1);
 }
 
-void CheckBoxes::addCheckBox(const string &txt, Widget::CBUserSelection cbUserSelection)
+void CheckBoxes::addCheckBox(const string &txt)
 {
     int i = frame->size();
     auto row = HorizontalLayout::create(*frame);
@@ -39,11 +39,10 @@ void CheckBoxes::addCheckBox(const string &txt, Widget::CBUserSelection cbUserSe
     text->setFlowAnchor(LEFT);
     text->setLayoutAnchor(CENTER);
     text->setAlpha(0);
-    Widget::CBWidgetState pressCB = [checkBox, this, i, cbUserSelection](Widget *, Widget::State state) {
+    Widget::CBWidgetState pressCB = [this, i](Widget *, Widget::State state) {
         if (state == Widget::PRESS) {
             bool isChecked = ! this->isChecked(i);
             this->setChecked(i, isChecked);
-            if (cbUserSelection) cbUserSelection(this, i);
         }
     };
     checkBox->notifyOnChange(pressCB);
@@ -103,10 +102,11 @@ shared_ptr<CheckBoxes> CheckBoxes::create(Layout &layoutVal, vector<string> chec
 {
     assert(checkBoxNames.size());
     shared_ptr<CheckBoxes> checkBoxes(WidgetFactoryT<CheckBoxes>::newWidget(layoutVal, pos));
+    checkBoxes->setUserCB(cbUserSelection);
 
     for (int i = 0; i < checkBoxNames.size(); ++i)
     {
-        checkBoxes->addCheckBox(checkBoxNames[i], cbUserSelection);
+        checkBoxes->addCheckBox(checkBoxNames[i]);
     }
 
     return checkBoxes;
@@ -119,6 +119,7 @@ void CheckBoxes::setChecked(int index, bool checked)
         if (selections[index] != checked)
         {
             selections[index] = checked;
+            if (userCB) userCB(this, index);
             setDirty();
         }
     }
@@ -144,7 +145,12 @@ string CheckBoxes::getTextAt(int index) const
 
 size_t CheckBoxes::size() const
 {
-   return selections.size();
+    return selections.size();
+}
+
+void CheckBoxes::setUserCB(Widget::CBUserSelection cbUserSelection)
+{
+    userCB  = cbUserSelection;
 }
 
 }
