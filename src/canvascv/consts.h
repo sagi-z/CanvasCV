@@ -23,6 +23,8 @@ public:
     static const double DEFAULT_FONT_SCALE;
     static const cv::Scalar DEFAULT_FONT_COLOR;
     static const int DEFAULT_FONT_THICKNESS;
+    static const int DEFAULT_LAYOUT_SPACING;
+    static const int DEFAULT_LAYOUT_PADDING;
 };
 
 }

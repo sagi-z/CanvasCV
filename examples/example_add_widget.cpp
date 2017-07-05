@@ -145,7 +145,7 @@ protected:
             }
         }
         top->update(); // Since we're making widgets dirty in recalc*() we need to manually update them
-        recalcRect();
+        recalcRect(0);
     }
 
 private:

@@ -12,4 +12,6 @@ namespace canvascv
     const double Consts::DEFAULT_FONT_SCALE = 0.55;
     const cv::Scalar Consts::DEFAULT_FONT_COLOR = Colors::Green;
     const int Consts::DEFAULT_FONT_THICKNESS = 1;
+    const int Consts::DEFAULT_LAYOUT_SPACING = 5;
+    const int Consts::DEFAULT_LAYOUT_PADDING = 2;
 }

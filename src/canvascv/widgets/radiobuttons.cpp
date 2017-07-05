@@ -67,7 +67,7 @@ void RadioButtons::recalcCompound()
         }
         drawings[i]->update();
     }
-    recalcRect();
+    recalcRect(0);
 }
 
 cv::Mat RadioButtons::getRadioSelected()

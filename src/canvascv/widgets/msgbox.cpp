@@ -42,7 +42,7 @@ void MsgBox::setMsg(const string &msg)
 
 void MsgBox::recalcCompound()
 {
-    recalcRect();
+    recalcRect(0);
 }
 
 const char *MsgBox::getType() const

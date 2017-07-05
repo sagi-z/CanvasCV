@@ -8,7 +8,7 @@ namespace canvascv
 
 AutoLayout::AutoLayout(const Point &pos)
     : CompoundWidget(pos),
-      padding(2),
+      padding(Consts::DEFAULT_LAYOUT_PADDING),
       wrap(false),
       maxWidth(0),
       maxHeight(0)
@@ -18,17 +18,9 @@ AutoLayout::AutoLayout(const Point &pos)
 
 void AutoLayout::recalcAndAllocate()
 {
-    recalcRect();
+    recalcRect(padding);
     if (fillBG)
     {
-        if (padding)
-        {
-            // restore the padding that recalcRect() removed
-            rect.x -= padding;
-            rect.y -= padding;
-            rect.width += padding*2;
-            rect.height += padding*2;
-        }
         allocateBG(rect.size());
     }
 }

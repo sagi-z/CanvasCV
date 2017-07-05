@@ -68,7 +68,7 @@ protected:
 
     /// delegate to internal Widget parts added by derived classes
     virtual void recalc() final;
-    void recalcRect();
+    void recalcRect(int padding);
 
     /**
      * @brief recalcCompound

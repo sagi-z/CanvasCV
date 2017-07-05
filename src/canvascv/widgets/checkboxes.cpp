@@ -68,7 +68,7 @@ void CheckBoxes::recalcCompound()
         }
         drawings[i]->update();
     }
-    recalcRect();
+    recalcRect(0);
 }
 
 cv::Mat CheckBoxes::getCheckBoxSelected()

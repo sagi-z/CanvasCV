@@ -22,7 +22,7 @@ void VerticalLayout::setSpacing(int value)
 
 VerticalLayout::VerticalLayout(const Point &pos)
     : AutoLayout(pos),
-      spacing(5)
+      spacing(Consts::DEFAULT_LAYOUT_SPACING)
 {
 }
 
@@ -70,7 +70,7 @@ void VerticalLayout::recalcCompound()
     else pos.y += padding;
 
     int posYStart = pos.y;
-    int currentPosX = location.x;
+    int currentPosX = pos.x;
     for (auto &widget : widgets)
     {
         if (wrap && forcedHeight)

@@ -625,11 +625,11 @@ void Widget::update()
         if (stretchXToParent || stretchYToParent)
         {
             Rect parentRect;
-            int padding = 0;
+            int paddingX2 = 0;
             AutoLayout *autoLayout = dynamic_cast<AutoLayout*>(layout);
             if (autoLayout)
             {
-                padding = autoLayout->getPadding() * 2;
+                paddingX2 = autoLayout->getPadding() * 2;
                 parentRect = autoLayout->getRect();
             }
             else
@@ -638,12 +638,12 @@ void Widget::update()
             }
             if (stretchXToParent)
             {
-                forcedWidth = parentRect.x + parentRect.width - location.x - padding;
+                forcedWidth = parentRect.x + parentRect.width - location.x - paddingX2;
                 if (forcedWidth < 0) forcedWidth = 0;
             }
             if (stretchYToParent)
             {
-                forcedHeight = parentRect.y + parentRect.height - location.y - padding;
+                forcedHeight = parentRect.y + parentRect.height - location.y - paddingX2;
                 if (forcedHeight < 0) forcedHeight = 0;
             }
         }
@@ -652,13 +652,14 @@ void Widget::update()
             AutoLayout *autoLayout = dynamic_cast<AutoLayout*>(layout);
             if (autoLayout)
             {
+                int paddingX2 = autoLayout->getPadding() * 2;
                 if (stretchX)
                 {
-                    forcedWidth = autoLayout->getMaxWidgetWidth();
+                    forcedWidth = autoLayout->getMaxWidgetWidth() - paddingX2;
                 }
                 if (stretchY)
                 {
-                    forcedHeight = autoLayout->getMaxWidgetHeight();
+                    forcedHeight = autoLayout->getMaxWidgetHeight() - paddingX2;
                 }
             }
         }

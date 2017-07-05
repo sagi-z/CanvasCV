@@ -22,7 +22,7 @@ void HorizontalLayout::setSpacing(int value)
 
 HorizontalLayout::HorizontalLayout(const Point &pos)
     : AutoLayout(pos),
-      spacing(5)
+      spacing(Consts::DEFAULT_LAYOUT_SPACING)
 {
 }
 
@@ -70,7 +70,7 @@ void HorizontalLayout::recalcCompound()
     else pos.x += padding;
 
     int posXStart = pos.x;
-    int currentPosY = location.y;
+    int currentPosY = pos.y;
     for (auto &widget : widgets)
     {
         if (wrap && forcedWidth)

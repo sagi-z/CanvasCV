@@ -50,20 +50,20 @@ int main(int argc, char **argv)
     auto textInfoFrame = HFrame::create(*rightBodyFrame);
     auto buttonsLayout = HorizontalLayout::create(*rightBodyFrame);
 
-//    leftBodyFrame->setFrameRelief(Widget::SUNKEN);
-//    textInfoFrame->setFrameRelief(Widget::RAISED);
+    leftBodyFrame->setFrameRelief(Widget::SUNKEN);
+    textInfoFrame->setFrameRelief(Widget::SUNKEN);
 
     // The title frame and body frame adapt to top frame width
-//    titleFrame->setStretchX(true);
-//    bodyFrame->setStretchXToParent(true);
+    titleFrame->setStretchX(true);
+    bodyFrame->setStretchX(true);
 
-//    rightBodyFrame->setStretchY(true);
+    rightBodyFrame->setStretchY(true);
 
     // Adjust to titleFrame width and put the text at the center
     auto title = Text::create(*titleFrame, "Dialog title goes here", Widget::CENTER);
-//    title->setStretchXToParent(true);
-//    title->setAlpha(0);
-//    titleFrame->setFrameRelief(Widget::RAISED);
+    title->setStretchXToParent(true);
+    title->setAlpha(0);
+    titleFrame->setFrameRelief(Widget::RAISED);
 
     shared_ptr<Text> textInfo = Text::create(*textInfoFrame, "");
     shared_ptr<RadioButtons> radioButtons = RadioButtons::create(*leftBodyFrame, {"RBOption1", "RBOption2"}, 0);
@@ -79,8 +79,7 @@ int main(int argc, char **argv)
     };
 
     cb(0,0); // manually initialize the textInfo;
-    textInfo->setOutlineColor(Colors::Black);
-    textInfo->setFillColor(Colors::White);
+    textInfo->setAlpha(0);
 
     radioButtons->setUserCB(cb);
     checkBoxes->setUserCB(cb);
@@ -93,18 +92,13 @@ int main(int argc, char **argv)
     });
     Button::create(*buttonsLayout, "Cancel");
     Button::create(*buttonsLayout, "Ok");
-//    buttonsLayout->setStretchYToParent(true);
+    buttonsLayout->setStretchYToParent(true);
     buttonsLayout->setLayoutAnchor(Widget::CENTER);
     buttonsLayout->doForAll([](Widget *w)
     {
-//        w->setStretchX(true);
+        w->setStretchX(true);
         w->setLayoutAnchor(Widget::BOTTOM);
     }, 1, false);
-
-    titleFrame->setFillColor(Colors::Blue);
-    title->setFillColor(Colors::Red);
-    bodyFrame->setFillColor(Colors::Green);
-    rightBodyFrame->setFillColor(Colors::Yellow);
 
     int key = 0;
     c.setImage(image);

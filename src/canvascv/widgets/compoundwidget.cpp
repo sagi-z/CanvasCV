@@ -205,7 +205,7 @@ const string &CompoundWidget::getStatusMsg() const
    }
 }
 
-void CompoundWidget::recalcRect()
+void CompoundWidget::recalcRect(int padding)
 {
     int xMin = INT_MAX;
     int yMin = INT_MAX;
@@ -228,10 +228,19 @@ void CompoundWidget::recalcRect()
         rect.y = yMin;
         rect.width = xMax - xMin;
         rect.height = yMax - yMin;
+        recalcMinimalRect();
+        int paddingX2 = padding * 2;
+        rect.x -= padding;
+        rect.y -= padding;
+        rect.width += paddingX2;
+        rect.height += paddingX2;
+        minimalRect.x -= padding;
+        minimalRect.y -= padding;
+        minimalRect.width += paddingX2;
+        minimalRect.height += paddingX2;
     }
     if (forcedWidth) rect.width = forcedWidth;
     if (forcedHeight) rect.height = forcedHeight;
-    recalcMinimalRect();
 }
 
 CompoundWidget::CompoundWidget(const Point &pos)
