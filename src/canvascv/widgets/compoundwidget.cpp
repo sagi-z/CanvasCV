@@ -229,18 +229,14 @@ void CompoundWidget::recalcRect(int padding)
         rect.width = xMax - xMin;
         rect.height = yMax - yMin;
         recalcMinimalRect();
-        int paddingX2 = padding * 2;
-        rect.x -= padding;
-        rect.y -= padding;
-        rect.width += paddingX2;
-        rect.height += paddingX2;
-        minimalRect.x -= padding;
-        minimalRect.y -= padding;
-        minimalRect.width += paddingX2;
-        minimalRect.height += paddingX2;
     }
     if (forcedWidth) rect.width = forcedWidth;
     if (forcedHeight) rect.height = forcedHeight;
+    int paddingX2 = padding * 2;
+    rect.x -= padding;
+    rect.y -= padding;
+    rect.width += paddingX2;
+    rect.height += paddingX2;
 }
 
 CompoundWidget::CompoundWidget(const Point &pos)

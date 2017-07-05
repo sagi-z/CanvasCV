@@ -652,14 +652,13 @@ void Widget::update()
             AutoLayout *autoLayout = dynamic_cast<AutoLayout*>(layout);
             if (autoLayout)
             {
-                int paddingX2 = autoLayout->getPadding() * 2;
                 if (stretchX)
                 {
-                    forcedWidth = autoLayout->getMaxWidgetWidth() - paddingX2;
+                    forcedWidth = autoLayout->getMaxWidgetWidth();
                 }
                 if (stretchY)
                 {
-                    forcedHeight = autoLayout->getMaxWidgetHeight() - paddingX2;
+                    forcedHeight = autoLayout->getMaxWidgetHeight();
                 }
             }
         }

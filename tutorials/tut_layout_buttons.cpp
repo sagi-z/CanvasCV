@@ -21,6 +21,7 @@ int main(int argc, char **argv)
     }
 
     namedWindow("LayoutButtons", WINDOW_AUTOSIZE); // disable mouse resize
+    moveWindow("LayoutButtons", 10, 10);
     Canvas c("LayoutButtons", image.size());
     c.setMouseCallback();
     c.enableStatusMsg();
