@@ -106,7 +106,7 @@ int main(int argc, char **argv)
 
         imshow("MsgBox example", out);
 
-	// the blocking API handles GUI internally
+    // the blocking API handles GUI internally
         userSelection = MsgBox::create(c, string("Notice #") + to_string(++cnt) + " this msg", {
                                            "Ok", "Whatever"
                                        })->getUserSelection(true);
@@ -228,7 +228,7 @@ int main(int argc, char **argv)
 
         imshow("MsgBox example", out);
 
-	// the blocking API handles GUI internally
+        // the blocking API handles GUI internally
         userSelection = MsgBox::createModal("Modal MsgBox", "Notice this window", {"Ok", "Whatever"});
         c.setScreenText(CCV_STR("User pressed button with index '" << userSelection << "'\n\n" <<
                                 "(Choose 'Whatever' to exit)"));
