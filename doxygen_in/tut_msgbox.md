@@ -120,9 +120,9 @@ int main(int argc, char **argv)
 }
 ~~~~~~~
 Notes:
-* We needed canvascv::Canvas::setMouseCallback since the Canvas will intercept mouse events for the MsgBox now.
+* We needed canvascv::Canvas::setMouseCallback() since the Canvas will intercept mouse events for the MsgBox now.
 * All widgets have a static create methods, which is the only way to create them.
-* The canvascv::MsgBox::create will return a shared_ptr<MsgBox> instance, which you don't have to keep since another one is kept by the canvascv::Layout.
+* The canvascv::MsgBox::create() will return a shared_ptr<MsgBox> instance, which you don't have to keep since another one is kept by the canvascv::Layout.
 * Here we're using getUserSelection(true) immediatly on that shared_ptr, and by passing true we're blocked at that line of code.
 * *CCV_STR* lets you write create a string as writing into a stream.
 * When executed with a path to an image, this gives you (depends on your image):
@@ -174,9 +174,9 @@ using namespace canvascv;
 
 Notes:
 * All widgets have a static create methods, which is the only way to create them.
-* The canvascv::MsgBox::create will return a shared_ptr<MsgBox> instance, which you don't have to keep since another one is kept by the canvascv::Layout.
+* The canvascv::MsgBox::create() will return a shared_ptr<MsgBox> instance, which you don't have to keep since another one is kept by the canvascv::Layout.
 * This tutorial is using C++11 lambda expressions as callbacks, but anything which has the void(Widget*,int) signature will work.
-* We needed canvascv::Canvas::setMouseCallback since the Canvas will intercept mouse events for the MsgBox now.
+* We needed canvascv::Canvas::setMouseCallback() since the Canvas will intercept mouse events for the MsgBox now.
 * *CCV_STR* lets you write create a string as writing into a stream.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_msgbox.jpg
@@ -241,7 +241,8 @@ int main(int argc, char **argv)
 ~~~~~~~
 
 Notes:
-* Again - this is a blocking API. The line which is using canvascv::MsgBox::createModal waits for a response.
+* Again - this is a blocking API. The line which is using
+canvascv::MsgBox::createModal() waits for a response.
 * Currently there is no control of where the OpenCV window will be opened.
 * *CCV_STR* lets you write create a string as writing into a stream.
 * When executed with a path to an image, this gives you (depends on your image):

@@ -311,7 +311,7 @@ void buildDemoDialog(Canvas &c)
     textInfoFrame->setFrameRelief(Widget::SUNKEN);
 
     // The title frame and body frame adapt to top frame width
-    titleFrame->canvascv::Widget::setStretchX(true);
+    titleFrame->setStretchX(true);
     bodyFrame->setStretchX(true);
 
     rightBodyFrame->setStretchY(true);

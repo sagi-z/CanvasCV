@@ -83,7 +83,7 @@ Notes:
 * This tutorial is using C++11 lambda expressions as callbacks, but
 anything which has the void(Widget*,int) signature will work.
 * Note the alternate way of displaying images
-  * use canvascv::Canvas::setImage for the image you're showing.
+  * use canvascv::Canvas::setImage() for the image you're showing.
   * use canvascv::Canvas::waitKeyEx() without arguments to refresh
   widgets and handle internal events with your image as the background.
 * Here is a possible outcome of this code:

@@ -104,7 +104,7 @@ the right on resizing.
 canvascv::Canvas::waitKeyEx() (default delay is 0).
  #- Since during a zero delay, the Canvas is self updating, it needs to
  know that the image has changed, and this is what
- canvascv::Canvas::setImage is for.
+ canvascv::Canvas::setImage() is for.
 * We using *enableStatusMsg* since we want the mouse hover over the
 buttons to show out status message for it.
 * This tutorial is using C++11 lambda expressions as callbacks, but
@@ -191,7 +191,7 @@ int main(int argc, char **argv)
 }
 ~~~~~~~
 Notes:
-* the canvascv::Widget::setFlowAnchor does the work here.
+* the canvascv::Widget::setFlowAnchor() does the work here.
 * Here is a possible outcome this code:
 @image html tut_buttons_txt_alignment.jpg
 <BR>

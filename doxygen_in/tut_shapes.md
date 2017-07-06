@@ -399,7 +399,7 @@ Notes for the `//CanvasCV change#...` comments above:
   canvascv::Canvas::setSize() to adapt to the new size.
 * When using the CanvasCV, you create shapes and widgets on the
   canvascv::Canvas and not on the *Mat*.
-* canvascv::Canvas::waitKeyEx knows to update it's internal shapes and
+* canvascv::Canvas::waitKeyEx() knows to update it's internal shapes and
   widgets even if you pass 0 as a blocking delay indicator.
 * When executed with --video="Path to opencv-3.2.0/samples/data/vtest.avi", you can get
 @image html tut_shapes_code.jpg
