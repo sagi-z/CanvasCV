@@ -63,7 +63,7 @@ public:
      * @brief redrawOn
      *
      * A utility method that uses latest Mat used as 'src' in the redrawOn above.
-     * This methos is also used internally on waitKeyEx(0)
+     * This methos is also used internally in waitKeyEx(0)
      * @param dst will be used as output.
      * @sa waitKeyEx
      */
@@ -150,7 +150,8 @@ public:
 
     /**
      * @brief used to register for notifications on shape creation
-     * 
+     *
+     * Multiple registrations are allowed.
      * @param cb to invoke on shape creation
      */
     void notifyOnShapeCreate(CBCanvasShape cb);
@@ -158,6 +159,7 @@ public:
     /**
      * @brief used to register for notifications on shape modification (actually when it is deselected)
      * 
+     * Multiple registrations are allowed.
      * @param cb to invoke on shape modification
      */
     void notifyOnShapeModify(CBCanvasShape cb);
@@ -165,6 +167,7 @@ public:
     /**
      * @brief used to register for notifications on shape deletion
      * 
+     * Multiple registrations are allowed.
      * @param cb to invoke on shape deletion
      */
     void notifyOnShapeDelete(CBCanvasShape cb);
@@ -222,7 +225,8 @@ public:
     /**
      * @brief enableScreenText enables the top left text area for manual user messages
      * 
-     * During enable of this feature you can overide some default values
+     * During enable of this feature you can overide some default values. It is safe to
+     * call this method again just to change display settings.
      * @param color is font color
      * @param bgColor is rect bg color
      * @param scale is font scale
@@ -240,7 +244,8 @@ public:
     /**
      * @brief enableStatusMsg enables the bottom left text area for auto status messages
      * 
-     * During enable of this feature you can overide some default values
+     * During enable of this feature you can overide some default values. It is safe to
+     * call this method again just to change display settings.
      * @param color is font color
      * @param bgColor is rect bg color
      * @param scale is font scale
@@ -296,9 +301,13 @@ public:
      * 
      * utility method to handle key strokes - you get the keystroke if a widget/shape didn't consume it.
      * @param delay in milliseconds. If delay is 0, then the latest image used as input will be the
-     * background for internal updates. If you want to change it from a callback, then use setImage
+     * background for internal updates. If you want to change it from a callback, then use setImage.
      * @return the key press or -1 if the timeout reached
      * @sa setImage
+     * @note
+     * When using widgets with callback on the same image, the delay should be 0.
+     * If you're changing frames or using only the polling API of the widgets, then
+     * specify a delay of your choice.
      */
     int waitKeyEx(int delay = 0);
 

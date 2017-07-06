@@ -149,7 +149,7 @@ public:
     void setLayoutAnchor(const Anchor &value);
 
     /**
-     * @brief getFlowAnchor affects internal widget alignment and direction of growth
+     * @brief getFlowAnchor get internal widget alignment and direction of growth
      * 
      * @return the Anchor of our own flow
      * @see VerticalLayout, HorizontalLayout, Text
@@ -160,7 +160,7 @@ public:
     }
 
     /**
-     * @brief setFlowAnchor affects internal widget alignment and direction of growth
+     * @brief setFlowAnchor set internal widget alignment and direction of growth
      * 
      * @param value is used to set the flowAnchor
      * @see VerticalLayout, HorizontalLayout, Text
