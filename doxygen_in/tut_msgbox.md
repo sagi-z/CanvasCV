@@ -106,7 +106,7 @@ int main(int argc, char **argv)
 
         imshow("MsgBox example", out);
 
-    // the blocking API handles GUI internally
+        // the blocking API handles GUI internally
         userSelection = MsgBox::create(c, string("Notice #") + to_string(++cnt) + " this msg", {
                                            "Ok", "Whatever"
                                        })->getUserSelection(true);
