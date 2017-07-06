@@ -16,48 +16,48 @@ from the user.
 
 Notice along the tutorial the usage of anchors and and stretching.
 
-For anchors, you have 2 different specs:
+For anchors, you have 2 different APIs:
 * canvascv::Widget::setFlowAnchor() - used internally by the widget to determine into which
 direction to grow.
 * canvascv::Widget::setLayoutAnchor()- used by the layout holding this
 widget for alignments.
 
-For stretching, you have 2 different specs:
+For stretching, you have 2 different APIs:
 * canvascv::Widget::setStretchX() and canvascv::Widget::setStretchY(),
 which tells if we want to be equal in width/height to the largest widget
 in our layout.
 * canvascv::Widget::setStretchXToParent() and
 canvascv::Widget::setStretchYToParent(), which tells if we want to be
-streched tt the ful width/height of our layout.
+streched to the full width/height of our layout.
 
 [TOC]
 
 # Center text on the screen {#layouts_s1}
-In this tutorial @ref screentext_s2_3 we created a Text widget and
+In the tutorial @ref screentext_s2_3 we created a *Text* widget and
 manually tried to center it on the screen.
 
 To center it vertically and horizontally, you would use 2 layout
 managers - canvascv::VerticalLayout and canvascv::HorizontalLayout.
 
 The top layout should stretch to the full dimensions of the screen
-(because we want CENTER to be relative to that). Here we choose a
-VerticalLayout, in which widgets are layered automatically veritcally,
+(because we want *CENTER* to be relative to that). Here we choose a
+*VerticalLayout*, in which widgets are layered automatically veritcally,
 but horizontally you can specify where to put your widget.
 
-Now we'll add a HorizontalLayout to the above layout and request to be
-anchored to the CENTER.
+Now we'll add a *HorizontalLayout* to the above layout and request to be
+anchored to the *CENTER*.
 
-In the HorizontalLayout, widgets are layered automatically horizontally,
+In the *HorizontalLayout*, widgets are layered automatically horizontally,
 but vertically you can specify where to put your widget. This widget
-will strectch in the Y direction, so CENTER in it will be relevant to
+will strectch in the Y direction, so *CENTER* in it will be relative to
 the height of the image.
 
-So finally we'll add our Text, just like before, but now instead of
-adding it to the Canvas, we'll add it to the above HorizontalLayout, and
-ask to be anchored to the CENTER of it.
+So finally we'll add our *Text*, just like before, but now instead of
+adding it to the *Canvas*, we'll add it to the above *HorizontalLayout*, and
+ask to be anchored to the *CENTER* of it.
 
-So the VerticalLayout will CENTER the HorizontalLayout and it will
-CENTER the Text. Since the layouts are stretching to the full dimension
+So the *VerticalLayout* will *CENTER* the *HorizontalLayout* and it will
+*CENTER* the *Text*. Since the layouts are stretching to the full dimension
 of the image, it will always be centered.
 
 The added/changed code is much shorter than the explanation:
@@ -169,10 +169,10 @@ int main(int argc, char **argv)
     return 0;
 }
 ~~~~~~~
-Note:
+Notes:
 * To expand the widget to the full extent of it's parent layout use
-canvascv::Widget::setStretchXToParent(true) to match the layout width and
-canvascv::Widget::setStretchYToParent(true) to match the layout height.
+canvascv::Widget::setStretchXToParent() with *true* to match the layout width and
+canvascv::Widget::setStretchYToParent() with *true* to match the layout height.
 * Here is a possible outcome of this code:
 @image html tut_layout_txt.jpg
 <BR>
@@ -181,7 +181,7 @@ canvascv::Widget::setStretchYToParent(true) to match the layout height.
 
 Here we're going to create some buttons in a group.
 
-The buttons are going to be evenly spaced in a VerticalLayout.
+The buttons are going to be evenly spaced in a *VerticalLayout*.
 
 The code is simple:
 ~~~~~~~{.cpp}
@@ -241,7 +241,7 @@ int main(int argc, char **argv)
 ~~~~~~~
 Notes:
 * When creating widgets the first parameter is the containing layout
-(the Canvas is also a Layout).
+(the *Canvas* is also a *Layout*).
 * As you can see, there is a possible problem with this code - the
 length of the buttons:
 @image html tut_layout_buttons1.jpg
@@ -267,22 +267,24 @@ widget in our layout.
 
 # A full dialog {#layouts_s3}
 Now it's time to take all the widgets we've been talking about in the
-tutorials and make a dialog frame for out user.
+tutorials and make a dialog frame for our user.
 
 As always it's going to be displayed on an image, but this time we'll
 make sure the image size fits into the screen. Since OpenCV doesn't
 expose the desktop size, we'll hard code a rough estimation of 1024x768
 maximum size.
 
-* The dialog will be in a VFrame.
-  * top - title in a raise VFrame/HFrame
-  * bottom - body in a HFrame - split into 2 horizontal parts.
-    * Left part with will have a sunken VFrame with
-      * RadioButtons
-      * CheckBoxes
-    * Right part with will have a VFrame with
-      * HFrame with Text to display RadioButtons and CheckBoxes selection
-      * HorizontalLayout with Reset/Cancel/Ok buttons (aligned to BOTTOM)
+* The dialog will be in a *VFrame*.
+  * top - title in a *RAISED* VFrame/HFrame
+  * bottom - body in a *HFrame* - split into 2 horizontal parts:
+    * Left part will have a *SUNKEN* VFrame with
+      * *RadioButtons*
+      * *CheckBoxes*
+    * Right part will have a *VFrame* with
+      * *HFrame* with *Text* to display the user's *RadioButtons* and
+      *CheckBoxes* selections
+      * *HorizontalLayout* with "Reset"/"Cancel"/"Ok" buttons (aligned
+      to *BOTTOM*)
 
 
 ~~~~~~~{.cpp}
@@ -310,7 +312,7 @@ void buildDemoDialog(Canvas &c)
     leftBodyFrame->setFrameRelief(Widget::SUNKEN);
     textInfoFrame->setFrameRelief(Widget::SUNKEN);
 
-    // The title frame and body frame adapt to top frame width
+    // The title frame and body frame adapt to each other width
     titleFrame->setStretchX(true);
     bodyFrame->setStretchX(true);
 
@@ -326,6 +328,7 @@ void buildDemoDialog(Canvas &c)
     shared_ptr<RadioButtons> radioButtons = RadioButtons::create(*leftBodyFrame, {"RBOption1", "RBOption2"}, 0);
     shared_ptr<CheckBoxes> checkBoxes = CheckBoxes::create(*leftBodyFrame, {"CBOption1", "CBOption2", "CBOption3"});
 
+    // The same callback will be used for several widgets
     Widget::CBUserSelection cb = [textInfo, radioButtons, checkBoxes](Widget*,int)
     {
         stringstream s;
@@ -335,7 +338,7 @@ void buildDemoDialog(Canvas &c)
         textInfo->setText(s.str());
     };
 
-    cb(0,0); // manually initialize the textInfo;
+    cb(0,0); // manually initialize the textInfo by invoking the callback
     textInfo->setAlpha(0);
 
     radioButtons->setUserCB(cb);
@@ -406,6 +409,15 @@ int main(int argc, char **argv)
     return 0;
 }
 ~~~~~~~
+Notes:
+* Creating the frames and layouts first is recommended. Everything is
+inserted into them after that.
+* We're using the same callback here for handling changes in the
+*CheckBoxes* and *RadioButtons*.
+* Since widgets are layered on top of each other, you might want to make
+some of the widget transparent, by using canvaccv::Widget::setAlpha().
+* You can perform actions recursively on *CompoundWidgets* with
+canvascv::CompoundWidget::doForAll().
 * This is what you should get:
 @image html tut_layout_dialog.jpg
 <BR>

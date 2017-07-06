@@ -22,7 +22,7 @@ void buildDemoDialog(Canvas &c)
     leftBodyFrame->setFrameRelief(Widget::SUNKEN);
     textInfoFrame->setFrameRelief(Widget::SUNKEN);
 
-    // The title frame and body frame adapt to top frame width
+    // The title frame and body frame adapt to each other width
     titleFrame->setStretchX(true);
     bodyFrame->setStretchX(true);
 
@@ -38,6 +38,7 @@ void buildDemoDialog(Canvas &c)
     shared_ptr<RadioButtons> radioButtons = RadioButtons::create(*leftBodyFrame, {"RBOption1", "RBOption2"}, 0);
     shared_ptr<CheckBoxes> checkBoxes = CheckBoxes::create(*leftBodyFrame, {"CBOption1", "CBOption2", "CBOption3"});
 
+    // The same callback will be used for several widgets
     Widget::CBUserSelection cb = [textInfo, radioButtons, checkBoxes](Widget*,int)
     {
         stringstream s;
@@ -47,7 +48,7 @@ void buildDemoDialog(Canvas &c)
         textInfo->setText(s.str());
     };
 
-    cb(0,0); // manually initialize the textInfo;
+    cb(0,0); // manually initialize the textInfo
     textInfo->setAlpha(0);
 
     radioButtons->setUserCB(cb);

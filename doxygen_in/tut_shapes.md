@@ -4,10 +4,10 @@ Creating shapes {#tutshapes}
 CanvasCV's support of shapes is one of it's strongest points.
 
 You have 2 ways of creating shapes:
-* From the GUI, with the mouse and keyboard - for example to let the
+* **From the GUI** (with the mouse and keyboard) - for example to let the
 user select a polygon mask as an area of intereset for the CV.
-* From the code - for example creating a clickable rectangle on screen
-to which a SelectionBox widget can be applied.
+* **From the code** - for example creating a clickable rectangle on screen
+to which a *SelectionBox* widget can be applied.
 
 [TOC]
 
@@ -16,7 +16,7 @@ In this example we want to user to mark a polygon area on the image or
 frame.
 
 There could be various reasons for that:
-* Since the camera is capturing a large area and we want to operate
+* Maybe the camera is capturing a large area and we want to operate
 our algorithm on a relevant dynamic subset of it.
 * The user selects a polygon area that triggers an alert when tracked
 objects are inside it.

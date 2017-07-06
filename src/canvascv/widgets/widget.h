@@ -114,19 +114,19 @@ public:
      */
     enum Anchor
     {
-        TOP    = 0b00000001,
-        BOTTOM = 0b00000010,
-        LEFT   = 0b00000100,
-        RIGHT  = 0b00001000,
-        CENTER = 0b00010000,
-        TOP_LEFT      = TOP | LEFT,
-        TOP_RIGHT     = TOP | RIGHT,
-        BOTTOM_LEFT   = BOTTOM | LEFT,
-        BOTTOM_RIGHT  = BOTTOM | RIGHT,
-        CENTER_TOP    = CENTER | TOP,
-        CENTER_BOTTOM = CENTER | BOTTOM,
-        CENTER_LEFT   = CENTER | LEFT,
-        CENTER_RIGHT  = CENTER | RIGHT
+        TOP    = 0b00000001,            ///< top
+        BOTTOM = 0b00000010,            ///< bottom
+        LEFT   = 0b00000100,            ///< left
+        RIGHT  = 0b00001000,            ///< right
+        CENTER = 0b00010000,            ///< center
+        TOP_LEFT      = TOP | LEFT,     ///< top-left
+        TOP_RIGHT     = TOP | RIGHT,    ///< top-right
+        BOTTOM_LEFT   = BOTTOM | LEFT,  ///< bottom-left
+        BOTTOM_RIGHT  = BOTTOM | RIGHT, ///< bottom-right
+        CENTER_TOP    = CENTER | TOP,   ///< center-top
+        CENTER_BOTTOM = CENTER | BOTTOM,///< center-bottom
+        CENTER_LEFT   = CENTER | LEFT,  ///< center-left
+        CENTER_RIGHT  = CENTER | RIGHT  ///< center-right
     };
 
     /**

@@ -6,7 +6,7 @@ canvascv::CheckBoxes, canvascv::RadioButtons and canvascv::SelectionBox.
 
 We going to take a look at using the *CheckBoxes* now. The concept is
 similar to *RadioButtons* and the *SelectionBox*. In the tutorial about
-layout managers we'll see an example frame with all of them.
+layout managers we'll see an example frame with several of them together.
 
 [TOC]
 
@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 Notes:
 * *CCV_STR* lets you create a string as you would write into a stream.
 * This tutorial is using C++11 lambda expressions as callbacks, but
-anything which has the void(Widget*,int) signature will work.
+anything which has the "void(Widget*,int)" signature will work.
 * Note the alternate way of displaying images
   * use canvascv::Canvas::setImage() for the image you're showing.
   * use canvascv::Canvas::waitKeyEx() without arguments to refresh

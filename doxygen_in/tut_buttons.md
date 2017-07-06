@@ -1,9 +1,9 @@
 Using buttons {#tutbuttons}
 =============
 
-A Button is one of the most a basic widgets.
+A *Button* is one of the most a basic widgets.
 
-It changes it contour when pressed (according to the current canvascv::Theme).
+It changes its contour when pressed (according to the current canvascv::Theme).
 
 It has text displayed on it and you attach a callback to know when it was pressed.
 
@@ -98,17 +98,17 @@ int main(int argc, char **argv)
 ~~~~~~~
 Notes:
 * We only need a variable to widgets we want to acces by code, so only
-the rightSideButton has a variable, since we're manually aligning it to
+the *rightSideButton* has a variable, since we're manually aligning it to
 the right on resizing.
 * For a single image display, the best practice is to use
 canvascv::Canvas::waitKeyEx() (default delay is 0).
- #- Since during a zero delay, the Canvas is self updating, it needs to
+  * Since during a zero delay, the Canvas is self updating, it needs to
  know that the image has changed, and this is what
  canvascv::Canvas::setImage() is for.
-* We using *enableStatusMsg* since we want the mouse hover over the
-buttons to show out status message for it.
+* We're using *enableStatusMsg* since we want the mouse hover over the
+buttons to show our status message for it.
 * This tutorial is using C++11 lambda expressions as callbacks, but
-anything which has the void(Widget*) signature will work here.
+anything which has the "void(Widget*)" signature will work here.
 * Here is an image decreased by this code:
 @image html tut_buttons.jpg
 <BR>

@@ -33,7 +33,7 @@ namespace canvascv
     | A      +---------+ A |
     | D     SPACING      D |
     | D +--------------+ D |
-    | I |   Widget     | I |  WHATEVER (widest sets the standard for other)
+    | I |   Widget     | I |  layoutAnchor=whatever...(widest sets the standard for other)
     | N +--------------+ N |
     | G     PADDING      G |
     +----------------------+

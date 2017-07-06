@@ -6,7 +6,7 @@ to save that setup?
 
 No problem! shapes can be saved to a file and read back from that file.
 
-Currently only the shapes of the entire Canvas can be written to a file and read
+Currently only the shapes of the entire *Canvas* can be written to a file and read
 from it.
 
 [TOC]

@@ -18,8 +18,7 @@ namespace canvascv
  *  -# CENTER will align the widget to the center (unless setStretchY() is true in the laid widget)
  *  -# BOTTOM will align the widget to the bottom (unless setStretchY() is true in the laid widget)
  * \verbatim
-         WHATEVER
-    (highest sets the standard for other)
+        layoutAnchor=whatever...(highest sets the standard for other)
             ^
             |
     +-------------------------------------------------------------------------------+

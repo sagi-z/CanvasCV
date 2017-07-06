@@ -28,7 +28,7 @@ Canvas c("winName", frame.size());
     c.setMouseCallback(); // optional for mouse usage (see also example_selectbox.cpp)
 ~~~~~~~
 
-* Create you widget on the Canvas (or in a frame/layout) for example:
+* Create your widget on the Canvas (or in a frame/layout) for example:
 ~~~~~~~{.cpp}
     auto msgBox = MsgBox::create(c, "Do you really want to do that?", {"Yes", "No"});
 ~~~~~~~
@@ -52,7 +52,7 @@ Your application/utility might need command line arguments, or cannot continue f
 
 A simple write to the console before exiting is usually not enough to get the user attention.  
 
-For these simple cases you have a simple shortcut in Canvas::fatal():
+For these simple cases you have a simple shortcut in canvascv::Canvas::fatal():
 ~~~~~~~{.cpp}
 #include <canvascv/canvas.h>
 
@@ -75,9 +75,11 @@ which, besides an output to STDERR, gives you:
 <BR>
 
 @subsection screentext_s2_2 Displaying user text in a fixed location
-Instead of displaying the help message or any other fixed text to the console use the enableScreenText and setScreenText(string) methods.
+Instead of displaying the help message or any other fixed text to the
+console use the canvascv::Canvas::enableScreenText() and
+canvaccv::Canvas::setScreenText(string) methods.
 
-This flow is a little closer to the regular usage of the Canvas, but you don't need to create a widget of your own.
+This flow is a little closer to the regular usage of the *Canvas*, but you don't need to create a widget of your own.
 
 Adding to the previous example (we want to display this on an image):
 ~~~~~~~{.cpp}
@@ -156,7 +158,7 @@ Some notes here:
 * Note the continued use of canvascv::Canvas::fatal().
 * Note that we didn't need to use canvascv::Canvas::setMouseCallback() or create a widget of our own here.
 * When you canvascv::Canvas::enableScreenText() you can configure it's display.
-* As you can see the Canvas instance can be completely turned on and off with the canvascv::Canvas::setOn() method.
+* As you can see the *Canvas* instance can be completely turned on and off with the canvascv::Canvas::setOn() method.
 * canvascv::Canvas::waitKeyEx() knows to update it's internal shapes and
   widgets even if you pass 0 as a blocking delay indicator.
 * When executed with a path to an image, this gives you (depends on your image):
@@ -186,7 +188,8 @@ Notes:
 * All widgets have a static create methods, which is the only way to create them.
 * The canvascv::Text::create() will return a shared_ptr<Text> instance, which you don't have to keep since another one is kept by the canvascv::Layout.
 * There are many Colors constants to choose from, see canvascv::Colors.
-* The canvascv::Widget::setLocation() gives specific XY postion, but a canvascv::HorizontalLayout could help us put this in the CENTER.
+* The canvascv::Widget::setLocation() gives specific XY postion, but a
+canvascv::HorizontalLayout could help us put this in the *CENTER*.
 * When executed with a path to an image, this gives you (depends on your image):
 @image html tut_text.jpg
 <BR>
