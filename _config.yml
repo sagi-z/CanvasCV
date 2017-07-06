@@ -26,11 +26,11 @@ github_username:  sagi-z
 environment: production
 #environment: development
 google_analytics: UA-102191827-1
-#google_seo: "true"
+google_seo: "true"
 # url is taken from site.github.url, which is fine
-#webmaster_verifications:
+webmaster_verifications:
 #  google: JUx4WnitKgBv-bkQtPcA5t8KpbzedlCc0FHHLhac9J0
-#  bing: A8ABC38B72560EE52E9985C1E21C5BE4
+  bing: A8ABC38B72560EE52E9985C1E21C5BE4
 logo: /CanvasCV/assets/img/project_logo.jpg
 
 # Build settings
