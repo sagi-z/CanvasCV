@@ -33,7 +33,7 @@ public:
     /// disconnect our own head Handle from any previously connected shape
     void disconnectHead();
 
-    /// called after read of Canvas from file, assuming internals are fileld, but not connected
+    /// called after read of Canvas from file, assuming internals are filled, but not connected
     void reconnect();
 
     /// get the id of the shape connected to our tail Handle
