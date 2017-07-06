@@ -5,6 +5,10 @@
 
 #include <opencv2/highgui.hpp>
 
+#if ! OPENCV_HAS_WINDOW_GUI_NORMAL
+#define WINDOW_GUI_NORMAL 0
+#endif
+
 using namespace std;
 using namespace cv;
 
