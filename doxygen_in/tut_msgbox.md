@@ -126,7 +126,7 @@ Notes:
 * Here we're using getUserSelection(true) immediatly on that shared_ptr, and by passing true we're blocked at that line of code.
 * *CCV_STR* lets you write create a string as writing into a stream.
 * When executed with a path to an image, this gives you (depends on your image):
-@image html tut_msgbox_modal.png
+@image html tut_msgbox_modal.jpg
 <BR>
 
 @section msgbox_s3 A non modal MsgBox
@@ -179,7 +179,7 @@ Notes:
 * We needed canvascv::Canvas::setMouseCallback since the Canvas will intercept mouse events for the MsgBox now.
 * *CCV_STR* lets you write create a string as writing into a stream.
 * When executed with a path to an image, this gives you (depends on your image):
-@image html tut_msgbox.png
+@image html tut_msgbox.jpg
 <BR>
 
 @section msgbox_s4 An external window modal MsgBox
@@ -245,7 +245,7 @@ Notes:
 * Currently there is no control of where the OpenCV window will be opened.
 * *CCV_STR* lets you write create a string as writing into a stream.
 * When executed with a path to an image, this gives you (depends on your image):
-@image html tut_msgbox_modal_external.png
+@image html tut_msgbox_modal_external.jpg
 <BR>
 
 **That's all for this tutorial**

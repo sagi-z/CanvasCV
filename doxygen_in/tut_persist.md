@@ -135,7 +135,7 @@ Notes:
 * The canvascv::Canvas::readShapesFromFile() will clear itself from
 shapes before reading the shapes from the file.
 * When executed with a path to an image, this gives you (depends on your image):
-@image html tut_shapes_persistency.png
+@image html tut_shapes_persistency.jpg
 <BR>
 
 **That's all for this tutorial**

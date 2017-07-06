@@ -110,7 +110,7 @@ buttons to show out status message for it.
 * This tutorial is using C++11 lambda expressions as callbacks, but
 anything which has the void(Widget*) signature will work here.
 * Here is an image decreased by this code:
-@image html tut_buttons.png
+@image html tut_buttons.jpg
 <BR>
 
 # Text alignment with buttons {#buttons_s2}
@@ -193,7 +193,7 @@ int main(int argc, char **argv)
 Notes:
 * the canvascv::Widget::setFlowAnchor does the work here.
 * Here is a possible outcome this code:
-@image html tut_buttons_txt_alignment.png
+@image html tut_buttons_txt_alignment.jpg
 <BR>
 
 **That's all for this tutorial**

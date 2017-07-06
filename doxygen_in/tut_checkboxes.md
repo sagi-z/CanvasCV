@@ -87,7 +87,7 @@ anything which has the void(Widget*,int) signature will work.
   * use canvascv::Canvas::waitKeyEx() without arguments to refresh
   widgets and handle internal events with your image as the background.
 * Here is a possible outcome of this code:
-@image html tut_checkboxes_cb.png
+@image html tut_checkboxes_cb.jpg
 <BR>
 
 
@@ -156,7 +156,7 @@ Notes:
   * canvascv::Canvas::imshow()
   * canvascv::Canvas::waitKeyEx() with a non zero delay
 * Here is a possible outcome of this code:
-@image html tut_checkboxes_poll.png
+@image html tut_checkboxes_poll.jpg
 <BR>
 
 **That's all for this tutorial**

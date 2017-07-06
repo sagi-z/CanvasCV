@@ -8,4 +8,4 @@ Tutorials {#tutorials}
 * @subpage tutbuttons
 * @subpage tutcheckbox
 * @subpage tutlayouts (puting widgets together)
-* [More tutorials which haven't made it into the official documentation yet](https://sagi-z.github.io/CanvasCV/tutorials "more tutorials").
+* [more tutorials and help](https://sagi-z.github.io/CanvasCV/support "more tutorials")

@@ -129,7 +129,7 @@ canvascv::Canvas::setShapeType().
 the Shapes that it creates/modify/deletes. This is the place to react to
 the user's GUI actions.
 * When executed with a path to an image, this gives you (depends on your image):
-@image html tut_shapes_gui.png
+@image html tut_shapes_gui.jpg
 <BR>
 
 # Creating a clickable rectangle from code {#shapes_s2}
@@ -402,7 +402,7 @@ Notes for the `//CanvasCV change#...` comments above:
 * canvascv::Canvas::waitKeyEx knows to update it's internal shapes and
   widgets even if you pass 0 as a blocking delay indicator.
 * When executed with --video="Path to opencv-3.2.0/samples/data/vtest.avi", you can get
-@image html tut_shapes_code.png
+@image html tut_shapes_code.jpg
 <BR>
 
 **That's all for this tutorial**

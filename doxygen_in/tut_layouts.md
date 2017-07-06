@@ -174,7 +174,7 @@ Note:
 canvascv::Widget::setStretchXToParent(true) to match the layout width and
 canvascv::Widget::setStretchYToParent(true) to match the layout height.
 * Here is a possible outcome of this code:
-@image html tut_layout_txt.png
+@image html tut_layout_txt.jpg
 <BR>
 
 # A simple buttons group {#layouts_s2}
@@ -244,7 +244,7 @@ Notes:
 (the Canvas is also a Layout).
 * As you can see, there is a possible problem with this code - the
 length of the buttons:
-@image html tut_layout_buttons1.png
+@image html tut_layout_buttons1.jpg
 * To fix this, add these lines after the creation of the buttons:
 ~~~~~~~{.cpp}
     using namespace canvascv;
@@ -262,7 +262,7 @@ Notes:
 canvascv::Widget::setStretchY() will stretch self to size of the largest
 widget in our layout.
 * Now the buttons have the same length:
-@image html tut_layout_buttons2.png
+@image html tut_layout_buttons2.jpg
 <BR>
 
 # A full dialog {#layouts_s3}
@@ -407,7 +407,7 @@ int main(int argc, char **argv)
 }
 ~~~~~~~
 * This is what you should get:
-@image html tut_layout_dialog.png
+@image html tut_layout_dialog.jpg
 <BR>
 
 **That's all for this tutorial**

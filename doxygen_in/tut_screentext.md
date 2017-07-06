@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 ~~~~~~~
 
 which, besides an output to STDERR, gives you:
-@image html tut_fatal.png
+@image html tut_fatal.jpg
 <BR>
 
 @subsection screentext_s2_2 Displaying user text in a fixed location
@@ -160,7 +160,7 @@ Some notes here:
 * canvascv::Canvas::waitKeyEx knows to update it's internal shapes and
   widgets even if you pass 0 as a blocking delay indicator.
 * When executed with a path to an image, this gives you (depends on your image):
-@image html tut_screentext.png
+@image html tut_screentext.jpg
 <BR>
 
 @subsection screentext_s2_3 Displaying text where ever you want
@@ -188,7 +188,7 @@ Notes:
 * There are many Colors constants to choose from, see canvascv::Colors.
 * The canvascv::Widget::setLocation gives specific XY postion, but a canvascv::HorizontalLayout could help us put this in the CENTER.
 * When executed with a path to an image, this gives you (depends on your image):
-@image html tut_text.png
+@image html tut_text.jpg
 <BR>
 
 **That's all for this tutorial**
