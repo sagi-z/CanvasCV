@@ -415,7 +415,7 @@ inserted into them after that.
 * We're using the same callback here for handling changes in the
 *CheckBoxes* and *RadioButtons*.
 * Since widgets are layered on top of each other, you might want to make
-some of the widget transparent, by using canvaccv::Widget::setAlpha().
+some of the widget transparent, by using canvascv::Widget::setAlpha().
 * You can perform actions recursively on *CompoundWidgets* with
 canvascv::CompoundWidget::doForAll().
 * This is what you should get:
