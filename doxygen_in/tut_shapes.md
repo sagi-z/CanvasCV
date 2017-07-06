@@ -401,6 +401,7 @@ Notes for the `//CanvasCV change#...` comments above:
   canvascv::Canvas and not on the *Mat*.
 * canvascv::Canvas::waitKeyEx() knows to update it's internal shapes and
   widgets even if you pass 0 as a blocking delay indicator.
+* *CCV_STR* lets you create a string as you would write into a stream.
 * When executed with --video="Path to opencv-3.2.0/samples/data/vtest.avi", you can get
 @image html tut_shapes_code.jpg
 <BR>

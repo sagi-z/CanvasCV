@@ -80,6 +80,7 @@ int main(int argc, char **argv)
 }
 ~~~~~~~
 Notes:
+* *CCV_STR* lets you create a string as you would write into a stream.
 * This tutorial is using C++11 lambda expressions as callbacks, but
 anything which has the void(Widget*,int) signature will work.
 * Note the alternate way of displaying images
