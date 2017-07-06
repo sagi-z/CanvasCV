@@ -1,0 +1,180 @@
+\hypertarget{classcanvascv_1_1LineCrossing}{}\section{canvascv\+:\+:Line\+Crossing Class Reference}
+\label{classcanvascv_1_1LineCrossing}\index{canvascv\+::\+Line\+Crossing@{canvascv\+::\+Line\+Crossing}}
+
+
+The \hyperlink{classcanvascv_1_1LineCrossing}{Line\+Crossing} class.  
+
+
+
+
+{\ttfamily \#include $<$linecrossing.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Line\+Crossing\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classcanvascv_1_1LineCrossing}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classcanvascv_1_1LineCrossing_adfd51e0d8d224200b4466627241df4c9}{get\+Direction} () const \hypertarget{classcanvascv_1_1LineCrossing_adfd51e0d8d224200b4466627241df4c9}{}\label{classcanvascv_1_1LineCrossing_adfd51e0d8d224200b4466627241df4c9}
+
+\begin{DoxyCompactList}\small\item\em -\/1 or 1 \end{DoxyCompactList}\item 
+const std\+::string \& \hyperlink{classcanvascv_1_1LineCrossing_a3a2bdd022bca8469ebdc63572fe86f06}{get\+Name} () const \hypertarget{classcanvascv_1_1LineCrossing_a3a2bdd022bca8469ebdc63572fe86f06}{}\label{classcanvascv_1_1LineCrossing_a3a2bdd022bca8469ebdc63572fe86f06}
+
+\begin{DoxyCompactList}\small\item\em gets the text from the attached \hyperlink{classcanvascv_1_1TextBox}{Text\+Box} \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1LineCrossing_a577a282941ac95558da70bdcad0623ee}{set\+Name} (const std\+::string \&value) const \hypertarget{classcanvascv_1_1LineCrossing_a577a282941ac95558da70bdcad0623ee}{}\label{classcanvascv_1_1LineCrossing_a577a282941ac95558da70bdcad0623ee}
+
+\begin{DoxyCompactList}\small\item\em sets the text in the attached \hyperlink{classcanvascv_1_1TextBox}{Text\+Box} \end{DoxyCompactList}\item 
+\hyperlink{classcanvascv_1_1TextBox}{Text\+Box} $\ast$ \hyperlink{classcanvascv_1_1LineCrossing_a186d5a3556954ff2b50e21ba8c675792}{get\+Text\+Box} ()\hypertarget{classcanvascv_1_1LineCrossing_a186d5a3556954ff2b50e21ba8c675792}{}\label{classcanvascv_1_1LineCrossing_a186d5a3556954ff2b50e21ba8c675792}
+
+\begin{DoxyCompactList}\small\item\em getter to internal \hyperlink{classcanvascv_1_1TextBox}{Text\+Box} \end{DoxyCompactList}\item 
+\hyperlink{classcanvascv_1_1Line}{Line} $\ast$ \hyperlink{classcanvascv_1_1LineCrossing_a9ee35848f19c6841cc59a373726ba8dc}{get\+Line} ()\hypertarget{classcanvascv_1_1LineCrossing_a9ee35848f19c6841cc59a373726ba8dc}{}\label{classcanvascv_1_1LineCrossing_a9ee35848f19c6841cc59a373726ba8dc}
+
+\begin{DoxyCompactList}\small\item\em getter to internal \hyperlink{classcanvascv_1_1Line}{Line} \end{DoxyCompactList}\item 
+\hyperlink{classcanvascv_1_1Arrow}{Arrow} $\ast$ \hyperlink{classcanvascv_1_1LineCrossing_a37e267229ce3c0f326b002c4cff7a4ab}{get\+Arrow} ()\hypertarget{classcanvascv_1_1LineCrossing_a37e267229ce3c0f326b002c4cff7a4ab}{}\label{classcanvascv_1_1LineCrossing_a37e267229ce3c0f326b002c4cff7a4ab}
+
+\begin{DoxyCompactList}\small\item\em getter to internal \hyperlink{classcanvascv_1_1Arrow}{Arrow} \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1LineCrossing_aced09c16d3b9ccaae29c02ac02147ee9}{was\+Crossed} (const Point \&pt) const 
+\begin{DoxyCompactList}\small\item\em was\+Crossed \end{DoxyCompactList}\item 
+int \hyperlink{classcanvascv_1_1LineCrossing_a940cbb0be9bea9acbd82493916b1b3d6}{is\+Crossed\+By\+Segment} (const Point \&line\+Start, const Point \&line\+End) const 
+\begin{DoxyCompactList}\small\item\em is\+Crossed\+By \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1LineCrossing_a5dcddad51aedc5f860a21d191266e862}{is\+At\+Pos} (const cv\+::\+Point \&pos)\hypertarget{classcanvascv_1_1LineCrossing_a5dcddad51aedc5f860a21d191266e862}{}\label{classcanvascv_1_1LineCrossing_a5dcddad51aedc5f860a21d191266e862}
+
+\begin{DoxyCompactList}\small\item\em returns true if shape is at pos, false otherwise \end{DoxyCompactList}\item 
+virtual std\+::list$<$ \hyperlink{classcanvascv_1_1Handle}{Handle} $\ast$ $>$ \hyperlink{classcanvascv_1_1LineCrossing_a8428e287e407e07cfaf11ea6d655e0e6}{get\+Connection\+Targets} ()
+\begin{DoxyCompactList}\small\item\em get\+Connection\+Targets \end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{classcanvascv_1_1LineCrossing_a86757b4f629d3d03885f62976d5b7fc3}{get\+Type} () const 
+\begin{DoxyCompactList}\small\item\em get\+Type is always implemented by derived to return the same static pointer per shape. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classcanvascv_1_1LineCrossing_a04d251f0cda9f4f51d98d483264fb2dd}{draw} (cv\+::\+Mat \&canvas)
+\begin{DoxyCompactList}\small\item\em draw shape on the canvas \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1LineCrossing_a8232b4101d5533b12129c4d145ffc54d}{mouse\+Pressed} (const cv\+::\+Point \&pos, bool on\+Create=false)
+\begin{DoxyCompactList}\small\item\em mouse\+Pressed \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+\begin{DoxyItemize}
+\item Helps us know when something we tracked passed over a line.
+\item We also need to know if it passed in one direction or another. 
+\end{DoxyItemize}\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_linecrossing_8cpp-example}{example\+\_\+linecrossing.\+cpp}, and \hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Line\+Crossing@{canvascv\+::\+Line\+Crossing}!draw@{draw}}
+\index{draw@{draw}!canvascv\+::\+Line\+Crossing@{canvascv\+::\+Line\+Crossing}}
+\subsubsection[{\texorpdfstring{draw(cv\+::\+Mat \&canvas)}{draw(cv::Mat &canvas)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Line\+Crossing\+::draw (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Mat \&}]{canvas}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1LineCrossing_a04d251f0cda9f4f51d98d483264fb2dd}{}\label{classcanvascv_1_1LineCrossing_a04d251f0cda9f4f51d98d483264fb2dd}
+
+\begin{DoxyParams}{Parameters}
+{\em canvas} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_a6ec60ee0340ed25274e3ac1349345953}{canvascv\+::\+Compound\+Shape}.
+
+\index{canvascv\+::\+Line\+Crossing@{canvascv\+::\+Line\+Crossing}!get\+Connection\+Targets@{get\+Connection\+Targets}}
+\index{get\+Connection\+Targets@{get\+Connection\+Targets}!canvascv\+::\+Line\+Crossing@{canvascv\+::\+Line\+Crossing}}
+\subsubsection[{\texorpdfstring{get\+Connection\+Targets()}{getConnectionTargets()}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::list$<${\bf Handle} $\ast$$>$ canvascv\+::\+Line\+Crossing\+::get\+Connection\+Targets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1LineCrossing_a8428e287e407e07cfaf11ea6d655e0e6}{}\label{classcanvascv_1_1LineCrossing_a8428e287e407e07cfaf11ea6d655e0e6}
+Return a list of Handles this shape allows to connect to from other shapes (mainly for \hyperlink{classcanvascv_1_1ShapesConnector}{Shapes\+Connector}) \begin{DoxyReturn}{Returns}
+list of \hyperlink{classcanvascv_1_1Handle}{Handle} pointers we \hyperlink{classcanvascv_1_1ShapesConnector}{Shapes\+Connector} can use to connect 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Shape_a827822e17e24118e16fa932ac0e71cd2}{canvascv\+::\+Shape}.
+
+\index{canvascv\+::\+Line\+Crossing@{canvascv\+::\+Line\+Crossing}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!canvascv\+::\+Line\+Crossing@{canvascv\+::\+Line\+Crossing}}
+\subsubsection[{\texorpdfstring{get\+Type() const }{getType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ canvascv\+::\+Line\+Crossing\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1LineCrossing_a86757b4f629d3d03885f62976d5b7fc3}{}\label{classcanvascv_1_1LineCrossing_a86757b4f629d3d03885f62976d5b7fc3}
+\begin{DoxyReturn}{Returns}
+const char $\ast$ pointer to string with shape type name 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Shape_adee3cc696c7e82b0d2946e7e667ddd46}{canvascv\+::\+Shape}.
+
+\index{canvascv\+::\+Line\+Crossing@{canvascv\+::\+Line\+Crossing}!is\+Crossed\+By\+Segment@{is\+Crossed\+By\+Segment}}
+\index{is\+Crossed\+By\+Segment@{is\+Crossed\+By\+Segment}!canvascv\+::\+Line\+Crossing@{canvascv\+::\+Line\+Crossing}}
+\subsubsection[{\texorpdfstring{is\+Crossed\+By\+Segment(const Point \&line\+Start, const Point \&line\+End) const }{isCrossedBySegment(const Point &lineStart, const Point &lineEnd) const }}]{\setlength{\rightskip}{0pt plus 5cm}int canvascv\+::\+Line\+Crossing\+::is\+Crossed\+By\+Segment (
+\begin{DoxyParamCaption}
+\item[{const Point \&}]{line\+Start, }
+\item[{const Point \&}]{line\+End}
+\end{DoxyParamCaption}
+) const}\hypertarget{classcanvascv_1_1LineCrossing_a940cbb0be9bea9acbd82493916b1b3d6}{}\label{classcanvascv_1_1LineCrossing_a940cbb0be9bea9acbd82493916b1b3d6}
+Use cross product and predefined direction to tell if a given line path, starting at line\+Start and ending at line\+End is crossing this specific {\bfseries  line segment }. 
+\begin{DoxyParams}{Parameters}
+{\em line\+Start} & the start of the line to check against (path origin Point). \\
+\hline
+{\em line\+End} & the end of the line to check against (path latest Point). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item 0 if the segments are not crossing 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_linecrossing_8cpp-example}{example\+\_\+linecrossing.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Line\+Crossing@{canvascv\+::\+Line\+Crossing}!mouse\+Pressed@{mouse\+Pressed}}
+\index{mouse\+Pressed@{mouse\+Pressed}!canvascv\+::\+Line\+Crossing@{canvascv\+::\+Line\+Crossing}}
+\subsubsection[{\texorpdfstring{mouse\+Pressed(const cv\+::\+Point \&pos, bool on\+Create=false)}{mousePressed(const cv::Point &pos, bool onCreate=false)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Line\+Crossing\+::mouse\+Pressed (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos, }
+\item[{bool}]{on\+Create = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1LineCrossing_a8232b4101d5533b12129c4d145ffc54d}{}\label{classcanvascv_1_1LineCrossing_a8232b4101d5533b12129c4d145ffc54d}
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+{\em on\+Create} & is true if this is the mouse press which cerated this shape \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for keep in focus, false for leave focus 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_a821d046dceaba47114385d1c87e197ce}{canvascv\+::\+Compound\+Shape}.
+
+\index{canvascv\+::\+Line\+Crossing@{canvascv\+::\+Line\+Crossing}!was\+Crossed@{was\+Crossed}}
+\index{was\+Crossed@{was\+Crossed}!canvascv\+::\+Line\+Crossing@{canvascv\+::\+Line\+Crossing}}
+\subsubsection[{\texorpdfstring{was\+Crossed(const Point \&pt) const }{wasCrossed(const Point &pt) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool canvascv\+::\+Line\+Crossing\+::was\+Crossed (
+\begin{DoxyParamCaption}
+\item[{const Point \&}]{pt}
+\end{DoxyParamCaption}
+) const}\hypertarget{classcanvascv_1_1LineCrossing_aced09c16d3b9ccaae29c02ac02147ee9}{}\label{classcanvascv_1_1LineCrossing_aced09c16d3b9ccaae29c02ac02147ee9}
+Use cross product and predefined direction to tell if a given point is accross the {\bfseries  endless line } represented by this segment. 
+\begin{DoxyParams}{Parameters}
+{\em pt} & is the point we\textquotesingle{}re going to examine \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool if line is on the other side of the line according to the direction arrow 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/shapes/linecrossing.\+h\end{DoxyCompactItemize}

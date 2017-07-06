@@ -1,0 +1,112 @@
+\hypertarget{example_matwidget_8cpp-example}{}\section{example\+\_\+matwidget.\+cpp}
+This is an example of how to use the Mat\+Widget Widget.
+
+
+\begin{DoxyCodeInclude}
+\textcolor{preprocessor}{#include "canvascv/canvas.h"}
+
+\textcolor{comment}{// These are used to create widgets}
+\textcolor{preprocessor}{#include "canvascv/widgets/matwidget.h"}
+
+\textcolor{preprocessor}{#include <iostream>}
+\textcolor{preprocessor}{#include <iterator>}
+
+\textcolor{preprocessor}{#include <opencv2/highgui.hpp>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacestd}{std};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+shared\_ptr<MatWidget> matWidget;
+
+\textcolor{comment}{// This is needed for user interaction - creating/editing choosing shapes.}
+\textcolor{comment}{// Clicking on interactive widgets.}
+\textcolor{comment}{// We don't need this code if we only want to display "on screen" messages and "status bar" messages.}
+\textcolor{keyword}{static} \textcolor{keywordtype}{void} mouseCB(\textcolor{keywordtype}{int} event, \textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y, \textcolor{keywordtype}{int} flags, \textcolor{keywordtype}{void}* userData) \{
+    (void)flags;
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} *pCanvas=\textcolor{keyword}{reinterpret\_cast<}\hyperlink{classcanvascv_1_1Canvas}{Canvas}*\textcolor{keyword}{>}(userData);
+    Point pos(x,y);
+    \textcolor{keywordflow}{switch}( event )
+    \{
+    \textcolor{keywordflow}{case} EVENT\_LBUTTONDOWN:
+        \textcolor{keywordflow}{if} (matWidget->getVisible() == \textcolor{keyword}{false})
+        \{
+            matWidget->setLocation(pos);
+            matWidget->setVisible(\textcolor{keyword}{true});
+        \}
+        \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (! pCanvas->\hyperlink{classcanvascv_1_1Canvas_abe53228080133efe5d9fecf6982b823e}{onMousePress}(pos))
+        \{
+            matWidget->setLocation(pos);
+        \}
+        \textcolor{keywordflow}{break};
+    \textcolor{keywordflow}{case} EVENT\_LBUTTONUP:
+        pCanvas->\hyperlink{classcanvascv_1_1Canvas_aca936fe492da286d5fb8eabbcd061793}{onMouseRelease}(pos);
+        \textcolor{keywordflow}{break};
+    \textcolor{keywordflow}{case} EVENT\_MOUSEMOVE:
+        pCanvas->\hyperlink{classcanvascv_1_1Canvas_a1189823898c4022fd0eed4cfb99535c2}{onMouseMove}(pos);
+        \textcolor{keywordflow}{break};
+    \}
+\}
+
+\textcolor{keyword}{static} Mat drawSmily()
+\{
+    Mat smily(48,48,CV\_8UC4);
+    smily = Scalar::all(0); \textcolor{comment}{// transparent BG}
+    Scalar orange = \hyperlink{classcanvascv_1_1Colors_a463fb59b35fb56e7a4eaa5976baaa411}{Colors::Orange};
+    orange[3] = 255; \textcolor{comment}{// opaque FG}
+    circle(smily, \{23,23\}, 23, orange, 2, LINE\_AA);
+    circle(smily, \{15,15\}, 3, orange, 2, LINE\_AA);
+    circle(smily, \{33,15\}, 3, orange, 2, LINE\_AA);
+    ellipse(smily, \{23,33\}, Size(6,3), 0., 10., 170., orange, 2, LINE\_AA);
+    \textcolor{keywordflow}{return} smily;
+\}
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    Mat image;
+    \textcolor{keywordflow}{if} (argc)
+    \{
+        Mat orig = imread(argv[0]);
+        \textcolor{keywordflow}{if} (orig.empty()) \{
+            \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -1);
+        \}
+        \textcolor{keywordflow}{if} (orig.cols > 1024)
+        \{
+            \textcolor{keywordtype}{double} ratio = 1024. / orig.cols;
+            cv::resize(orig, image, Size(), ratio, ratio);
+        \}
+        \textcolor{keywordflow}{else}
+        \{
+            image = orig;
+        \}
+    \}
+    \textcolor{keywordflow}{else}
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"Canvas"}, image.size());
+    Mat smily = drawSmily();
+    matWidget = \hyperlink{classcanvascv_1_1MatWidget_aca0ea4c34265c70f59a929968ca64aba}{MatWidget::create}(c, smily);
+    matWidget->setVisible(\textcolor{keyword}{false});
+    matWidget->setAlpha(0.);
+
+    namedWindow(\textcolor{stringliteral}{"Canvas"}, WINDOW\_AUTOSIZE);
+    setMouseCallback(\textcolor{stringliteral}{"Canvas"}, mouseCB, &c);
+
+    \textcolor{keywordtype}{int} key = 0;
+    Mat out; \textcolor{comment}{// keeping it out of the loop is a little more efficient}
+    \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'})
+    \{
+        c.redrawOn(image, out);
+        imshow(\textcolor{stringliteral}{"Canvas"}, out);
+        key = c.waitKeyEx(); \textcolor{comment}{// GUI and callbacks happen here}
+    \}
+
+    destroyAllWindows();
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCodeInclude}
+ 

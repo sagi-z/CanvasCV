@@ -1,0 +1,178 @@
+\hypertarget{classcanvascv_1_1TwoColoredTheme}{}\section{canvascv\+:\+:Two\+Colored\+Theme Class Reference}
+\label{classcanvascv_1_1TwoColoredTheme}\index{canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}}
+
+
+The Theme\+Dark class implements a 2 colored theme base class.  
+
+
+
+
+{\ttfamily \#include $<$twocoloredtheme.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Two\+Colored\+Theme\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classcanvascv_1_1TwoColoredTheme}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classcanvascv_1_1TwoColoredTheme_a2a725588ca2e1c33900019622cc8fe9a}{apply\+Style} (\hyperlink{classcanvascv_1_1Widget}{Widget} $\ast$widget)
+\begin{DoxyCompactList}\small\item\em apply\+Style is called for every new widget created by the \hyperlink{classcanvascv_1_1WidgetFactory}{Widget\+Factory} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1TwoColoredTheme_ada225b2ed04e78caded01b23de343b1f}{apply\+Style} (\hyperlink{classcanvascv_1_1Shape}{Shape} $\ast$shape)
+\begin{DoxyCompactList}\small\item\em apply\+Style is called for every new \hyperlink{classcanvascv_1_1Shape}{Shape} created by the \hyperlink{classcanvascv_1_1ShapeFactory}{Shape\+Factory} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1TwoColoredTheme_ae085f9cd7f170e49fbc463348a4eb7b5}{allocate\+BG} (cv\+::\+Mat \&dst, const cv\+::\+Size \&size, const cv\+::\+Scalar \&color)
+\begin{DoxyCompactList}\small\item\em allocate\+BG creates the rect background for widgets \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1TwoColoredTheme_a76c1d4f249bb5d01ff07b4559cbdd592}{flat} (cv\+::\+Mat \&bg, const cv\+::\+Scalar \&color)
+\begin{DoxyCompactList}\small\item\em flat will cause bg to appear flat \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1TwoColoredTheme_a5c3d937a5e36e80eff6f7683f2898589}{raised} (cv\+::\+Mat \&bg, const cv\+::\+Scalar \&color)
+\begin{DoxyCompactList}\small\item\em raised will cause bg to appear raised \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1TwoColoredTheme_a2b39a62e7aa5836b9957d1c8257167c3}{sunken} (cv\+::\+Mat \&bg, const cv\+::\+Scalar \&color)
+\begin{DoxyCompactList}\small\item\em sunken will cause bg to appear sunken \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1TwoColoredTheme_abee098f6af5b63fa06441184c2c331bb}{selected} (cv\+::\+Mat \&bg, const cv\+::\+Scalar \&color)
+\begin{DoxyCompactList}\small\item\em selected will cause bg to appear selecte \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_add_theme_8cpp-example}{example\+\_\+add\+\_\+theme.\+cpp}.\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}!allocate\+BG@{allocate\+BG}}
+\index{allocate\+BG@{allocate\+BG}!canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}}
+\subsubsection[{\texorpdfstring{allocate\+B\+G(cv\+::\+Mat \&dst, const cv\+::\+Size \&size, const cv\+::\+Scalar \&color)}{allocateBG(cv::Mat &dst, const cv::Size &size, const cv::Scalar &color)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Two\+Colored\+Theme\+::allocate\+BG (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Mat \&}]{dst, }
+\item[{const cv\+::\+Size \&}]{size, }
+\item[{const cv\+::\+Scalar \&}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1TwoColoredTheme_ae085f9cd7f170e49fbc463348a4eb7b5}{}\label{classcanvascv_1_1TwoColoredTheme_ae085f9cd7f170e49fbc463348a4eb7b5}
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & is a Mat dedicated to hold the background will be filled with 4 channels \\
+\hline
+{\em size} & will be the size of dst when done \\
+\hline
+{\em color} & is the requested color, with alpha, which the theme is allowed to ignore \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classcanvascv_1_1Theme_a5f8c0e382d893419f9097bbc07e04130}{canvascv\+::\+Theme}.
+
+\index{canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}!apply\+Style@{apply\+Style}}
+\index{apply\+Style@{apply\+Style}!canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}}
+\subsubsection[{\texorpdfstring{apply\+Style(\+Widget $\ast$widget)}{applyStyle(Widget *widget)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Two\+Colored\+Theme\+::apply\+Style (
+\begin{DoxyParamCaption}
+\item[{{\bf Widget} $\ast$}]{widget}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1TwoColoredTheme_a2a725588ca2e1c33900019622cc8fe9a}{}\label{classcanvascv_1_1TwoColoredTheme_a2a725588ca2e1c33900019622cc8fe9a}
+
+\begin{DoxyParams}{Parameters}
+{\em widget} & will have setters invoked according to the theme \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classcanvascv_1_1Theme_a38ea37c836acfb37ee9b4d201c1f369b}{canvascv\+::\+Theme}.
+
+\index{canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}!apply\+Style@{apply\+Style}}
+\index{apply\+Style@{apply\+Style}!canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}}
+\subsubsection[{\texorpdfstring{apply\+Style(\+Shape $\ast$shape)}{applyStyle(Shape *shape)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Two\+Colored\+Theme\+::apply\+Style (
+\begin{DoxyParamCaption}
+\item[{{\bf Shape} $\ast$}]{shape}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1TwoColoredTheme_ada225b2ed04e78caded01b23de343b1f}{}\label{classcanvascv_1_1TwoColoredTheme_ada225b2ed04e78caded01b23de343b1f}
+
+\begin{DoxyParams}{Parameters}
+{\em shape} & will have setters invoked according to the theme \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classcanvascv_1_1Theme_a0730fd4b881d57ee9d7b377238f8d24b}{canvascv\+::\+Theme}.
+
+\index{canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}!flat@{flat}}
+\index{flat@{flat}!canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}}
+\subsubsection[{\texorpdfstring{flat(cv\+::\+Mat \&bg, const cv\+::\+Scalar \&color)}{flat(cv::Mat &bg, const cv::Scalar &color)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Two\+Colored\+Theme\+::flat (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Mat \&}]{bg, }
+\item[{const cv\+::\+Scalar \&}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1TwoColoredTheme_a76c1d4f249bb5d01ff07b4559cbdd592}{}\label{classcanvascv_1_1TwoColoredTheme_a76c1d4f249bb5d01ff07b4559cbdd592}
+
+\begin{DoxyParams}{Parameters}
+{\em bg} & was previously allocated by \hyperlink{classcanvascv_1_1TwoColoredTheme_ae085f9cd7f170e49fbc463348a4eb7b5}{allocate\+B\+G()} \\
+\hline
+{\em color} & could be used for drawing, but the theme is allowed to ignore it \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classcanvascv_1_1Theme_a2a7cbe4666031dcecfa50fa3dd1ec711}{canvascv\+::\+Theme}.
+
+\index{canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}!raised@{raised}}
+\index{raised@{raised}!canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}}
+\subsubsection[{\texorpdfstring{raised(cv\+::\+Mat \&bg, const cv\+::\+Scalar \&color)}{raised(cv::Mat &bg, const cv::Scalar &color)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Two\+Colored\+Theme\+::raised (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Mat \&}]{bg, }
+\item[{const cv\+::\+Scalar \&}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1TwoColoredTheme_a5c3d937a5e36e80eff6f7683f2898589}{}\label{classcanvascv_1_1TwoColoredTheme_a5c3d937a5e36e80eff6f7683f2898589}
+
+\begin{DoxyParams}{Parameters}
+{\em bg} & was previously allocated by \hyperlink{classcanvascv_1_1TwoColoredTheme_ae085f9cd7f170e49fbc463348a4eb7b5}{allocate\+B\+G()} \\
+\hline
+{\em color} & could be used for drawing, but the theme is allowed to ignore it \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classcanvascv_1_1Theme_ae23eaf232b60504c82fc46b59ccfee67}{canvascv\+::\+Theme}.
+
+\index{canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}!selected@{selected}}
+\index{selected@{selected}!canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}}
+\subsubsection[{\texorpdfstring{selected(cv\+::\+Mat \&bg, const cv\+::\+Scalar \&color)}{selected(cv::Mat &bg, const cv::Scalar &color)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Two\+Colored\+Theme\+::selected (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Mat \&}]{bg, }
+\item[{const cv\+::\+Scalar \&}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1TwoColoredTheme_abee098f6af5b63fa06441184c2c331bb}{}\label{classcanvascv_1_1TwoColoredTheme_abee098f6af5b63fa06441184c2c331bb}
+
+\begin{DoxyParams}{Parameters}
+{\em bg} & was previously allocated by \hyperlink{classcanvascv_1_1TwoColoredTheme_ae085f9cd7f170e49fbc463348a4eb7b5}{allocate\+B\+G()} \\
+\hline
+{\em color} & could be used for drawing, but the theme is allowed to ignore it \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classcanvascv_1_1Theme_aa92819f6a08112b5ff489b00f66a3ce0}{canvascv\+::\+Theme}.
+
+\index{canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}!sunken@{sunken}}
+\index{sunken@{sunken}!canvascv\+::\+Two\+Colored\+Theme@{canvascv\+::\+Two\+Colored\+Theme}}
+\subsubsection[{\texorpdfstring{sunken(cv\+::\+Mat \&bg, const cv\+::\+Scalar \&color)}{sunken(cv::Mat &bg, const cv::Scalar &color)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Two\+Colored\+Theme\+::sunken (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Mat \&}]{bg, }
+\item[{const cv\+::\+Scalar \&}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1TwoColoredTheme_a2b39a62e7aa5836b9957d1c8257167c3}{}\label{classcanvascv_1_1TwoColoredTheme_a2b39a62e7aa5836b9957d1c8257167c3}
+
+\begin{DoxyParams}{Parameters}
+{\em bg} & was previously allocated by \hyperlink{classcanvascv_1_1TwoColoredTheme_ae085f9cd7f170e49fbc463348a4eb7b5}{allocate\+B\+G()} \\
+\hline
+{\em color} & could be used for drawing, but the theme is allowed to ignore it \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classcanvascv_1_1Theme_a65ca2a83a09be3707304aeae3c53fd7e}{canvascv\+::\+Theme}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/themes/twocoloredtheme.\+h\end{DoxyCompactItemize}

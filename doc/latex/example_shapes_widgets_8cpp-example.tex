@@ -1,0 +1,286 @@
+\hypertarget{example_shapes_widgets_8cpp-example}{}\section{example\+\_\+shapes\+\_\+widgets.\+cpp}
+This is an example of using shapes and widgets together.
+
+
+\begin{DoxyCodeInclude}
+\textcolor{comment}{// Mandator include file}
+\textcolor{preprocessor}{#include "canvascv/canvas.h"}
+
+\textcolor{comment}{// We don't need these includes for shape based interaction with the user.}
+\textcolor{comment}{// We need these if we want to customize or create shapes on canvas form the code.}
+\textcolor{preprocessor}{#include "canvascv/shapes/linecrossing.h"}
+\textcolor{preprocessor}{#include "canvascv/shapes/textbox.h"}
+\textcolor{preprocessor}{#include "canvascv/shapes/shapesconnector.h"}
+\textcolor{preprocessor}{#include "canvascv/shapes/ellipse.h"}
+
+\textcolor{comment}{// These are used to create widgets}
+\textcolor{preprocessor}{#include "canvascv/widgets/button.h"}
+\textcolor{preprocessor}{#include "canvascv/widgets/vframe.h"}
+\textcolor{preprocessor}{#include "canvascv/widgets/hframe.h"}
+
+\textcolor{preprocessor}{#include <iostream>}
+\textcolor{preprocessor}{#include <iterator>}
+
+\textcolor{preprocessor}{#include <opencv2/highgui.hpp>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacestd}{std};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keyword}{static} \textcolor{keywordtype}{string} gHelpMsg =
+\textcolor{stringliteral}{"Usage:\(\backslash\)n"}
+\textcolor{stringliteral}{"=====\(\backslash\)n"}
+\textcolor{stringliteral}{"Use the mouse and keyboard.\(\backslash\)n"}
+\textcolor{stringliteral}{"Hover over and click on widgets and shapes.\(\backslash\)n"}
+\textcolor{stringliteral}{"Select/Unselect the center Ellipse.\(\backslash\)n"}
+\textcolor{stringliteral}{"Use these keys:\(\backslash\)n"}
+\textcolor{stringliteral}{"1: Line\(\backslash\)n"}
+\textcolor{stringliteral}{"2: Arrow\(\backslash\)n"}
+\textcolor{stringliteral}{"3: TextBox\(\backslash\)n"}
+\textcolor{stringliteral}{"4: LineCrossing\(\backslash\)n"}
+\textcolor{stringliteral}{"5: Polygon\(\backslash\)n"}
+\textcolor{stringliteral}{"6: Rectangle\(\backslash\)n"}
+\textcolor{stringliteral}{"7: Ellipse\(\backslash\)n"}
+\textcolor{stringliteral}{"8: ShapesConnector\(\backslash\)n"}
+\textcolor{stringliteral}{"9: LabeledShapesConnector\(\backslash\)n"}
+\textcolor{stringliteral}{"h: toggle usage message\(\backslash\)n"}
+\textcolor{stringliteral}{"*: toggle canvas on/off\(\backslash\)n"}
+\textcolor{stringliteral}{"c: clear the shapes from the canvas\(\backslash\)n"}
+\textcolor{stringliteral}{"s: save shapes to config.xml\(\backslash\)n"}
+\textcolor{stringliteral}{"l: load shapes from config.xml\(\backslash\)n"}
+\textcolor{stringliteral}{"DEL: delete active shape\(\backslash\)n"}
+\textcolor{stringliteral}{"q: exit"};
+
+\textcolor{keywordtype}{void} help(\hyperlink{classcanvascv_1_1Canvas}{Canvas} &c)
+\{
+    \textcolor{keyword}{static} \textcolor{keywordtype}{bool} showHelp = \textcolor{keyword}{true};
+    \textcolor{keywordflow}{if} (showHelp)
+    \{
+        cout << gHelpMsg << endl;
+        c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(gHelpMsg);
+    \}
+    \textcolor{keywordflow}{else}
+    \{
+        c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(\textcolor{stringliteral}{""});
+    \}
+    showHelp = ! showHelp;
+\}
+
+\textcolor{comment}{/*}
+\textcolor{comment}{ * Create a selectable ellipse with a text-box like this:}
+\textcolor{comment}{ *}
+\textcolor{comment}{ *                +--------------+}
+\textcolor{comment}{ *                |locked ellipse|}
+\textcolor{comment}{ *                +--------------+}
+\textcolor{comment}{ *               /}
+\textcolor{comment}{ *              /}
+\textcolor{comment}{ *             O}
+\textcolor{comment}{ *}
+\textcolor{comment}{ */}
+\textcolor{keyword}{static} \textcolor{keywordtype}{void} createShapesFromCodeExample(\hyperlink{classcanvascv_1_1Canvas}{Canvas} &c, Point center)
+\{
+    \textcolor{comment}{// Add some shapes to the canvas as an example.}
+    shared\_ptr<TextBox> textBox = c.\hyperlink{classcanvascv_1_1Canvas_a630ac92458f1718d0c597e96dd5a4aef}{createShape}<\hyperlink{classcanvascv_1_1TextBox}{TextBox}>();
+    shared\_ptr<ShapesConnector> connector = c.\hyperlink{classcanvascv_1_1Canvas_a630ac92458f1718d0c597e96dd5a4aef}{createShape}<
+      \hyperlink{classcanvascv_1_1ShapesConnector}{ShapesConnector}>();
+    shared\_ptr<Ellipse> ellipse = c.\hyperlink{classcanvascv_1_1Canvas_a630ac92458f1718d0c597e96dd5a4aef}{createShape}<\hyperlink{classcanvascv_1_1Ellipse}{Ellipse}>();
+
+    textBox->setTL(\{int(center.x * 1.5), int(center.y * 0.5)\});
+    textBox->setText(\textcolor{stringliteral}{"locked ellipse"});
+    ellipse->\hyperlink{classcanvascv_1_1Rectangle_a5149d50c87c3388619ace3badd868f50}{setRect}(RotatedRect(center,
+                                 Size2f(40,60), \textcolor{comment}{// width and height}
+                                 0));     \textcolor{comment}{// angle in degrees}
+    \hyperlink{classcanvascv_1_1Handle}{Handle} *head = *(std::next(ellipse->getConnectionTargets().begin(),3)); \textcolor{comment}{// 4th rotation handle}
+    \hyperlink{classcanvascv_1_1Handle}{Handle} *tail = *textBox->\hyperlink{classcanvascv_1_1Handle_a6cf6d2c4ad6a01a1e9e7c27f3c29ed57}{getConnectionTargets}().begin();
+    connector->connectHead(*ellipse, *head);
+    connector->connectTail(*textBox, *tail);
+
+    \textcolor{comment}{// Lock just the ellipse}
+    ellipse->setLocked(\textcolor{keyword}{true});
+
+    \textcolor{comment}{// create some widgets}
+    \textcolor{keyword}{auto} msgs = \hyperlink{classcanvascv_1_1HFrame_a0bd1d3df07a8c25f48e79048913f85fc}{HFrame::create}(c, (*tail)());
+    msgs->setFrameRelief(Widget::SUNKEN);
+    msgs->setFlowAnchor(\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea21bfb46eb1646b1bb4f7a11f5af11f06}{Widget::BOTTOM\_RIGHT});
+    msgs->setVisible(\textcolor{keyword}{false});
+
+    \textcolor{keyword}{auto} buttons = \hyperlink{classcanvascv_1_1VFrame_a013de150c59b8f7f37aa21ac59d78b10}{VFrame::create}(c, (*head)());
+
+    \hyperlink{classcanvascv_1_1Text_a7f3552263b6f185f78d90549e7ac38f7}{Text::create}(*msgs,
+                 \textcolor{stringliteral}{"aligned to top"},
+                 \hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea8612ea17f4627ffaf6aa00af2595efe7}{Widget::BOTTOM})->setLayoutAnchor(\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeaa6a2c9d829ceed729afe8cb2f51b2f0c}{Widget::TOP});
+    \hyperlink{classcanvascv_1_1Text_a7f3552263b6f185f78d90549e7ac38f7}{Text::create}(*msgs,
+                 \textcolor{stringliteral}{"aligned to center"},
+                 \hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea8612ea17f4627ffaf6aa00af2595efe7}{Widget::BOTTOM})->setLayoutAnchor(\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea2cd62693af40f3c5f559a07d6a61a55d}{Widget::CENTER});
+    \hyperlink{classcanvascv_1_1Text_a7f3552263b6f185f78d90549e7ac38f7}{Text::create}(*msgs,
+                 \textcolor{stringliteral}{"These 3 objects where precreated.\(\backslash\)n"}
+                 \textcolor{stringliteral}{"They are an Ellipse,\(\backslash\)n"}
+                 \textcolor{stringliteral}{" ShapesConnector and a TextBox.\(\backslash\)n"}
+                 \textcolor{stringliteral}{"You select/edit/move/delete them.\(\backslash\)n"}
+                 \textcolor{stringliteral}{"The Ellipse is locked."},
+                 \hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea8612ea17f4627ffaf6aa00af2595efe7}{Widget::BOTTOM});
+
+    \hyperlink{classcanvascv_1_1Button_a3557ea02dfca8d6cb92181a2d2b88112}{Button::create}(*buttons, \textcolor{stringliteral}{"right\(\backslash\)naligned"},
+                   \textcolor{stringliteral}{"button 1\(\backslash\)n"}
+                   \textcolor{stringliteral}{"Hover with mouse.\(\backslash\)n"}
+                   \textcolor{stringliteral}{"Press with mouse."});
+    \hyperlink{classcanvascv_1_1Button_a3557ea02dfca8d6cb92181a2d2b88112}{Button::create}(*buttons, \textcolor{stringliteral}{"centered"},
+                   \textcolor{stringliteral}{"button 2\(\backslash\)n"}
+                   \textcolor{stringliteral}{"Hover with mouse.\(\backslash\)n"}
+                   \textcolor{stringliteral}{"Press with mouse."});
+    \hyperlink{classcanvascv_1_1Button_a3557ea02dfca8d6cb92181a2d2b88112}{Button::create}(*buttons, \textcolor{stringliteral}{"this is a long text"},
+                   \textcolor{stringliteral}{"button 3\(\backslash\)n"}
+                   \textcolor{stringliteral}{"Hover with mouse.\(\backslash\)n"}
+                   \textcolor{stringliteral}{"Press with mouse."});
+
+    buttons->at(0)->setLayoutAnchor(\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeaa426f2ee5f621cfc973e1032931932ef}{Widget::RIGHT});
+    buttons->at(0)->notifyOnChange([](\hyperlink{classcanvascv_1_1Widget}{Widget} *w, \hyperlink{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8}{Widget::State} state)
+    \{
+        cout << \textcolor{stringliteral}{"widget "} << w << \textcolor{stringliteral}{" at(0) got state "} << state << endl;
+    \});
+
+    buttons->at(1)->setLayoutAnchor(\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea2cd62693af40f3c5f559a07d6a61a55d}{Widget::CENTER});
+    buttons->at(1)->notifyOnChange([](\hyperlink{classcanvascv_1_1Widget}{Widget} *w, \hyperlink{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8}{Widget::State} state)
+    \{
+        cout << \textcolor{stringliteral}{"widget "} << w << \textcolor{stringliteral}{" at(1) got state "} << state << endl;
+    \});
+
+    ellipse->notifyOnEvent([buttons, msgs, &c](\hyperlink{classcanvascv_1_1Shape}{Shape} *shape, \hyperlink{classcanvascv_1_1Shape_a3fa381d7be3c6bb3cd736e237a444d5c}{Shape::Event} event)
+    \{
+        cout << \textcolor{stringliteral}{"ellipse event is "}   << \textcolor{keyword}{event} << endl;
+        \textcolor{keywordflow}{if} (event == \hyperlink{classcanvascv_1_1Shape_a3fa381d7be3c6bb3cd736e237a444d5cafeb2f2cbc576f5235afac464e54a7450}{Shape::SELECT})
+        \{
+            buttons->setVisible(\textcolor{keyword}{false});
+            msgs->setVisible(\textcolor{keyword}{true});
+        \}
+        \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (event == \hyperlink{classcanvascv_1_1Shape_a3fa381d7be3c6bb3cd736e237a444d5cafea26e438446b822586b19d85b9c1f44}{Shape::UNSELECT})
+        \{
+            buttons->setVisible(\textcolor{keyword}{true});
+            msgs->setVisible(\textcolor{keyword}{false});
+        \}
+        \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (event == \hyperlink{classcanvascv_1_1Shape_a3fa381d7be3c6bb3cd736e237a444d5caa6787a2dc8627b989f9befaf2e50c9ad}{Shape::REMOVED})
+        \{
+            c.\hyperlink{classcanvascv_1_1Canvas_a70248a9be2eedcacad74c9be5fd615eb}{rmvWidget}(buttons);
+            c.\hyperlink{classcanvascv_1_1Canvas_a70248a9be2eedcacad74c9be5fd615eb}{rmvWidget}(msgs);
+        \}
+    \});
+\}
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    Mat image;
+    \textcolor{keywordflow}{if} (argc)
+    \{
+        Mat orig = imread(argv[0], IMREAD\_UNCHANGED);
+        \textcolor{keywordflow}{if} (orig.empty())
+        \{
+            \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -1);
+        \}
+        \textcolor{keywordflow}{if} (orig.cols > 1024)
+        \{
+            \textcolor{keywordtype}{double} ratio = 1024. / orig.cols;
+            cv::resize(orig, image, Size(), ratio, ratio);
+        \}
+        \textcolor{keywordflow}{else}
+        \{
+            image = orig;
+        \}
+    \}
+    \textcolor{keywordflow}{else}
+    \{
+        image.create(600, 800, CV\_8UC3);
+        image = \hyperlink{classcanvascv_1_1Colors_a79938bbb8f85fc8c8aa34a7934890c08}{Colors::White};
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"Canvas"}, image.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(\textcolor{stringliteral}{"Line"}); \textcolor{comment}{// default shape type for direct GUI creation}
+    c.\hyperlink{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{enableScreenText}();
+    c.\hyperlink{classcanvascv_1_1Canvas_a402c43a42c0089c48a96e5303c1c1fe8}{enableStatusMsg}();
+    help(c);
+
+    \textcolor{comment}{// notifyOnCreate callbacks can be used for anything.}
+    \textcolor{comment}{// here we overide the theme settings in case of LineCrossing}
+    c.\hyperlink{classcanvascv_1_1Canvas_a64a459b16965e23de992cd2a301c68f4}{notifyOnShapeCreate}([](\hyperlink{classcanvascv_1_1Shape}{Shape} *shape)
+    \{
+        \textcolor{keywordflow}{if} (shape->\hyperlink{classcanvascv_1_1Shape_adee3cc696c7e82b0d2946e7e667ddd46}{getType}() == LineCrossing::type)
+        \{
+            ((\hyperlink{classcanvascv_1_1LineCrossing}{LineCrossing}*)shape)->setArrowMagnitude(50);
+        \}
+    \});
+
+    \textcolor{comment}{// Creating shapes on the canvas from code is also possible}
+    createShapesFromCodeExample(c, Point(image.cols / 2, image.rows / 2));
+
+    namedWindow(\textcolor{stringliteral}{"Canvas"}, WINDOW\_AUTOSIZE);
+    c.\hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{setMouseCallback}(); \textcolor{comment}{// optional for mouse usage see also (example\_selectbox.cpp)}
+
+
+    \textcolor{keywordtype}{int} key = 0;
+    Mat out; \textcolor{comment}{// keeping it out of the loop is a little more efficient}
+    \textcolor{keywordflow}{do}
+    \{
+        \textcolor{keywordflow}{switch} (key)
+        \{
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'1'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(\textcolor{stringliteral}{"Line"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'2'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(\textcolor{stringliteral}{"Arrow"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'3'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(\textcolor{stringliteral}{"TextBox"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'4'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(\textcolor{stringliteral}{"LineCrossing"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'5'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(\textcolor{stringliteral}{"Polygon"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'6'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(\textcolor{stringliteral}{"Rectangle"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'7'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(\textcolor{stringliteral}{"Ellipse"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'8'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(\textcolor{stringliteral}{"ShapesConnector"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'9'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(\textcolor{stringliteral}{"LabeledShapesConnector"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'h'}:
+            help(c);
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'*'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_aba149ea25c6cdad2673133a060355954}{setOn}(! c.\hyperlink{classcanvascv_1_1Canvas_afe6a2955a5bbee8903350b4fba3f4473}{getOn}());
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'c'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_a8aa6686036b8a1a006718ae62f44b6c2}{clearShapes}();
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'s'}:
+        \{
+            c.\hyperlink{classcanvascv_1_1Canvas_a494bb06b1a29232f05807f4a0e480ebb}{writeShapesToFile}(\textcolor{stringliteral}{"config.xml"});
+        \}
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'l'}:
+        \{
+            c.\hyperlink{classcanvascv_1_1Canvas_ab68000bb631c2fa7bb8863e746a8cff3}{readShapesFromFile}(\textcolor{stringliteral}{"config.xml"});
+        \}
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} 65535:
+            c.\hyperlink{classcanvascv_1_1Canvas_a2fb88addb88a21757d4272e64acd30ae}{deleteActive}();
+            \textcolor{keywordflow}{break};
+        \}
+
+        c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(image, out);
+        imshow(\textcolor{stringliteral}{"Canvas"}, out);
+        key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(); \textcolor{comment}{// GUI and callbacks happen here}
+    \} \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'});
+
+    destroyAllWindows();
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCodeInclude}
+ 

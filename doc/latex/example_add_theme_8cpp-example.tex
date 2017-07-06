@@ -1,0 +1,123 @@
+\hypertarget{example_add_theme_8cpp-example}{}\section{example\+\_\+add\+\_\+theme.\+cpp}
+This is an example of how to add a theme.
+
+
+\begin{DoxyCodeInclude}
+\textcolor{preprocessor}{#include "canvascv/canvas.h"}
+
+\textcolor{comment}{// These are used to create widgets}
+\textcolor{preprocessor}{#include "canvascv/widgets/radiobuttons.h"}
+\textcolor{preprocessor}{#include "canvascv/widgets/text.h"}
+\textcolor{preprocessor}{#include "canvascv/widgets/button.h"}
+\textcolor{preprocessor}{#include "canvascv/widgets/hframe.h"}
+\textcolor{preprocessor}{#include "canvascv/themes/themerepository.h"}
+\textcolor{preprocessor}{#include "canvascv/themes/twocoloredtheme.h"}
+
+\textcolor{preprocessor}{#include <iostream>}
+\textcolor{preprocessor}{#include <iterator>}
+
+\textcolor{preprocessor}{#include <opencv2/highgui.hpp>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacestd}{std};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keyword}{class }MyTheme : \textcolor{keyword}{public} \hyperlink{classcanvascv_1_1TwoColoredTheme}{TwoColoredTheme}
+\{
+\textcolor{keyword}{public}:
+    MyTheme(Scalar fgColor, Scalar bgColor, \textcolor{keywordtype}{int} widthVal)
+        : \hyperlink{classcanvascv_1_1TwoColoredTheme}{TwoColoredTheme}(fgColor, bgColor),
+          width(widthVal)
+    \{\}
+
+    \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} allocateBG(Mat &dst, \textcolor{keyword}{const} Size &size, \textcolor{keyword}{const} Scalar &color)
+    \{
+        TwoColoredTheme::allocateBG(dst, size, color);
+        \textcolor{keywordflow}{if} (! dst.empty())
+        \{
+            Point pFrom(0,0);
+            Point pTo(0,size.height);
+            \textcolor{keywordtype}{int} spacing = width * 2;
+            \textcolor{keywordflow}{for} (pFrom.x = 0, pTo.x = pFrom.x - size.height ; pTo.x < size.width; pFrom.x += spacing, pTo.x
+       += spacing)
+            \{
+                cv::line(dst, pFrom, pTo, color*1.5, width, LINE\_AA);
+            \}
+        \}
+    \}
+\textcolor{keyword}{private}:
+    \textcolor{keywordtype}{int} width;
+\};
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    Mat image;
+    \textcolor{keywordflow}{if} (argc)
+    \{
+        Mat orig = imread(argv[0]);
+        \textcolor{keywordflow}{if} (orig.empty())
+        \{
+            Canvas::fatal(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -1);
+        \}
+        \textcolor{keywordflow}{if} (orig.cols > 1024)
+        \{
+            \textcolor{keywordtype}{double} ratio = 1024. / orig.cols;
+            cv::resize(orig, image, Size(), ratio, ratio);
+        \}
+        \textcolor{keywordflow}{else}
+        \{
+            image = orig;
+        \}
+    \}
+    \textcolor{keywordflow}{else}
+    \{
+        Canvas::fatal(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"Canvas"}, image.size());
+    \textcolor{keyword}{auto} layout = HFrame::create(c, Point(5, image.rows / 2.));
+    \hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget::CBUserSelection} cb = [&c, &layout](\hyperlink{classcanvascv_1_1Widget}{Widget} *w, \textcolor{keywordtype}{int} index) \{
+        \hyperlink{classcanvascv_1_1RadioButtons}{RadioButtons} *rb = (\hyperlink{classcanvascv_1_1RadioButtons}{RadioButtons}*)w;
+        \textcolor{keywordtype}{string} themeName = rb->\hyperlink{classcanvascv_1_1RadioButtons_a6a1570cb5b8328fba59bb0c17f63debc}{getTextAt}(index);
+        ThemeRepository::setCurrentTheme(themeName);
+        c.applyTheme();
+        layout->at<\hyperlink{classcanvascv_1_1Text}{Text}>(0)->setText(CCV\_STR(\textcolor{stringliteral}{"User selected theme '"} << index << \textcolor{stringliteral}{"': '"} << themeName <<
+       \textcolor{stringliteral}{"'\(\backslash\)n"}));
+    \};
+
+    ThemeRepository::addTheme(\textcolor{stringliteral}{"MyTheme1"}, \textcolor{keyword}{new} MyTheme(Colors::Red, Colors::Pink, 10));
+    ThemeRepository::addTheme(\textcolor{stringliteral}{"MyTheme2"}, \textcolor{keyword}{new} MyTheme(Colors::Red, Colors::Pink, 20));
+    ThemeRepository::addTheme(\textcolor{stringliteral}{"MyTheme3"}, \textcolor{keyword}{new} MyTheme(Colors::Blue, Colors::Green, 20));
+    vector<string> availThemes = ThemeRepository::availThemes();
+
+    \textcolor{keyword}{auto} iter = std::find(availThemes.begin(), availThemes.end(), ThemeRepository::getCurrentThemeName());
+    \textcolor{keywordtype}{int} i = std::distance(availThemes.begin(), iter);
+
+    \textcolor{keyword}{auto} text = Text::create(*layout, \textcolor{stringliteral}{""}, Widget::TOP, Widget::CENTER);
+    text->setMaxWidth(100);
+    text->setAlpha(0);
+    RadioButtons::create(*layout, availThemes, i, cb);
+    Button::create(*layout, \textcolor{stringliteral}{"First button"})->setLayoutAnchor(Widget::CENTER);
+    Button::create(*layout, \textcolor{stringliteral}{"Second button"})->setLayoutAnchor(Widget::CENTER);
+
+    namedWindow(\textcolor{stringliteral}{"Canvas"}, WINDOW\_AUTOSIZE);
+    c.setMouseCallback(); \textcolor{comment}{// optional for mouse usage see also (example\_selectbox.cpp)}
+
+    \textcolor{keywordtype}{int} key = 0;
+    Mat out; \textcolor{comment}{// keeping it out of the loop is a little more efficient}
+    \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'})
+    \{
+        c.redrawOn(image, out);
+        imshow(\textcolor{stringliteral}{"Canvas"}, out);
+        key = c.waitKeyEx(); \textcolor{comment}{// GUI and callbacks happen here}
+    \}
+
+    destroyAllWindows();
+    \textcolor{keywordflow}{return} 0;
+\}
+
+
+\end{DoxyCodeInclude}
+ 

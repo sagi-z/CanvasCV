@@ -56,6 +56,9 @@ make doc
 cd ..
 rm -rf $TARGET_DIR
 
+# HACK: modify images with maps to be in a scrollable div
+find doc/html -type f -name "*html" |xargs grep -l 'img.*usemap'| xargs perl -i -pe 's/<img (.* usemap.*>)/<div style="overflow: auto;"><img style="max-width: 4096px;" $1<\/div>/'
+
 # Take doxygen output
 mv doc $TARGET_DIR
 

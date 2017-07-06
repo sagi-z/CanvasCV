@@ -1,0 +1,129 @@
+\hypertarget{classcanvascv_1_1VerticalLayout}{}\section{canvascv\+:\+:Vertical\+Layout Class Reference}
+\label{classcanvascv_1_1VerticalLayout}\index{canvascv\+::\+Vertical\+Layout@{canvascv\+::\+Vertical\+Layout}}
+
+
+The \hyperlink{classcanvascv_1_1VerticalLayout}{Vertical\+Layout} class.  
+
+
+
+
+{\ttfamily \#include $<$verticallayout.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Vertical\+Layout\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{classcanvascv_1_1VerticalLayout}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classcanvascv_1_1VerticalLayout_a49f7dd2e6eb7f60df3489069b4af500e}{get\+Spacing} () const \hypertarget{classcanvascv_1_1VerticalLayout_a49f7dd2e6eb7f60df3489069b4af500e}{}\label{classcanvascv_1_1VerticalLayout_a49f7dd2e6eb7f60df3489069b4af500e}
+
+\begin{DoxyCompactList}\small\item\em returns pixel spacing between items \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1VerticalLayout_ae3f58b90e8d957642feb2cc5e3100bd1}{set\+Spacing} (int value)\hypertarget{classcanvascv_1_1VerticalLayout_ae3f58b90e8d957642feb2cc5e3100bd1}{}\label{classcanvascv_1_1VerticalLayout_ae3f58b90e8d957642feb2cc5e3100bd1}
+
+\begin{DoxyCompactList}\small\item\em sets pixel spacing between items \end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{classcanvascv_1_1VerticalLayout_a1b6eaaa782a4c9c880feb49d595d45b6}{get\+Type} () const 
+\begin{DoxyCompactList}\small\item\em get\+Type is always implemented by derived to return the same static pointer per widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1VerticalLayout}{Vertical\+Layout} $>$ \hyperlink{classcanvascv_1_1VerticalLayout_a3e0ae249db062663815d2d822e178dd3}{create} (\hyperlink{classcanvascv_1_1Layout}{Layout} \&layout, const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))
+\begin{DoxyCompactList}\small\item\em create a \hyperlink{classcanvascv_1_1VerticalLayout}{Vertical\+Layout} widget \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classcanvascv_1_1VerticalLayout_a0d4661776d5cb6dc4eccebcb3e5ff17c}{recalc\+Compound} ()
+\begin{DoxyCompactList}\small\item\em recalc\+Compound \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A \hyperlink{classcanvascv_1_1Layout}{Layout} implementation which lays it\textquotesingle{}s internal widgets vertically with a predefined spacing between widgets.
+\begin{DoxyItemize}
+\item Vertical layout is automatic according to widget size and spacing.
+\begin{DoxyEnumerate}
+\item This layout can expand up (it\textquotesingle{}s \textquotesingle{}flow\+Anchor\textquotesingle{} is B\+O\+T\+T\+OM), or down (it\textquotesingle{}s \textquotesingle{}flow\+Anchor\textquotesingle{} is T\+OP)
+\end{DoxyEnumerate}
+\item Horizontal layout per laid widget is determined according to the laid widget \textquotesingle{}layout\+Anchor\textquotesingle{}\+:
+\begin{DoxyEnumerate}
+\item L\+E\+FT will align the widget to the left (unless \hyperlink{classcanvascv_1_1Widget_a7cdddebd755c499712793f727a057733}{set\+Stretch\+X()} is true in the laid widget)
+\item C\+E\+N\+T\+ER will align the widget to the center (unless \hyperlink{classcanvascv_1_1Widget_a7cdddebd755c499712793f727a057733}{set\+Stretch\+X()} is true in the laid widget)
+\item R\+I\+G\+HT will align the widget to the right (unless \hyperlink{classcanvascv_1_1Widget_a7cdddebd755c499712793f727a057733}{set\+Stretch\+X()} is true in the laid widget) \begin{DoxyVerb}   +----------------------+
+   |       PADDING        |
+   | P +--------+       P |
+   | A | Widget |       A |  layoutAnchor = LEFT
+   | D +--------+       D |
+   | D     SPACING      D |
+   | I   +----------+   I |
+   | N   |  Widget  |   N |  layoutAnchor = CENTER
+   | G   +----------+   G |
+   |       SPACING        |
+   |        +---------+   |
+   | P      | Widget  | P |  layoutAnchor = RIGHT
+   | A      +---------+ A |
+   | D     SPACING      D |
+   | D +--------------+ D |
+   | I |   Widget     | I |  layoutAnchor=whatever...(widest sets the standard for other)
+   | N +--------------+ N |
+   | G     PADDING      G |
+   +----------------------+
+\end{DoxyVerb}
+ 
+\end{DoxyEnumerate}
+\end{DoxyItemize}
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Vertical\+Layout@{canvascv\+::\+Vertical\+Layout}!create@{create}}
+\index{create@{create}!canvascv\+::\+Vertical\+Layout@{canvascv\+::\+Vertical\+Layout}}
+\subsubsection[{\texorpdfstring{create(\+Layout \&layout, const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))}{create(Layout &layout, const cv::Point &pos=cv::Point(0, 0))}}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::shared\+\_\+ptr$<${\bf Vertical\+Layout}$>$ canvascv\+::\+Vertical\+Layout\+::create (
+\begin{DoxyParamCaption}
+\item[{{\bf Layout} \&}]{layout, }
+\item[{const cv\+::\+Point \&}]{pos = {\ttfamily cv\+:\+:Point(0,~0)}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classcanvascv_1_1VerticalLayout_a3e0ae249db062663815d2d822e178dd3}{}\label{classcanvascv_1_1VerticalLayout_a3e0ae249db062663815d2d822e178dd3}
+
+\begin{DoxyParams}{Parameters}
+{\em layout} & widgets are placed in layouts Canvas/\+V\+Frame/\+H\+Frame/... \\
+\hline
+{\em pos} & location in the \hyperlink{classcanvascv_1_1Layout}{Layout} (Layouts can ignore that) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a smart pointer copy of the object kept in the \hyperlink{classcanvascv_1_1Layout}{Layout} 
+\end{DoxyReturn}
+\index{canvascv\+::\+Vertical\+Layout@{canvascv\+::\+Vertical\+Layout}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!canvascv\+::\+Vertical\+Layout@{canvascv\+::\+Vertical\+Layout}}
+\subsubsection[{\texorpdfstring{get\+Type() const }{getType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ canvascv\+::\+Vertical\+Layout\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1VerticalLayout_a1b6eaaa782a4c9c880feb49d595d45b6}{}\label{classcanvascv_1_1VerticalLayout_a1b6eaaa782a4c9c880feb49d595d45b6}
+\begin{DoxyReturn}{Returns}
+const char $\ast$ pointer to string with widget type name 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Widget_a85884269bd53ab91203f099a586efa43}{canvascv\+::\+Widget}.
+
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1VFrame_a8a87d2a05ca0f42a8deeaefa698347a9}{canvascv\+::\+V\+Frame}.
+
+\index{canvascv\+::\+Vertical\+Layout@{canvascv\+::\+Vertical\+Layout}!recalc\+Compound@{recalc\+Compound}}
+\index{recalc\+Compound@{recalc\+Compound}!canvascv\+::\+Vertical\+Layout@{canvascv\+::\+Vertical\+Layout}}
+\subsubsection[{\texorpdfstring{recalc\+Compound()}{recalcCompound()}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Vertical\+Layout\+::recalc\+Compound (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1VerticalLayout_a0d4661776d5cb6dc4eccebcb3e5ff17c}{}\label{classcanvascv_1_1VerticalLayout_a0d4661776d5cb6dc4eccebcb3e5ff17c}
+Your BG size recalculation/allocation and FG drawing is done here. It is done semi automatically. Is you invoke setters in this method on your internal widgets, then make sure to update them and/or their layout 
+
+Implements \hyperlink{classcanvascv_1_1CompoundWidget_a4a4f8241d6fd187ffcae2c7968f13864}{canvascv\+::\+Compound\+Widget}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/widgets/verticallayout.\+h\end{DoxyCompactItemize}

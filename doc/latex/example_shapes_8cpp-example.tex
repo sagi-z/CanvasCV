@@ -1,0 +1,156 @@
+\hypertarget{example_shapes_8cpp-example}{}\section{example\+\_\+shapes.\+cpp}
+This is an example of how to create shapes by mouse.
+
+
+\begin{DoxyCodeInclude}
+\textcolor{comment}{// Mandator include file}
+\textcolor{preprocessor}{#include "canvascv/canvas.h"}
+
+\textcolor{preprocessor}{#include <iostream>}
+\textcolor{preprocessor}{#include <iterator>}
+
+\textcolor{preprocessor}{#include <opencv2/highgui.hpp>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacestd}{std};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keyword}{static} \textcolor{keywordtype}{string} gHelpMsg =
+\textcolor{stringliteral}{"Usage:\(\backslash\)n"}
+\textcolor{stringliteral}{"=====\(\backslash\)n"}
+\textcolor{stringliteral}{"Use these keys:\(\backslash\)n"}
+\textcolor{stringliteral}{"1: Line\(\backslash\)n"}
+\textcolor{stringliteral}{"2: Arrow\(\backslash\)n"}
+\textcolor{stringliteral}{"3: TextBox\(\backslash\)n"}
+\textcolor{stringliteral}{"4: LineCrossing\(\backslash\)n"}
+\textcolor{stringliteral}{"5: Polygon\(\backslash\)n"}
+\textcolor{stringliteral}{"6: Rectangle\(\backslash\)n"}
+\textcolor{stringliteral}{"7: Ellipse\(\backslash\)n"}
+\textcolor{stringliteral}{"8: ShapesConnector\(\backslash\)n"}
+\textcolor{stringliteral}{"9: LabeledShapesConnector\(\backslash\)n"}
+\textcolor{stringliteral}{"h: toggle usage message\(\backslash\)n"}
+\textcolor{stringliteral}{"*: toggle canvas on/off\(\backslash\)n"}
+\textcolor{stringliteral}{"c: clear the shapes from the canvas\(\backslash\)n"}
+\textcolor{stringliteral}{"s: save shapes to config.xml\(\backslash\)n"}
+\textcolor{stringliteral}{"l: load shapes from config.xml\(\backslash\)n"}
+\textcolor{stringliteral}{"DEL: delete active shape\(\backslash\)n"}
+\textcolor{stringliteral}{"q: exit"};
+
+\textcolor{keywordtype}{void} help(\hyperlink{classcanvascv_1_1Canvas}{Canvas} &c)
+\{
+    \textcolor{keyword}{static} \textcolor{keywordtype}{bool} showHelp = \textcolor{keyword}{true};
+    \textcolor{keywordflow}{if} (showHelp)
+    \{
+        cout << gHelpMsg << endl;
+        c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(gHelpMsg);
+    \}
+    \textcolor{keywordflow}{else}
+    \{
+        c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(\textcolor{stringliteral}{""});
+    \}
+    showHelp = ! showHelp;
+\}
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    Mat image;
+    \textcolor{keywordflow}{if} (argc)
+    \{
+        Mat orig = imread(argv[0], IMREAD\_UNCHANGED);
+        \textcolor{keywordflow}{if} (orig.empty())
+        \{
+            \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -1);
+        \}
+        \textcolor{keywordflow}{if} (orig.cols > 1024)
+        \{
+            \textcolor{keywordtype}{double} ratio = 1024. / orig.cols;
+            cv::resize(orig, image, Size(), ratio, ratio);
+        \}
+        \textcolor{keywordflow}{else}
+        \{
+            image = orig;
+        \}
+    \}
+    \textcolor{keywordflow}{else}
+    \{
+        image.create(600, 800, CV\_8UC3);
+        image = \hyperlink{classcanvascv_1_1Colors_a79938bbb8f85fc8c8aa34a7934890c08}{Colors::White};
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"Canvas"}, image.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(\textcolor{stringliteral}{"Line"}); \textcolor{comment}{// default shape type for direct GUI creation}
+    c.enableScreenText();
+    c.enableStatusMsg();
+    c.setDefaultStatusMsg(\textcolor{stringliteral}{"Click-Release-Drag to create a new shape.\(\backslash\)nSelect/Unselect with the mouse.\(\backslash\)nDrag
+       selected shapes with the mouse."});
+    help(c);
+
+    namedWindow(\textcolor{stringliteral}{"Canvas"}, WINDOW\_AUTOSIZE);
+
+    c.setMouseCallback(); \textcolor{comment}{// optional for mouse usage see also (example\_selectbox.cpp)}
+
+    \textcolor{keywordtype}{int} key = 0;
+    Mat out; \textcolor{comment}{// keeping it out of the loop is a little more efficient}
+    \textcolor{keywordflow}{do}
+    \{
+        \textcolor{keywordflow}{switch} (key)
+        \{
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'1'}:
+            c.setShapeType(\textcolor{stringliteral}{"Line"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'2'}:
+            c.setShapeType(\textcolor{stringliteral}{"Arrow"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'3'}:
+            c.setShapeType(\textcolor{stringliteral}{"TextBox"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'4'}:
+            c.setShapeType(\textcolor{stringliteral}{"LineCrossing"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'5'}:
+            c.setShapeType(\textcolor{stringliteral}{"Polygon"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'6'}:
+            c.setShapeType(\textcolor{stringliteral}{"Rectangle"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'7'}:
+            c.setShapeType(\textcolor{stringliteral}{"Ellipse"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'8'}:
+            c.setShapeType(\textcolor{stringliteral}{"ShapesConnector"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'9'}:
+            c.setShapeType(\textcolor{stringliteral}{"LabeledShapesConnector"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'h'}:
+            help(c);
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'*'}:
+            c.setOn(! c.getOn());
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'c'}:
+            c.clearShapes();
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'s'}:
+            c.writeShapesToFile(\textcolor{stringliteral}{"config.xml"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'l'}:
+            c.readShapesFromFile(\textcolor{stringliteral}{"config.xml"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} 65535:
+            c.deleteActive();
+            \textcolor{keywordflow}{break};
+        \}
+
+        c.redrawOn(image, out);
+        imshow(\textcolor{stringliteral}{"Canvas"}, out);
+        key = c.waitKeyEx(); \textcolor{comment}{// GUI and callbacks happen here}
+    \} \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'});
+
+    destroyAllWindows();
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCodeInclude}
+ 

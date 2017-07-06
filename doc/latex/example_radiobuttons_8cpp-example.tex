@@ -1,0 +1,93 @@
+\hypertarget{example_radiobuttons_8cpp-example}{}\section{example\+\_\+radiobuttons.\+cpp}
+This is an example of how to use the Radio\+Buttons Widget.
+
+
+\begin{DoxyCodeInclude}
+\textcolor{preprocessor}{#include "canvascv/canvas.h"}
+
+\textcolor{comment}{// These are used to create widgets}
+\textcolor{preprocessor}{#include "canvascv/widgets/radiobuttons.h"}
+
+\textcolor{preprocessor}{#include <iostream>}
+\textcolor{preprocessor}{#include <iterator>}
+
+\textcolor{preprocessor}{#include <opencv2/highgui.hpp>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacestd}{std};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    Mat image;
+    \textcolor{keywordflow}{if} (argc)
+    \{
+        Mat orig = imread(argv[0]);
+        \textcolor{keywordflow}{if} (orig.empty())
+        \{
+            \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -1);
+        \}
+        \textcolor{keywordflow}{if} (orig.cols > 1024)
+        \{
+            \textcolor{keywordtype}{double} ratio = 1024. / orig.cols;
+            cv::resize(orig, image, Size(), ratio, ratio);
+        \}
+        \textcolor{keywordflow}{else}
+        \{
+            image = orig;
+        \}
+    \}
+    \textcolor{keywordflow}{else}
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"Canvas"}, image.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{enableScreenText}();
+    \hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget::CBUserSelection} cb = [&c](\hyperlink{classcanvascv_1_1Widget}{Widget} *w, \textcolor{keywordtype}{int} index) \{
+        \hyperlink{classcanvascv_1_1RadioButtons}{RadioButtons} *rb = (\hyperlink{classcanvascv_1_1RadioButtons}{RadioButtons}*)w;
+        c.setScreenText(CCV\_STR(\textcolor{stringliteral}{"User selected option '"} << index << \textcolor{stringliteral}{"': '"} << rb->
+      \hyperlink{classcanvascv_1_1RadioButtons_a6a1570cb5b8328fba59bb0c17f63debc}{getTextAt}(index) << \textcolor{stringliteral}{"'\(\backslash\)n"}));
+        \textcolor{keywordflow}{switch} (index)
+        \{
+        \textcolor{keywordflow}{case} 0:
+            w->\hyperlink{classcanvascv_1_1Widget_a6e79b6a861cfb54fea56d5705fec44d7}{setOutlineColor}(\hyperlink{classcanvascv_1_1Colors_a2a48572768ea2c3912a1a5c8de4f1954}{Colors::Blue});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} 1:
+            w->\hyperlink{classcanvascv_1_1Widget_a6e79b6a861cfb54fea56d5705fec44d7}{setOutlineColor}(\hyperlink{classcanvascv_1_1Colors_a93c492d5ea68350ee63d5b91315b5ea7}{Colors::Green});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} 2:
+            w->\hyperlink{classcanvascv_1_1Widget_a6e79b6a861cfb54fea56d5705fec44d7}{setOutlineColor}(\hyperlink{classcanvascv_1_1Colors_a10aff24c53edf45b038d0636b061f9c2}{Colors::Red});
+            \textcolor{keywordflow}{break};
+        \}
+    \};
+
+    \textcolor{keyword}{auto} radioButtons = \hyperlink{classcanvascv_1_1RadioButtons_a302902d397822611546929f214604183}{RadioButtons::create}(c, \{
+                                                 \textcolor{stringliteral}{"Blue"},  \textcolor{comment}{// index 0}
+                                                 \textcolor{stringliteral}{"Green"}, \textcolor{comment}{// index 1}
+                                                 \textcolor{stringliteral}{"Red"},   \textcolor{comment}{// index 2}
+                                                 \textcolor{stringliteral}{"Exit"}   \textcolor{comment}{// index 3}
+                                             \}, 0, cb,
+                                             Point(image.cols / 2., image.rows / 2.));
+    radioButtons->setOutlineColor(\hyperlink{classcanvascv_1_1Colors_a2a48572768ea2c3912a1a5c8de4f1954}{Colors::Blue});
+
+    namedWindow(\textcolor{stringliteral}{"Canvas"}, WINDOW\_AUTOSIZE);
+    c.setMouseCallback(); \textcolor{comment}{// optional for mouse usage see also (example\_selectbox.cpp)}
+
+    \textcolor{keywordtype}{int} key = 0;
+    \textcolor{keywordtype}{int} delay = 1000/25; \textcolor{comment}{// we use a delay for polling the radioButtons}
+    Mat out; \textcolor{comment}{// keeping it out of the loop is a little more efficient}
+    \textcolor{keywordflow}{while} (radioButtons->getSelection() != 3 && key != \textcolor{charliteral}{'q'})
+    \{
+        c.redrawOn(image, out);
+        imshow(\textcolor{stringliteral}{"Canvas"}, out);
+        key = c.waitKeyEx(delay); \textcolor{comment}{// GUI and callbacks happen here}
+    \}
+
+    destroyAllWindows();
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCodeInclude}
+ 

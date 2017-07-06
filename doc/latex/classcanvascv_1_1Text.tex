@@ -1,0 +1,143 @@
+\hypertarget{classcanvascv_1_1Text}{}\section{canvascv\+:\+:Text Class Reference}
+\label{classcanvascv_1_1Text}\index{canvascv\+::\+Text@{canvascv\+::\+Text}}
+
+
+The \hyperlink{classcanvascv_1_1Text}{Text} class.  
+
+
+
+
+{\ttfamily \#include $<$text.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Text\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classcanvascv_1_1Text}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual const char $\ast$ \hyperlink{classcanvascv_1_1Text_ae81d87d43167c2e8d1e58fa620a80579}{get\+Type} () const 
+\begin{DoxyCompactList}\small\item\em get\+Type is always implemented by derived to return the same static pointer per widget. \end{DoxyCompactList}\item 
+std\+::string \hyperlink{classcanvascv_1_1Text_acd9ec2f0271ac420775a029d84361581}{get\+Text} () const \hypertarget{classcanvascv_1_1Text_acd9ec2f0271ac420775a029d84361581}{}\label{classcanvascv_1_1Text_acd9ec2f0271ac420775a029d84361581}
+
+\begin{DoxyCompactList}\small\item\em get the current text of the \hyperlink{classcanvascv_1_1Text}{Text} \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Text_aa54bad8c0b8eecdd5cd64138216ec83f}{set\+Text} (const std\+::string \&value)\hypertarget{classcanvascv_1_1Text_aa54bad8c0b8eecdd5cd64138216ec83f}{}\label{classcanvascv_1_1Text_aa54bad8c0b8eecdd5cd64138216ec83f}
+
+\begin{DoxyCompactList}\small\item\em set the current text of the \hyperlink{classcanvascv_1_1Text}{Text} \end{DoxyCompactList}\item 
+int \hyperlink{classcanvascv_1_1Text_ad535b8c794ff21380a7c9ccd7132d3ea}{get\+Font\+Face} () const \hypertarget{classcanvascv_1_1Text_ad535b8c794ff21380a7c9ccd7132d3ea}{}\label{classcanvascv_1_1Text_ad535b8c794ff21380a7c9ccd7132d3ea}
+
+\begin{DoxyCompactList}\small\item\em get the Open\+CV font used \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Text_af0d610b5c5015df19befd15b3f600a4e}{set\+Font\+Face} (int value)\hypertarget{classcanvascv_1_1Text_af0d610b5c5015df19befd15b3f600a4e}{}\label{classcanvascv_1_1Text_af0d610b5c5015df19befd15b3f600a4e}
+
+\begin{DoxyCompactList}\small\item\em set the Open\+CV font to use \end{DoxyCompactList}\item 
+double \hyperlink{classcanvascv_1_1Text_a8af0c36c755f596b31cedf3043a51552}{get\+Font\+Scale} () const \hypertarget{classcanvascv_1_1Text_a8af0c36c755f596b31cedf3043a51552}{}\label{classcanvascv_1_1Text_a8af0c36c755f596b31cedf3043a51552}
+
+\begin{DoxyCompactList}\small\item\em get the Open\+CV scale used for te font \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Text_a6541ae87e4577272feef0e30e1d5a24d}{set\+Font\+Scale} (double value)\hypertarget{classcanvascv_1_1Text_a6541ae87e4577272feef0e30e1d5a24d}{}\label{classcanvascv_1_1Text_a6541ae87e4577272feef0e30e1d5a24d}
+
+\begin{DoxyCompactList}\small\item\em set the Open\+CV scale used for te font \end{DoxyCompactList}\item 
+int \hyperlink{classcanvascv_1_1Text_ae314e7c415cc0b5aa7e56af8734fe526}{get\+Font\+Height} () const \hypertarget{classcanvascv_1_1Text_ae314e7c415cc0b5aa7e56af8734fe526}{}\label{classcanvascv_1_1Text_ae314e7c415cc0b5aa7e56af8734fe526}
+
+\begin{DoxyCompactList}\small\item\em get the calculated font height (with padding and internal font spaces) \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Text_abb99c1a3328766b2079619db76de9f04}{set\+Font\+Height} (int value)\hypertarget{classcanvascv_1_1Text_abb99c1a3328766b2079619db76de9f04}{}\label{classcanvascv_1_1Text_abb99c1a3328766b2079619db76de9f04}
+
+\begin{DoxyCompactList}\small\item\em set the font scale from a requested pixel height (with padding and internal font spaces) \end{DoxyCompactList}\item 
+int \hyperlink{classcanvascv_1_1Text_a1c968ed06ba141eeeb99e3cc369988a3}{get\+Max\+Width} () const \hypertarget{classcanvascv_1_1Text_a1c968ed06ba141eeeb99e3cc369988a3}{}\label{classcanvascv_1_1Text_a1c968ed06ba141eeeb99e3cc369988a3}
+
+\begin{DoxyCompactList}\small\item\em get the maxuimum allowed width of rows in pixels (0 means it\textquotesingle{}s disabled) \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Text_a6062c0756aceec5d6fe8f233173e4b03}{set\+Max\+Width} (int value)\hypertarget{classcanvascv_1_1Text_a6062c0756aceec5d6fe8f233173e4b03}{}\label{classcanvascv_1_1Text_a6062c0756aceec5d6fe8f233173e4b03}
+
+\begin{DoxyCompactList}\small\item\em set the maxuimum allowed width of rows in pixels (0 to disable max width) \end{DoxyCompactList}\item 
+virtual const cv\+::\+Rect \& \hyperlink{classcanvascv_1_1Text_a3b2c63327230c5763fe4262a804c41d0}{get\+Rect} ()\hypertarget{classcanvascv_1_1Text_a3b2c63327230c5763fe4262a804c41d0}{}\label{classcanvascv_1_1Text_a3b2c63327230c5763fe4262a804c41d0}
+
+\begin{DoxyCompactList}\small\item\em Actual size the widget is occupying due to \hyperlink{classcanvascv_1_1Layout}{Layout} manager. \end{DoxyCompactList}\item 
+virtual const cv\+::\+Rect \& \hyperlink{classcanvascv_1_1Text_a0cfed8ed9879101479795710dac4b1f2}{get\+Minimal\+Rect} ()\hypertarget{classcanvascv_1_1Text_a0cfed8ed9879101479795710dac4b1f2}{}\label{classcanvascv_1_1Text_a0cfed8ed9879101479795710dac4b1f2}
+
+\begin{DoxyCompactList}\small\item\em Minimal size the widget coould have occupy. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Text_a94ccca8b1e03869a73699617a8c7f189}{recalc} ()\hypertarget{classcanvascv_1_1Text_a94ccca8b1e03869a73699617a8c7f189}{}\label{classcanvascv_1_1Text_a94ccca8b1e03869a73699617a8c7f189}
+
+\begin{DoxyCompactList}\small\item\em update self so next call to \textquotesingle{}draw\textquotesingle{} will display correctly \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Text_a2790e0fe1541df82c97879d393de687f}{draw\+FG} (cv\+::\+Mat \&dst)\hypertarget{classcanvascv_1_1Text_a2790e0fe1541df82c97879d393de687f}{}\label{classcanvascv_1_1Text_a2790e0fe1541df82c97879d393de687f}
+
+\begin{DoxyCompactList}\small\item\em dst is the roi of the widget size and not the full image \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Text}{Text} $>$ \hyperlink{classcanvascv_1_1Text_a7f3552263b6f185f78d90549e7ac38f7}{create} (\hyperlink{classcanvascv_1_1Layout}{Layout} \&layout, const cv\+::\+Point \&pos, const std\+::string \&text=\char`\"{}\char`\"{}, \hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abe}{Anchor} flow\+Anchor=\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeaa6a2c9d829ceed729afe8cb2f51b2f0c}{T\+OP}, \hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abe}{Anchor} layout\+Anchor=\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeaa6a2c9d829ceed729afe8cb2f51b2f0c}{T\+OP})
+\begin{DoxyCompactList}\small\item\em create a \hyperlink{classcanvascv_1_1Text}{Text} widget \end{DoxyCompactList}\item 
+static std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Text}{Text} $>$ \hyperlink{classcanvascv_1_1Text_ae95c6c8ba42111f81ce8120e9fe54fd6}{create} (\hyperlink{classcanvascv_1_1Layout}{Layout} \&layout, const std\+::string \&text=\char`\"{}\char`\"{}, \hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abe}{Anchor} flow\+Anchor=\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeaa6a2c9d829ceed729afe8cb2f51b2f0c}{T\+OP}, \hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abe}{Anchor} layout\+Anchor=\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeaa6a2c9d829ceed729afe8cb2f51b2f0c}{T\+OP})\hypertarget{classcanvascv_1_1Text_ae95c6c8ba42111f81ce8120e9fe54fd6}{}\label{classcanvascv_1_1Text_ae95c6c8ba42111f81ce8120e9fe54fd6}
+
+\begin{DoxyCompactList}\small\item\em a convinient version to the above without the \textquotesingle{}pos\textquotesingle{} argument \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Displaying text on the Open\+CV Window with/without a hilighting background. \begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_add_theme_8cpp-example}{example\+\_\+add\+\_\+theme.\+cpp}.\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Text@{canvascv\+::\+Text}!create@{create}}
+\index{create@{create}!canvascv\+::\+Text@{canvascv\+::\+Text}}
+\subsubsection[{\texorpdfstring{create(\+Layout \&layout, const cv\+::\+Point \&pos, const std\+::string \&text="""", Anchor flow\+Anchor=\+T\+O\+P, Anchor layout\+Anchor=\+T\+O\+P)}{create(Layout &layout, const cv::Point &pos, const std::string &text="", Anchor flowAnchor=TOP, Anchor layoutAnchor=TOP)}}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::shared\+\_\+ptr$<${\bf Text}$>$ canvascv\+::\+Text\+::create (
+\begin{DoxyParamCaption}
+\item[{{\bf Layout} \&}]{layout, }
+\item[{const cv\+::\+Point \&}]{pos, }
+\item[{const std\+::string \&}]{text = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{{\bf Anchor}}]{flow\+Anchor = {\ttfamily {\bf T\+OP}}, }
+\item[{{\bf Anchor}}]{layout\+Anchor = {\ttfamily {\bf T\+OP}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classcanvascv_1_1Text_a7f3552263b6f185f78d90549e7ac38f7}{}\label{classcanvascv_1_1Text_a7f3552263b6f185f78d90549e7ac38f7}
+
+\begin{DoxyParams}{Parameters}
+{\em layout} & widgets are placed in layouts Canvas/\+V\+Frame/\+H\+Frame/... \\
+\hline
+{\em pos} & location in the \hyperlink{classcanvascv_1_1Layout}{Layout} (Layouts can ignore that) \\
+\hline
+{\em text} & what to write (accepts newline) \\
+\hline
+{\em flow\+Anchor} & affects the widget behavior
+\begin{DoxyItemize}
+\item T\+O\+P/\+B\+O\+T\+T\+OM -\/ text appears below or above pos
+\item R\+I\+G\+H\+T/\+C\+E\+N\+T\+E\+R/\+L\+E\+FT is row alignment for multirows 
+\end{DoxyItemize}\\
+\hline
+{\em layout\+Anchor} & affects the layout in the \hyperlink{classcanvascv_1_1Layout}{Layout} it belongs to
+\begin{DoxyItemize}
+\item T\+O\+P/\+C\+E\+N\+T\+E\+R/\+B\+O\+T\+T\+OM is relevat to a Horizontal\+Layout/\+H\+Frame (unless \hyperlink{classcanvascv_1_1Widget_a3ef50b76d33c332cea4e632346b6df33}{set\+Stretch\+Y()} is used)
+\item R\+I\+G\+H\+T/\+C\+E\+N\+T\+E\+R/\+L\+E\+FT is relevat to a Vertical\+Layout/\+V\+Frame (unless \hyperlink{classcanvascv_1_1Widget_a7cdddebd755c499712793f727a057733}{set\+Stretch\+X()} is used) 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a smart pointer copy of the object kept in the \hyperlink{classcanvascv_1_1Layout}{Layout} 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Text@{canvascv\+::\+Text}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!canvascv\+::\+Text@{canvascv\+::\+Text}}
+\subsubsection[{\texorpdfstring{get\+Type() const }{getType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ canvascv\+::\+Text\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Text_ae81d87d43167c2e8d1e58fa620a80579}{}\label{classcanvascv_1_1Text_ae81d87d43167c2e8d1e58fa620a80579}
+\begin{DoxyReturn}{Returns}
+const char $\ast$ pointer to string with widget type name 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Widget_a85884269bd53ab91203f099a586efa43}{canvascv\+::\+Widget}.
+
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1Button_ace294c72ce39507268ffd752f4ca0034}{canvascv\+::\+Button}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/widgets/text.\+h\end{DoxyCompactItemize}

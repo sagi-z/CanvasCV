@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['darkblue',['DarkBlue',['../classcanvascv_1_1Colors.html#a719690c9780f154593064e8c638ca8ed',1,'canvascv::Colors']]],
+  ['darkcyan',['DarkCyan',['../classcanvascv_1_1Colors.html#a8eaa68747a618e95e56cfc61d3e25f07',1,'canvascv::Colors']]],
+  ['darkgoldenrod',['DarkGoldenRod',['../classcanvascv_1_1Colors.html#a693dabc1911a039a0e03d799beb1d41e',1,'canvascv::Colors']]],
+  ['darkgray',['DarkGray',['../classcanvascv_1_1Colors.html#a4587bf616f720c3afe0724ca552b527b',1,'canvascv::Colors']]],
+  ['darkgreen',['DarkGreen',['../classcanvascv_1_1Colors.html#acbd7ca16f07b5ff69f3f370951f061c8',1,'canvascv::Colors']]],
+  ['darkgrey',['DarkGrey',['../classcanvascv_1_1Colors.html#ad4057ad27ddc1a360adaa6c6d8ad7327',1,'canvascv::Colors']]],
+  ['darkkhaki',['DarkKhaki',['../classcanvascv_1_1Colors.html#ad4a5d9248452a5aa5f91f406e00c035c',1,'canvascv::Colors']]],
+  ['darkmagenta',['DarkMagenta',['../classcanvascv_1_1Colors.html#a4d36a8fd5dda17b145b1eecd97116fe2',1,'canvascv::Colors']]],
+  ['darkolivegreen',['DarkOliveGreen',['../classcanvascv_1_1Colors.html#a6fc99c0e07f0e56d91215438b32d368f',1,'canvascv::Colors']]],
+  ['darkorange',['DarkOrange',['../classcanvascv_1_1Colors.html#a8b14aa892e77d94b86548ee54774d226',1,'canvascv::Colors']]],
+  ['darkorchid',['DarkOrchid',['../classcanvascv_1_1Colors.html#a92b4e5ffd1fba8499445819712595eb3',1,'canvascv::Colors']]],
+  ['darkred',['DarkRed',['../classcanvascv_1_1Colors.html#a29a1cd16453b2d75bdb4324b395f2796',1,'canvascv::Colors']]],
+  ['darksalmon',['DarkSalmon',['../classcanvascv_1_1Colors.html#a1d3a826928f24172701289b736bc3fd3',1,'canvascv::Colors']]],
+  ['darkseagreen',['DarkSeaGreen',['../classcanvascv_1_1Colors.html#a94cfb2b88c10f848cb90d41fc70ac973',1,'canvascv::Colors']]],
+  ['darkslateblue',['DarkSlateBlue',['../classcanvascv_1_1Colors.html#ac20afd846ec87e7bdf9cc38c1c6755ba',1,'canvascv::Colors']]],
+  ['darkslategray',['DarkSlateGray',['../classcanvascv_1_1Colors.html#ac66e6a923be591fb68570281286c7c05',1,'canvascv::Colors']]],
+  ['darkturquoise',['DarkTurquoise',['../classcanvascv_1_1Colors.html#a7f095f9f4b95e3d2443ad6cf67757d32',1,'canvascv::Colors']]],
+  ['darkviolet',['DarkViolet',['../classcanvascv_1_1Colors.html#a36da5ac0b100032fa3e0298d5950d32a',1,'canvascv::Colors']]],
+  ['deeppink',['DeepPink',['../classcanvascv_1_1Colors.html#a9a83f4b13795374abb0a6dd4361f6ddb',1,'canvascv::Colors']]],
+  ['deepskyblue',['DeepSkyBlue',['../classcanvascv_1_1Colors.html#a32106ce8f118e33a24a2c5f3048e6cd7',1,'canvascv::Colors']]],
+  ['dimgray',['DimGray',['../classcanvascv_1_1Colors.html#a8031ff6369deeccd839a066e4fd0bc1d',1,'canvascv::Colors']]],
+  ['dimgrey',['DimGrey',['../classcanvascv_1_1Colors.html#a465c7118cde62bc549bb3993693524ab',1,'canvascv::Colors']]],
+  ['dodgerblue',['DodgerBlue',['../classcanvascv_1_1Colors.html#a43b0172f931d81a957a172035966b8fa',1,'canvascv::Colors']]]
+];

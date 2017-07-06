@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['tan',['Tan',['../classcanvascv_1_1Colors.html#acc9ba39ebb412fff2e76684d65aa7556',1,'canvascv::Colors']]],
+  ['teal',['Teal',['../classcanvascv_1_1Colors.html#a739bf703aca32d6ba82f871cff4edf10',1,'canvascv::Colors']]],
+  ['text',['Text',['../classcanvascv_1_1Text.html',1,'canvascv']]],
+  ['textbox',['TextBox',['../classcanvascv_1_1TextBox.html',1,'canvascv']]],
+  ['theme',['Theme',['../classcanvascv_1_1Theme.html',1,'canvascv']]],
+  ['themedarkblue',['ThemeDarkBlue',['../classcanvascv_1_1ThemeDarkBlue.html',1,'canvascv']]],
+  ['themedarkorange',['ThemeDarkOrange',['../classcanvascv_1_1ThemeDarkOrange.html',1,'canvascv']]],
+  ['themerepository',['ThemeRepository',['../classcanvascv_1_1ThemeRepository.html',1,'canvascv']]],
+  ['thistle',['Thistle',['../classcanvascv_1_1Colors.html#aa391df2a13b457cdd1c4ec693b3817a7',1,'canvascv::Colors']]],
+  ['tomato',['Tomato',['../classcanvascv_1_1Colors.html#a07faee5fa36ce572e41255b05d442e99',1,'canvascv::Colors']]],
+  ['top',['TOP',['../classcanvascv_1_1Widget.html#a98ca3c300ba50b316fa5a1d300456abeaa6a2c9d829ceed729afe8cb2f51b2f0c',1,'canvascv::Widget']]],
+  ['top_5fleft',['TOP_LEFT',['../classcanvascv_1_1Widget.html#a98ca3c300ba50b316fa5a1d300456abeade1c5e9202b56dcd7d2f5f9825a36cf9',1,'canvascv::Widget']]],
+  ['top_5fright',['TOP_RIGHT',['../classcanvascv_1_1Widget.html#a98ca3c300ba50b316fa5a1d300456abea28a2d9d47839ff200bcc800acc32bc92',1,'canvascv::Widget']]],
+  ['translate',['translate',['../classcanvascv_1_1CompoundWidget.html#a28d73640776bc428f008a9b14facd3f9',1,'canvascv::CompoundWidget::translate()'],['../classcanvascv_1_1Widget.html#a05344fc28d0e558fd2e940e672329dec',1,'canvascv::Widget::translate()']]],
+  ['transparent',['TRANSPARENT',['../classcanvascv_1_1Colors.html#afcf2e7359a45b54affb1d2c4df47730f',1,'canvascv::Colors']]],
+  ['turquoise',['Turquoise',['../classcanvascv_1_1Colors.html#a1634d6dbb7d8ababfe789402e09ec616',1,'canvascv::Colors']]],
+  ['tutorials',['Tutorials',['../tutorials.html',1,'']]],
+  ['twocoloredtheme',['TwoColoredTheme',['../classcanvascv_1_1TwoColoredTheme.html',1,'canvascv']]]
+];

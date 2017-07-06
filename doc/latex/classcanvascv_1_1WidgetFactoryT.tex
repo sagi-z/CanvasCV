@@ -1,0 +1,77 @@
+\hypertarget{classcanvascv_1_1WidgetFactoryT}{}\section{canvascv\+:\+:Widget\+FactoryT$<$ T $>$ Class Template Reference}
+\label{classcanvascv_1_1WidgetFactoryT}\index{canvascv\+::\+Widget\+Factory\+T$<$ T $>$@{canvascv\+::\+Widget\+Factory\+T$<$ T $>$}}
+
+
+The \hyperlink{classcanvascv_1_1WidgetFactoryT}{Widget\+FactoryT} class.  
+
+
+
+
+{\ttfamily \#include $<$widgetfactory.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Widget\+FactoryT$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcanvascv_1_1WidgetFactoryT}
+\end{center}
+\end{figure}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{classcanvascv_1_1WidgetFactoryT_afc65f55a1043450975cc5431b10fbe89}{add\+Type} (std\+::string name)
+\begin{DoxyCompactList}\small\item\em add\+Type adds type \textquotesingle{}T\textquotesingle{} under name \textquotesingle{}name\textquotesingle{} \end{DoxyCompactList}\item 
+static std\+::shared\+\_\+ptr$<$ T $>$ \hyperlink{classcanvascv_1_1WidgetFactoryT_afa3a2961a2fdb649dacb86a07c3c26a0}{new\+Widget} (\hyperlink{classcanvascv_1_1Layout}{Layout} \&layout\+Val, const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))
+\begin{DoxyCompactList}\small\item\em new\+Widget \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\\*
+class canvascv\+::\+Widget\+Factory\+T$<$ T $>$}
+
+This is the compile-\/time type-\/safe version of the \hyperlink{classcanvascv_1_1WidgetFactory}{Widget\+Factory}. Types added here with \hyperlink{classcanvascv_1_1WidgetFactoryT_afc65f55a1043450975cc5431b10fbe89}{add\+Type()} are guranteed to exist at compile time. Types created by \hyperlink{classcanvascv_1_1WidgetFactoryT_afa3a2961a2fdb649dacb86a07c3c26a0}{new\+Widget()} are guranteed to exist at compile time. \begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_add_widget_8cpp-example}{example\+\_\+add\+\_\+widget.\+cpp}.\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Widget\+FactoryT@{canvascv\+::\+Widget\+FactoryT}!add\+Type@{add\+Type}}
+\index{add\+Type@{add\+Type}!canvascv\+::\+Widget\+FactoryT@{canvascv\+::\+Widget\+FactoryT}}
+\subsubsection[{\texorpdfstring{add\+Type(std\+::string name)}{addType(std::string name)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ bool {\bf canvascv\+::\+Widget\+FactoryT}$<$ T $>$\+::add\+Type (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classcanvascv_1_1WidgetFactoryT_afc65f55a1043450975cc5431b10fbe89}{}\label{classcanvascv_1_1WidgetFactoryT_afc65f55a1043450975cc5431b10fbe89}
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if type \textquotesingle{}T\textquotesingle{} is registering for the first time ot false otherwise 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+C\+C\+V\+\_\+\+R\+E\+G\+I\+S\+T\+E\+R\+\_\+\+W\+I\+D\+G\+ET macro in Widget\+Factory.\+h 
+\end{DoxySeeAlso}
+\index{canvascv\+::\+Widget\+FactoryT@{canvascv\+::\+Widget\+FactoryT}!new\+Widget@{new\+Widget}}
+\index{new\+Widget@{new\+Widget}!canvascv\+::\+Widget\+FactoryT@{canvascv\+::\+Widget\+FactoryT}}
+\subsubsection[{\texorpdfstring{new\+Widget(\+Layout \&layout\+Val, const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))}{newWidget(Layout &layoutVal, const cv::Point &pos=cv::Point(0, 0))}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ std\+::shared\+\_\+ptr$<$ T $>$ {\bf canvascv\+::\+Widget\+FactoryT}$<$ T $>$\+::new\+Widget (
+\begin{DoxyParamCaption}
+\item[{{\bf Layout} \&}]{layout\+Val, }
+\item[{const cv\+::\+Point \&}]{pos = {\ttfamily cv\+:\+:Point(0,0)}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classcanvascv_1_1WidgetFactoryT_afa3a2961a2fdb649dacb86a07c3c26a0}{}\label{classcanvascv_1_1WidgetFactoryT_afa3a2961a2fdb649dacb86a07c3c26a0}
+Use this to create widgets by compile-\/time type. 
+\begin{DoxyParams}{Parameters}
+{\em layout\+Val} & is the parent layout \\
+\hline
+{\em pos} & is an intial location for the \hyperlink{classcanvascv_1_1Widget}{Widget} on the \hyperlink{classcanvascv_1_1Layout}{Layout} (if the layout supports specific positions). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a pointer to a newly allocated widget of type \textquotesingle{}type\textquotesingle{}. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/widgets/widgetfactory.\+h\end{DoxyCompactItemize}

@@ -3,9 +3,12 @@ layout: page
 title: Screenshots
 permalink: /screenshots/
 ---
+These are taken from the source code examples and tutorials
+-----------------------------------------------------------
+A dialog from the tutorials:
 
-These are taken from the source code 'examples'
------------------------------------------------
+![CanvasCV]({{ site.baseurl }}/assets/img/screenshots/tut_layout_dialog.jpg)
+<BR>
 
 Applying themes ar runtime:
 

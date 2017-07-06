@@ -1,0 +1,158 @@
+
+\begin{DoxyItemize}
+\item \href{https://github.com/sagi-z/CanvasCV/releases}{\tt Browse releases}
+\item \hyperlink{installlinux}{Linux installation}
+\item \hyperlink{installwindows}{Windows installation}
+\item \hyperlink{cmake}{A c++ cmake using the installation} 
+\end{DoxyItemize}\hypertarget{installlinux}{}\section{Linux installation}\label{installlinux}
+\hypertarget{installlinux_ilsec1}{}\subsection{Build dependencies}\label{installlinux_ilsec1}
+Make sure these are installed first and that their executables are {\bfseries in your path}\+:
+\begin{DoxyItemize}
+\item {\bfseries cmake} -\/ should already be installed since you built Open\+CV by yourself.
+\item {\bfseries git} (optional) -\/ you can also download the sources from Git\+Hub. ~\newline
+
+\end{DoxyItemize}\hypertarget{installlinux_ilsec2}{}\subsection{Prepare to build}\label{installlinux_ilsec2}
+\begin{DoxyVerb}git clone https://github.com/sagi-z/CanvasCV.git
+cd CanvasCV
+git checkout tags/1.0.0
+mkdir build
+cd build
+\end{DoxyVerb}
+ ~\newline
+\hypertarget{installlinux_ilsec3}{}\subsection{Building without the C++ examples}\label{installlinux_ilsec3}
+\begin{DoxyVerb}cmake ..
+make
+\end{DoxyVerb}
+ ~\newline
+\hypertarget{installlinux_ilsec4}{}\subsection{Build with the examples}\label{installlinux_ilsec4}
+\begin{DoxyVerb}cmake -DBUILD_EXAMPLES=ON ..
+make
+\end{DoxyVerb}
+ ~\newline
+\hypertarget{installlinux_ilsec5}{}\subsection{Install option 1}\label{installlinux_ilsec5}
+\begin{DoxyVerb}sudo make install
+\end{DoxyVerb}
+ ~\newline
+\hypertarget{installlinux_ilsec6}{}\subsection{Install option 2 -\/ cleaner}\label{installlinux_ilsec6}
+\begin{DoxyVerb}cpack -G DEB
+sudo dpkg -i ./canvascv-1.0.0-Linux.deb
+\end{DoxyVerb}
+ ~\newline
+ \hypertarget{installwindows}{}\section{Windows installation}\label{installwindows}
+\hypertarget{installwindows_iwsec1}{}\subsection{Build dependencies}\label{installwindows_iwsec1}
+Make sure these are installed first and that their executables are {\bfseries in your path}\+:
+\begin{DoxyItemize}
+\item {\bfseries cmake} -\/ should already be installed if you built Open\+CV by yourself (configure {\itshape O\+P\+E\+N\+C\+V\+\_\+\+D\+IR} as required for build using Open\+CV with cmake).
+\item {\bfseries Visual Studio} -\/ a C++ compiler -\/ I\textquotesingle{}m using {\itshape Visual Studio 2015}.
+\item {\bfseries git} (optional) -\/ you can also download the sources from Git\+Hub.
+\item {\bfseries N\+S\+IS} (optional) -\/ if you want to build a package installer. ~\newline
+
+\end{DoxyItemize}\hypertarget{installwindows_iwsec2}{}\subsection{Building}\label{installwindows_iwsec2}
+
+\begin{DoxyItemize}
+\item This should be done from a {\bfseries Developer Command Prompt for V\+S2015} (Open it from the {\itshape Start} menu)\+:
+\end{DoxyItemize}
+
+\begin{DoxyVerb}REM check dependencies are in path/exist
+REM ====================================
+cd c:\users\sagiz
+where git
+where cmake
+echo %OPENCV_DIR%
+where msbuild
+dir "c:\Program Files (x86)\NSIS\NSIS.exe"
+
+REM get the sources
+REM ===============
+cd c:\users\sagiz
+git clone https://github.com/sagi-z/CanvasCV.git
+cd CanvasCV
+git checkout tags/1.0.0
+mkdir build
+cd build
+
+REM configure the build
+REM ===================
+cmake -G "Visual Studio 14 2015 Win64" -DBUILD_EXAMPLES=ON ..
+
+REM build the sources
+REM =================
+msbuild ALL_BUILD.vcxproj /p:Configuration=Release
+
+REM build the installer
+REM ===================
+msbuild PACKAGE.vcxproj /p:Configuration=Release
+
+REM run the installer
+REM =================
+.\canvascv-1.0.0-win64.exe
+\end{DoxyVerb}
+ \hypertarget{cmake}{}\section{A c++ cmake using the installation}\label{cmake}
+\hypertarget{cmake_cmakesec1}{}\subsection{Common cmake}\label{cmake_cmakesec1}
+The tutorials in this documentation were built on Linux and Window with this {\itshape C\+Make\+Lists.\+txt} file\+:
+
+(assuming a sub directory named {\itshape tutorials} with a target per cpp file)
+
+
+\begin{DoxyCode}
+1 cmake\_minimum\_required(VERSION 3.0.2)
+2 
+3 project (canvascv-tutorials)
+4 
+5 find\_package(OpenCV 3.1.0 REQUIRED)
+6 
+7 set(CMAKE\_CXX\_STANDARD\_REQUIRED ON)
+8 set(CMAKE\_CXX\_STANDARD 11)
+9 
+10 # add include directories to the project
+11 include\_directories(
+12     $\{PROJECT\_SOURCE\_DIR\}/tutorials
+13     $\{OpenCV\_INCLUDE\_DIRS\}
+14 )
+15 
+16 file(GLOB\_RECURSE TUTORIAL\_SRCS
+17     "tutorials/*.cpp"
+18 )
+19 
+20 if(WIN32)
+21     find\_library(CanvasCV\_LIB canvascv "C:/Program Files/canvascv 1.0.0/lib")
+22     include\_directories("C:/Program Files/canvascv 1.0.0/include")
+23 else()
+24     find\_library(CanvasCV\_LIB canvascv "/usr/local/lib")
+25     include\_directories(/usr/local/include)
+26 endif()
+27 
+28 message ("Building these tutorials:")
+29 foreach ( file $\{TUTORIAL\_SRCS\} )
+30     get\_filename\_component( target\_name $\{file\} NAME\_WE )
+31     message ( "Example '$\{target\_name\}' will be created")
+32     add\_executable($\{target\_name\} $\{file\})
+33     target\_link\_libraries ($\{target\_name\} $\{CanvasCV\_LIB\} $\{OpenCV\_LIBS\})
+34 endforeach()
+\end{DoxyCode}
+ ~\newline
+\hypertarget{cmake_cmakesec2}{}\subsection{Linux command line}\label{cmake_cmakesec2}
+\begin{DoxyVerb}cd projectDir
+mkdir build
+cd build
+cmake ..
+make
+ls
+\end{DoxyVerb}
+ ~\newline
+\hypertarget{cmake_cmakesec3}{}\subsection{Windows command line}\label{cmake_cmakesec3}
+This should be done from a {\bfseries Developer Command Prompt for V\+S2015} (Open it from the {\itshape Start} menu)\+: \begin{DoxyVerb}cd projectDir
+mkdir build
+cd build
+cmake -G "Visual Studio 14 2015 Win64" ..
+\end{DoxyVerb}
+
+
+Now depending if you\textquotesingle{}re linking with a {\itshape Debug} or {\itshape Release} version (usually {\itshape Release})\+: \begin{DoxyVerb}msbuild ALL_BUILD.vcxproj /p:Configuration=Release
+dir Release\*.exe
+\end{DoxyVerb}
+
+
+OR \begin{DoxyVerb}msbuild ALL_BUILD.vcxproj /p:Configuration=Debug
+dir Debug\*.exe\end{DoxyVerb}
+ 

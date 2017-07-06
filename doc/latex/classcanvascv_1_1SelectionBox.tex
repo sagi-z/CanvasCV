@@ -1,0 +1,144 @@
+\hypertarget{classcanvascv_1_1SelectionBox}{}\section{canvascv\+:\+:Selection\+Box Class Reference}
+\label{classcanvascv_1_1SelectionBox}\index{canvascv\+::\+Selection\+Box@{canvascv\+::\+Selection\+Box}}
+
+
+The \hyperlink{classcanvascv_1_1SelectionBox}{Selection\+Box} class.  
+
+
+
+
+{\ttfamily \#include $<$selectionbox.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Selection\+Box\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classcanvascv_1_1SelectionBox}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \hyperlink{classcanvascv_1_1SelectionBox_adb7793b6a0508af80e6320f87549a99e}{get\+Text\+At} (int index) const 
+\begin{DoxyCompactList}\small\item\em get\+Text\+At \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classcanvascv_1_1SelectionBox_aa24538ddb8d188e7db4c052ba2cf0728}{size} () const \hypertarget{classcanvascv_1_1SelectionBox_aa24538ddb8d188e7db4c052ba2cf0728}{}\label{classcanvascv_1_1SelectionBox_aa24538ddb8d188e7db4c052ba2cf0728}
+
+\begin{DoxyCompactList}\small\item\em return nunmber of check boxes in group \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1SelectionBox_a760cb57780d64eee6dda96b2971ea3af}{set\+User\+CB} (\hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget\+::\+C\+B\+User\+Selection} cb\+User\+Selection)\hypertarget{classcanvascv_1_1SelectionBox_a760cb57780d64eee6dda96b2971ea3af}{}\label{classcanvascv_1_1SelectionBox_a760cb57780d64eee6dda96b2971ea3af}
+
+\begin{DoxyCompactList}\small\item\em cb\+User\+Selection will be invoked per user selection \end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{classcanvascv_1_1SelectionBox_aef13ee1ea2023ccb5589b6328b458e1c}{get\+Type} () const 
+\begin{DoxyCompactList}\small\item\em get\+Type is always implemented by derived to return the same static pointer per widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1SelectionBox}{Selection\+Box} $>$ \hyperlink{classcanvascv_1_1SelectionBox_af1f8e0c480d006706bc5240cd1ebd075}{create} (\hyperlink{classcanvascv_1_1Layout}{Layout} \&layout\+Val, std\+::vector$<$ std\+::string $>$ selection\+Names, \hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget\+::\+C\+B\+User\+Selection} cb\+User\+Selection=\hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget\+::\+C\+B\+User\+Selection}(), const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))
+\begin{DoxyCompactList}\small\item\em create a selection box widget \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classcanvascv_1_1SelectionBox_a78bf141cda79618e972f173627d07e1a}{recalc\+Compound} ()
+\begin{DoxyCompactList}\small\item\em recalc\+Compound \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Use a message box with any number of buttons on an Open\+CV window \begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_selectbox_8cpp-example}{example\+\_\+selectbox.\+cpp}.\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Selection\+Box@{canvascv\+::\+Selection\+Box}!create@{create}}
+\index{create@{create}!canvascv\+::\+Selection\+Box@{canvascv\+::\+Selection\+Box}}
+\subsubsection[{\texorpdfstring{create(\+Layout \&layout\+Val, std\+::vector$<$ std\+::string $>$ selection\+Names, Widget\+::\+C\+B\+User\+Selection cb\+User\+Selection=\+Widget\+::\+C\+B\+User\+Selection(), const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))}{create(Layout &layoutVal, std::vector< std::string > selectionNames, Widget::CBUserSelection cbUserSelection=Widget::CBUserSelection(), const cv::Point &pos=cv::Point(0, 0))}}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::shared\+\_\+ptr$<${\bf Selection\+Box}$>$ canvascv\+::\+Selection\+Box\+::create (
+\begin{DoxyParamCaption}
+\item[{{\bf Layout} \&}]{layout\+Val, }
+\item[{std\+::vector$<$ std\+::string $>$}]{selection\+Names, }
+\item[{{\bf Widget\+::\+C\+B\+User\+Selection}}]{cb\+User\+Selection = {\ttfamily {\bf Widget\+::\+C\+B\+User\+Selection}()}, }
+\item[{const cv\+::\+Point \&}]{pos = {\ttfamily cv\+:\+:Point(0,~0)}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classcanvascv_1_1SelectionBox_af1f8e0c480d006706bc5240cd1ebd075}{}\label{classcanvascv_1_1SelectionBox_af1f8e0c480d006706bc5240cd1ebd075}
+
+\begin{DoxyParams}{Parameters}
+{\em layout\+Val} & widgets are placed in layouts Canvas/\+V\+Frame/\+H\+Frame/... \\
+\hline
+{\em selection\+Names} & automatically create items with names of selection\+Names \\
+\hline
+{\em cb\+User\+Selection} & a callback to invoke with index of pressed button \\
+\hline
+{\em pos} & location in the \hyperlink{classcanvascv_1_1Layout}{Layout} (if the layout supports Point locations) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a smart pointer copy of the object kept in the \hyperlink{classcanvascv_1_1Layout}{Layout} 
+\begin{DoxyCode}
+Canvas c(winName, image.size());
+\textcolor{keyword}{auto} selectionBox = \hyperlink{classcanvascv_1_1SelectionBox_af1f8e0c480d006706bc5240cd1ebd075}{SelectionBox::create}(c, \{
+                                        \textcolor{stringliteral}{"Long Option1"},     \textcolor{comment}{// index 0}
+                                        \textcolor{stringliteral}{"Option2\(\backslash\)n2 lines"}, \textcolor{comment}{// index 1}
+                                        \textcolor{stringliteral}{"Option3"}           \textcolor{comment}{// index 2}
+                                    \},
+                                    [](Widget *w, \textcolor{keywordtype}{int} i) \{
+    w->setVisible(\textcolor{keyword}{false});
+    cout << \textcolor{stringliteral}{"Option "} << i << \textcolor{stringliteral}{" was chosen"} << endl;
+\});
+\textcolor{keywordflow}{while}(...)
+\{
+    c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(...);
+    imshow(...);
+    key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(...); \textcolor{comment}{// GUI and callbacks happen here}
+\}
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_selectbox_8cpp-example}{example\+\_\+selectbox.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Selection\+Box@{canvascv\+::\+Selection\+Box}!get\+Text\+At@{get\+Text\+At}}
+\index{get\+Text\+At@{get\+Text\+At}!canvascv\+::\+Selection\+Box@{canvascv\+::\+Selection\+Box}}
+\subsubsection[{\texorpdfstring{get\+Text\+At(int index) const }{getTextAt(int index) const }}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string canvascv\+::\+Selection\+Box\+::get\+Text\+At (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+) const}\hypertarget{classcanvascv_1_1SelectionBox_adb7793b6a0508af80e6320f87549a99e}{}\label{classcanvascv_1_1SelectionBox_adb7793b6a0508af80e6320f87549a99e}
+return the text at index index 
+\begin{DoxyParams}{Parameters}
+{\em index} & is the index you want the text for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return the text at index index or empty string if invalid index 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_selectbox_8cpp-example}{example\+\_\+selectbox.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Selection\+Box@{canvascv\+::\+Selection\+Box}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!canvascv\+::\+Selection\+Box@{canvascv\+::\+Selection\+Box}}
+\subsubsection[{\texorpdfstring{get\+Type() const }{getType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ canvascv\+::\+Selection\+Box\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1SelectionBox_aef13ee1ea2023ccb5589b6328b458e1c}{}\label{classcanvascv_1_1SelectionBox_aef13ee1ea2023ccb5589b6328b458e1c}
+\begin{DoxyReturn}{Returns}
+const char $\ast$ pointer to string with widget type name 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Widget_a85884269bd53ab91203f099a586efa43}{canvascv\+::\+Widget}.
+
+\index{canvascv\+::\+Selection\+Box@{canvascv\+::\+Selection\+Box}!recalc\+Compound@{recalc\+Compound}}
+\index{recalc\+Compound@{recalc\+Compound}!canvascv\+::\+Selection\+Box@{canvascv\+::\+Selection\+Box}}
+\subsubsection[{\texorpdfstring{recalc\+Compound()}{recalcCompound()}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Selection\+Box\+::recalc\+Compound (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1SelectionBox_a78bf141cda79618e972f173627d07e1a}{}\label{classcanvascv_1_1SelectionBox_a78bf141cda79618e972f173627d07e1a}
+Your BG size recalculation/allocation and FG drawing is done here. It is done semi automatically. Is you invoke setters in this method on your internal widgets, then make sure to update them and/or their layout 
+
+Implements \hyperlink{classcanvascv_1_1CompoundWidget_a4a4f8241d6fd187ffcae2c7968f13864}{canvascv\+::\+Compound\+Widget}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/widgets/selectionbox.\+h\end{DoxyCompactItemize}

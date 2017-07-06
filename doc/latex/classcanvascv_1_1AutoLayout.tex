@@ -1,0 +1,125 @@
+\hypertarget{classcanvascv_1_1AutoLayout}{}\section{canvascv\+:\+:Auto\+Layout Class Reference}
+\label{classcanvascv_1_1AutoLayout}\index{canvascv\+::\+Auto\+Layout@{canvascv\+::\+Auto\+Layout}}
+
+
+The \hyperlink{classcanvascv_1_1AutoLayout}{Auto\+Layout} class.  
+
+
+
+
+{\ttfamily \#include $<$autolayout.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Auto\+Layout\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{classcanvascv_1_1AutoLayout}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classcanvascv_1_1AutoLayout_ade56b6a9186982fcf5fdcfbf39ac48df}{get\+Padding} () const 
+\begin{DoxyCompactList}\small\item\em get\+Padding get number of pixels to pad from \hyperlink{classcanvascv_1_1Layout}{Layout} rect during layout \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1AutoLayout_ab288ea25db0cdfe13887fdff4df1ac43}{set\+Padding} (int value)
+\begin{DoxyCompactList}\small\item\em set\+Padding set number of pixels to pad from \hyperlink{classcanvascv_1_1Layout}{Layout} rect during layout \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1AutoLayout_a2f5bf030889e0792acc8f10d7b0ac191}{add\+Widget} (const std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Widget}{Widget} $>$ \&widget)\hypertarget{classcanvascv_1_1AutoLayout_a2f5bf030889e0792acc8f10d7b0ac191}{}\label{classcanvascv_1_1AutoLayout_a2f5bf030889e0792acc8f10d7b0ac191}
+
+\begin{DoxyCompactList}\small\item\em adds the widget to this \hyperlink{classcanvascv_1_1Layout}{Layout} after removing it from it\textquotesingle{}s previous layout \end{DoxyCompactList}\item 
+virtual std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Widget}{Widget} $>$ \hyperlink{classcanvascv_1_1AutoLayout_abc436c90f50a5331c391e351bef9e659}{rmv\+Widget} (const std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Widget}{Widget} $>$ \&widget)
+\begin{DoxyCompactList}\small\item\em rmv\+Widget \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1AutoLayout_a2e518f91b260856c3e22fcb7c61e841d}{rmv\+Widget} (int i)\hypertarget{classcanvascv_1_1AutoLayout_a2e518f91b260856c3e22fcb7c61e841d}{}\label{classcanvascv_1_1AutoLayout_a2e518f91b260856c3e22fcb7c61e841d}
+
+\begin{DoxyCompactList}\small\item\em remove a widget at index \textquotesingle{}i\textquotesingle{} (silently ignores \textquotesingle{}i\textquotesingle{} too big) \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T  = Widget$>$ }\\T $\ast$ \hyperlink{classcanvascv_1_1AutoLayout_a3735b4825af3732ebb183efdc55207f4}{at} (int index)\hypertarget{classcanvascv_1_1AutoLayout_a3735b4825af3732ebb183efdc55207f4}{}\label{classcanvascv_1_1AutoLayout_a3735b4825af3732ebb183efdc55207f4}
+
+\begin{DoxyCompactList}\small\item\em return a widget at index \textquotesingle{}i\textquotesingle{} (or 0 if type is wrong ot \textquotesingle{}i\textquotesingle{} is too big) \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classcanvascv_1_1AutoLayout_abda4b4eb07aab7d294b71f4135e1c8ed}{size} () const \hypertarget{classcanvascv_1_1AutoLayout_abda4b4eb07aab7d294b71f4135e1c8ed}{}\label{classcanvascv_1_1AutoLayout_abda4b4eb07aab7d294b71f4135e1c8ed}
+
+\begin{DoxyCompactList}\small\item\em returns the number of widgets in the layout \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1AutoLayout_a33fda3ba2a72e60eec6f9cfec5bcea53}{get\+Wrap} () const \hypertarget{classcanvascv_1_1AutoLayout_a33fda3ba2a72e60eec6f9cfec5bcea53}{}\label{classcanvascv_1_1AutoLayout_a33fda3ba2a72e60eec6f9cfec5bcea53}
+
+\begin{DoxyCompactList}\small\item\em get if the layout will wrap widgets past forced\+Width / forced\+Height \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1AutoLayout_a633172f81a61be4e6840457ea538a694}{set\+Wrap} (bool value)\hypertarget{classcanvascv_1_1AutoLayout_a633172f81a61be4e6840457ea538a694}{}\label{classcanvascv_1_1AutoLayout_a633172f81a61be4e6840457ea538a694}
+
+\begin{DoxyCompactList}\small\item\em set if the layout will wrap widgets past forced\+Width / forced\+Height \end{DoxyCompactList}\item 
+int \hyperlink{classcanvascv_1_1AutoLayout_adc7737dce041188285c0026efb3d7c08}{get\+Max\+Widget\+Width} ()\hypertarget{classcanvascv_1_1AutoLayout_adc7737dce041188285c0026efb3d7c08}{}\label{classcanvascv_1_1AutoLayout_adc7737dce041188285c0026efb3d7c08}
+
+\begin{DoxyCompactList}\small\item\em get the maximum width from all contained widgets \end{DoxyCompactList}\item 
+int \hyperlink{classcanvascv_1_1AutoLayout_a7b2458bbef0c160ab0e2b138c802d188}{get\+Max\+Widget\+Height} ()\hypertarget{classcanvascv_1_1AutoLayout_a7b2458bbef0c160ab0e2b138c802d188}{}\label{classcanvascv_1_1AutoLayout_a7b2458bbef0c160ab0e2b138c802d188}
+
+\begin{DoxyCompactList}\small\item\em get the maximum height from all contained widgets \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Base class for all \hyperlink{classcanvascv_1_1Layout}{Layout} managers which are also widgets (not the \hyperlink{classcanvascv_1_1Canvas}{Canvas} class) 
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Auto\+Layout@{canvascv\+::\+Auto\+Layout}!get\+Padding@{get\+Padding}}
+\index{get\+Padding@{get\+Padding}!canvascv\+::\+Auto\+Layout@{canvascv\+::\+Auto\+Layout}}
+\subsubsection[{\texorpdfstring{get\+Padding() const }{getPadding() const }}]{\setlength{\rightskip}{0pt plus 5cm}int canvascv\+::\+Auto\+Layout\+::get\+Padding (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classcanvascv_1_1AutoLayout_ade56b6a9186982fcf5fdcfbf39ac48df}{}\label{classcanvascv_1_1AutoLayout_ade56b6a9186982fcf5fdcfbf39ac48df}
+\begin{DoxyVerb}   +----------------------+
+   |       PADDING        |
+   |   +--------------+   |
+   | P |   Widget     | P |
+   | A +--------------+ A |
+   | D     SPACING      D |
+   | D +--------------+ D |
+   | I |   Widget     | I |
+   | N +--------------+ N |
+   | G     PADDING      G |
+   +----------------------+
+\end{DoxyVerb}
+ \begin{DoxyReturn}{Returns}
+padding in pixels 
+\end{DoxyReturn}
+\index{canvascv\+::\+Auto\+Layout@{canvascv\+::\+Auto\+Layout}!rmv\+Widget@{rmv\+Widget}}
+\index{rmv\+Widget@{rmv\+Widget}!canvascv\+::\+Auto\+Layout@{canvascv\+::\+Auto\+Layout}}
+\subsubsection[{\texorpdfstring{rmv\+Widget(const std\+::shared\+\_\+ptr$<$ Widget $>$ \&widget)}{rmvWidget(const std::shared_ptr< Widget > &widget)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::shared\+\_\+ptr$<${\bf Widget}$>$ canvascv\+::\+Auto\+Layout\+::rmv\+Widget (
+\begin{DoxyParamCaption}
+\item[{const std\+::shared\+\_\+ptr$<$ {\bf Widget} $>$ \&}]{widget}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1AutoLayout_abc436c90f50a5331c391e351bef9e659}{}\label{classcanvascv_1_1AutoLayout_abc436c90f50a5331c391e351bef9e659}
+
+\begin{DoxyParams}{Parameters}
+{\em widget} & will be removed from this \hyperlink{classcanvascv_1_1Layout}{Layout} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+filled shared\+\_\+ptr to removed widget or empty if not found 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Widgets must be in layouts to be displayed correctly. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundWidget_ad4a37bf31f9cf6410b41526a5b83c75a}{canvascv\+::\+Compound\+Widget}.
+
+\index{canvascv\+::\+Auto\+Layout@{canvascv\+::\+Auto\+Layout}!set\+Padding@{set\+Padding}}
+\index{set\+Padding@{set\+Padding}!canvascv\+::\+Auto\+Layout@{canvascv\+::\+Auto\+Layout}}
+\subsubsection[{\texorpdfstring{set\+Padding(int value)}{setPadding(int value)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Auto\+Layout\+::set\+Padding (
+\begin{DoxyParamCaption}
+\item[{int}]{value}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1AutoLayout_ab288ea25db0cdfe13887fdff4df1ac43}{}\label{classcanvascv_1_1AutoLayout_ab288ea25db0cdfe13887fdff4df1ac43}
+\begin{DoxyVerb}   +----------------------+
+   |       PADDING        |
+   |   +--------------+   |
+   | P |   Widget     | P |
+   | A +--------------+ A |
+   | D     SPACING      D |
+   | D +--------------+ D |
+   | I |   Widget     | I |
+   | N +--------------+ N |
+   | G     PADDING      G |
+   +----------------------+
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/widgets/autolayout.\+h\end{DoxyCompactItemize}

@@ -1,0 +1,523 @@
+\hypertarget{classcanvascv_1_1Canvas}{}\section{canvascv\+:\+:Canvas Class Reference}
+\label{classcanvascv_1_1Canvas}\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+
+
+The \hyperlink{classcanvascv_1_1Canvas}{Canvas} class is the entry point into Canvas\+CV.  
+
+
+
+
+{\ttfamily \#include $<$canvas.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Canvas\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classcanvascv_1_1Canvas}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::function$<$ void(\hyperlink{classcanvascv_1_1Shape}{Shape} $\ast$)$>$ \hyperlink{classcanvascv_1_1Canvas_a6436ebb5dbadc3dbf9de3da8a499cf44}{C\+B\+Canvas\+Shape}\hypertarget{classcanvascv_1_1Canvas_a6436ebb5dbadc3dbf9de3da8a499cf44}{}\label{classcanvascv_1_1Canvas_a6436ebb5dbadc3dbf9de3da8a499cf44}
+
+\begin{DoxyCompactList}\small\item\em notification on shapes create/modify/delete from this \hyperlink{classcanvascv_1_1Canvas}{Canvas} instance \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcanvascv_1_1Canvas_a7049e8c687a2ac33331820d32f4f6464}{Canvas} (const std\+::string \&win\+Name\+Val, cv\+::\+Size size\+Val=cv\+::\+Size())
+\begin{DoxyCompactList}\small\item\em \hyperlink{classcanvascv_1_1Canvas}{Canvas}. \end{DoxyCompactList}\item 
+\hyperlink{classcanvascv_1_1Canvas_a178be13c77efe0d5768fb7ca09873711}{$\sim$\+Canvas} ()\hypertarget{classcanvascv_1_1Canvas_a178be13c77efe0d5768fb7ca09873711}{}\label{classcanvascv_1_1Canvas_a178be13c77efe0d5768fb7ca09873711}
+
+\begin{DoxyCompactList}\small\item\em release all shapes and widgets. \hyperlink{classcanvascv_1_1Shape}{Shape} callbacks are invoked doe delete. \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redraw\+On} (const cv\+::\+Mat \&src, cv\+::\+Mat \&dst)
+\begin{DoxyCompactList}\small\item\em redraw\+On draws the shapes on dst \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a0eed02e6923d903c3af1bf6692ad87fe}{redraw\+On} (cv\+::\+Mat \&dst)
+\begin{DoxyCompactList}\small\item\em redraw\+On \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a441c5882c7ebebd454a306b3c3478ae7}{set\+Image} (const cv\+::\+Mat \&img)
+\begin{DoxyCompactList}\small\item\em set\+Image \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1Canvas_abe53228080133efe5d9fecf6982b823e}{on\+Mouse\+Press} (const cv\+::\+Point \&pos)\hypertarget{classcanvascv_1_1Canvas_abe53228080133efe5d9fecf6982b823e}{}\label{classcanvascv_1_1Canvas_abe53228080133efe5d9fecf6982b823e}
+
+\begin{DoxyCompactList}\small\item\em You should delegate Open\+CV mouse callback events to this method -\/ returns true if did something at pos. \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_aca936fe492da286d5fb8eabbcd061793}{on\+Mouse\+Release} (const cv\+::\+Point \&pos)\hypertarget{classcanvascv_1_1Canvas_aca936fe492da286d5fb8eabbcd061793}{}\label{classcanvascv_1_1Canvas_aca936fe492da286d5fb8eabbcd061793}
+
+\begin{DoxyCompactList}\small\item\em You should delegate Open\+CV mouse callback events to this method. \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a1189823898c4022fd0eed4cfb99535c2}{on\+Mouse\+Move} (const cv\+::\+Point \&pos)\hypertarget{classcanvascv_1_1Canvas_a1189823898c4022fd0eed4cfb99535c2}{}\label{classcanvascv_1_1Canvas_a1189823898c4022fd0eed4cfb99535c2}
+
+\begin{DoxyCompactList}\small\item\em You should delegate Open\+CV mouse callback events to this method. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Shape}{Shape} $>$ \hyperlink{classcanvascv_1_1Canvas_a630ac92458f1718d0c597e96dd5a4aef}{create\+Shape} (std\+::string type, const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))
+\begin{DoxyCompactList}\small\item\em create\+Shape \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\std\+::shared\+\_\+ptr$<$ T $>$ \hyperlink{classcanvascv_1_1Canvas_ac126ef1547509744d9968ba83ddfef36}{create\+Shape} (const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))
+\begin{DoxyCompactList}\small\item\em create\+Shape \end{DoxyCompactList}\item 
+std\+::string \hyperlink{classcanvascv_1_1Canvas_a910107e17ee39da2074f9688e2a307ae}{get\+Shape\+Type} () const 
+\begin{DoxyCompactList}\small\item\em get default shape type to draw \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{set\+Shape\+Type} (std\+::string value)
+\begin{DoxyCompactList}\small\item\em set default shape type to draw (could be \char`\"{}\char`\"{}) \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a2fb88addb88a21757d4272e64acd30ae}{delete\+Active} ()\hypertarget{classcanvascv_1_1Canvas_a2fb88addb88a21757d4272e64acd30ae}{}\label{classcanvascv_1_1Canvas_a2fb88addb88a21757d4272e64acd30ae}
+
+\begin{DoxyCompactList}\small\item\em delete shape currenty selected \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a4cabdb76b4f6854e957a065c29ab5669}{delete\+Shape} (const std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Shape}{Shape} $>$ \&shape)\hypertarget{classcanvascv_1_1Canvas_a4cabdb76b4f6854e957a065c29ab5669}{}\label{classcanvascv_1_1Canvas_a4cabdb76b4f6854e957a065c29ab5669}
+
+\begin{DoxyCompactList}\small\item\em delete specific shape \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_ab72c0ea97fe435d9ce2aeffb4116faed}{delete\+Widget} (const std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Widget}{Widget} $>$ \&widget)\hypertarget{classcanvascv_1_1Canvas_ab72c0ea97fe435d9ce2aeffb4116faed}{}\label{classcanvascv_1_1Canvas_ab72c0ea97fe435d9ce2aeffb4116faed}
+
+\begin{DoxyCompactList}\small\item\em delete specific widget \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a64a459b16965e23de992cd2a301c68f4}{notify\+On\+Shape\+Create} (\hyperlink{classcanvascv_1_1Canvas_a6436ebb5dbadc3dbf9de3da8a499cf44}{C\+B\+Canvas\+Shape} cb)
+\begin{DoxyCompactList}\small\item\em used to register for notifications on shape creation \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a5a6da8ae08b08a20d7fe15564bda5515}{notify\+On\+Shape\+Modify} (\hyperlink{classcanvascv_1_1Canvas_a6436ebb5dbadc3dbf9de3da8a499cf44}{C\+B\+Canvas\+Shape} cb)
+\begin{DoxyCompactList}\small\item\em used to register for notifications on shape modification (actually when it is deselected) \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a1e7c26b39fd247e85941a6542f1b94c3}{notify\+On\+Shape\+Delete} (\hyperlink{classcanvascv_1_1Canvas_a6436ebb5dbadc3dbf9de3da8a499cf44}{C\+B\+Canvas\+Shape} cb)
+\begin{DoxyCompactList}\small\item\em used to register for notifications on shape deletion \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a8aa6686036b8a1a006718ae62f44b6c2}{clear\+Shapes} ()\hypertarget{classcanvascv_1_1Canvas_a8aa6686036b8a1a006718ae62f44b6c2}{}\label{classcanvascv_1_1Canvas_a8aa6686036b8a1a006718ae62f44b6c2}
+
+\begin{DoxyCompactList}\small\item\em clear all shapes from \hyperlink{classcanvascv_1_1Canvas}{Canvas} \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a94ee58b125af1d49baf921b7a65d0d8d}{clear\+Widgets} ()\hypertarget{classcanvascv_1_1Canvas_a94ee58b125af1d49baf921b7a65d0d8d}{}\label{classcanvascv_1_1Canvas_a94ee58b125af1d49baf921b7a65d0d8d}
+
+\begin{DoxyCompactList}\small\item\em clear all widgets from \hyperlink{classcanvascv_1_1Canvas}{Canvas} \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\void \hyperlink{classcanvascv_1_1Canvas_a6201675a6b8a13b3e004456225987dfa}{get\+Shapes} (std\+::list$<$ std\+::shared\+\_\+ptr$<$ T $>$$>$ \&result)
+\begin{DoxyCompactList}\small\item\em get\+Shapes of a specific type \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Shape}{Shape} $>$ \hyperlink{classcanvascv_1_1Canvas_a7b799712dccb4316648a3c1a09a8279f}{get\+Shape} (int id)
+\begin{DoxyCompactList}\small\item\em get\+Shape \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_aec742570f7a4fd9dc2671826ca3a159a}{get\+Shapes} (const cv\+::\+Point \&pos, std\+::list$<$ std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Shape}{Shape} $>$$>$ \&result)
+\begin{DoxyCompactList}\small\item\em get\+Shapes \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_afbc5ba3255edc06c63ce2a64e732754b}{disable\+Screen\+Text} ()\hypertarget{classcanvascv_1_1Canvas_afbc5ba3255edc06c63ce2a64e732754b}{}\label{classcanvascv_1_1Canvas_afbc5ba3255edc06c63ce2a64e732754b}
+
+\begin{DoxyCompactList}\small\item\em disable the top left text area for manual user messages \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_ad307658a70d97c360af99d3738fee972}{disable\+Status\+Msg} ()\hypertarget{classcanvascv_1_1Canvas_ad307658a70d97c360af99d3738fee972}{}\label{classcanvascv_1_1Canvas_ad307658a70d97c360af99d3738fee972}
+
+\begin{DoxyCompactList}\small\item\em disable the bottom left text area for auto status messages \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{enable\+Screen\+Text} (cv\+::\+Scalar color=\hyperlink{classcanvascv_1_1Colors_a934f65d826ab8b22e5bcfa6ce7816dbe}{Colors\+::\+Black}, cv\+::\+Scalar bg\+Color=\hyperlink{classcanvascv_1_1Colors_a4c2258611a1932339c02df35504f8f6d}{Colors\+::\+Light\+Gray}, double scale=Consts\+::\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+N\+T\+\_\+\+S\+C\+A\+LE, int thickness=Consts\+::\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+N\+T\+\_\+\+T\+H\+I\+C\+K\+N\+E\+SS, uchar alpha=80, int font\+Face=Consts\+::\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+NT)
+\begin{DoxyCompactList}\small\item\em enable\+Screen\+Text enables the top left text area for manual user messages \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a402c43a42c0089c48a96e5303c1c1fe8}{enable\+Status\+Msg} (cv\+::\+Scalar color=\hyperlink{classcanvascv_1_1Colors_a463fb59b35fb56e7a4eaa5976baaa411}{Colors\+::\+Orange}, cv\+::\+Scalar bg\+Color=\hyperlink{classcanvascv_1_1Colors_a4c2258611a1932339c02df35504f8f6d}{Colors\+::\+Light\+Gray}, double scale=Consts\+::\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+N\+T\+\_\+\+S\+C\+A\+LE, int thickness=Consts\+::\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+N\+T\+\_\+\+T\+H\+I\+C\+K\+N\+E\+SS, uchar alpha=80, int font\+Face=Consts\+::\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+NT)
+\begin{DoxyCompactList}\small\item\em enable\+Status\+Msg enables the bottom left text area for auto status messages \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a14828809edd29d789170284a86f16f23}{set\+Default\+Status\+Msg} (const std\+::string \&msg)\hypertarget{classcanvascv_1_1Canvas_a14828809edd29d789170284a86f16f23}{}\label{classcanvascv_1_1Canvas_a14828809edd29d789170284a86f16f23}
+
+\begin{DoxyCompactList}\small\item\em set the default status message (active widget and shapes will override it) \end{DoxyCompactList}\item 
+std\+::string \hyperlink{classcanvascv_1_1Canvas_a020df071c9ef8dd6a0582accb75553df}{get\+Default\+Status\+Msg} () const \hypertarget{classcanvascv_1_1Canvas_a020df071c9ef8dd6a0582accb75553df}{}\label{classcanvascv_1_1Canvas_a020df071c9ef8dd6a0582accb75553df}
+
+\begin{DoxyCompactList}\small\item\em get the default status message (active widget and shapes will override it) \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{set\+Screen\+Text} (const std\+::string \&msg)\hypertarget{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{}\label{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}
+
+\begin{DoxyCompactList}\small\item\em manually set the screen text message. It remains until disabled or changed. \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_ab9ffc28f7a21e1375da18cc4f03343ae}{set\+Size} (const cv\+::\+Size \&value)\hypertarget{classcanvascv_1_1Canvas_ab9ffc28f7a21e1375da18cc4f03343ae}{}\label{classcanvascv_1_1Canvas_ab9ffc28f7a21e1375da18cc4f03343ae}
+
+\begin{DoxyCompactList}\small\item\em set the \hyperlink{classcanvascv_1_1Canvas}{Canvas} size to match the cv\+::\+Mat we\textquotesingle{}ll use in redraw\+On; \end{DoxyCompactList}\item 
+cv\+::\+Size \hyperlink{classcanvascv_1_1Canvas_a749efce55cfc1a16f6fdb91fab435bc4}{get\+Size} ()\hypertarget{classcanvascv_1_1Canvas_a749efce55cfc1a16f6fdb91fab435bc4}{}\label{classcanvascv_1_1Canvas_a749efce55cfc1a16f6fdb91fab435bc4}
+
+\begin{DoxyCompactList}\small\item\em get the \hyperlink{classcanvascv_1_1Canvas}{Canvas} size \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Canvas_a830b59fb09fe8f493c895d96316f6f36}{add\+Widget} (const std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Widget}{Widget} $>$ \&widget)\hypertarget{classcanvascv_1_1Canvas_a830b59fb09fe8f493c895d96316f6f36}{}\label{classcanvascv_1_1Canvas_a830b59fb09fe8f493c895d96316f6f36}
+
+\begin{DoxyCompactList}\small\item\em adds the widget to this \hyperlink{classcanvascv_1_1Layout}{Layout} after removing it from it\textquotesingle{}s previous layout \end{DoxyCompactList}\item 
+virtual std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Widget}{Widget} $>$ \hyperlink{classcanvascv_1_1Canvas_a70248a9be2eedcacad74c9be5fd615eb}{rmv\+Widget} (const std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Widget}{Widget} $>$ \&widget)
+\begin{DoxyCompactList}\small\item\em rmv\+Widget \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1Canvas_afe6a2955a5bbee8903350b4fba3f4473}{get\+On} () const \hypertarget{classcanvascv_1_1Canvas_afe6a2955a5bbee8903350b4fba3f4473}{}\label{classcanvascv_1_1Canvas_afe6a2955a5bbee8903350b4fba3f4473}
+
+\begin{DoxyCompactList}\small\item\em is \hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redraw\+On()} on/off? \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_aba149ea25c6cdad2673133a060355954}{set\+On} (bool value)\hypertarget{classcanvascv_1_1Canvas_aba149ea25c6cdad2673133a060355954}{}\label{classcanvascv_1_1Canvas_aba149ea25c6cdad2673133a060355954}
+
+\begin{DoxyCompactList}\small\item\em redraw\+On will do nothing if value is \textquotesingle{}false\textquotesingle{} \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a494bb06b1a29232f05807f4a0e480ebb}{write\+Shapes\+To\+File} (const std\+::string \&filepath) const \hypertarget{classcanvascv_1_1Canvas_a494bb06b1a29232f05807f4a0e480ebb}{}\label{classcanvascv_1_1Canvas_a494bb06b1a29232f05807f4a0e480ebb}
+
+\begin{DoxyCompactList}\small\item\em write all the shapes currently in the \hyperlink{classcanvascv_1_1Canvas}{Canvas} to a file \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_ab68000bb631c2fa7bb8863e746a8cff3}{read\+Shapes\+From\+File} (const std\+::string \&filepath)\hypertarget{classcanvascv_1_1Canvas_ab68000bb631c2fa7bb8863e746a8cff3}{}\label{classcanvascv_1_1Canvas_ab68000bb631c2fa7bb8863e746a8cff3}
+
+\begin{DoxyCompactList}\small\item\em load all the from a file into the canvas (removing all current shapes in the process) \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{set\+Mouse\+Callback} ()\hypertarget{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{}\label{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}
+
+\begin{DoxyCompactList}\small\item\em utility method to handle mouse events on the associated window \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_acaf9494a5668046dd0a8908aa97a7a43}{imshow} (Input\+Array mat)\hypertarget{classcanvascv_1_1Canvas_acaf9494a5668046dd0a8908aa97a7a43}{}\label{classcanvascv_1_1Canvas_acaf9494a5668046dd0a8908aa97a7a43}
+
+\begin{DoxyCompactList}\small\item\em utility method which uses the win\+Name encapsulated in \hyperlink{classcanvascv_1_1Canvas}{Canvas} \end{DoxyCompactList}\item 
+int \hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{wait\+Key\+Ex} (int delay=0)
+\begin{DoxyCompactList}\small\item\em wait\+Key\+Ex \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a4915ddef2f0ff55a35f708d4721401d6}{apply\+Theme} (bool apply\+To\+Canvas\+Text=false)
+\begin{DoxyCompactList}\small\item\em apply\+Theme \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Canvas_a9ead8dc40ae03cf1723e35e49a2ebaf5}{set\+Dirty} ()\hypertarget{classcanvascv_1_1Canvas_a9ead8dc40ae03cf1723e35e49a2ebaf5}{}\label{classcanvascv_1_1Canvas_a9ead8dc40ae03cf1723e35e49a2ebaf5}
+
+\begin{DoxyCompactList}\small\item\em while waiting for events the \hyperlink{classcanvascv_1_1Canvas}{Canvas} is redrawn only if it is dirty \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{fatal} (string error\+Msg, int exit\+Status)
+\begin{DoxyCompactList}\small\item\em fatal \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+This is conceptually a canvas layer on top of your frame.
+\begin{DoxyItemize}
+\item It can be turned on and off.
+\item It can show your messages on screen with a semi transparent background.
+\item You can handle mouse and keyboard events\+:
+\begin{DoxyEnumerate}
+\item To create/edit/delete shapes on screen for user selections and landmark configuration.
+\item To handle widgets you put on the screen for user input. 
+\end{DoxyEnumerate}
+\end{DoxyItemize}\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_add_theme_8cpp-example}{example\+\_\+add\+\_\+theme.\+cpp}, \hyperlink{example_add_widget_8cpp-example}{example\+\_\+add\+\_\+widget.\+cpp}, \hyperlink{example_checkboxes_8cpp-example}{example\+\_\+checkboxes.\+cpp}, \hyperlink{example_linecrossing_8cpp-example}{example\+\_\+linecrossing.\+cpp}, \hyperlink{example_matwidget_8cpp-example}{example\+\_\+matwidget.\+cpp}, \hyperlink{example_msgbox_8cpp-example}{example\+\_\+msgbox.\+cpp}, \hyperlink{example_radiobuttons_8cpp-example}{example\+\_\+radiobuttons.\+cpp}, \hyperlink{example_selectbox_8cpp-example}{example\+\_\+selectbox.\+cpp}, \hyperlink{example_shapes_8cpp-example}{example\+\_\+shapes.\+cpp}, and \hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!Canvas@{Canvas}}
+\index{Canvas@{Canvas}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{Canvas(const std\+::string \&win\+Name\+Val, cv\+::\+Size size\+Val=cv\+::\+Size())}{Canvas(const std::string &winNameVal, cv::Size sizeVal=cv::Size())}}]{\setlength{\rightskip}{0pt plus 5cm}canvascv\+::\+Canvas\+::\+Canvas (
+\begin{DoxyParamCaption}
+\item[{const std\+::string \&}]{win\+Name\+Val, }
+\item[{cv\+::\+Size}]{size\+Val = {\ttfamily cv\+:\+:Size()}}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_a7049e8c687a2ac33331820d32f4f6464}{}\label{classcanvascv_1_1Canvas_a7049e8c687a2ac33331820d32f4f6464}
+This class is associated with an Open\+CV window of a certain size. 
+\begin{DoxyParams}{Parameters}
+{\em win\+Name\+Val} & is the name of the Open\+CV window (it doesn\textquotesingle{}t have to exist yet) \\
+\hline
+{\em size\+Val} & is the size of the Open\+CV window \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1Canvas_ab9ffc28f7a21e1375da18cc4f03343ae}{set\+Size()} 
+\end{DoxySeeAlso}
+
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!apply\+Theme@{apply\+Theme}}
+\index{apply\+Theme@{apply\+Theme}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{apply\+Theme(bool apply\+To\+Canvas\+Text=false)}{applyTheme(bool applyToCanvasText=false)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Canvas\+::apply\+Theme (
+\begin{DoxyParamCaption}
+\item[{bool}]{apply\+To\+Canvas\+Text = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_a4915ddef2f0ff55a35f708d4721401d6}{}\label{classcanvascv_1_1Canvas_a4915ddef2f0ff55a35f708d4721401d6}
+apply the current theme to all existing widgets and shapes in the canvas 
+\begin{DoxyParams}{Parameters}
+{\em apply\+To\+Canvas\+Text} & should be usually false (make it true to affect Status\&User\+Text of \hyperlink{classcanvascv_1_1Canvas}{Canvas}). \\
+\hline
+\end{DoxyParams}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!create\+Shape@{create\+Shape}}
+\index{create\+Shape@{create\+Shape}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{create\+Shape(std\+::string type, const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))}{createShape(std::string type, const cv::Point &pos=cv::Point(0, 0))}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::shared\+\_\+ptr$<${\bf Shape}$>$ canvascv\+::\+Canvas\+::create\+Shape (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{type, }
+\item[{const cv\+::\+Point \&}]{pos = {\ttfamily cv\+:\+:Point(0,~0)}}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_a630ac92458f1718d0c597e96dd5a4aef}{}\label{classcanvascv_1_1Canvas_a630ac92458f1718d0c597e96dd5a4aef}
+Create shape by name on the canvas directly from code (instead of by the user using the mouse) 
+\begin{DoxyParams}{Parameters}
+{\em type} & name of the \hyperlink{classcanvascv_1_1Shape}{Shape} \\
+\hline
+{\em pos} & shape position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This method will return a shared\+\_\+ptr$<$\+T$>$ instance, which you don\textquotesingle{}t have to keep since another one is kept by the \hyperlink{classcanvascv_1_1Canvas}{Canvas} in which the shape is placed. Never use delete on a \hyperlink{classcanvascv_1_1Shape}{Shape} pointer. 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!create\+Shape@{create\+Shape}}
+\index{create\+Shape@{create\+Shape}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{create\+Shape(const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))}{createShape(const cv::Point &pos=cv::Point(0, 0))}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ std\+::shared\+\_\+ptr$<$ T $>$ canvascv\+::\+Canvas\+::create\+Shape (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos = {\ttfamily cv\+:\+:Point(0,0)}}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_ac126ef1547509744d9968ba83ddfef36}{}\label{classcanvascv_1_1Canvas_ac126ef1547509744d9968ba83ddfef36}
+Create shape by type on the canvas directly from code (instead of by the user using the mouse) 
+\begin{DoxyParams}{Parameters}
+{\em pos} & shape position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This method will return a shared\+\_\+ptr$<$\+T$>$ instance, which you don\textquotesingle{}t have to keep since another one is kept by the \hyperlink{classcanvascv_1_1Canvas}{Canvas} in which the shape is placed. Never use delete on a \hyperlink{classcanvascv_1_1Shape}{Shape} pointer. 
+\end{DoxyReturn}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!enable\+Screen\+Text@{enable\+Screen\+Text}}
+\index{enable\+Screen\+Text@{enable\+Screen\+Text}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{enable\+Screen\+Text(cv\+::\+Scalar color=\+Colors\+::\+Black, cv\+::\+Scalar bg\+Color=\+Colors\+::\+Light\+Gray, double scale=\+Consts\+::\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+N\+T\+\_\+\+S\+C\+A\+L\+E, int thickness=\+Consts\+::\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+N\+T\+\_\+\+T\+H\+I\+C\+K\+N\+E\+S\+S, uchar alpha=80, int font\+Face=\+Consts\+::\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+N\+T)}{enableScreenText(cv::Scalar color=Colors::Black, cv::Scalar bgColor=Colors::LightGray, double scale=Consts::DEFAULT_FONT_SCALE, int thickness=Consts::DEFAULT_FONT_THICKNESS, uchar alpha=80, int fontFace=Consts::DEFAULT_FONT)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Canvas\+::enable\+Screen\+Text (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Scalar}]{color = {\ttfamily {\bf Colors\+::\+Black}}, }
+\item[{cv\+::\+Scalar}]{bg\+Color = {\ttfamily {\bf Colors\+::\+Light\+Gray}}, }
+\item[{double}]{scale = {\ttfamily Consts\+:\+:DEFAULT\+\_\+FONT\+\_\+SCALE}, }
+\item[{int}]{thickness = {\ttfamily Consts\+:\+:DEFAULT\+\_\+FONT\+\_\+THICKNESS}, }
+\item[{uchar}]{alpha = {\ttfamily 80}, }
+\item[{int}]{font\+Face = {\ttfamily Consts\+:\+:DEFAULT\+\_\+FONT}}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{}\label{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}
+During enable of this feature you can overide some default values. It is safe to call this method again just to change display settings. 
+\begin{DoxyParams}{Parameters}
+{\em color} & is font color \\
+\hline
+{\em bg\+Color} & is rect bg color \\
+\hline
+{\em scale} & is font scale \\
+\hline
+{\em thickness} & is font thickness \\
+\hline
+{\em alpha} & is the alpha value of the rect bg \mbox{[}0,255\mbox{]} =$>$ \mbox{[}transparent,opaque\mbox{]} \\
+\hline
+{\em font\+Face} & is the Open\+CV fonr to use \\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_checkboxes_8cpp-example}{example\+\_\+checkboxes.\+cpp}, \hyperlink{example_radiobuttons_8cpp-example}{example\+\_\+radiobuttons.\+cpp}, and \hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!enable\+Status\+Msg@{enable\+Status\+Msg}}
+\index{enable\+Status\+Msg@{enable\+Status\+Msg}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{enable\+Status\+Msg(cv\+::\+Scalar color=\+Colors\+::\+Orange, cv\+::\+Scalar bg\+Color=\+Colors\+::\+Light\+Gray, double scale=\+Consts\+::\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+N\+T\+\_\+\+S\+C\+A\+L\+E, int thickness=\+Consts\+::\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+N\+T\+\_\+\+T\+H\+I\+C\+K\+N\+E\+S\+S, uchar alpha=80, int font\+Face=\+Consts\+::\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+N\+T)}{enableStatusMsg(cv::Scalar color=Colors::Orange, cv::Scalar bgColor=Colors::LightGray, double scale=Consts::DEFAULT_FONT_SCALE, int thickness=Consts::DEFAULT_FONT_THICKNESS, uchar alpha=80, int fontFace=Consts::DEFAULT_FONT)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Canvas\+::enable\+Status\+Msg (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Scalar}]{color = {\ttfamily {\bf Colors\+::\+Orange}}, }
+\item[{cv\+::\+Scalar}]{bg\+Color = {\ttfamily {\bf Colors\+::\+Light\+Gray}}, }
+\item[{double}]{scale = {\ttfamily Consts\+:\+:DEFAULT\+\_\+FONT\+\_\+SCALE}, }
+\item[{int}]{thickness = {\ttfamily Consts\+:\+:DEFAULT\+\_\+FONT\+\_\+THICKNESS}, }
+\item[{uchar}]{alpha = {\ttfamily 80}, }
+\item[{int}]{font\+Face = {\ttfamily Consts\+:\+:DEFAULT\+\_\+FONT}}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_a402c43a42c0089c48a96e5303c1c1fe8}{}\label{classcanvascv_1_1Canvas_a402c43a42c0089c48a96e5303c1c1fe8}
+During enable of this feature you can overide some default values. It is safe to call this method again just to change display settings. 
+\begin{DoxyParams}{Parameters}
+{\em color} & is font color \\
+\hline
+{\em bg\+Color} & is rect bg color \\
+\hline
+{\em scale} & is font scale \\
+\hline
+{\em thickness} & is font thickness \\
+\hline
+{\em alpha} & is the alpha value of the rect bg \mbox{[}0,255\mbox{]} =$>$ \mbox{[}transparent,opaque\mbox{]} \\
+\hline
+{\em font\+Face} & is the Open\+CV fonr to use \\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!fatal@{fatal}}
+\index{fatal@{fatal}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{fatal(string error\+Msg, int exit\+Status)}{fatal(string errorMsg, int exitStatus)}}]{\setlength{\rightskip}{0pt plus 5cm}static void canvascv\+::\+Canvas\+::fatal (
+\begin{DoxyParamCaption}
+\item[{string}]{error\+Msg, }
+\item[{int}]{exit\+Status}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{}\label{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}
+A more elegant way for your app to exit on failures.
+\begin{DoxyItemize}
+\item A dedicated opencv window with a \hyperlink{classcanvascv_1_1MsgBox}{Msg\+Box} wil show your message.
+\item The error code will be used with \+\_\+\+Exit()
+\item The error\+Msg will also be written to the standard error 
+\begin{DoxyParams}{Parameters}
+{\em error\+Msg} & will be displayed to the user \\
+\hline
+{\em exit\+Status} & will be used with \+\_\+\+Exit() \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_add_widget_8cpp-example}{example\+\_\+add\+\_\+widget.\+cpp}, \hyperlink{example_checkboxes_8cpp-example}{example\+\_\+checkboxes.\+cpp}, \hyperlink{example_linecrossing_8cpp-example}{example\+\_\+linecrossing.\+cpp}, \hyperlink{example_matwidget_8cpp-example}{example\+\_\+matwidget.\+cpp}, \hyperlink{example_msgbox_8cpp-example}{example\+\_\+msgbox.\+cpp}, \hyperlink{example_radiobuttons_8cpp-example}{example\+\_\+radiobuttons.\+cpp}, \hyperlink{example_selectbox_8cpp-example}{example\+\_\+selectbox.\+cpp}, \hyperlink{example_shapes_8cpp-example}{example\+\_\+shapes.\+cpp}, and \hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!get\+Shape@{get\+Shape}}
+\index{get\+Shape@{get\+Shape}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{get\+Shape(int id)}{getShape(int id)}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::shared\+\_\+ptr$<${\bf Shape}$>$ canvascv\+::\+Canvas\+::get\+Shape (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_a7b799712dccb4316648a3c1a09a8279f}{}\label{classcanvascv_1_1Canvas_a7b799712dccb4316648a3c1a09a8279f}
+
+\begin{DoxyParams}{Parameters}
+{\em id} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+shape with requested id 
+\end{DoxyReturn}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!get\+Shapes@{get\+Shapes}}
+\index{get\+Shapes@{get\+Shapes}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{get\+Shapes(std\+::list$<$ std\+::shared\+\_\+ptr$<$ T $>$$>$ \&result)}{getShapes(std::list< std::shared_ptr< T >> &result)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void canvascv\+::\+Canvas\+::get\+Shapes (
+\begin{DoxyParamCaption}
+\item[{std\+::list$<$ std\+::shared\+\_\+ptr$<$ T $>$$>$ \&}]{result}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_a6201675a6b8a13b3e004456225987dfa}{}\label{classcanvascv_1_1Canvas_a6201675a6b8a13b3e004456225987dfa}
+
+\begin{DoxyParams}{Parameters}
+{\em result} & will contain alll shapes of the T on return \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+these are internal shapes used in the canvas, so changing them affects what is drawn on the \hyperlink{classcanvascv_1_1Canvas}{Canvas}. 
+\end{DoxyNote}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!get\+Shapes@{get\+Shapes}}
+\index{get\+Shapes@{get\+Shapes}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{get\+Shapes(const cv\+::\+Point \&pos, std\+::list$<$ std\+::shared\+\_\+ptr$<$ Shape $>$$>$ \&result)}{getShapes(const cv::Point &pos, std::list< std::shared_ptr< Shape >> &result)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Canvas\+::get\+Shapes (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos, }
+\item[{std\+::list$<$ std\+::shared\+\_\+ptr$<$ {\bf Shape} $>$$>$ \&}]{result}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_aec742570f7a4fd9dc2671826ca3a159a}{}\label{classcanvascv_1_1Canvas_aec742570f7a4fd9dc2671826ca3a159a}
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & is position to search for shapes \\
+\hline
+{\em result} & is all the shapes at pos \\
+\hline
+\end{DoxyParams}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!get\+Shape\+Type@{get\+Shape\+Type}}
+\index{get\+Shape\+Type@{get\+Shape\+Type}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{get\+Shape\+Type() const }{getShapeType() const }}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string canvascv\+::\+Canvas\+::get\+Shape\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcanvascv_1_1Canvas_a910107e17ee39da2074f9688e2a307ae}{}\label{classcanvascv_1_1Canvas_a910107e17ee39da2074f9688e2a307ae}
+\begin{DoxyReturn}{Returns}
+returns the default current shape to create on mouse press 
+\end{DoxyReturn}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!notify\+On\+Shape\+Create@{notify\+On\+Shape\+Create}}
+\index{notify\+On\+Shape\+Create@{notify\+On\+Shape\+Create}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{notify\+On\+Shape\+Create(\+C\+B\+Canvas\+Shape cb)}{notifyOnShapeCreate(CBCanvasShape cb)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Canvas\+::notify\+On\+Shape\+Create (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+B\+Canvas\+Shape}}]{cb}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_a64a459b16965e23de992cd2a301c68f4}{}\label{classcanvascv_1_1Canvas_a64a459b16965e23de992cd2a301c68f4}
+Multiple registrations are allowed. 
+\begin{DoxyParams}{Parameters}
+{\em cb} & to invoke on shape creation \\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!notify\+On\+Shape\+Delete@{notify\+On\+Shape\+Delete}}
+\index{notify\+On\+Shape\+Delete@{notify\+On\+Shape\+Delete}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{notify\+On\+Shape\+Delete(\+C\+B\+Canvas\+Shape cb)}{notifyOnShapeDelete(CBCanvasShape cb)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Canvas\+::notify\+On\+Shape\+Delete (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+B\+Canvas\+Shape}}]{cb}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_a1e7c26b39fd247e85941a6542f1b94c3}{}\label{classcanvascv_1_1Canvas_a1e7c26b39fd247e85941a6542f1b94c3}
+Multiple registrations are allowed. 
+\begin{DoxyParams}{Parameters}
+{\em cb} & to invoke on shape deletion \\
+\hline
+\end{DoxyParams}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!notify\+On\+Shape\+Modify@{notify\+On\+Shape\+Modify}}
+\index{notify\+On\+Shape\+Modify@{notify\+On\+Shape\+Modify}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{notify\+On\+Shape\+Modify(\+C\+B\+Canvas\+Shape cb)}{notifyOnShapeModify(CBCanvasShape cb)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Canvas\+::notify\+On\+Shape\+Modify (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+B\+Canvas\+Shape}}]{cb}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_a5a6da8ae08b08a20d7fe15564bda5515}{}\label{classcanvascv_1_1Canvas_a5a6da8ae08b08a20d7fe15564bda5515}
+Multiple registrations are allowed. 
+\begin{DoxyParams}{Parameters}
+{\em cb} & to invoke on shape modification \\
+\hline
+\end{DoxyParams}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!redraw\+On@{redraw\+On}}
+\index{redraw\+On@{redraw\+On}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{redraw\+On(const cv\+::\+Mat \&src, cv\+::\+Mat \&dst)}{redrawOn(const cv::Mat &src, cv::Mat &dst)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Canvas\+::redraw\+On (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Mat \&}]{src, }
+\item[{cv\+::\+Mat \&}]{dst}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{}\label{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}
+Draws src with shapes and widgets onto dst. src is upgraded to 3 channels if it has 1 channel. 
+\begin{DoxyParams}{Parameters}
+{\em src} & can be also dst, in which case it is drawn on. src is B\+G\+R/\+B\+G\+R\+A/\+G\+R\+AY. \\
+\hline
+{\em dst} & if different than src, then src is cloned to it and drawn on. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1Canvas_a441c5882c7ebebd454a306b3c3478ae7}{set\+Image} 
+\end{DoxySeeAlso}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!redraw\+On@{redraw\+On}}
+\index{redraw\+On@{redraw\+On}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{redraw\+On(cv\+::\+Mat \&dst)}{redrawOn(cv::Mat &dst)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Canvas\+::redraw\+On (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Mat \&}]{dst}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_a0eed02e6923d903c3af1bf6692ad87fe}{}\label{classcanvascv_1_1Canvas_a0eed02e6923d903c3af1bf6692ad87fe}
+A utility method that uses latest Mat used as \textquotesingle{}src\textquotesingle{} in the redraw\+On above. This methos is also used internally in wait\+Key\+Ex(0) 
+\begin{DoxyParams}{Parameters}
+{\em dst} & will be used as output. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{wait\+Key\+Ex} 
+\end{DoxySeeAlso}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!rmv\+Widget@{rmv\+Widget}}
+\index{rmv\+Widget@{rmv\+Widget}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{rmv\+Widget(const std\+::shared\+\_\+ptr$<$ Widget $>$ \&widget)}{rmvWidget(const std::shared_ptr< Widget > &widget)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::shared\+\_\+ptr$<${\bf Widget}$>$ canvascv\+::\+Canvas\+::rmv\+Widget (
+\begin{DoxyParamCaption}
+\item[{const std\+::shared\+\_\+ptr$<$ {\bf Widget} $>$ \&}]{widget}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Canvas_a70248a9be2eedcacad74c9be5fd615eb}{}\label{classcanvascv_1_1Canvas_a70248a9be2eedcacad74c9be5fd615eb}
+
+\begin{DoxyParams}{Parameters}
+{\em widget} & will be removed from this \hyperlink{classcanvascv_1_1Layout}{Layout} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+filled shared\+\_\+ptr to removed widget or empty if not found 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Widgets must be in layouts to be displayed correctly. 
+\end{DoxyNote}
+
+
+Implements \hyperlink{classcanvascv_1_1Layout_a7b532816232c436ea5b6e7c4c3254779}{canvascv\+::\+Layout}.
+
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!set\+Image@{set\+Image}}
+\index{set\+Image@{set\+Image}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{set\+Image(const cv\+::\+Mat \&img)}{setImage(const cv::Mat &img)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Canvas\+::set\+Image (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Mat \&}]{img}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_a441c5882c7ebebd454a306b3c3478ae7}{}\label{classcanvascv_1_1Canvas_a441c5882c7ebebd454a306b3c3478ae7}
+sets the internal \textquotesingle{}latest\+Frame\+Src\textquotesingle{} used for G\+UI updates while wait\+Key\+Ex(0) is used, or with \hyperlink{classcanvascv_1_1Canvas_a0eed02e6923d903c3af1bf6692ad87fe}{redraw\+On(cv\+::\+Mat\&)} 
+\begin{DoxyParams}{Parameters}
+{\em img} & will be used to set\+Size and update internal latest\+Frame\+Src \\
+\hline
+\end{DoxyParams}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!set\+Shape\+Type@{set\+Shape\+Type}}
+\index{set\+Shape\+Type@{set\+Shape\+Type}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{set\+Shape\+Type(std\+::string value)}{setShapeType(std::string value)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Canvas\+::set\+Shape\+Type (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{}\label{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}
+
+\begin{DoxyParams}{Parameters}
+{\em value} & will be the default current shape to create on mouse press \\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_linecrossing_8cpp-example}{example\+\_\+linecrossing.\+cpp}, \hyperlink{example_shapes_8cpp-example}{example\+\_\+shapes.\+cpp}, and \hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Canvas@{canvascv\+::\+Canvas}!wait\+Key\+Ex@{wait\+Key\+Ex}}
+\index{wait\+Key\+Ex@{wait\+Key\+Ex}!canvascv\+::\+Canvas@{canvascv\+::\+Canvas}}
+\subsubsection[{\texorpdfstring{wait\+Key\+Ex(int delay=0)}{waitKeyEx(int delay=0)}}]{\setlength{\rightskip}{0pt plus 5cm}int canvascv\+::\+Canvas\+::wait\+Key\+Ex (
+\begin{DoxyParamCaption}
+\item[{int}]{delay = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{}\label{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}
+utility method to handle key strokes -\/ you get the keystroke if a widget/shape didn\textquotesingle{}t consume it. 
+\begin{DoxyParams}{Parameters}
+{\em delay} & in milliseconds. If delay is 0, then the latest image used as input will be the background for internal updates. If you want to change it from a callback, then use set\+Image. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the key press or -\/1 if the timeout reached 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1Canvas_a441c5882c7ebebd454a306b3c3478ae7}{set\+Image} 
+\end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+When using widgets with callback on the same image, the delay should be 0. If you\textquotesingle{}re changing frames or using only the polling A\+PI of the widgets, then specify a delay of your choice. 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/canvas.\+h\end{DoxyCompactItemize}

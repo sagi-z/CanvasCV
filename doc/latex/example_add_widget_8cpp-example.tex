@@ -1,0 +1,278 @@
+\hypertarget{example_add_widget_8cpp-example}{}\section{example\+\_\+add\+\_\+widget.\+cpp}
+This is an example of how to add a widget.
+
+
+\begin{DoxyCodeInclude}
+\textcolor{preprocessor}{#include "canvascv/canvas.h"}
+
+\textcolor{comment}{// These are used to create widgets}
+\textcolor{preprocessor}{#include "canvascv/widgets/text.h"}
+\textcolor{preprocessor}{#include "canvascv/widgets/button.h"}
+\textcolor{preprocessor}{#include "canvascv/widgets/hframe.h"}
+\textcolor{preprocessor}{#include "canvascv/widgets/vframe.h"}
+\textcolor{preprocessor}{#include "canvascv/widgets/widgetfactory.h"}
+
+\textcolor{preprocessor}{#include <iostream>}
+
+\textcolor{preprocessor}{#include <opencv2/highgui.hpp>}
+
+\textcolor{comment}{// This was integrated into c++17, but experimental in c++11,}
+\textcolor{comment}{//  which is currently our minimum version}
+\textcolor{preprocessor}{#include <experimental/filesystem>}
+\textcolor{keyword}{namespace }fs = std::experimental::filesystem;
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacestd}{std};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keyword}{class }FileBrowser : \textcolor{keyword}{public} \hyperlink{classcanvascv_1_1CompoundWidget}{CompoundWidget}
+\{
+\textcolor{keyword}{public}:
+    \textcolor{keyword}{static} std::shared\_ptr<FileBrowser> create(\hyperlink{classcanvascv_1_1Layout}{Layout} &layoutVal,
+                                               \textcolor{keyword}{const} std::string &startPath,
+                                               \hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget::CBUserSelection} 
+      cbUserSelection = \hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget::CBUserSelection}(),
+                                               \textcolor{keyword}{const} cv::Point &pos = cv::Point(-1,-1))
+    \{
+        shared\_ptr<FileBrowser> fb = \hyperlink{classcanvascv_1_1WidgetFactoryT}{WidgetFactoryT<FileBrowser>::newWidget}
+      (layoutVal, pos);
+        fb->setCurrentPath(startPath);
+        fb->userCB = cbUserSelection;
+        \textcolor{keywordflow}{return} fb;
+    \}
+
+    \textcolor{keywordtype}{string} getCurrentPath()\textcolor{keyword}{ const}
+\textcolor{keyword}{    }\{
+        \textcolor{keywordflow}{return} currentPath;
+    \}
+
+    \textcolor{keywordtype}{void} setCurrentPath(\textcolor{keyword}{const} \textcolor{keywordtype}{string} &value)
+    \{
+        \textcolor{keywordflow}{if} (currentPath != value)
+        \{
+            currentPath = value;
+            setDirty();
+        \}
+    \}
+
+    \textcolor{keyword}{virtual} \textcolor{keyword}{const} \textcolor{keywordtype}{char} *getType()\textcolor{keyword}{ const }\{\textcolor{keywordflow}{return} type;\}
+    \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{char} *type;
+
+    \textcolor{keywordtype}{string} getUserSelection()\textcolor{keyword}{ const}
+\textcolor{keyword}{    }\{
+        \textcolor{keywordflow}{return} userSelection;
+    \}
+
+\textcolor{keyword}{protected}:
+    \textcolor{keyword}{friend} \textcolor{keyword}{class }\hyperlink{classcanvascv_1_1WidgetFactory}{canvascv::WidgetFactory};
+    \textcolor{keyword}{template} <\textcolor{keyword}{class} T> \textcolor{keyword}{friend} \textcolor{keyword}{class }\hyperlink{classcanvascv_1_1WidgetFactoryT}{canvascv::WidgetFactoryT};
+
+    FileBrowser(\textcolor{keyword}{const} cv::Point &pos)
+        : \hyperlink{classcanvascv_1_1CompoundWidget}{CompoundWidget}(pos)
+    \{
+        top = \hyperlink{classcanvascv_1_1VFrame_a013de150c59b8f7f37aa21ac59d78b10}{VFrame::create}(*\textcolor{keyword}{this}, pos).get(); \textcolor{comment}{// note the get()}
+        top->setFrameRelief(RAISED);
+        top->setPadding(5);
+        pathFrame = \hyperlink{classcanvascv_1_1HFrame_a0bd1d3df07a8c25f48e79048913f85fc}{HFrame::create}(*top).get(); \textcolor{comment}{// note the get()}
+        pathFrame->setFrameRelief(Widget::SELECTED);
+        pathFrame->setWrap(\textcolor{keyword}{true});
+        filesFrame = \hyperlink{classcanvascv_1_1HFrame_a0bd1d3df07a8c25f48e79048913f85fc}{HFrame::create}(*top).get(); \textcolor{comment}{// note the get()}
+        filesFrame->setFrameRelief(Widget::SELECTED);
+        filesFrame->setWrap(\textcolor{keyword}{true});
+        \textcolor{keyword}{auto} okCancel = \hyperlink{classcanvascv_1_1HorizontalLayout_aea31dd787cbf985687ead6a55efa1839}{HorizontalLayout::create}(*top);
+        okCancel->setLayoutAnchor(CENTER);
+        \hyperlink{classcanvascv_1_1Button_a3557ea02dfca8d6cb92181a2d2b88112}{Button::create}(*okCancel, \textcolor{stringliteral}{"Cancel"}, \textcolor{stringliteral}{""}, [\textcolor{keyword}{this}](\hyperlink{classcanvascv_1_1Widget}{Widget}*) \{rmvFromLayout();\});
+        \hyperlink{classcanvascv_1_1Button_a3557ea02dfca8d6cb92181a2d2b88112}{Button::create}(*okCancel, \textcolor{stringliteral}{"Ok"}, \textcolor{stringliteral}{""}, [\textcolor{keyword}{this}](\hyperlink{classcanvascv_1_1Widget}{Widget}*)
+        \{
+            userSelection = currentPath;
+            \textcolor{keywordflow}{if} (userCB) userCB(\textcolor{keyword}{this}, 0);
+            rmvFromLayout();
+        \});
+    \}
+
+    \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} recalcCompound()
+    \{
+        fs::path pathObj(getCurrentPath());
+        \textcolor{keywordflow}{if} (fs::is\_directory(pathObj) &&
+                currentDir != pathObj.string())
+        \{
+            \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} f : files) \{ f->rmvFromLayout(); \}
+            files.clear();
+            currentDir = pathObj.string();
+            \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}& p: fs::directory\_iterator(getCurrentPath()))
+            \{
+                \textcolor{keywordflow}{if} (fs::is\_directory(p))
+                \{
+                    \hyperlink{classcanvascv_1_1Button}{Button} *dir = \hyperlink{classcanvascv_1_1Button_a3557ea02dfca8d6cb92181a2d2b88112}{Button::create}(*filesFrame, p.path().filename().
+      string()).\textcolor{keyword}{get}();
+                    dir->\hyperlink{classcanvascv_1_1Widget_abdb1aed0ca76845ba6a56c4f8db502c9}{notifyOnChange}([\textcolor{keyword}{this}, p](\hyperlink{classcanvascv_1_1Widget}{Widget} *, 
+      \hyperlink{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8}{Widget::State} state) \{
+                        \textcolor{keywordflow}{if} (state == \hyperlink{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8abb395c6efa7fc11a3176d1f801bdbc86}{Widget::PRESS}) \{
+                            setCurrentPath(p.path().string());
+                        \}
+                    \});
+                    files.push\_back(dir);
+                \}
+                \textcolor{keywordflow}{else}
+                \{
+                    \hyperlink{classcanvascv_1_1Button}{Button} *file = \hyperlink{classcanvascv_1_1Button_a3557ea02dfca8d6cb92181a2d2b88112}{Button::create}(*filesFrame, p.path().filename().
+      string()).\textcolor{keyword}{get}();
+                    file->\hyperlink{classcanvascv_1_1Button_a7d2c79daa9d22bf02c2cc978ff10df7e}{setFlatButton}();
+                    file->\hyperlink{classcanvascv_1_1Widget_abdb1aed0ca76845ba6a56c4f8db502c9}{notifyOnChange}([\textcolor{keyword}{this}, p](\hyperlink{classcanvascv_1_1Widget}{Widget} *, 
+      \hyperlink{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8}{Widget::State} state) \{
+                        \textcolor{keywordflow}{if} (state == \hyperlink{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8abb395c6efa7fc11a3176d1f801bdbc86}{Widget::PRESS}) \{
+                            setCurrentPath(p.path().string());
+                        \}
+                    \});
+                    files.push\_back(file);
+                \}
+            \}
+        \}
+        \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} b : path) \{ b->rmvFromLayout(); \}
+        path.clear();
+        list<fs::path> parts;
+        \textcolor{keywordflow}{do}
+        \{
+            parts.push\_front(pathObj);
+            pathObj = pathObj.parent\_path();
+        \} \textcolor{keywordflow}{while} (pathObj.string().length());
+        \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} &p : parts)
+        \{
+            \textcolor{keywordflow}{if} (fs::is\_directory(p))
+            \{
+                \hyperlink{classcanvascv_1_1Button}{Button} *dir = \hyperlink{classcanvascv_1_1Button_a3557ea02dfca8d6cb92181a2d2b88112}{Button::create}(*pathFrame, p.filename().string()).\textcolor{keyword}{get}();
+                dir->\hyperlink{classcanvascv_1_1Widget_abdb1aed0ca76845ba6a56c4f8db502c9}{notifyOnChange}([\textcolor{keyword}{this}, p](\hyperlink{classcanvascv_1_1Widget}{Widget} *, 
+      \hyperlink{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8}{Widget::State} state) \{
+                    \textcolor{keywordflow}{if} (state == \hyperlink{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8abb395c6efa7fc11a3176d1f801bdbc86}{Widget::PRESS}) \{
+                        setCurrentPath(p.string());
+                    \}
+                \});
+                path.push\_back(dir);
+            \}
+            \textcolor{keywordflow}{else}
+            \{
+                \hyperlink{classcanvascv_1_1Button}{Button} *file = \hyperlink{classcanvascv_1_1Button_a3557ea02dfca8d6cb92181a2d2b88112}{Button::create}(*pathFrame, p.filename().string()).\textcolor{keyword}{get}();
+                file->\hyperlink{classcanvascv_1_1Button_a7d2c79daa9d22bf02c2cc978ff10df7e}{setFlatButton}();
+                path.push\_back(file);
+            \}
+        \}
+        top->update(); \textcolor{comment}{// Since we're making widgets dirty in recalc*() we need to manually update them}
+        recalcRect(0);
+    \}
+
+\textcolor{keyword}{private}:
+    CBUserSelection userCB;
+    fs::path currentDir;
+    \textcolor{keywordtype}{string} currentPath;
+    \textcolor{keywordtype}{string} userSelection;
+
+    \textcolor{comment}{// It's enough to keep pointers.}
+    \textcolor{comment}{// The layout is holding the smart pointers,}
+    \textcolor{comment}{//  and that's keeping the reference count up.}
+    \hyperlink{classcanvascv_1_1VFrame}{VFrame} *top;
+    \hyperlink{classcanvascv_1_1HFrame}{HFrame} *pathFrame;
+    list<Button*> path;
+    \hyperlink{classcanvascv_1_1HFrame}{HFrame} *filesFrame;
+    list<Button*> files;
+\};
+\textcolor{keyword}{const} \textcolor{keywordtype}{char} *FileBrowser::type = \textcolor{stringliteral}{"FileBrowser"};
+
+CCV\_REGISTER\_WIDGET(FileBrowser);
+
+\textcolor{keyword}{static} Mat readImg(\textcolor{keyword}{const} \textcolor{keywordtype}{string} &name)
+\{
+    Mat image;
+    Mat orig = imread(name, IMREAD\_UNCHANGED);
+    \textcolor{keywordflow}{if} (! orig.empty())
+    \{
+        \textcolor{keywordflow}{if} (orig.cols > 1024)
+        \{
+            \textcolor{keywordtype}{double} ratio = 1024. / orig.cols;
+            cv::resize(orig, image, Size(), ratio, ratio);
+        \}
+        \textcolor{keywordflow}{else}
+        \{
+            image = orig;
+        \}
+    \}
+    \textcolor{keywordflow}{return} image;
+\}
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    Mat image;
+    \textcolor{keywordflow}{if} (argc)
+    \{
+        image = readImg(argv[0]);
+        \textcolor{keywordflow}{if} (image.empty())
+        \{
+            \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -1);
+        \}
+    \}
+    \textcolor{keywordflow}{else}
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    fs::path startPath(argv[0]);
+    startPath = startPath.parent\_path();
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"Canvas"}, image.size());
+
+    namedWindow(\textcolor{stringliteral}{"Canvas"}, WINDOW\_AUTOSIZE);
+    c.setMouseCallback(); \textcolor{comment}{// optional for mouse usage see also (example\_selectbox.cpp)}
+
+    shared\_ptr<FileBrowser> fb;
+    \hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget::CBUserSelection} cb = [&c, &image](\hyperlink{classcanvascv_1_1Widget}{Widget} *w, int)
+    \{
+        cout << \textcolor{stringliteral}{"CB: Got user selection '"} << ((FileBrowser*)w)->getUserSelection() << \textcolor{stringliteral}{"'"} << endl;
+        Mat tmp = readImg(((FileBrowser*)w)->getUserSelection());
+        \textcolor{keywordflow}{if} (tmp.empty())
+        \{
+            cout << \textcolor{stringliteral}{"OpenCV cannot read this image"} << endl;
+        \}
+        \textcolor{keywordflow}{else}
+        \{
+            image = tmp;
+            c.setSize(image.size());
+        \}
+    \};
+
+    \textcolor{keywordtype}{int} delay = 1000/25; \textcolor{comment}{// if using a polling API we need a delay}
+    \textcolor{keywordtype}{int} key = 0;
+    Mat out; \textcolor{comment}{// keeping it out of the loop is a little more efficient}
+    \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'})
+    \{
+        \textcolor{keywordflow}{if} (! fb)
+        \{
+            fb = FileBrowser::create(c, startPath.string(), cb);
+            fb->setFillColor(\hyperlink{classcanvascv_1_1Colors_acabb2042568dac2c0fbefcc92b48be0b}{Colors::RoyalBlue});
+            fb->setAlpha(128);
+        \}
+        c.redrawOn(image, out);
+        imshow(\textcolor{stringliteral}{"Canvas"}, out);
+        key = c.waitKeyEx(delay); \textcolor{comment}{// GUI and callbacks happen here}
+        \textcolor{keywordflow}{if} (fb->getUserSelection().length())
+        \{
+            cout << \textcolor{stringliteral}{"Loop: Got user selection '"} << fb->getUserSelection() << \textcolor{stringliteral}{"'"} << endl;
+            cout << \textcolor{stringliteral}{"Starting a new FileBrowser"} << endl;
+            startPath = fb->getUserSelection();
+            \textcolor{keywordflow}{if} (! fs::is\_directory(startPath)) startPath = startPath.parent\_path();
+            fb = FileBrowser::create(c, startPath.string(), cb);
+            fb->setFillColor(\hyperlink{classcanvascv_1_1Colors_acabb2042568dac2c0fbefcc92b48be0b}{Colors::RoyalBlue});
+            fb->setAlpha(128);
+        \}
+        \textcolor{keywordflow}{if} (fb->isRemoved() && ! fb->getUserSelection().length())
+        \{
+            cout << \textcolor{stringliteral}{"User canceled"} << endl;
+            \textcolor{keywordflow}{break};
+        \}
+    \}
+
+    destroyAllWindows();
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCodeInclude}
+ 

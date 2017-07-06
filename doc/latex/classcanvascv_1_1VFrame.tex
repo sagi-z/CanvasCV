@@ -1,0 +1,97 @@
+\hypertarget{classcanvascv_1_1VFrame}{}\section{canvascv\+:\+:V\+Frame Class Reference}
+\label{classcanvascv_1_1VFrame}\index{canvascv\+::\+V\+Frame@{canvascv\+::\+V\+Frame}}
+
+
+The \hyperlink{classcanvascv_1_1VFrame}{V\+Frame} class.  
+
+
+
+
+{\ttfamily \#include $<$vframe.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:V\+Frame\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{classcanvascv_1_1VFrame}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcanvascv_1_1VFrame_aa99d2a36a61eca36d3e3ba0972df65b4}{set\+Frame\+Relief} (\hyperlink{classcanvascv_1_1Widget_a8253daa509c55c24c92ce0d3dd93e4cd}{Relief} value)
+\begin{DoxyCompactList}\small\item\em set\+Frame\+Relief \end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{classcanvascv_1_1VFrame_a8a87d2a05ca0f42a8deeaefa698347a9}{get\+Type} () const 
+\begin{DoxyCompactList}\small\item\em get\+Type is always implemented by derived to return the same static pointer per widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1VFrame}{V\+Frame} $>$ \hyperlink{classcanvascv_1_1VFrame_a013de150c59b8f7f37aa21ac59d78b10}{create} (\hyperlink{classcanvascv_1_1Layout}{Layout} \&layout, const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))
+\begin{DoxyCompactList}\small\item\em create a \hyperlink{classcanvascv_1_1VFrame}{V\+Frame} widget \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A frame with a background of a selected relief type. This is also a \hyperlink{classcanvascv_1_1Layout}{Layout} for other Widgets and it lays them vertically. \begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1VerticalLayout}{Vertical\+Layout} 
+\end{DoxySeeAlso}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_add_widget_8cpp-example}{example\+\_\+add\+\_\+widget.\+cpp}.\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+V\+Frame@{canvascv\+::\+V\+Frame}!create@{create}}
+\index{create@{create}!canvascv\+::\+V\+Frame@{canvascv\+::\+V\+Frame}}
+\subsubsection[{\texorpdfstring{create(\+Layout \&layout, const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))}{create(Layout &layout, const cv::Point &pos=cv::Point(0, 0))}}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::shared\+\_\+ptr$<${\bf V\+Frame}$>$ canvascv\+::\+V\+Frame\+::create (
+\begin{DoxyParamCaption}
+\item[{{\bf Layout} \&}]{layout, }
+\item[{const cv\+::\+Point \&}]{pos = {\ttfamily cv\+:\+:Point(0,~0)}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classcanvascv_1_1VFrame_a013de150c59b8f7f37aa21ac59d78b10}{}\label{classcanvascv_1_1VFrame_a013de150c59b8f7f37aa21ac59d78b10}
+
+\begin{DoxyParams}{Parameters}
+{\em layout} & widgets are placed in layouts Canvas/\+V\+Frame/\+H\+Frame/... \\
+\hline
+{\em pos} & location in the \hyperlink{classcanvascv_1_1Layout}{Layout} (Layouts can ignore that) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a smart pointer copy of the object kept in the \hyperlink{classcanvascv_1_1Layout}{Layout} 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_add_widget_8cpp-example}{example\+\_\+add\+\_\+widget.\+cpp}, and \hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+\index{canvascv\+::\+V\+Frame@{canvascv\+::\+V\+Frame}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!canvascv\+::\+V\+Frame@{canvascv\+::\+V\+Frame}}
+\subsubsection[{\texorpdfstring{get\+Type() const }{getType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ canvascv\+::\+V\+Frame\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1VFrame_a8a87d2a05ca0f42a8deeaefa698347a9}{}\label{classcanvascv_1_1VFrame_a8a87d2a05ca0f42a8deeaefa698347a9}
+\begin{DoxyReturn}{Returns}
+const char $\ast$ pointer to string with widget type name 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1VerticalLayout_a1b6eaaa782a4c9c880feb49d595d45b6}{canvascv\+::\+Vertical\+Layout}.
+
+\index{canvascv\+::\+V\+Frame@{canvascv\+::\+V\+Frame}!set\+Frame\+Relief@{set\+Frame\+Relief}}
+\index{set\+Frame\+Relief@{set\+Frame\+Relief}!canvascv\+::\+V\+Frame@{canvascv\+::\+V\+Frame}}
+\subsubsection[{\texorpdfstring{set\+Frame\+Relief(\+Relief value)}{setFrameRelief(Relief value)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+V\+Frame\+::set\+Frame\+Relief (
+\begin{DoxyParamCaption}
+\item[{{\bf Relief}}]{value}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1VFrame_aa99d2a36a61eca36d3e3ba0972df65b4}{}\label{classcanvascv_1_1VFrame_aa99d2a36a61eca36d3e3ba0972df65b4}
+
+\begin{DoxyParams}{Parameters}
+{\em value} & is one of the supported relief types \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1Widget_a8253daa509c55c24c92ce0d3dd93e4cd}{Widget\+::\+Relief} 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/widgets/vframe.\+h\end{DoxyCompactItemize}

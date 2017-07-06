@@ -1,0 +1,61 @@
+\hypertarget{classcanvascv_1_1Layout}{}\section{canvascv\+:\+:Layout Class Reference}
+\label{classcanvascv_1_1Layout}\index{canvascv\+::\+Layout@{canvascv\+::\+Layout}}
+
+
+The \hyperlink{classcanvascv_1_1Layout}{Layout} class.  
+
+
+
+
+{\ttfamily \#include $<$layout.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Layout\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.128491cm]{classcanvascv_1_1Layout}
+\end{center}
+\end{figure}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classcanvascv_1_1Layout_a90b4264dce5634f09d555c22358e35f0}{add\+Widget} (const std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Widget}{Widget} $>$ \&widget)=0\hypertarget{classcanvascv_1_1Layout_a90b4264dce5634f09d555c22358e35f0}{}\label{classcanvascv_1_1Layout_a90b4264dce5634f09d555c22358e35f0}
+
+\begin{DoxyCompactList}\small\item\em adds the widget to this \hyperlink{classcanvascv_1_1Layout}{Layout} after removing it from it\textquotesingle{}s previous layout \end{DoxyCompactList}\item 
+virtual std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Widget}{Widget} $>$ \hyperlink{classcanvascv_1_1Layout_a7b532816232c436ea5b6e7c4c3254779}{rmv\+Widget} (const std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Widget}{Widget} $>$ \&widget)=0
+\begin{DoxyCompactList}\small\item\em rmv\+Widget \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is the layout interface class. All widgets must go into a \hyperlink{classcanvascv_1_1Layout}{Layout}. All Layouts are also widgets except for the \hyperlink{classcanvascv_1_1Canvas}{Canvas} class. \begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_add_widget_8cpp-example}{example\+\_\+add\+\_\+widget.\+cpp}.\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Layout@{canvascv\+::\+Layout}!rmv\+Widget@{rmv\+Widget}}
+\index{rmv\+Widget@{rmv\+Widget}!canvascv\+::\+Layout@{canvascv\+::\+Layout}}
+\subsubsection[{\texorpdfstring{rmv\+Widget(const std\+::shared\+\_\+ptr$<$ Widget $>$ \&widget)=0}{rmvWidget(const std::shared_ptr< Widget > &widget)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::shared\+\_\+ptr$<${\bf Widget}$>$ canvascv\+::\+Layout\+::rmv\+Widget (
+\begin{DoxyParamCaption}
+\item[{const std\+::shared\+\_\+ptr$<$ {\bf Widget} $>$ \&}]{widget}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}\hypertarget{classcanvascv_1_1Layout_a7b532816232c436ea5b6e7c4c3254779}{}\label{classcanvascv_1_1Layout_a7b532816232c436ea5b6e7c4c3254779}
+
+\begin{DoxyParams}{Parameters}
+{\em widget} & will be removed from this \hyperlink{classcanvascv_1_1Layout}{Layout} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+filled shared\+\_\+ptr to removed widget or empty if not found 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Widgets must be in layouts to be displayed correctly. 
+\end{DoxyNote}
+
+
+Implemented in \hyperlink{classcanvascv_1_1Canvas_a70248a9be2eedcacad74c9be5fd615eb}{canvascv\+::\+Canvas}, \hyperlink{classcanvascv_1_1CompoundWidget_ad4a37bf31f9cf6410b41526a5b83c75a}{canvascv\+::\+Compound\+Widget}, and \hyperlink{classcanvascv_1_1AutoLayout_abc436c90f50a5331c391e351bef9e659}{canvascv\+::\+Auto\+Layout}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/widgets/layout.\+h\end{DoxyCompactItemize}

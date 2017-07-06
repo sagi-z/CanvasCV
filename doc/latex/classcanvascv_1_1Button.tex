@@ -1,0 +1,95 @@
+\hypertarget{classcanvascv_1_1Button}{}\section{canvascv\+:\+:Button Class Reference}
+\label{classcanvascv_1_1Button}\index{canvascv\+::\+Button@{canvascv\+::\+Button}}
+
+
+The \hyperlink{classcanvascv_1_1Button}{Button} class.  
+
+
+
+
+{\ttfamily \#include $<$button.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Button\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classcanvascv_1_1Button}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcanvascv_1_1Button_a7d2c79daa9d22bf02c2cc978ff10df7e}{set\+Flat\+Button} ()\hypertarget{classcanvascv_1_1Button_a7d2c79daa9d22bf02c2cc978ff10df7e}{}\label{classcanvascv_1_1Button_a7d2c79daa9d22bf02c2cc978ff10df7e}
+
+\begin{DoxyCompactList}\small\item\em The button will always have a F\+L\+AT relief. \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Button_a274f428bce039ba2159b78d790c3ed94}{on\+Press} (\hyperlink{classcanvascv_1_1Widget_ad27bca771ee1c14454c77c91d9d49925}{C\+B\+Widget} value)\hypertarget{classcanvascv_1_1Button_a274f428bce039ba2159b78d790c3ed94}{}\label{classcanvascv_1_1Button_a274f428bce039ba2159b78d790c3ed94}
+
+\begin{DoxyCompactList}\small\item\em Call a user CB when pressed. \end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{classcanvascv_1_1Button_ace294c72ce39507268ffd752f4ca0034}{get\+Type} () const 
+\begin{DoxyCompactList}\small\item\em get\+Type is always implemented by derived to return the same static pointer per widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Button}{Button} $>$ \hyperlink{classcanvascv_1_1Button_a3557ea02dfca8d6cb92181a2d2b88112}{create} (\hyperlink{classcanvascv_1_1Layout}{Layout} \&layout, const cv\+::\+Point \&pos, const std\+::string \&button\+Text, const std\+::string \&status\+Msg=\char`\"{}\char`\"{}, \hyperlink{classcanvascv_1_1Widget_ad27bca771ee1c14454c77c91d9d49925}{C\+B\+Widget} cb\+Val=\hyperlink{classcanvascv_1_1Widget_ad27bca771ee1c14454c77c91d9d49925}{C\+B\+Widget}())
+\begin{DoxyCompactList}\small\item\em create a button widget \end{DoxyCompactList}\item 
+static std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Button}{Button} $>$ \hyperlink{classcanvascv_1_1Button_afcef2e139661b2b07da904899d83cfc8}{create} (\hyperlink{classcanvascv_1_1Layout}{Layout} \&layout, const std\+::string \&button\+Text, const std\+::string \&status\+Msg=\char`\"{}\char`\"{}, \hyperlink{classcanvascv_1_1Widget_ad27bca771ee1c14454c77c91d9d49925}{C\+B\+Widget} cb\+Val=\hyperlink{classcanvascv_1_1Widget_ad27bca771ee1c14454c77c91d9d49925}{C\+B\+Widget}())\hypertarget{classcanvascv_1_1Button_afcef2e139661b2b07da904899d83cfc8}{}\label{classcanvascv_1_1Button_afcef2e139661b2b07da904899d83cfc8}
+
+\begin{DoxyCompactList}\small\item\em a convinient version to the above without the \textquotesingle{}pos\textquotesingle{} argument \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+a button widget to use on the Open\+CV Window \begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_add_widget_8cpp-example}{example\+\_\+add\+\_\+widget.\+cpp}.\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Button@{canvascv\+::\+Button}!create@{create}}
+\index{create@{create}!canvascv\+::\+Button@{canvascv\+::\+Button}}
+\subsubsection[{\texorpdfstring{create(\+Layout \&layout, const cv\+::\+Point \&pos, const std\+::string \&button\+Text, const std\+::string \&status\+Msg="""", C\+B\+Widget cb\+Val=\+C\+B\+Widget())}{create(Layout &layout, const cv::Point &pos, const std::string &buttonText, const std::string &statusMsg="", CBWidget cbVal=CBWidget())}}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::shared\+\_\+ptr$<${\bf Button}$>$ canvascv\+::\+Button\+::create (
+\begin{DoxyParamCaption}
+\item[{{\bf Layout} \&}]{layout, }
+\item[{const cv\+::\+Point \&}]{pos, }
+\item[{const std\+::string \&}]{button\+Text, }
+\item[{const std\+::string \&}]{status\+Msg = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{{\bf C\+B\+Widget}}]{cb\+Val = {\ttfamily {\bf C\+B\+Widget}()}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classcanvascv_1_1Button_a3557ea02dfca8d6cb92181a2d2b88112}{}\label{classcanvascv_1_1Button_a3557ea02dfca8d6cb92181a2d2b88112}
+
+\begin{DoxyParams}{Parameters}
+{\em layout} & widgets are placed in layouts Canvas/\+V\+Frame/\+H\+Frame/... \\
+\hline
+{\em pos} & location in the \hyperlink{classcanvascv_1_1Layout}{Layout} (Layouts can ignore that) \\
+\hline
+{\em button\+Text} & what to write on the button \\
+\hline
+{\em status\+Msg} & what to write during hover over the button \\
+\hline
+{\em cb\+Val} & a callback to invoke when the button is pressed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a smart pointer copy of the object kept in the \hyperlink{classcanvascv_1_1Layout}{Layout} 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_add_widget_8cpp-example}{example\+\_\+add\+\_\+widget.\+cpp}, and \hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Button@{canvascv\+::\+Button}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!canvascv\+::\+Button@{canvascv\+::\+Button}}
+\subsubsection[{\texorpdfstring{get\+Type() const }{getType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ canvascv\+::\+Button\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Button_ace294c72ce39507268ffd752f4ca0034}{}\label{classcanvascv_1_1Button_ace294c72ce39507268ffd752f4ca0034}
+\begin{DoxyReturn}{Returns}
+const char $\ast$ pointer to string with widget type name 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1Text_ae81d87d43167c2e8d1e58fa620a80579}{canvascv\+::\+Text}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/widgets/button.\+h\end{DoxyCompactItemize}

@@ -1,0 +1,191 @@
+\hypertarget{classcanvascv_1_1MsgBox}{}\section{canvascv\+:\+:Msg\+Box Class Reference}
+\label{classcanvascv_1_1MsgBox}\index{canvascv\+::\+Msg\+Box@{canvascv\+::\+Msg\+Box}}
+
+
+The \hyperlink{classcanvascv_1_1MsgBox}{Msg\+Box} class.  
+
+
+
+
+{\ttfamily \#include $<$msgbox.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Msg\+Box\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classcanvascv_1_1MsgBox}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classcanvascv_1_1MsgBox_a8762fe664f293389a1b823c75dc545e1}{get\+User\+Selection} (bool blocking=false)
+\begin{DoxyCompactList}\small\item\em get\+User\+Selection \end{DoxyCompactList}\item 
+std\+::string \hyperlink{classcanvascv_1_1MsgBox_af97285a26857652a316387505ff7dce0}{get\+Text\+At} (int index) const 
+\begin{DoxyCompactList}\small\item\em get\+Text\+At \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classcanvascv_1_1MsgBox_adc1e629426ea62ff9b1391c18fcb3a4a}{size} () const \hypertarget{classcanvascv_1_1MsgBox_adc1e629426ea62ff9b1391c18fcb3a4a}{}\label{classcanvascv_1_1MsgBox_adc1e629426ea62ff9b1391c18fcb3a4a}
+
+\begin{DoxyCompactList}\small\item\em return nunmber of buttons \end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{classcanvascv_1_1MsgBox_ad846e38adb000c10fac57e433d894001}{get\+Type} () const 
+\begin{DoxyCompactList}\small\item\em get\+Type is always implemented by derived to return the same static pointer per widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1MsgBox}{Msg\+Box} $>$ \hyperlink{classcanvascv_1_1MsgBox_a3bf0019e83e367e415da29286db2c5d0}{create} (\hyperlink{classcanvascv_1_1Canvas}{Canvas} \&canvas, const std\+::string \&msg, std\+::vector$<$ std\+::string $>$ button\+Names=\{\char`\"{}Ok\char`\"{}\}, Widget\+::\+C\+B\+User\+Selection cb\+User\+Selection=\hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget\+::\+C\+B\+User\+Selection}(), const cv\+::\+Point \&pos=cv\+::\+Point(-\/1,-\/1))
+\begin{DoxyCompactList}\small\item\em create a message box widget which is closed automatically \end{DoxyCompactList}\item 
+static int \hyperlink{classcanvascv_1_1MsgBox_a1eb6af15c2393ce6cda9ce277c01d200}{create\+Modal} (const std\+::string \&title, const std\+::string \&msg, std\+::vector$<$ std\+::string $>$ button\+Names=\{\char`\"{}Ok\char`\"{}\}, Widget\+::\+C\+B\+User\+Selection cb\+User\+Selection=\hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget\+::\+C\+B\+User\+Selection}())
+\begin{DoxyCompactList}\small\item\em create\+Modal \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classcanvascv_1_1MsgBox_a1eea452acb76e5a5a0588bf83cc91325}{recalc\+Compound} ()
+\begin{DoxyCompactList}\small\item\em recalc\+Compound \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Use a message box with any number of buttons on an Open\+CV window 
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Msg\+Box@{canvascv\+::\+Msg\+Box}!create@{create}}
+\index{create@{create}!canvascv\+::\+Msg\+Box@{canvascv\+::\+Msg\+Box}}
+\subsubsection[{\texorpdfstring{create(\+Canvas \&canvas, const std\+::string \&msg, std\+::vector$<$ std\+::string $>$ button\+Names=\lcurly{}""Ok""\rcurly{}, Widget\+::\+C\+B\+User\+Selection cb\+User\+Selection=\+Widget\+::\+C\+B\+User\+Selection(), const cv\+::\+Point \&pos=cv\+::\+Point(-\/1,-\/1))}{create(Canvas &canvas, const std::string &msg, std::vector< std::string > buttonNames=\{"Ok"\}, Widget::CBUserSelection cbUserSelection=Widget::CBUserSelection(), const cv::Point &pos=cv::Point(-1,-1))}}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::shared\+\_\+ptr$<${\bf Msg\+Box}$>$ canvascv\+::\+Msg\+Box\+::create (
+\begin{DoxyParamCaption}
+\item[{{\bf Canvas} \&}]{canvas, }
+\item[{const std\+::string \&}]{msg, }
+\item[{std\+::vector$<$ std\+::string $>$}]{button\+Names = {\ttfamily \{\char`\"{}Ok\char`\"{}\}}, }
+\item[{{\bf Widget\+::\+C\+B\+User\+Selection}}]{cb\+User\+Selection = {\ttfamily {\bf Widget\+::\+C\+B\+User\+Selection}()}, }
+\item[{const cv\+::\+Point \&}]{pos = {\ttfamily cv\+:\+:Point(-\/1,-\/1)}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classcanvascv_1_1MsgBox_a3bf0019e83e367e415da29286db2c5d0}{}\label{classcanvascv_1_1MsgBox_a3bf0019e83e367e415da29286db2c5d0}
+The \hyperlink{classcanvascv_1_1MsgBox}{Msg\+Box} is not modal -\/ does not block input to other widgets. For a modal \hyperlink{classcanvascv_1_1MsgBox}{Msg\+Box} inside a \hyperlink{classcanvascv_1_1Canvas}{Canvas} use \hyperlink{classcanvascv_1_1MsgBox_a3bf0019e83e367e415da29286db2c5d0}{create()} and get\+User\+Selection(true). 
+\begin{DoxyParams}{Parameters}
+{\em canvas} & must be a \hyperlink{classcanvascv_1_1Canvas}{Canvas} reference for a \hyperlink{classcanvascv_1_1MsgBox}{Msg\+Box} \\
+\hline
+{\em msg} & what to display in the \hyperlink{classcanvascv_1_1MsgBox}{Msg\+Box} \\
+\hline
+{\em button\+Names} & automatically create buttons with names of button\+Names \\
+\hline
+{\em cb\+User\+Selection} & a callback to invoke with index of pressed button \\
+\hline
+{\em pos} & location in the \hyperlink{classcanvascv_1_1Canvas}{Canvas} (the default is the center of the \hyperlink{classcanvascv_1_1Canvas}{Canvas}) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a smart pointer copy of the object kept in the \hyperlink{classcanvascv_1_1Layout}{Layout} 
+\begin{DoxyCode}
+Canvas c(winName, image.size());
+\textcolor{keyword}{auto} msgBox = \hyperlink{classcanvascv_1_1MsgBox_a3bf0019e83e367e415da29286db2c5d0}{MsgBox::create}(c,
+                             \textcolor{stringliteral}{"This is a MsgBox example\(\backslash\)n"}
+                             \textcolor{stringliteral}{"with 2 lines"}, \{
+                                 \textcolor{stringliteral}{"Ok"},           \textcolor{comment}{// 0}
+                                 \textcolor{stringliteral}{"Cancel"},       \textcolor{comment}{// 1}
+                                 \textcolor{stringliteral}{"Somthing else"} \textcolor{comment}{// 2}
+                             \});
+
+\textcolor{keywordflow}{while}(...)
+\{
+    \textcolor{keywordflow}{if} (msgBox && msgBox->getUserSelection() != -1)
+    \{
+        cout << \textcolor{stringliteral}{"MsgBox was pressed with key index "} << msgBox->getUserSelection() << endl;
+        msgBox.reset();
+    \}
+    c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(...);
+    imshow(...);
+    key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(...); \textcolor{comment}{// GUI and callbacks happen here}
+\}
+\end{DoxyCode}
+ Or you could use the callback version (see the example) 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1MsgBox_a8762fe664f293389a1b823c75dc545e1}{get\+User\+Selection} 
+\end{DoxySeeAlso}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_msgbox_8cpp-example}{example\+\_\+msgbox.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Msg\+Box@{canvascv\+::\+Msg\+Box}!create\+Modal@{create\+Modal}}
+\index{create\+Modal@{create\+Modal}!canvascv\+::\+Msg\+Box@{canvascv\+::\+Msg\+Box}}
+\subsubsection[{\texorpdfstring{create\+Modal(const std\+::string \&title, const std\+::string \&msg, std\+::vector$<$ std\+::string $>$ button\+Names=\lcurly{}""Ok""\rcurly{}, Widget\+::\+C\+B\+User\+Selection cb\+User\+Selection=\+Widget\+::\+C\+B\+User\+Selection())}{createModal(const std::string &title, const std::string &msg, std::vector< std::string > buttonNames=\{"Ok"\}, Widget::CBUserSelection cbUserSelection=Widget::CBUserSelection())}}]{\setlength{\rightskip}{0pt plus 5cm}static int canvascv\+::\+Msg\+Box\+::create\+Modal (
+\begin{DoxyParamCaption}
+\item[{const std\+::string \&}]{title, }
+\item[{const std\+::string \&}]{msg, }
+\item[{std\+::vector$<$ std\+::string $>$}]{button\+Names = {\ttfamily \{\char`\"{}Ok\char`\"{}\}}, }
+\item[{{\bf Widget\+::\+C\+B\+User\+Selection}}]{cb\+User\+Selection = {\ttfamily {\bf Widget\+::\+C\+B\+User\+Selection}()}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classcanvascv_1_1MsgBox_a1eb6af15c2393ce6cda9ce277c01d200}{}\label{classcanvascv_1_1MsgBox_a1eb6af15c2393ce6cda9ce277c01d200}
+opens a modal (blocking) \hyperlink{classcanvascv_1_1MsgBox}{Msg\+Box} in it\textquotesingle{}s own window and immediatly waits for a user selection. For a modal \hyperlink{classcanvascv_1_1MsgBox}{Msg\+Box} inside a \hyperlink{classcanvascv_1_1Canvas}{Canvas} use \hyperlink{classcanvascv_1_1MsgBox_a3bf0019e83e367e415da29286db2c5d0}{create()} and get\+User\+Selection(true). 
+\begin{DoxyParams}{Parameters}
+{\em title} & is the title of the new window \\
+\hline
+{\em msg} & what to display in the \hyperlink{classcanvascv_1_1MsgBox}{Msg\+Box} \\
+\hline
+{\em button\+Names} & automatically create buttons with names of button\+Names \\
+\hline
+{\em cb\+User\+Selection} & a callback to invoke with index of pressed button \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return result of \hyperlink{classcanvascv_1_1MsgBox_a8762fe664f293389a1b823c75dc545e1}{get\+User\+Selection()} 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+get\+User\+Selection(true) 
+\end{DoxySeeAlso}
+\index{canvascv\+::\+Msg\+Box@{canvascv\+::\+Msg\+Box}!get\+Text\+At@{get\+Text\+At}}
+\index{get\+Text\+At@{get\+Text\+At}!canvascv\+::\+Msg\+Box@{canvascv\+::\+Msg\+Box}}
+\subsubsection[{\texorpdfstring{get\+Text\+At(int index) const }{getTextAt(int index) const }}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string canvascv\+::\+Msg\+Box\+::get\+Text\+At (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+) const}\hypertarget{classcanvascv_1_1MsgBox_af97285a26857652a316387505ff7dce0}{}\label{classcanvascv_1_1MsgBox_af97285a26857652a316387505ff7dce0}
+return the text at index index 
+\begin{DoxyParams}{Parameters}
+{\em index} & is the index you want the text for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return the text at index index or empty string if invalid index 
+\end{DoxyReturn}
+\index{canvascv\+::\+Msg\+Box@{canvascv\+::\+Msg\+Box}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!canvascv\+::\+Msg\+Box@{canvascv\+::\+Msg\+Box}}
+\subsubsection[{\texorpdfstring{get\+Type() const }{getType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ canvascv\+::\+Msg\+Box\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1MsgBox_ad846e38adb000c10fac57e433d894001}{}\label{classcanvascv_1_1MsgBox_ad846e38adb000c10fac57e433d894001}
+\begin{DoxyReturn}{Returns}
+const char $\ast$ pointer to string with widget type name 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Widget_a85884269bd53ab91203f099a586efa43}{canvascv\+::\+Widget}.
+
+\index{canvascv\+::\+Msg\+Box@{canvascv\+::\+Msg\+Box}!get\+User\+Selection@{get\+User\+Selection}}
+\index{get\+User\+Selection@{get\+User\+Selection}!canvascv\+::\+Msg\+Box@{canvascv\+::\+Msg\+Box}}
+\subsubsection[{\texorpdfstring{get\+User\+Selection(bool blocking=false)}{getUserSelection(bool blocking=false)}}]{\setlength{\rightskip}{0pt plus 5cm}int canvascv\+::\+Msg\+Box\+::get\+User\+Selection (
+\begin{DoxyParamCaption}
+\item[{bool}]{blocking = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1MsgBox_a8762fe664f293389a1b823c75dc545e1}{}\label{classcanvascv_1_1MsgBox_a8762fe664f293389a1b823c75dc545e1}
+get what the user pressed 
+\begin{DoxyParams}{Parameters}
+{\em blocking} & if true, block waiting on the \hyperlink{classcanvascv_1_1MsgBox}{Msg\+Box} until a button is pressed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns pressed button index or -\/1 if not pressed 
+\end{DoxyReturn}
+\index{canvascv\+::\+Msg\+Box@{canvascv\+::\+Msg\+Box}!recalc\+Compound@{recalc\+Compound}}
+\index{recalc\+Compound@{recalc\+Compound}!canvascv\+::\+Msg\+Box@{canvascv\+::\+Msg\+Box}}
+\subsubsection[{\texorpdfstring{recalc\+Compound()}{recalcCompound()}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Msg\+Box\+::recalc\+Compound (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1MsgBox_a1eea452acb76e5a5a0588bf83cc91325}{}\label{classcanvascv_1_1MsgBox_a1eea452acb76e5a5a0588bf83cc91325}
+Your BG size recalculation/allocation and FG drawing is done here. It is done semi automatically. Is you invoke setters in this method on your internal widgets, then make sure to update them and/or their layout 
+
+Implements \hyperlink{classcanvascv_1_1CompoundWidget_a4a4f8241d6fd187ffcae2c7968f13864}{canvascv\+::\+Compound\+Widget}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/widgets/msgbox.\+h\end{DoxyCompactItemize}

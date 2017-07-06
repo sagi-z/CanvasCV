@@ -1,0 +1,83 @@
+\hypertarget{classcanvascv_1_1ThemeRepository}{}\section{canvascv\+:\+:Theme\+Repository Class Reference}
+\label{classcanvascv_1_1ThemeRepository}\index{canvascv\+::\+Theme\+Repository@{canvascv\+::\+Theme\+Repository}}
+
+
+The \hyperlink{classcanvascv_1_1ThemeRepository}{Theme\+Repository} is used to add and get themes for \hyperlink{classcanvascv_1_1Widget}{Widget} and \hyperlink{classcanvascv_1_1Shape}{Shape} objects.  
+
+
+
+
+{\ttfamily \#include $<$themerepository.\+h$>$}
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{classcanvascv_1_1ThemeRepository_ac4c17001de8990373066ee3cc9c8a167}{add\+Theme} (const std\+::string \&name, \hyperlink{classcanvascv_1_1Theme}{Theme} $\ast$theme)
+\begin{DoxyCompactList}\small\item\em add\+Theme add a \hyperlink{classcanvascv_1_1Theme}{Theme} to the repository \end{DoxyCompactList}\item 
+static void \hyperlink{classcanvascv_1_1ThemeRepository_a0adfc9060f4c9f274e3be5800b952a8f}{set\+Current\+Theme} (const std\+::string \&name)
+\begin{DoxyCompactList}\small\item\em set\+Current\+Theme sets a previously added theme \end{DoxyCompactList}\item 
+static \hyperlink{classcanvascv_1_1Theme}{Theme} $\ast$ \hyperlink{classcanvascv_1_1ThemeRepository_af63c1f2e5bac4f6adbaa328234aa476d}{get\+Current\+Theme} ()\hypertarget{classcanvascv_1_1ThemeRepository_af63c1f2e5bac4f6adbaa328234aa476d}{}\label{classcanvascv_1_1ThemeRepository_af63c1f2e5bac4f6adbaa328234aa476d}
+
+\begin{DoxyCompactList}\small\item\em returns the current theme \end{DoxyCompactList}\item 
+static std\+::string \hyperlink{classcanvascv_1_1ThemeRepository_a5cbfe3483cb442b3317f2d6dff983966}{get\+Current\+Theme\+Name} ()\hypertarget{classcanvascv_1_1ThemeRepository_a5cbfe3483cb442b3317f2d6dff983966}{}\label{classcanvascv_1_1ThemeRepository_a5cbfe3483cb442b3317f2d6dff983966}
+
+\begin{DoxyCompactList}\small\item\em returns the current theme name \end{DoxyCompactList}\item 
+static void \hyperlink{classcanvascv_1_1ThemeRepository_af64bf9462b980772c4c8c11132edec26}{apply\+Current\+Theme} (\hyperlink{classcanvascv_1_1Shape}{Shape} $\ast$shape)\hypertarget{classcanvascv_1_1ThemeRepository_af64bf9462b980772c4c8c11132edec26}{}\label{classcanvascv_1_1ThemeRepository_af64bf9462b980772c4c8c11132edec26}
+
+\begin{DoxyCompactList}\small\item\em used automatically by the \hyperlink{classcanvascv_1_1ShapeFactory}{Shape\+Factory} when creating a shape \end{DoxyCompactList}\item 
+static void \hyperlink{classcanvascv_1_1ThemeRepository_a92d582b9eef45fabdd2ff6dc354250cf}{apply\+Current\+Theme} (\hyperlink{classcanvascv_1_1Widget}{Widget} $\ast$widget)\hypertarget{classcanvascv_1_1ThemeRepository_a92d582b9eef45fabdd2ff6dc354250cf}{}\label{classcanvascv_1_1ThemeRepository_a92d582b9eef45fabdd2ff6dc354250cf}
+
+\begin{DoxyCompactList}\small\item\em used automatically by the \hyperlink{classcanvascv_1_1WidgetFactory}{Widget\+Factory} when creating a widget \end{DoxyCompactList}\item 
+static std\+::vector$<$ std\+::string $>$ \hyperlink{classcanvascv_1_1ThemeRepository_aec4b1a6a992907e16da57fde49e4b861}{avail\+Themes} ()\hypertarget{classcanvascv_1_1ThemeRepository_aec4b1a6a992907e16da57fde49e4b861}{}\label{classcanvascv_1_1ThemeRepository_aec4b1a6a992907e16da57fde49e4b861}
+
+\begin{DoxyCompactList}\small\item\em get a list of available theme names \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class must have at least a single theme. Themes can be a part of this library, or external to it, suplied by the user and added with \hyperlink{classcanvascv_1_1ThemeRepository_ac4c17001de8990373066ee3cc9c8a167}{Theme\+Repository\+::add\+Theme()} 
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Theme\+Repository@{canvascv\+::\+Theme\+Repository}!add\+Theme@{add\+Theme}}
+\index{add\+Theme@{add\+Theme}!canvascv\+::\+Theme\+Repository@{canvascv\+::\+Theme\+Repository}}
+\subsubsection[{\texorpdfstring{add\+Theme(const std\+::string \&name, Theme $\ast$theme)}{addTheme(const std::string &name, Theme *theme)}}]{\setlength{\rightskip}{0pt plus 5cm}static bool canvascv\+::\+Theme\+Repository\+::add\+Theme (
+\begin{DoxyParamCaption}
+\item[{const std\+::string \&}]{name, }
+\item[{{\bf Theme} $\ast$}]{theme}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classcanvascv_1_1ThemeRepository_ac4c17001de8990373066ee3cc9c8a167}{}\label{classcanvascv_1_1ThemeRepository_ac4c17001de8990373066ee3cc9c8a167}
+
+\begin{DoxyParams}{Parameters}
+{\em name} & is the name of the theme (to overide a theme, add something instead with the same name) \\
+\hline
+{\em theme} & is the theme associated with this name \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if theme is not null 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+that you cannot delete the \hyperlink{classcanvascv_1_1Theme}{Theme} pointer while it\textquotesingle{}s in use. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1ThemeRepository_a0adfc9060f4c9f274e3be5800b952a8f}{set\+Current\+Theme()} 
+\end{DoxySeeAlso}
+\index{canvascv\+::\+Theme\+Repository@{canvascv\+::\+Theme\+Repository}!set\+Current\+Theme@{set\+Current\+Theme}}
+\index{set\+Current\+Theme@{set\+Current\+Theme}!canvascv\+::\+Theme\+Repository@{canvascv\+::\+Theme\+Repository}}
+\subsubsection[{\texorpdfstring{set\+Current\+Theme(const std\+::string \&name)}{setCurrentTheme(const std::string &name)}}]{\setlength{\rightskip}{0pt plus 5cm}static void canvascv\+::\+Theme\+Repository\+::set\+Current\+Theme (
+\begin{DoxyParamCaption}
+\item[{const std\+::string \&}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classcanvascv_1_1ThemeRepository_a0adfc9060f4c9f274e3be5800b952a8f}{}\label{classcanvascv_1_1ThemeRepository_a0adfc9060f4c9f274e3be5800b952a8f}
+
+\begin{DoxyParams}{Parameters}
+{\em name} & is the name of the \hyperlink{classcanvascv_1_1Theme}{Theme} to set as default \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+if the theme doesn\textquotesingle{}t exist then nothing happens 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/themes/themerepository.\+h\end{DoxyCompactItemize}

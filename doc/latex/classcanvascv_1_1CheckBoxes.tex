@@ -1,0 +1,181 @@
+\hypertarget{classcanvascv_1_1CheckBoxes}{}\section{canvascv\+:\+:Check\+Boxes Class Reference}
+\label{classcanvascv_1_1CheckBoxes}\index{canvascv\+::\+Check\+Boxes@{canvascv\+::\+Check\+Boxes}}
+
+
+The \hyperlink{classcanvascv_1_1CheckBoxes}{Check\+Boxes} class.  
+
+
+
+
+{\ttfamily \#include $<$checkboxes.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Check\+Boxes\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classcanvascv_1_1CheckBoxes}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcanvascv_1_1CheckBoxes_ae5614e44017cd8e7169448a9ea3269ec}{set\+Checked} (int index, bool checked)
+\begin{DoxyCompactList}\small\item\em set\+Selection \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1CheckBoxes_a2e544c7f81248c6b297460be5852506e}{is\+Checked} (int index) const 
+\begin{DoxyCompactList}\small\item\em is\+Checked \end{DoxyCompactList}\item 
+std\+::string \hyperlink{classcanvascv_1_1CheckBoxes_a1ca004ddd840090415924b1f79b2ee47}{get\+Text\+At} (int index) const 
+\begin{DoxyCompactList}\small\item\em get\+Text\+At \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classcanvascv_1_1CheckBoxes_ac2e93b64ec078504230c7330d068248c}{size} () const \hypertarget{classcanvascv_1_1CheckBoxes_ac2e93b64ec078504230c7330d068248c}{}\label{classcanvascv_1_1CheckBoxes_ac2e93b64ec078504230c7330d068248c}
+
+\begin{DoxyCompactList}\small\item\em return nunmber of check boxes in group \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1CheckBoxes_a940fd899b9d206d4d2fc41b309bd0423}{set\+User\+CB} (\hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget\+::\+C\+B\+User\+Selection} cb\+User\+Selection)\hypertarget{classcanvascv_1_1CheckBoxes_a940fd899b9d206d4d2fc41b309bd0423}{}\label{classcanvascv_1_1CheckBoxes_a940fd899b9d206d4d2fc41b309bd0423}
+
+\begin{DoxyCompactList}\small\item\em cb\+User\+Selection will be invoked per user selection \end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{classcanvascv_1_1CheckBoxes_a59d8af71b4304f97f9caa178d38c99be}{get\+Type} () const 
+\begin{DoxyCompactList}\small\item\em get\+Type is always implemented by derived to return the same static pointer per widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1CheckBoxes}{Check\+Boxes} $>$ \hyperlink{classcanvascv_1_1CheckBoxes_a5108f52385a5cb19ad7fe52a18a91df0}{create} (\hyperlink{classcanvascv_1_1Layout}{Layout} \&layout\+Val, std\+::vector$<$ std\+::string $>$ check\+Box\+Names, \hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget\+::\+C\+B\+User\+Selection} cb\+User\+Selection=\hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget\+::\+C\+B\+User\+Selection}(), const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))
+\begin{DoxyCompactList}\small\item\em create a check box widget \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classcanvascv_1_1CheckBoxes_a50cae1ae73c9d69f864bc7fe6d6fedd6}{recalc\+Compound} ()
+\begin{DoxyCompactList}\small\item\em recalc\+Compound \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Use a check box to get a user selection for multiple options \begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_checkboxes_8cpp-example}{example\+\_\+checkboxes.\+cpp}.\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Check\+Boxes@{canvascv\+::\+Check\+Boxes}!create@{create}}
+\index{create@{create}!canvascv\+::\+Check\+Boxes@{canvascv\+::\+Check\+Boxes}}
+\subsubsection[{\texorpdfstring{create(\+Layout \&layout\+Val, std\+::vector$<$ std\+::string $>$ check\+Box\+Names, Widget\+::\+C\+B\+User\+Selection cb\+User\+Selection=\+Widget\+::\+C\+B\+User\+Selection(), const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))}{create(Layout &layoutVal, std::vector< std::string > checkBoxNames, Widget::CBUserSelection cbUserSelection=Widget::CBUserSelection(), const cv::Point &pos=cv::Point(0, 0))}}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::shared\+\_\+ptr$<${\bf Check\+Boxes}$>$ canvascv\+::\+Check\+Boxes\+::create (
+\begin{DoxyParamCaption}
+\item[{{\bf Layout} \&}]{layout\+Val, }
+\item[{std\+::vector$<$ std\+::string $>$}]{check\+Box\+Names, }
+\item[{{\bf Widget\+::\+C\+B\+User\+Selection}}]{cb\+User\+Selection = {\ttfamily {\bf Widget\+::\+C\+B\+User\+Selection}()}, }
+\item[{const cv\+::\+Point \&}]{pos = {\ttfamily cv\+:\+:Point(0,~0)}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classcanvascv_1_1CheckBoxes_a5108f52385a5cb19ad7fe52a18a91df0}{}\label{classcanvascv_1_1CheckBoxes_a5108f52385a5cb19ad7fe52a18a91df0}
+
+\begin{DoxyParams}{Parameters}
+{\em layout\+Val} & widgets are placed in layouts Canvas/\+V\+Frame/\+H\+Frame/... \\
+\hline
+{\em check\+Box\+Names} & automatically create items with names of check\+Box\+Names \\
+\hline
+{\em cb\+User\+Selection} & a callback to invoke with index of pressed check\+Box \\
+\hline
+{\em pos} & location in the \hyperlink{classcanvascv_1_1Layout}{Layout} (if the layout supports Point locations) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a smart pointer copy of the object kept in the \hyperlink{classcanvascv_1_1Layout}{Layout} 
+\begin{DoxyCode}
+Canvas c(winName, image.size());
+\textcolor{keyword}{auto} selectionBoxes = \hyperlink{classcanvascv_1_1CheckBoxes_a5108f52385a5cb19ad7fe52a18a91df0}{CheckBoxes::create}(c, \{
+                                        \textcolor{stringliteral}{"Long Option1"},     \textcolor{comment}{// index 0}
+                                        \textcolor{stringliteral}{"Option2\(\backslash\)n2 lines"}, \textcolor{comment}{// index 1}
+                                        \textcolor{stringliteral}{"Option3"}           \textcolor{comment}{// index 2}
+                                    \},
+                                    [](Widget *w, \textcolor{keywordtype}{int} i) \{
+    w->setVisible(\textcolor{keyword}{false});
+    cout << \textcolor{stringliteral}{"Option "} << i << \textcolor{stringliteral}{" was chosen"} << endl;
+\});
+\textcolor{keywordflow}{while}(...)
+\{
+    c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(...);
+    imshow(...);
+    key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(...); \textcolor{comment}{// GUI and callbacks happen here}
+\}
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_checkboxes_8cpp-example}{example\+\_\+checkboxes.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Check\+Boxes@{canvascv\+::\+Check\+Boxes}!get\+Text\+At@{get\+Text\+At}}
+\index{get\+Text\+At@{get\+Text\+At}!canvascv\+::\+Check\+Boxes@{canvascv\+::\+Check\+Boxes}}
+\subsubsection[{\texorpdfstring{get\+Text\+At(int index) const }{getTextAt(int index) const }}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string canvascv\+::\+Check\+Boxes\+::get\+Text\+At (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+) const}\hypertarget{classcanvascv_1_1CheckBoxes_a1ca004ddd840090415924b1f79b2ee47}{}\label{classcanvascv_1_1CheckBoxes_a1ca004ddd840090415924b1f79b2ee47}
+return the text at index index 
+\begin{DoxyParams}{Parameters}
+{\em index} & is the index you want the text for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return the text at index index or empty string if invalid index 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_checkboxes_8cpp-example}{example\+\_\+checkboxes.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Check\+Boxes@{canvascv\+::\+Check\+Boxes}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!canvascv\+::\+Check\+Boxes@{canvascv\+::\+Check\+Boxes}}
+\subsubsection[{\texorpdfstring{get\+Type() const }{getType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ canvascv\+::\+Check\+Boxes\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1CheckBoxes_a59d8af71b4304f97f9caa178d38c99be}{}\label{classcanvascv_1_1CheckBoxes_a59d8af71b4304f97f9caa178d38c99be}
+\begin{DoxyReturn}{Returns}
+const char $\ast$ pointer to string with widget type name 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Widget_a85884269bd53ab91203f099a586efa43}{canvascv\+::\+Widget}.
+
+\index{canvascv\+::\+Check\+Boxes@{canvascv\+::\+Check\+Boxes}!is\+Checked@{is\+Checked}}
+\index{is\+Checked@{is\+Checked}!canvascv\+::\+Check\+Boxes@{canvascv\+::\+Check\+Boxes}}
+\subsubsection[{\texorpdfstring{is\+Checked(int index) const }{isChecked(int index) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool canvascv\+::\+Check\+Boxes\+::is\+Checked (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+) const}\hypertarget{classcanvascv_1_1CheckBoxes_a2e544c7f81248c6b297460be5852506e}{}\label{classcanvascv_1_1CheckBoxes_a2e544c7f81248c6b297460be5852506e}
+is a box at index checked 
+\begin{DoxyParams}{Parameters}
+{\em index} & is box index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true or flase for checked or unchecked 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_checkboxes_8cpp-example}{example\+\_\+checkboxes.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Check\+Boxes@{canvascv\+::\+Check\+Boxes}!recalc\+Compound@{recalc\+Compound}}
+\index{recalc\+Compound@{recalc\+Compound}!canvascv\+::\+Check\+Boxes@{canvascv\+::\+Check\+Boxes}}
+\subsubsection[{\texorpdfstring{recalc\+Compound()}{recalcCompound()}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Check\+Boxes\+::recalc\+Compound (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1CheckBoxes_a50cae1ae73c9d69f864bc7fe6d6fedd6}{}\label{classcanvascv_1_1CheckBoxes_a50cae1ae73c9d69f864bc7fe6d6fedd6}
+Your BG size recalculation/allocation and FG drawing is done here. It is done semi automatically. Is you invoke setters in this method on your internal widgets, then make sure to update them and/or their layout 
+
+Implements \hyperlink{classcanvascv_1_1CompoundWidget_a4a4f8241d6fd187ffcae2c7968f13864}{canvascv\+::\+Compound\+Widget}.
+
+\index{canvascv\+::\+Check\+Boxes@{canvascv\+::\+Check\+Boxes}!set\+Checked@{set\+Checked}}
+\index{set\+Checked@{set\+Checked}!canvascv\+::\+Check\+Boxes@{canvascv\+::\+Check\+Boxes}}
+\subsubsection[{\texorpdfstring{set\+Checked(int index, bool checked)}{setChecked(int index, bool checked)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Check\+Boxes\+::set\+Checked (
+\begin{DoxyParamCaption}
+\item[{int}]{index, }
+\item[{bool}]{checked}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1CheckBoxes_ae5614e44017cd8e7169448a9ea3269ec}{}\label{classcanvascv_1_1CheckBoxes_ae5614e44017cd8e7169448a9ea3269ec}
+make a certain box checked 
+\begin{DoxyParams}{Parameters}
+{\em index} & is box index \\
+\hline
+{\em checked} & is true or false for checked or unchecked \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/widgets/checkboxes.\+h\end{DoxyCompactItemize}

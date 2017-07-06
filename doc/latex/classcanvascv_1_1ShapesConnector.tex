@@ -1,0 +1,155 @@
+\hypertarget{classcanvascv_1_1ShapesConnector}{}\section{canvascv\+:\+:Shapes\+Connector Class Reference}
+\label{classcanvascv_1_1ShapesConnector}\index{canvascv\+::\+Shapes\+Connector@{canvascv\+::\+Shapes\+Connector}}
+
+
+The \hyperlink{classcanvascv_1_1ShapesConnector}{Shapes\+Connector} class.  
+
+
+
+
+{\ttfamily \#include $<$shapesconnector.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Shapes\+Connector\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{classcanvascv_1_1ShapesConnector}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classcanvascv_1_1ShapesConnector_ac03d532ffefce9ce5033676a672b0b37}{get\+Spacing} () const \hypertarget{classcanvascv_1_1ShapesConnector_ac03d532ffefce9ce5033676a672b0b37}{}\label{classcanvascv_1_1ShapesConnector_ac03d532ffefce9ce5033676a672b0b37}
+
+\begin{DoxyCompactList}\small\item\em get the spacing of the dotted connecting line \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1ShapesConnector_aaa6f3f712c905df1c6dd33e535920293}{set\+Spacing} (int value)\hypertarget{classcanvascv_1_1ShapesConnector_aaa6f3f712c905df1c6dd33e535920293}{}\label{classcanvascv_1_1ShapesConnector_aaa6f3f712c905df1c6dd33e535920293}
+
+\begin{DoxyCompactList}\small\item\em set the spacing of the dotted connecting line \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1ShapesConnector_a949cf82640ba6977d8d1879702d1be89}{connect\+Tail} (\hyperlink{classcanvascv_1_1Shape}{Shape} \&shape, \hyperlink{classcanvascv_1_1Handle}{Handle} \&handle)\hypertarget{classcanvascv_1_1ShapesConnector_a949cf82640ba6977d8d1879702d1be89}{}\label{classcanvascv_1_1ShapesConnector_a949cf82640ba6977d8d1879702d1be89}
+
+\begin{DoxyCompactList}\small\item\em Connect \textquotesingle{}shape\textquotesingle{} with it\textquotesingle{}s \hyperlink{classcanvascv_1_1Handle}{Handle} \textquotesingle{}handle\textquotesingle{} to our own tail \hyperlink{classcanvascv_1_1Handle}{Handle}. \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1ShapesConnector_a1765b937ee22f9b3bf6920b0e1e4767c}{connect\+Head} (\hyperlink{classcanvascv_1_1Shape}{Shape} \&shape, \hyperlink{classcanvascv_1_1Handle}{Handle} \&handle)\hypertarget{classcanvascv_1_1ShapesConnector_a1765b937ee22f9b3bf6920b0e1e4767c}{}\label{classcanvascv_1_1ShapesConnector_a1765b937ee22f9b3bf6920b0e1e4767c}
+
+\begin{DoxyCompactList}\small\item\em Connect \textquotesingle{}shape\textquotesingle{} with it\textquotesingle{}s \hyperlink{classcanvascv_1_1Handle}{Handle} \textquotesingle{}handle\textquotesingle{} to our own head \hyperlink{classcanvascv_1_1Handle}{Handle}. \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1ShapesConnector_a583c55abfaccaf62f510281b56cc5059}{disconnect\+Tail} ()\hypertarget{classcanvascv_1_1ShapesConnector_a583c55abfaccaf62f510281b56cc5059}{}\label{classcanvascv_1_1ShapesConnector_a583c55abfaccaf62f510281b56cc5059}
+
+\begin{DoxyCompactList}\small\item\em disconnect our own tail \hyperlink{classcanvascv_1_1Handle}{Handle} from any previously connected shape \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1ShapesConnector_ae953fce050f2ceffa4eb2c17be416a84}{disconnect\+Head} ()\hypertarget{classcanvascv_1_1ShapesConnector_ae953fce050f2ceffa4eb2c17be416a84}{}\label{classcanvascv_1_1ShapesConnector_ae953fce050f2ceffa4eb2c17be416a84}
+
+\begin{DoxyCompactList}\small\item\em disconnect our own head \hyperlink{classcanvascv_1_1Handle}{Handle} from any previously connected shape \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1ShapesConnector_afddfa95e10779b106070a24177d9d9be}{reconnect} ()\hypertarget{classcanvascv_1_1ShapesConnector_afddfa95e10779b106070a24177d9d9be}{}\label{classcanvascv_1_1ShapesConnector_afddfa95e10779b106070a24177d9d9be}
+
+\begin{DoxyCompactList}\small\item\em called after read of \hyperlink{classcanvascv_1_1Canvas}{Canvas} from file, assuming internals are filled, but not connected \end{DoxyCompactList}\item 
+int \hyperlink{classcanvascv_1_1ShapesConnector_a977c1a582ae5fb3b17eff1eedb8cc808}{get\+Tail\+Shape\+Id} ()\hypertarget{classcanvascv_1_1ShapesConnector_a977c1a582ae5fb3b17eff1eedb8cc808}{}\label{classcanvascv_1_1ShapesConnector_a977c1a582ae5fb3b17eff1eedb8cc808}
+
+\begin{DoxyCompactList}\small\item\em get the id of the shape connected to our tail \hyperlink{classcanvascv_1_1Handle}{Handle} \end{DoxyCompactList}\item 
+int \hyperlink{classcanvascv_1_1ShapesConnector_aba1c81f24ddd2d75f8b5cee2a4ca211e}{get\+Head\+Shape\+Id} ()\hypertarget{classcanvascv_1_1ShapesConnector_aba1c81f24ddd2d75f8b5cee2a4ca211e}{}\label{classcanvascv_1_1ShapesConnector_aba1c81f24ddd2d75f8b5cee2a4ca211e}
+
+\begin{DoxyCompactList}\small\item\em get the id of the shape connected to our head \hyperlink{classcanvascv_1_1Handle}{Handle} \end{DoxyCompactList}\item 
+\hyperlink{classcanvascv_1_1Shape}{Shape} $\ast$ \hyperlink{classcanvascv_1_1ShapesConnector_ab25d6be02ace66e07d0265fa0cca9b6d}{get\+Tail\+Shape} ()\hypertarget{classcanvascv_1_1ShapesConnector_ab25d6be02ace66e07d0265fa0cca9b6d}{}\label{classcanvascv_1_1ShapesConnector_ab25d6be02ace66e07d0265fa0cca9b6d}
+
+\begin{DoxyCompactList}\small\item\em get the shape connected to our tail \hyperlink{classcanvascv_1_1Handle}{Handle} \end{DoxyCompactList}\item 
+\hyperlink{classcanvascv_1_1Shape}{Shape} $\ast$ \hyperlink{classcanvascv_1_1ShapesConnector_ab531d54fbe568a3c0bffe50399e0de34}{get\+Head\+Shape} ()\hypertarget{classcanvascv_1_1ShapesConnector_ab531d54fbe568a3c0bffe50399e0de34}{}\label{classcanvascv_1_1ShapesConnector_ab531d54fbe568a3c0bffe50399e0de34}
+
+\begin{DoxyCompactList}\small\item\em get the shape connected to our head \hyperlink{classcanvascv_1_1Handle}{Handle} \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1ShapesConnector_a1eda734d151a1d7abc9505ccd54d9c4e}{disconnect\+Shape} (int id)\hypertarget{classcanvascv_1_1ShapesConnector_a1eda734d151a1d7abc9505ccd54d9c4e}{}\label{classcanvascv_1_1ShapesConnector_a1eda734d151a1d7abc9505ccd54d9c4e}
+
+\begin{DoxyCompactList}\small\item\em disconnect a previouslt connected shape with an \textquotesingle{}id\textquotesingle{} \end{DoxyCompactList}\item 
+virtual std\+::list$<$ \hyperlink{classcanvascv_1_1Handle}{Handle} $\ast$ $>$ \hyperlink{classcanvascv_1_1ShapesConnector_a90672acd22f69f3d143f08197d4108b8}{get\+Connection\+Targets} ()
+\begin{DoxyCompactList}\small\item\em get\+Connection\+Targets \end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{classcanvascv_1_1ShapesConnector_aedda9e8fd9c1be85704f289df94905a2}{get\+Type} () const 
+\begin{DoxyCompactList}\small\item\em get\+Type is always implemented by derived to return the same static pointer per shape. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classcanvascv_1_1ShapesConnector_a6c6400403c6c2809af1e0a64e477f592}{mouse\+Pressed} (const cv\+::\+Point \&pos, bool on\+Create=false)
+\begin{DoxyCompactList}\small\item\em mouse\+Pressed \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1ShapesConnector_a56ab827f3d72e495ccfd1101807413f8}{mouse\+Released} (const cv\+::\+Point \&pos)
+\begin{DoxyCompactList}\small\item\em mouse\+Released \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Allows visually connecting 2 shapes from the code or by mouse \begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Shapes\+Connector@{canvascv\+::\+Shapes\+Connector}!get\+Connection\+Targets@{get\+Connection\+Targets}}
+\index{get\+Connection\+Targets@{get\+Connection\+Targets}!canvascv\+::\+Shapes\+Connector@{canvascv\+::\+Shapes\+Connector}}
+\subsubsection[{\texorpdfstring{get\+Connection\+Targets()}{getConnectionTargets()}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::list$<${\bf Handle} $\ast$$>$ canvascv\+::\+Shapes\+Connector\+::get\+Connection\+Targets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1ShapesConnector_a90672acd22f69f3d143f08197d4108b8}{}\label{classcanvascv_1_1ShapesConnector_a90672acd22f69f3d143f08197d4108b8}
+Return a list of Handles this shape allows to connect to from other shapes (mainly for \hyperlink{classcanvascv_1_1ShapesConnector}{Shapes\+Connector}) \begin{DoxyReturn}{Returns}
+list of \hyperlink{classcanvascv_1_1Handle}{Handle} pointers we \hyperlink{classcanvascv_1_1ShapesConnector}{Shapes\+Connector} can use to connect 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1Line_a4a4293ae8f9600ee7f9d3a8089e6965a}{canvascv\+::\+Line}.
+
+\index{canvascv\+::\+Shapes\+Connector@{canvascv\+::\+Shapes\+Connector}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!canvascv\+::\+Shapes\+Connector@{canvascv\+::\+Shapes\+Connector}}
+\subsubsection[{\texorpdfstring{get\+Type() const }{getType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ canvascv\+::\+Shapes\+Connector\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1ShapesConnector_aedda9e8fd9c1be85704f289df94905a2}{}\label{classcanvascv_1_1ShapesConnector_aedda9e8fd9c1be85704f289df94905a2}
+\begin{DoxyReturn}{Returns}
+const char $\ast$ pointer to string with shape type name 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1Line_a863306159fbca892702fd3d0047b63c3}{canvascv\+::\+Line}.
+
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1LabeledShapesConnector_aebeccdf1e7c4efb0bde504b361eac801}{canvascv\+::\+Labeled\+Shapes\+Connector}.
+
+\index{canvascv\+::\+Shapes\+Connector@{canvascv\+::\+Shapes\+Connector}!mouse\+Pressed@{mouse\+Pressed}}
+\index{mouse\+Pressed@{mouse\+Pressed}!canvascv\+::\+Shapes\+Connector@{canvascv\+::\+Shapes\+Connector}}
+\subsubsection[{\texorpdfstring{mouse\+Pressed(const cv\+::\+Point \&pos, bool on\+Create=false)}{mousePressed(const cv::Point &pos, bool onCreate=false)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Shapes\+Connector\+::mouse\+Pressed (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos, }
+\item[{bool}]{on\+Create = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1ShapesConnector_a6c6400403c6c2809af1e0a64e477f592}{}\label{classcanvascv_1_1ShapesConnector_a6c6400403c6c2809af1e0a64e477f592}
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+{\em on\+Create} & is true if this is the mouse press which cerated this shape \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for keep in focus, false for leave focus 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1Line_aab4d23d336fe71c6d7000d8da9a54269}{canvascv\+::\+Line}.
+
+\index{canvascv\+::\+Shapes\+Connector@{canvascv\+::\+Shapes\+Connector}!mouse\+Released@{mouse\+Released}}
+\index{mouse\+Released@{mouse\+Released}!canvascv\+::\+Shapes\+Connector@{canvascv\+::\+Shapes\+Connector}}
+\subsubsection[{\texorpdfstring{mouse\+Released(const cv\+::\+Point \&pos)}{mouseReleased(const cv::Point &pos)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Shapes\+Connector\+::mouse\+Released (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1ShapesConnector_a56ab827f3d72e495ccfd1101807413f8}{}\label{classcanvascv_1_1ShapesConnector_a56ab827f3d72e495ccfd1101807413f8}
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for keep in focus, false for leave focus 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1Line_ace7269cabd2acbb2c9da009740f46fa3}{canvascv\+::\+Line}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/shapes/shapesconnector.\+h\end{DoxyCompactItemize}

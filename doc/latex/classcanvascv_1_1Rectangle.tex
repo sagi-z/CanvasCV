@@ -1,0 +1,192 @@
+\hypertarget{classcanvascv_1_1Rectangle}{}\section{canvascv\+:\+:Rectangle Class Reference}
+\label{classcanvascv_1_1Rectangle}\index{canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}}
+
+
+The \hyperlink{classcanvascv_1_1Rectangle}{Rectangle} class.  
+
+
+
+
+{\ttfamily \#include $<$rectangle.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Rectangle\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classcanvascv_1_1Rectangle}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+cv\+::\+Rotated\+Rect \hyperlink{classcanvascv_1_1Rectangle_aa821fa0533fed58ce488d796a25f7d74}{get\+Rect} () const \hypertarget{classcanvascv_1_1Rectangle_aa821fa0533fed58ce488d796a25f7d74}{}\label{classcanvascv_1_1Rectangle_aa821fa0533fed58ce488d796a25f7d74}
+
+\begin{DoxyCompactList}\small\item\em get the Open\+CV representation of this shape \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Rectangle_a5149d50c87c3388619ace3badd868f50}{set\+Rect} (const cv\+::\+Rotated\+Rect \&rect)\hypertarget{classcanvascv_1_1Rectangle_a5149d50c87c3388619ace3badd868f50}{}\label{classcanvascv_1_1Rectangle_a5149d50c87c3388619ace3badd868f50}
+
+\begin{DoxyCompactList}\small\item\em set this shape from the Open\+CV representation \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Rectangle_a905ec50de408cbc2df0158bafff210d1}{key\+Pressed} (int \&key)
+\begin{DoxyCompactList}\small\item\em key\+Pressed will be called by \hyperlink{classcanvascv_1_1Canvas}{Canvas} for active shapes \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1Rectangle_a2562d2ae0fac60c5604b2b5c5a5a24d0}{is\+Point\+In\+Rectangle} (cv\+::\+Point pos)\hypertarget{classcanvascv_1_1Rectangle_a2562d2ae0fac60c5604b2b5c5a5a24d0}{}\label{classcanvascv_1_1Rectangle_a2562d2ae0fac60c5604b2b5c5a5a24d0}
+
+\begin{DoxyCompactList}\small\item\em returns true if pos is in the rectangle representated by this shape \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Rectangle_a90af43d63545f799eda44a7d107358de}{is\+At\+Pos} (const cv\+::\+Point \&pos)\hypertarget{classcanvascv_1_1Rectangle_a90af43d63545f799eda44a7d107358de}{}\label{classcanvascv_1_1Rectangle_a90af43d63545f799eda44a7d107358de}
+
+\begin{DoxyCompactList}\small\item\em returns true if shape is at pos, false otherwise \end{DoxyCompactList}\item 
+virtual std\+::list$<$ \hyperlink{classcanvascv_1_1Handle}{Handle} $\ast$ $>$ \hyperlink{classcanvascv_1_1Rectangle_a90f186627bf00deb4ed1050f68190759}{get\+Connection\+Targets} ()
+\begin{DoxyCompactList}\small\item\em get\+Connection\+Targets \end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{classcanvascv_1_1Rectangle_aa66625e0e783029524f669a3113020f5}{get\+Type} () const 
+\begin{DoxyCompactList}\small\item\em get\+Type is always implemented by derived to return the same static pointer per shape. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classcanvascv_1_1Rectangle_a6b75f528a26e50c35ef9adead3489fc8}{draw} (cv\+::\+Mat \&canvas)
+\begin{DoxyCompactList}\small\item\em draw shape on the canvas \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Rectangle_ac39753497259e3f6a7fdac667cd08596}{mouse\+Pressed} (const cv\+::\+Point \&pos, bool on\+Create=false)
+\begin{DoxyCompactList}\small\item\em mouse\+Pressed \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Rectangle_a0e363f915b93526e034dbfd5550597db}{mouse\+Moved} (const cv\+::\+Point \&pos)
+\begin{DoxyCompactList}\small\item\em mouse\+Moved \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Rectangle_a6a54774d57d88d053cfb8d5a41878b16}{mouse\+Released} (const cv\+::\+Point \&pos)
+\begin{DoxyCompactList}\small\item\em mouse\+Released \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Allows you to draw a rotatable rectangle by mouse or from code 
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}!draw@{draw}}
+\index{draw@{draw}!canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}}
+\subsubsection[{\texorpdfstring{draw(cv\+::\+Mat \&canvas)}{draw(cv::Mat &canvas)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Rectangle\+::draw (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Mat \&}]{canvas}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Rectangle_a6b75f528a26e50c35ef9adead3489fc8}{}\label{classcanvascv_1_1Rectangle_a6b75f528a26e50c35ef9adead3489fc8}
+
+\begin{DoxyParams}{Parameters}
+{\em canvas} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_a6ec60ee0340ed25274e3ac1349345953}{canvascv\+::\+Compound\+Shape}.
+
+\index{canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}!get\+Connection\+Targets@{get\+Connection\+Targets}}
+\index{get\+Connection\+Targets@{get\+Connection\+Targets}!canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}}
+\subsubsection[{\texorpdfstring{get\+Connection\+Targets()}{getConnectionTargets()}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::list$<${\bf Handle} $\ast$$>$ canvascv\+::\+Rectangle\+::get\+Connection\+Targets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Rectangle_a90f186627bf00deb4ed1050f68190759}{}\label{classcanvascv_1_1Rectangle_a90f186627bf00deb4ed1050f68190759}
+Return a list of Handles this shape allows to connect to from other shapes (mainly for \hyperlink{classcanvascv_1_1ShapesConnector}{Shapes\+Connector}) \begin{DoxyReturn}{Returns}
+list of \hyperlink{classcanvascv_1_1Handle}{Handle} pointers we \hyperlink{classcanvascv_1_1ShapesConnector}{Shapes\+Connector} can use to connect 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Shape_a827822e17e24118e16fa932ac0e71cd2}{canvascv\+::\+Shape}.
+
+\index{canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}}
+\subsubsection[{\texorpdfstring{get\+Type() const }{getType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ canvascv\+::\+Rectangle\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Rectangle_aa66625e0e783029524f669a3113020f5}{}\label{classcanvascv_1_1Rectangle_aa66625e0e783029524f669a3113020f5}
+\begin{DoxyReturn}{Returns}
+const char $\ast$ pointer to string with shape type name 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Shape_adee3cc696c7e82b0d2946e7e667ddd46}{canvascv\+::\+Shape}.
+
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1Ellipse_a15df73cf790d34b71749ec0e5d6d0331}{canvascv\+::\+Ellipse}.
+
+\index{canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}!key\+Pressed@{key\+Pressed}}
+\index{key\+Pressed@{key\+Pressed}!canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}}
+\subsubsection[{\texorpdfstring{key\+Pressed(int \&key)}{keyPressed(int &key)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Rectangle\+::key\+Pressed (
+\begin{DoxyParamCaption}
+\item[{int \&}]{key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Rectangle_a905ec50de408cbc2df0158bafff210d1}{}\label{classcanvascv_1_1Rectangle_a905ec50de408cbc2df0158bafff210d1}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & was pressed. You must set it to -\/1 if you consumed it. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if we want to stay in focus and false otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_ac739f68737099c6f5c6d2c70196cd07b}{canvascv\+::\+Compound\+Shape}.
+
+\index{canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}!mouse\+Moved@{mouse\+Moved}}
+\index{mouse\+Moved@{mouse\+Moved}!canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}}
+\subsubsection[{\texorpdfstring{mouse\+Moved(const cv\+::\+Point \&pos)}{mouseMoved(const cv::Point &pos)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Rectangle\+::mouse\+Moved (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Rectangle_a0e363f915b93526e034dbfd5550597db}{}\label{classcanvascv_1_1Rectangle_a0e363f915b93526e034dbfd5550597db}
+
+\begin{DoxyEnumerate}
+\item Was a mouse moved over this shape?
+\item If shape is during edit, then these are the mouse position. 
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if a mouse moved over this shape, or it is during edit. false otherwise. 
+\end{DoxyReturn}
+
+\end{DoxyEnumerate}
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_a387d1705b99d2053306ffd8d8e67b63b}{canvascv\+::\+Compound\+Shape}.
+
+\index{canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}!mouse\+Pressed@{mouse\+Pressed}}
+\index{mouse\+Pressed@{mouse\+Pressed}!canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}}
+\subsubsection[{\texorpdfstring{mouse\+Pressed(const cv\+::\+Point \&pos, bool on\+Create=false)}{mousePressed(const cv::Point &pos, bool onCreate=false)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Rectangle\+::mouse\+Pressed (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos, }
+\item[{bool}]{on\+Create = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Rectangle_ac39753497259e3f6a7fdac667cd08596}{}\label{classcanvascv_1_1Rectangle_ac39753497259e3f6a7fdac667cd08596}
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+{\em on\+Create} & is true if this is the mouse press which cerated this shape \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for keep in focus, false for leave focus 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_a821d046dceaba47114385d1c87e197ce}{canvascv\+::\+Compound\+Shape}.
+
+\index{canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}!mouse\+Released@{mouse\+Released}}
+\index{mouse\+Released@{mouse\+Released}!canvascv\+::\+Rectangle@{canvascv\+::\+Rectangle}}
+\subsubsection[{\texorpdfstring{mouse\+Released(const cv\+::\+Point \&pos)}{mouseReleased(const cv::Point &pos)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Rectangle\+::mouse\+Released (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Rectangle_a6a54774d57d88d053cfb8d5a41878b16}{}\label{classcanvascv_1_1Rectangle_a6a54774d57d88d053cfb8d5a41878b16}
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for keep in focus, false for leave focus 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_a01cf027fd5f7ec96525949d0c8ae08a1}{canvascv\+::\+Compound\+Shape}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/shapes/rectangle.\+h\end{DoxyCompactItemize}

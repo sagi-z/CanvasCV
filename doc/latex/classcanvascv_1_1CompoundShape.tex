@@ -1,0 +1,206 @@
+\hypertarget{classcanvascv_1_1CompoundShape}{}\section{canvascv\+:\+:Compound\+Shape Class Reference}
+\label{classcanvascv_1_1CompoundShape}\index{canvascv\+::\+Compound\+Shape@{canvascv\+::\+Compound\+Shape}}
+
+
+The \hyperlink{classcanvascv_1_1CompoundShape}{Compound\+Shape} class.  
+
+
+
+
+{\ttfamily \#include $<$compoundshape.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Compound\+Shape\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.466960cm]{classcanvascv_1_1CompoundShape}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classcanvascv_1_1CompoundShape_a5b01540c58f0bb5d5a7feccfa38568f9}{set\+Outline\+Color} (const cv\+::\+Scalar \&value)\hypertarget{classcanvascv_1_1CompoundShape_a5b01540c58f0bb5d5a7feccfa38568f9}{}\label{classcanvascv_1_1CompoundShape_a5b01540c58f0bb5d5a7feccfa38568f9}
+
+\begin{DoxyCompactList}\small\item\em set the outline color \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1CompoundShape_a1c9636ecf2f90a1c532bc8d117f23e79}{set\+Fill\+Color} (const cv\+::\+Scalar \&value)\hypertarget{classcanvascv_1_1CompoundShape_a1c9636ecf2f90a1c532bc8d117f23e79}{}\label{classcanvascv_1_1CompoundShape_a1c9636ecf2f90a1c532bc8d117f23e79}
+
+\begin{DoxyCompactList}\small\item\em set the fill color (fill color is not very useful for shapes right now) \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1CompoundShape_ac47908d0fb7feb0cb76c4dfa1a3330df}{set\+Thickness} (int value)\hypertarget{classcanvascv_1_1CompoundShape_ac47908d0fb7feb0cb76c4dfa1a3330df}{}\label{classcanvascv_1_1CompoundShape_ac47908d0fb7feb0cb76c4dfa1a3330df}
+
+\begin{DoxyCompactList}\small\item\em set line thickness to use when drawing \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1CompoundShape_afd64826624ed73c2a5a2ea49ae732b90}{set\+Line\+Type} (int value)\hypertarget{classcanvascv_1_1CompoundShape_afd64826624ed73c2a5a2ea49ae732b90}{}\label{classcanvascv_1_1CompoundShape_afd64826624ed73c2a5a2ea49ae732b90}
+
+\begin{DoxyCompactList}\small\item\em set the line type (L\+I\+N\+E\+\_\+4, L\+I\+N\+E\+\_\+8, L\+I\+N\+E\+\_\+\+AA) \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1CompoundShape_ab3e29fabe368bd14343e9f7066fbc605}{set\+Locked} (bool value)\hypertarget{classcanvascv_1_1CompoundShape_ab3e29fabe368bd14343e9f7066fbc605}{}\label{classcanvascv_1_1CompoundShape_ab3e29fabe368bd14343e9f7066fbc605}
+
+\begin{DoxyCompactList}\small\item\em set the shape lock state (can/can\textquotesingle{}t be moved/edited) \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1CompoundShape_a85f3aa483aa21bae7dc60de118a60580}{set\+Visible} (bool value)\hypertarget{classcanvascv_1_1CompoundShape_a85f3aa483aa21bae7dc60de118a60580}{}\label{classcanvascv_1_1CompoundShape_a85f3aa483aa21bae7dc60de118a60580}
+
+\begin{DoxyCompactList}\small\item\em set the shape visible state \end{DoxyCompactList}\item 
+virtual std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Shape}{Shape} $>$ \hyperlink{classcanvascv_1_1CompoundShape_aa9ef6ed91e5a2b6fbd3efe13fbd8e561}{get\+Shape} (int id)
+\begin{DoxyCompactList}\small\item\em get\+Shape \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classcanvascv_1_1CompoundShape_a6ec60ee0340ed25274e3ac1349345953}{draw} (cv\+::\+Mat \&canvas)
+\begin{DoxyCompactList}\small\item\em draw shape on the canvas \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1CompoundShape_a821d046dceaba47114385d1c87e197ce}{mouse\+Pressed} (const cv\+::\+Point \&pos, bool on\+Create=false)
+\begin{DoxyCompactList}\small\item\em mouse\+Pressed \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1CompoundShape_a387d1705b99d2053306ffd8d8e67b63b}{mouse\+Moved} (const cv\+::\+Point \&pos)
+\begin{DoxyCompactList}\small\item\em mouse\+Moved \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1CompoundShape_a01cf027fd5f7ec96525949d0c8ae08a1}{mouse\+Released} (const cv\+::\+Point \&pos)
+\begin{DoxyCompactList}\small\item\em mouse\+Released \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1CompoundShape_ac739f68737099c6f5c6d2c70196cd07b}{key\+Pressed} (int \&key)
+\begin{DoxyCompactList}\small\item\em key\+Pressed will be called by \hyperlink{classcanvascv_1_1Canvas}{Canvas} for active shapes \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1CompoundShape_a4a448d90183494b264d7f673f3c613b4}{lost\+Focus} ()\hypertarget{classcanvascv_1_1CompoundShape_a4a448d90183494b264d7f673f3c613b4}{}\label{classcanvascv_1_1CompoundShape_a4a448d90183494b264d7f673f3c613b4}
+
+\begin{DoxyCompactList}\small\item\em lost\+Focus is called by \hyperlink{classcanvascv_1_1Canvas}{Canvas} if we\textquotesingle{}re in it and just became non-\/active \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A utility class used by shapes which are the combination of other shapes 
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Compound\+Shape@{canvascv\+::\+Compound\+Shape}!draw@{draw}}
+\index{draw@{draw}!canvascv\+::\+Compound\+Shape@{canvascv\+::\+Compound\+Shape}}
+\subsubsection[{\texorpdfstring{draw(cv\+::\+Mat \&canvas)}{draw(cv::Mat &canvas)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Compound\+Shape\+::draw (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Mat \&}]{canvas}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1CompoundShape_a6ec60ee0340ed25274e3ac1349345953}{}\label{classcanvascv_1_1CompoundShape_a6ec60ee0340ed25274e3ac1349345953}
+
+\begin{DoxyParams}{Parameters}
+{\em canvas} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classcanvascv_1_1Shape_ab064fdb03d0d94ce84bde0b76b9e62c0}{canvascv\+::\+Shape}.
+
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1Line_aad801107019337b6e369fed331539d56}{canvascv\+::\+Line}, \hyperlink{classcanvascv_1_1LineCrossing_a04d251f0cda9f4f51d98d483264fb2dd}{canvascv\+::\+Line\+Crossing}, \hyperlink{classcanvascv_1_1Polygon_a32e073cb9579fdf4645daf14e5143f22}{canvascv\+::\+Polygon}, \hyperlink{classcanvascv_1_1Rectangle_a6b75f528a26e50c35ef9adead3489fc8}{canvascv\+::\+Rectangle}, and \hyperlink{classcanvascv_1_1Arrow_a8ba5b890df49a2d8fc6630df5fe80351}{canvascv\+::\+Arrow}.
+
+\index{canvascv\+::\+Compound\+Shape@{canvascv\+::\+Compound\+Shape}!get\+Shape@{get\+Shape}}
+\index{get\+Shape@{get\+Shape}!canvascv\+::\+Compound\+Shape@{canvascv\+::\+Compound\+Shape}}
+\subsubsection[{\texorpdfstring{get\+Shape(int id)}{getShape(int id)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::shared\+\_\+ptr$<${\bf Shape}$>$ canvascv\+::\+Compound\+Shape\+::get\+Shape (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1CompoundShape_aa9ef6ed91e5a2b6fbd3efe13fbd8e561}{}\label{classcanvascv_1_1CompoundShape_aa9ef6ed91e5a2b6fbd3efe13fbd8e561}
+Get internal shapes, which \hyperlink{classcanvascv_1_1Canvas}{Canvas} doesn\textquotesingle{}t know of. 
+\begin{DoxyParams}{Parameters}
+{\em id} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+internal sub shape with requested id 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1Shape_a89e585b5a1099f5ce291ded14db7181d}{canvascv\+::\+Shape}.
+
+\index{canvascv\+::\+Compound\+Shape@{canvascv\+::\+Compound\+Shape}!key\+Pressed@{key\+Pressed}}
+\index{key\+Pressed@{key\+Pressed}!canvascv\+::\+Compound\+Shape@{canvascv\+::\+Compound\+Shape}}
+\subsubsection[{\texorpdfstring{key\+Pressed(int \&key)}{keyPressed(int &key)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Compound\+Shape\+::key\+Pressed (
+\begin{DoxyParamCaption}
+\item[{int \&}]{key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1CompoundShape_ac739f68737099c6f5c6d2c70196cd07b}{}\label{classcanvascv_1_1CompoundShape_ac739f68737099c6f5c6d2c70196cd07b}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & was pressed. You must set it to -\/1 if you consumed it. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if we want to stay in focus and false otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1Shape_a7419dc43b9be99010e2b3bb973efbd37}{canvascv\+::\+Shape}.
+
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1Line_a4059736cde05ffc90dda8ed1ff4f9ba2}{canvascv\+::\+Line}, \hyperlink{classcanvascv_1_1Polygon_aca22b914de1ced559faf4fd5426073ff}{canvascv\+::\+Polygon}, and \hyperlink{classcanvascv_1_1Rectangle_a905ec50de408cbc2df0158bafff210d1}{canvascv\+::\+Rectangle}.
+
+\index{canvascv\+::\+Compound\+Shape@{canvascv\+::\+Compound\+Shape}!mouse\+Moved@{mouse\+Moved}}
+\index{mouse\+Moved@{mouse\+Moved}!canvascv\+::\+Compound\+Shape@{canvascv\+::\+Compound\+Shape}}
+\subsubsection[{\texorpdfstring{mouse\+Moved(const cv\+::\+Point \&pos)}{mouseMoved(const cv::Point &pos)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Compound\+Shape\+::mouse\+Moved (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1CompoundShape_a387d1705b99d2053306ffd8d8e67b63b}{}\label{classcanvascv_1_1CompoundShape_a387d1705b99d2053306ffd8d8e67b63b}
+
+\begin{DoxyEnumerate}
+\item Was a mouse moved over this shape?
+\item If shape is during edit, then these are the mouse position. 
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if a mouse moved over this shape, or it is during edit. false otherwise. 
+\end{DoxyReturn}
+
+\end{DoxyEnumerate}
+
+Implements \hyperlink{classcanvascv_1_1Shape_acc72c3f645927c135dbc589e2c8678d4}{canvascv\+::\+Shape}.
+
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1Line_ad758464d98d455d2ea3aa591667fb595}{canvascv\+::\+Line}, \hyperlink{classcanvascv_1_1Polygon_aacc442ef4c0438ddb78c6ccce8e86618}{canvascv\+::\+Polygon}, and \hyperlink{classcanvascv_1_1Rectangle_a0e363f915b93526e034dbfd5550597db}{canvascv\+::\+Rectangle}.
+
+\index{canvascv\+::\+Compound\+Shape@{canvascv\+::\+Compound\+Shape}!mouse\+Pressed@{mouse\+Pressed}}
+\index{mouse\+Pressed@{mouse\+Pressed}!canvascv\+::\+Compound\+Shape@{canvascv\+::\+Compound\+Shape}}
+\subsubsection[{\texorpdfstring{mouse\+Pressed(const cv\+::\+Point \&pos, bool on\+Create=false)}{mousePressed(const cv::Point &pos, bool onCreate=false)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Compound\+Shape\+::mouse\+Pressed (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos, }
+\item[{bool}]{on\+Create = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1CompoundShape_a821d046dceaba47114385d1c87e197ce}{}\label{classcanvascv_1_1CompoundShape_a821d046dceaba47114385d1c87e197ce}
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+{\em on\+Create} & is true if this is the mouse press which cerated this shape \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for keep in focus, false for leave focus 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Shape_aa332adef968829dd7744cb1f6a491879}{canvascv\+::\+Shape}.
+
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1Line_aab4d23d336fe71c6d7000d8da9a54269}{canvascv\+::\+Line}, \hyperlink{classcanvascv_1_1LineCrossing_a8232b4101d5533b12129c4d145ffc54d}{canvascv\+::\+Line\+Crossing}, \hyperlink{classcanvascv_1_1ShapesConnector_a6c6400403c6c2809af1e0a64e477f592}{canvascv\+::\+Shapes\+Connector}, \hyperlink{classcanvascv_1_1Polygon_a87ce20dbc22fd0ce39d6e81de5e515ae}{canvascv\+::\+Polygon}, and \hyperlink{classcanvascv_1_1Rectangle_ac39753497259e3f6a7fdac667cd08596}{canvascv\+::\+Rectangle}.
+
+\index{canvascv\+::\+Compound\+Shape@{canvascv\+::\+Compound\+Shape}!mouse\+Released@{mouse\+Released}}
+\index{mouse\+Released@{mouse\+Released}!canvascv\+::\+Compound\+Shape@{canvascv\+::\+Compound\+Shape}}
+\subsubsection[{\texorpdfstring{mouse\+Released(const cv\+::\+Point \&pos)}{mouseReleased(const cv::Point &pos)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Compound\+Shape\+::mouse\+Released (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1CompoundShape_a01cf027fd5f7ec96525949d0c8ae08a1}{}\label{classcanvascv_1_1CompoundShape_a01cf027fd5f7ec96525949d0c8ae08a1}
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for keep in focus, false for leave focus 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Shape_a8cbe386ff880c9830c0e4a97b335abf0}{canvascv\+::\+Shape}.
+
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1Line_ace7269cabd2acbb2c9da009740f46fa3}{canvascv\+::\+Line}, \hyperlink{classcanvascv_1_1ShapesConnector_a56ab827f3d72e495ccfd1101807413f8}{canvascv\+::\+Shapes\+Connector}, \hyperlink{classcanvascv_1_1Polygon_afea6bbe1beef916e6ec47ed257cb2374}{canvascv\+::\+Polygon}, and \hyperlink{classcanvascv_1_1Rectangle_a6a54774d57d88d053cfb8d5a41878b16}{canvascv\+::\+Rectangle}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/shapes/compoundshape.\+h\end{DoxyCompactItemize}

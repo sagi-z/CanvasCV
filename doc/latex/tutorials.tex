@@ -1,0 +1,1697 @@
+
+\begin{DoxyItemize}
+\item \hyperlink{tutscreentext}{Leaving the console} (start here)
+\item \hyperlink{tutmsgbox}{Using the Msg\+Box}
+\item \hyperlink{tutshapes}{Creating shapes}
+\item \hyperlink{tutpersistency}{Persisting shapes}
+\item \hyperlink{tutbuttons}{Using buttons}
+\item \hyperlink{tutcheckbox}{Using Check\+Boxes (and Radio\+Buttons and a Selection\+Box)}
+\item \hyperlink{tutlayouts}{Auto widget layouts} (puting widgets together)
+\item \href{https://sagi-z.github.io/CanvasCV/support}{\tt more tutorials and help}
+\end{DoxyItemize}
+
+(see also the \href{examples.html}{\tt examples}) \hypertarget{tutscreentext}{}\section{Leaving the console}\label{tutscreentext}
+Open\+CV examples and tutorials make heavy use of the console to commuincate with the user.
+
+To start using the G\+UI instead of the console the first thing you need is to get to know the \hyperlink{classcanvascv_1_1Canvas}{canvascv\+::\+Canvas} class.\hypertarget{tutscreentext_screentext_s1}{}\subsection{Introducing the Canvas\+C\+V class}\label{tutscreentext_screentext_s1}
+The Canvas class is associated with an Open\+CV window and it gives you another virtual layer on top of your displayed Mat.
+
+This canvas class encapsulates {\bfseries a lot} of work for you, so you can focus on the CV. It also handles key presses and mouse events.
+
+The basic flow is\+:
+\begin{DoxyItemize}
+\item Define a Canvas for a window of a specific size, usually to match the image you\textquotesingle{}re displayng. 
+\begin{DoxyCode}
+Canvas c(\textcolor{stringliteral}{"winName"}, frame.size());
+\end{DoxyCode}
+
+\item Create an Open\+CV window without resizing so the widgets cannot be stretched 
+\begin{DoxyCode}
+namedWindow(\textcolor{stringliteral}{"winName"}, WINDOW\_AUTOSIZE); \textcolor{comment}{// disable mouse resize}
+\end{DoxyCode}
+
+\item Let the Canvas\+CV handle your mouse events 
+\begin{DoxyCode}
+c.\hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{setMouseCallback}(); \textcolor{comment}{// optional for mouse usage (see also example\_selectbox.cpp)}
+\end{DoxyCode}
+
+\item Create your widget on the Canvas (or in a frame/layout) for example\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{auto} msgBox = MsgBox::create(c, \textcolor{stringliteral}{"Do you really want to do that?"}, \{\textcolor{stringliteral}{"Yes"}, \textcolor{stringliteral}{"No"}\});
+\end{DoxyCode}
+
+\item Redraw on your frame/image in your regular Open\+CV loop, as in\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} delay = 1000/25; \textcolor{comment}{// for a single image, delay should be 0}
+\textcolor{keywordtype}{int} key = -1;
+Mat out;
+\textcolor{keywordflow}{while} (\textcolor{keyword}{true})
+\{
+    c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(frame, out);   \textcolor{comment}{// draws your virtual GUI layer on top of the 'frame'}
+    c.\hyperlink{classcanvascv_1_1Canvas_acaf9494a5668046dd0a8908aa97a7a43}{imshow}(out);            \textcolor{comment}{// you can also use imshow directly for "winName"}
+    key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(delay); \textcolor{comment}{// forwards key presses to widgets and shapes}
+\}
+\end{DoxyCode}
+
+\end{DoxyItemize}\hypertarget{tutscreentext_screentext_s2}{}\subsection{Some real use cases}\label{tutscreentext_screentext_s2}
+\hypertarget{tutscreentext_screentext_s2_1}{}\subsubsection{Exiting on fatal errors}\label{tutscreentext_screentext_s2_1}
+Your application/utility might need command line arguments, or cannot continue for some reason.
+
+A simple write to the console before exiting is usually not enough to get the user attention.
+
+For these simple cases you have a simple shortcut in \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{canvascv\+::\+Canvas\+::fatal()}\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    \textcolor{keywordflow}{if} (! argc)
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+
+
+which, besides an output to S\+T\+D\+E\+RR, gives you\+:  ~\newline
+\hypertarget{tutscreentext_screentext_s2_2}{}\subsubsection{Displaying user text in a fixed location}\label{tutscreentext_screentext_s2_2}
+Instead of displaying the help message or any other fixed text to the console use the \hyperlink{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{canvascv\+::\+Canvas\+::enable\+Screen\+Text()} and canvaccv\+::\+Canvas\+::set\+Screen\+Text(string) methods.
+
+This flow is a little closer to the regular usage of the {\itshape Canvas}, but you don\textquotesingle{}t need to create a widget of your own.
+
+Adding to the previous example (we want to display this on an image)\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{void} help(\hyperlink{classcanvascv_1_1Canvas}{Canvas} &c)
+\{
+    \textcolor{keyword}{static} \textcolor{keywordtype}{bool} showHelp = \textcolor{keyword}{true};
+    \textcolor{keyword}{static} \textcolor{keywordtype}{string} helpMsg =
+            \textcolor{stringliteral}{"Usage:\(\backslash\)n"}
+            \textcolor{stringliteral}{"=====\(\backslash\)n"}
+            \textcolor{stringliteral}{"h: toggle usage message\(\backslash\)n"}
+            \textcolor{stringliteral}{"*: toggle canvas on/off\(\backslash\)n"}
+            \textcolor{stringliteral}{"q: exit"};
+
+
+    \textcolor{keywordflow}{if} (showHelp) c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(helpMsg);
+    \textcolor{keywordflow}{else} c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(\textcolor{stringliteral}{""});
+
+    showHelp = ! showHelp;
+\}
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    \textcolor{keywordflow}{if} (! argc)
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    Mat image = imread(argv[0]);
+    \textcolor{keywordflow}{if} (image.empty())
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -2);
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"Canvas"}, image.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{enableScreenText}(); \textcolor{comment}{// see it's documentation}
+
+    help(c);
+
+    namedWindow(\textcolor{stringliteral}{"Canvas"}, WINDOW\_AUTOSIZE); \textcolor{comment}{// disable mouse resize}
+
+    \textcolor{keywordtype}{int} key = 0;
+    Mat out;
+    \textcolor{keywordflow}{do}
+    \{
+        \textcolor{keywordflow}{switch} (key)
+        \{
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'h'}:
+            help(c);
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'*'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_aba149ea25c6cdad2673133a060355954}{setOn}(! c.\hyperlink{classcanvascv_1_1Canvas_afe6a2955a5bbee8903350b4fba3f4473}{getOn}());
+            \textcolor{keywordflow}{break};
+        \}
+
+        c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(image, out);   \textcolor{comment}{// draw the canvas on the image copy}
+
+        imshow(\textcolor{stringliteral}{"Canvas"}, out);    \textcolor{comment}{// using cv::imshow works fine}
+
+        key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(); \textcolor{comment}{// GUI and callbacks happen here}
+
+    \} \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'});
+
+    destroyAllWindows();
+
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+
+
+Some notes here\+:
+\begin{DoxyItemize}
+\item Note the continued use of \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{canvascv\+::\+Canvas\+::fatal()}.
+\item Note that we didn\textquotesingle{}t need to use \hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{canvascv\+::\+Canvas\+::set\+Mouse\+Callback()} or create a widget of our own here.
+\item When you \hyperlink{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{canvascv\+::\+Canvas\+::enable\+Screen\+Text()} you can configure it\textquotesingle{}s display.
+\item As you can see the {\itshape Canvas} instance can be completely turned on and off with the \hyperlink{classcanvascv_1_1Canvas_aba149ea25c6cdad2673133a060355954}{canvascv\+::\+Canvas\+::set\+On()} method.
+\item \hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{canvascv\+::\+Canvas\+::wait\+Key\+Ex()} knows to update it\textquotesingle{}s internal shapes and widgets even if you pass 0 as a blocking delay indicator.
+\item When executed with a path to an image, this gives you (depends on your image)\+:  ~\newline
+
+\end{DoxyItemize}\hypertarget{tutscreentext_screentext_s2_3}{}\subsubsection{Displaying text where ever you want}\label{tutscreentext_screentext_s2_3}
+To display text where you want you need the \hyperlink{classcanvascv_1_1Text}{canvascv\+::\+Text} widget.
+
+You can create position it on the Canvas at any XY location.
+
+Add these lines to the previous example, after creating the named\+Window()\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+    \textcolor{comment}{//...}
+
+    \textcolor{keyword}{auto} txt = \hyperlink{classcanvascv_1_1Text_a7f3552263b6f185f78d90549e7ac38f7}{Text::create}(c, \textcolor{stringliteral}{"Target Acquired!"});
+    txt->setFontHeight(50);
+    txt->setOutlineColor(\hyperlink{classcanvascv_1_1Colors_a10aff24c53edf45b038d0636b061f9c2}{Colors::Red});
+    txt->setThickness(2);
+    txt->setLocation(\{30, image.rows / 2 - 15\});
+
+    \textcolor{comment}{//...}
+\end{DoxyCode}
+
+
+Notes\+:
+\begin{DoxyItemize}
+\item All widgets have a static create methods, which is the only way to create them.
+\item The \hyperlink{classcanvascv_1_1Text_a7f3552263b6f185f78d90549e7ac38f7}{canvascv\+::\+Text\+::create()} will return a shared\+\_\+ptr$<$\+Text$>$ instance, which you don\textquotesingle{}t have to keep since another one is kept by the \hyperlink{classcanvascv_1_1Layout}{canvascv\+::\+Layout}.
+\item There are many Colors constants to choose from, see \hyperlink{classcanvascv_1_1Colors}{canvascv\+::\+Colors}.
+\item The \hyperlink{classcanvascv_1_1Widget_a8a36b15a1c777baffbb4fcd4ccda3c45}{canvascv\+::\+Widget\+::set\+Location()} gives specific XY postion, but a \hyperlink{classcanvascv_1_1HorizontalLayout}{canvascv\+::\+Horizontal\+Layout} could help us put this in the {\itshape C\+E\+N\+T\+ER}.
+\item When executed with a path to an image, this gives you (depends on your image)\+:  ~\newline
+
+\end{DoxyItemize}
+
+{\bfseries That\textquotesingle{}s all for this tutorial} \hypertarget{tutmsgbox}{}\section{Using the Msg\+Box}\label{tutmsgbox}
+The \hyperlink{classcanvascv_1_1MsgBox}{canvascv\+::\+Msg\+Box} is a little different from other widgets, because it is very high level.
+
+This makes it easy to use and a good starting example for widgets that get mouse input.
+
+The {\itshape Msg\+Box} is a \char`\"{}one shot user pressed and widget died\char`\"{} kind of widget.\hypertarget{tutmsgbox_msgbox_s1}{}\subsection{Remember the main loop}\label{tutmsgbox_msgbox_s1}
+Just to remind you from the previous tutotial, the main loop looks something like this\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/msgbox.h>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    \textcolor{keywordflow}{if} (! argc)
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    Mat image = imread(argv[0]);
+    \textcolor{keywordflow}{if} (image.empty())
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -2);
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"MsgBox example"}, image.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{enableScreenText}();
+
+    namedWindow(\textcolor{stringliteral}{"MsgBox example"}, WINDOW\_AUTOSIZE);
+
+    \textcolor{keywordtype}{int} key = 0;
+    Mat out;
+    \textcolor{keywordflow}{do}
+    \{
+        c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(image, out);  \textcolor{comment}{// draw the canvas on the image copy}
+
+        imshow(\textcolor{stringliteral}{"MsgBox example"}, out);
+
+        key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(); \textcolor{comment}{// GUI and callbacks happen here}
+    \} \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'});
+
+    destroyAllWindows();
+
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+
+
+We want to work on top of an existing image so you can see the transparency.
+
+Let\textquotesingle{}s add the real code now.\hypertarget{tutmsgbox_msgbox_s2}{}\subsection{A simple modal Msg\+Box}\label{tutmsgbox_msgbox_s2}
+Since a {\itshape Msg\+Box} usually requires immediate user attention, you have a way to block other G\+UI while waiting for a user reaction.
+
+Remeber that the {\itshape Msg\+Box} is a \char`\"{}one shot user pressed and widget died\char`\"{} kind of widget. Here we\textquotesingle{}re recreating the {\itshape Msg\+Box} each time it dies.
+
+By default a {\itshape Msg\+Box} will be placed at the center of the screen.
+
+You can poll it at each loop with \hyperlink{classcanvascv_1_1MsgBox_a8762fe664f293389a1b823c75dc545e1}{canvascv\+::\+Msg\+Box\+::get\+User\+Selection()} or you can use it in a modal way, in which you block everything else and wait on that line of code for the user selection.
+
+This is what we\textquotesingle{}ll do here, with this code\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/msgbox.h>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    \textcolor{keywordflow}{if} (! argc)
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    Mat image = imread(argv[0]);
+    \textcolor{keywordflow}{if} (image.empty())
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -2);
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"MsgBox example"}, image.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{enableScreenText}();
+
+    namedWindow(\textcolor{stringliteral}{"MsgBox example"}, WINDOW\_AUTOSIZE);
+
+    c.\hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{setMouseCallback}(); \textcolor{comment}{// optional for mouse usage (see also example\_selectbox.cpp)}
+
+    Mat out;
+    \textcolor{keywordtype}{int} userSelection = 0;
+    \textcolor{keywordtype}{int} cnt = 0;
+    \textcolor{keywordflow}{do}
+    \{
+        c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(image, out);  \textcolor{comment}{// draw the canvas on the image copy}
+
+        imshow(\textcolor{stringliteral}{"MsgBox example"}, out);
+
+        \textcolor{comment}{// the blocking API handles GUI internally}
+        userSelection = \hyperlink{classcanvascv_1_1MsgBox_a3bf0019e83e367e415da29286db2c5d0}{MsgBox::create}(c, \textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Notice #"}) + to\_string(++cnt) + \textcolor{stringliteral}{" this msg"}
+      , \{
+                                           \textcolor{stringliteral}{"Ok"}, \textcolor{stringliteral}{"Whatever"}
+                                       \})->getUserSelection(\textcolor{keyword}{true});
+        c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(CCV\_STR(\textcolor{stringliteral}{"User pressed button with index '"} << userSelection << \textcolor{stringliteral}{"'\(\backslash\)n\(\backslash\)n"}
+       <<
+                                \textcolor{stringliteral}{"(Choose 'Whatever' to exit)"}));
+    \} \textcolor{keywordflow}{while} (userSelection == 0);
+
+    destroyAllWindows();
+
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+ Notes\+:
+\begin{DoxyItemize}
+\item We needed \hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{canvascv\+::\+Canvas\+::set\+Mouse\+Callback()} since the Canvas will intercept mouse events for the {\itshape Msg\+Box} now.
+\item All widgets have a static create methods, which is the only way to create them.
+\item The \hyperlink{classcanvascv_1_1MsgBox_a3bf0019e83e367e415da29286db2c5d0}{canvascv\+::\+Msg\+Box\+::create()} will return a {\itshape shared\+\_\+ptr$<$\+Msg\+Box$>$} instance, which you don\textquotesingle{}t have to keep since another one is kept by the \hyperlink{classcanvascv_1_1Layout}{canvascv\+::\+Layout}.
+\item Here we\textquotesingle{}re using canvascv\+::\+Msg\+Box\+::get\+User\+Selection(true) immediatly on that {\itshape shared\+\_\+ptr}, and by passing true we\textquotesingle{}re blocked at that line of code.
+\item {\itshape C\+C\+V\+\_\+\+S\+TR} lets you create a string as you would write into a stream.
+\item When executed with a path to an image, this gives you (depends on your image)\+:  ~\newline
+
+\end{DoxyItemize}\hypertarget{tutmsgbox_msgbox_s3}{}\subsection{A non modal Msg\+Box}\label{tutmsgbox_msgbox_s3}
+Remeber that the Msg\+Box is a \char`\"{}one shot user pressed and widget died\char`\"{} kind of widget. Here we\textquotesingle{}re recreating the {\itshape Msg\+Box} each time it dies, but with callbacks.
+
+If you wan to see code also using the {\itshape Msg\+Box} without callback (polling) then see \hyperlink{example_msgbox_8cpp-example}{example\+\_\+msgbox.\+cpp}.
+
+Here we\textquotesingle{}ll be working with callbacks. The callback is called when the user presses a button.
+
+After the callback is called the {\itshape Msg\+Box} will be destroyed automatically by the framework.
+
+In our callback we\textquotesingle{}ll immediatly create a new {\itshape Msg\+Box} with the same callback, just changing the message.
+
+Add these lines to the \textquotesingle{}main loop reminder code\textquotesingle{} above, after creating the {\itshape named\+Window()}\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+    \textcolor{comment}{//...}
+
+    c.\hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{setMouseCallback}(); \textcolor{comment}{// optional for mouse usage (see also example\_selectbox.cpp)}
+
+    \hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget::CBUserSelection}  cb;
+    \textcolor{keywordtype}{int} cnt = 0;
+
+    \textcolor{comment}{// initialize the cb with a C++11 lambda expression.}
+    \textcolor{comment}{// this will be given to the MsgBoxes we'll create.}
+    cb = [&c, &cb, &cnt](Widget *w, \textcolor{keywordtype}{int} index)
+    \{
+        \hyperlink{classcanvascv_1_1MsgBox}{MsgBox} *pMsgBox = (\hyperlink{classcanvascv_1_1MsgBox}{MsgBox}*) w;
+        c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(CCV\_STR( \textcolor{stringliteral}{"User pressed option numer '"} << index << \textcolor{stringliteral}{"'\(\backslash\)n"} <<
+                                 \textcolor{stringliteral}{"The button text is '"} << pMsgBox->\hyperlink{classcanvascv_1_1MsgBox_af97285a26857652a316387505ff7dce0}{getTextAt}(index) << \textcolor{stringliteral}{"'\(\backslash\)n\(\backslash\)n"} <<
+                                 \textcolor{stringliteral}{"(press q to exit)"}));
+        \hyperlink{classcanvascv_1_1MsgBox_a3bf0019e83e367e415da29286db2c5d0}{MsgBox::create}(c, CCV\_STR(\textcolor{stringliteral}{"Do you really want to do that? "} << \textcolor{stringliteral}{"("} << ++cnt << \textcolor{stringliteral}{")"}), 
+      \{
+                           \textcolor{stringliteral}{"Yes"}, \textcolor{stringliteral}{"No"}
+                       \}, cb);
+    \};
+
+    \textcolor{comment}{// the first MsgBox the user will see is this one.}
+    \textcolor{comment}{// when it ends by a mouse press, the cb will be called to create a new MsgBox.}
+    \hyperlink{classcanvascv_1_1MsgBox_a3bf0019e83e367e415da29286db2c5d0}{MsgBox::create}(c, \textcolor{stringliteral}{"Do you really want to do that?"}, \{\textcolor{stringliteral}{"Yes"}, \textcolor{stringliteral}{"No"}\}, cb);
+
+    \textcolor{comment}{//...}
+\end{DoxyCode}
+
+
+Notes\+:
+\begin{DoxyItemize}
+\item All widgets have a static {\itshape create} methods, which is the only way to create them.
+\item The \hyperlink{classcanvascv_1_1MsgBox_a3bf0019e83e367e415da29286db2c5d0}{canvascv\+::\+Msg\+Box\+::create()} will return a {\itshape shared\+\_\+ptr$<$\+Msg\+Box$>$} instance, which you don\textquotesingle{}t have to keep since another one is kept by the \hyperlink{classcanvascv_1_1Layout}{canvascv\+::\+Layout}.
+\item This tutorial is using C++11 lambda expressions as callbacks, but anything which has the \char`\"{}void(\+Widget$\ast$,int)\char`\"{} signature will work.
+\item We needed \hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{canvascv\+::\+Canvas\+::set\+Mouse\+Callback()} since the Canvas will intercept mouse events for the {\itshape Msg\+Box} now.
+\item {\itshape C\+C\+V\+\_\+\+S\+TR} lets you create a string as you would write into a stream.
+\item When executed with a path to an image, this gives you (depends on your image)\+:  ~\newline
+
+\end{DoxyItemize}\hypertarget{tutmsgbox_msgbox_s4}{}\subsection{An external window modal Msg\+Box}\label{tutmsgbox_msgbox_s4}
+Since a {\itshape Msg\+Box} usually requires immediate user attention, you have another way to block other G\+UI while waiting for a user reaction.
+
+This A\+PI opens an new independent Open\+CV window, occupying just the {\itshape Msg\+Box}, and waiting for a user response.
+
+This is a blocking A\+PI, the code will wait for a user button press.
+
+(You actually saw something like this when we explained the \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{canvascv\+::\+Canvas\+::fatal()} in a previous tutorial)
+
+
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/msgbox.h>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    \textcolor{keywordflow}{if} (! argc)
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    Mat image = imread(argv[0]);
+    \textcolor{keywordflow}{if} (image.empty())
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -2);
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"MsgBox example"}, image.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{enableScreenText}();
+
+    namedWindow(\textcolor{stringliteral}{"MsgBox example"}, WINDOW\_AUTOSIZE);
+
+    c.\hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{setMouseCallback}(); \textcolor{comment}{// optional for mouse usage (see also example\_selectbox.cpp)}
+
+    Mat out;
+    \textcolor{keywordtype}{int} userSelection = 0;
+    \textcolor{keywordflow}{do}
+    \{
+        c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(image, out);  \textcolor{comment}{// draw the canvas on the image copy}
+
+        imshow(\textcolor{stringliteral}{"MsgBox example"}, out);
+
+        \textcolor{comment}{// the blocking API handles GUI internally}
+        userSelection = \hyperlink{classcanvascv_1_1MsgBox_a1eb6af15c2393ce6cda9ce277c01d200}{MsgBox::createModal}(\textcolor{stringliteral}{"Modal MsgBox"}, \textcolor{stringliteral}{"Notice this window"}, \{\textcolor{stringliteral}{"Ok"},
+       \textcolor{stringliteral}{"Whatever"}\});
+        c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(CCV\_STR(\textcolor{stringliteral}{"User pressed button with index '"} << userSelection << \textcolor{stringliteral}{"'\(\backslash\)n\(\backslash\)n"}
+       <<
+                                \textcolor{stringliteral}{"(Choose 'Whatever' to exit)"}));
+    \} \textcolor{keywordflow}{while} (userSelection == 0);
+
+    destroyAllWindows();
+
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+
+
+Notes\+:
+\begin{DoxyItemize}
+\item Again -\/ this is a blocking A\+PI. The line which is using \hyperlink{classcanvascv_1_1MsgBox_a1eb6af15c2393ce6cda9ce277c01d200}{canvascv\+::\+Msg\+Box\+::create\+Modal()} waits for a response.
+\item Currently there is no control of where the Open\+CV window will be opened.
+\item {\itshape C\+C\+V\+\_\+\+S\+TR} lets you create a string as you would write into a stream.
+\item When executed with a path to an image, this gives you (depends on your image)\+:  ~\newline
+
+\end{DoxyItemize}
+
+{\bfseries That\textquotesingle{}s all for this tutorial} \hypertarget{tutshapes}{}\section{Creating shapes}\label{tutshapes}
+Canvas\+CV\textquotesingle{}s support of shapes is one of it\textquotesingle{}s strongest points.
+
+You have 2 ways of creating shapes\+:
+\begin{DoxyItemize}
+\item {\bfseries From the G\+UI} (with the mouse and keyboard) -\/ for example to let the user select a polygon mask as an area of intereset for the CV.
+\item {\bfseries From the code} -\/ for example creating a clickable rectangle on screen to which a {\itshape Selection\+Box} widget can be applied.
+\end{DoxyItemize}\hypertarget{tutshapes_shapes_s1}{}\subsection{Creating a polygon from the G\+UI}\label{tutshapes_shapes_s1}
+In this example we want to user to mark a polygon area on the image or frame.
+
+There could be various reasons for that\+:
+\begin{DoxyItemize}
+\item Maybe the camera is capturing a large area and we want to operate our algorithm on a relevant dynamic subset of it.
+\item The user selects a polygon area that triggers an alert when tracked objects are inside it.
+\item etc.
+\end{DoxyItemize}
+
+When the user creates/modifies/deletes the polygon we\textquotesingle{}ll just print the vertices to the screen.
+
+Here is the code\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+\textcolor{preprocessor}{#include <canvascv/shapes/polygon.h>}
+
+\textcolor{preprocessor}{#include <opencv2/highgui.hpp>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacestd}{std};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{void} handlePolyPoints(\hyperlink{classcanvascv_1_1Canvas}{Canvas} &c, \hyperlink{classcanvascv_1_1Polygon}{Polygon} &poly)
+\{
+    vector<Point> polyPoints;
+    poly.\hyperlink{classcanvascv_1_1Polygon_ada0df457225c06769d7a90d71f58ed7f}{getPoints}(polyPoints);
+    stringstream s;
+    s <<  \textcolor{stringliteral}{"polygon points are at :\(\backslash\)n["};
+    \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} &v : polyPoints)
+    \{
+        s << \textcolor{stringliteral}{" "} << v << \textcolor{stringliteral}{" "};
+    \}
+    s <<  \textcolor{stringliteral}{"]\(\backslash\)n\(\backslash\)n"};
+    s <<  \textcolor{stringliteral}{"Use q to exit."};
+    c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(s.str());
+\}
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    \textcolor{keywordflow}{if} (! argc)
+    \{
+        Canvas::fatal(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    Mat image = imread(argv[0]);
+    \textcolor{keywordflow}{if} (image.empty())
+    \{
+        Canvas::fatal(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -2);
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"Shapes"}, image.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{enableScreenText}();
+
+    c.\hyperlink{classcanvascv_1_1Canvas_a402c43a42c0089c48a96e5303c1c1fe8}{enableStatusMsg}();
+    c.\hyperlink{classcanvascv_1_1Canvas_a14828809edd29d789170284a86f16f23}{setDefaultStatusMsg}(\textcolor{stringliteral}{"Click-Release-Drag to create a single polygon.\(\backslash\)n"}
+                          \textcolor{stringliteral}{"Select/Unselect with the mouse.\(\backslash\)n"}
+                          \textcolor{stringliteral}{"Drag selected polygon with the mouse.\(\backslash\)n"}
+                          \textcolor{stringliteral}{"DEL deleted the selected shape."});
+
+    c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(Polygon::type); \textcolor{comment}{// default shape type for direct GUI creation}
+    c.\hyperlink{classcanvascv_1_1Canvas_a64a459b16965e23de992cd2a301c68f4}{notifyOnShapeCreate}([&c](\hyperlink{classcanvascv_1_1Shape}{Shape}* shape)
+    \{
+        handlePolyPoints(c, *(\hyperlink{classcanvascv_1_1Polygon}{Polygon}*) shape); \textcolor{comment}{// it can only be a Polygon}
+        c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(\textcolor{stringliteral}{""}); \textcolor{comment}{// default shape type for direct GUI creation}
+    \});
+    c.\hyperlink{classcanvascv_1_1Canvas_a5a6da8ae08b08a20d7fe15564bda5515}{notifyOnShapeModify}([&c](\hyperlink{classcanvascv_1_1Shape}{Shape}* shape)
+    \{
+        handlePolyPoints(c, *(\hyperlink{classcanvascv_1_1Polygon}{Polygon}*) shape);
+    \});
+    c.\hyperlink{classcanvascv_1_1Canvas_a1e7c26b39fd247e85941a6542f1b94c3}{notifyOnShapeDelete}([&c](\hyperlink{classcanvascv_1_1Shape}{Shape}*)
+    \{
+        c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(Polygon::type); \textcolor{comment}{// default shape type for direct GUI creation}
+    \});
+
+    namedWindow(\textcolor{stringliteral}{"Shapes"}, WINDOW\_AUTOSIZE);
+    c.\hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{setMouseCallback}(); \textcolor{comment}{// optional for mouse usage see also (example\_selectbox.cpp)}
+
+    \textcolor{keywordtype}{int} key = 0;
+    Mat out; \textcolor{comment}{// keeping it out of the loop is a little more efficient}
+    \textcolor{keywordflow}{do}
+    \{
+        \textcolor{keywordflow}{switch} (key)
+        \{
+        \textcolor{keywordflow}{case} 65535:
+            c.\hyperlink{classcanvascv_1_1Canvas_a2fb88addb88a21757d4272e64acd30ae}{deleteActive}();
+            c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(\textcolor{stringliteral}{""});
+            \textcolor{keywordflow}{break};
+        \}
+
+        c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(image, out);
+        c.\hyperlink{classcanvascv_1_1Canvas_acaf9494a5668046dd0a8908aa97a7a43}{imshow}(out);
+        key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(); \textcolor{comment}{// GUI and callbacks happen here}
+    \} \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'});
+
+    destroyAllWindows();
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+ Notes\+:
+\begin{DoxyItemize}
+\item \hyperlink{classcanvascv_1_1Canvas_a402c43a42c0089c48a96e5303c1c1fe8}{canvascv\+::\+Canvas\+::enable\+Status\+Msg()} is optional, but recommended when using shapes and widgets. It takes a small portion of the screen area, but gives helpful information to the user.
+\item \hyperlink{classcanvascv_1_1Canvas_a14828809edd29d789170284a86f16f23}{canvascv\+::\+Canvas\+::set\+Default\+Status\+Msg()} is optional. There are built in status messages that are displayed during shape creation and editing. When nothing is selected, then your default status message will be displayed.
+\item The Canvas needs to know what shape to create when the user left clicks with the mouse. This is done with \hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{canvascv\+::\+Canvas\+::set\+Shape\+Type()}.
+\item You can register for Canvas create/modify/delete notification on the Shapes that it creates/modify/deletes. This is the place to react to the user\textquotesingle{}s G\+UI actions.
+\item When executed with a path to an image, this gives you (depends on your image)\+:  ~\newline
+
+\end{DoxyItemize}\hypertarget{tutshapes_shapes_s2}{}\subsection{Creating a clickable rectangle from code}\label{tutshapes_shapes_s2}
+As you know, in CV tracking is split into 2 phases -\/ detection and tracking.
+
+Let\textquotesingle{}s assume we have a people detection code, and we\textquotesingle{}re detecting people in a croud.
+
+We want to enable the user to choose a specific detection to start tracking. In the most simple form -\/ we want the rectangles we draw to do something when they are clicked.
+
+In this tutorial we won\textquotesingle{}t track anything, but just output the chosen rectangle coordinates to the screen.
+
+The base code we\textquotesingle{}ll be using is from {\itshape Open\+C\+V-\/3.\+2.\+0/samples/cpp/peopledetect.cpp}.
+
+The modified code can be optimized for performance, but here we just want to show the {\itshape Canvas\+CV} way of doing it.
+
+You are encouraged to diff the tutorial version and the Open\+CV version with your favorite diff tool, but the most important difference is this\+:
+
+
+\begin{DoxyCode}
+1 <         rectangle(img, r.tl(), r.br(), cv::Scalar(0,255,0), 3);
+2 ---
+3 >         shared\_ptr<Rectangle> shapeRect = canvas.createShape<Rectangle>();
+4 >         shapeRect->setRect(cv::RotatedRect(Point(r.x + r.width / 2., r.y + r.height / 2.), r.size(), 0));
+5 >         shapeRect->setOutlineColor(Colors::Green);
+6 >         shapeRect->setThickness(3);
+7 >         shapeRect->setLocked(true); // cannot be dragged
+8 >         shapeRect->notifyOnEvent([&canvas](Shape *shape, Shape::Event evt)
+9 >         \{
+10 >             if (evt == Shape::SELECT)
+11 >             \{
+12 >                 canvas.setScreenText(CCV\_STR("User clicked in rect " <<
+       ((Rectangle*)shape)->getRect().boundingRect()));
+13 >             \}
+14 >         \});
+\end{DoxyCode}
+
+
+In the code above, instead of drawing a rectangle, we create a \hyperlink{classcanvascv_1_1Rectangle}{canvascv\+::\+Rectangle} object on the {\itshape Canvas} and attach a callback to that specific instance.
+
+The \hyperlink{classcanvascv_1_1Shape_a3fa381d7be3c6bb3cd736e237a444d5c}{canvascv\+::\+Shape\+::\+Event} we want is {\itshape S\+E\+L\+E\+CT}, which is when a shape is selected with the mouse (Clicked).
+
+The full code is a little long because the original code is long\+:
+
+
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <iostream>}
+\textcolor{preprocessor}{#include <stdexcept>}
+\textcolor{preprocessor}{#include <opencv2/objdetect.hpp>}
+\textcolor{preprocessor}{#include <opencv2/highgui.hpp>}
+\textcolor{preprocessor}{#include <opencv2/imgproc.hpp>}
+\textcolor{preprocessor}{#include <opencv2/imgcodecs.hpp>}
+\textcolor{preprocessor}{#include <opencv2/video.hpp>}
+\textcolor{preprocessor}{#include <opencv2/videoio.hpp>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacestd}{std};
+
+\textcolor{comment}{// CanvasCV change#1 - include and namespace}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+\textcolor{preprocessor}{#include <canvascv/shapes/rectangle.h>}
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+
+\textcolor{keyword}{const} \textcolor{keywordtype}{char}* keys =
+\{
+    \textcolor{stringliteral}{"\{ help h      |                     | print help message \}"}
+    \textcolor{stringliteral}{"\{ image i     |                     | specify input image\}"}
+    \textcolor{stringliteral}{"\{ camera c    |                     | enable camera capturing \}"}
+    \textcolor{stringliteral}{"\{ video v     | ../data/vtest.avi   | use video as input \}"}
+    \textcolor{stringliteral}{"\{ directory d |                     | images directory\}"}
+\};
+
+\textcolor{comment}{// CanvasCV change#8 - we draw on the canvas instead of the real img}
+\textcolor{keyword}{static} \textcolor{keywordtype}{void} detectAndDraw(\textcolor{keyword}{const} HOGDescriptor &hog, Mat &img, \hyperlink{classcanvascv_1_1Canvas}{Canvas} &canvas)
+\{
+    vector<Rect> found, found\_filtered;
+    \textcolor{keywordtype}{double} t = (double) getTickCount();
+    \textcolor{comment}{// Run the detector with default parameters. to get a higher hit-rate}
+    \textcolor{comment}{// (and more false alarms, respectively), decrease the hitThreshold and}
+    \textcolor{comment}{// groupThreshold (set groupThreshold to 0 to turn off the grouping completely).}
+    hog.detectMultiScale(img, found, 0, Size(8,8), Size(32,32), 1.05, 2);
+    t = (double) getTickCount() - t;
+    cout << \textcolor{stringliteral}{"detection time = "} << (t*1000./cv::getTickFrequency()) << \textcolor{stringliteral}{" ms"} << endl;
+
+    \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < found.size(); i++ )
+    \{
+        Rect r = found[i];
+
+        \textcolor{keywordtype}{size\_t} j;
+        \textcolor{comment}{// Do not add small detections inside a bigger detection.}
+        \textcolor{keywordflow}{for} ( j = 0; j < found.size(); j++ )
+            \textcolor{keywordflow}{if} ( j != i && (r & found[j]) == r )
+                \textcolor{keywordflow}{break};
+
+        \textcolor{keywordflow}{if} ( j == found.size() )
+            found\_filtered.push\_back(r);
+    \}
+
+    \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < found\_filtered.size(); i++)
+    \{
+        Rect r = found\_filtered[i];
+
+        \textcolor{comment}{// The HOG detector returns slightly larger rectangles than the real objects,}
+        \textcolor{comment}{// so we slightly shrink the rectangles to get a nicer output.}
+        r.x += cvRound(r.width*0.1);
+        r.width = cvRound(r.width*0.8);
+        r.y += cvRound(r.height*0.07);
+        r.height = cvRound(r.height*0.8);
+        shared\_ptr<Rectangle> shapeRect = canvas.\hyperlink{classcanvascv_1_1Canvas_a630ac92458f1718d0c597e96dd5a4aef}{createShape}<
+      \hyperlink{classcanvascv_1_1Rectangle}{Rectangle}>();
+        shapeRect->\hyperlink{classcanvascv_1_1Rectangle_a5149d50c87c3388619ace3badd868f50}{setRect}(cv::RotatedRect(Point(r.x + r.width / 2., r.y + r.height / 2.), r.size(),
+       0));
+        shapeRect->setOutlineColor(Colors::Green);
+        shapeRect->setThickness(3);
+        shapeRect->setLocked(\textcolor{keyword}{true}); \textcolor{comment}{// cannot be dragged}
+        shapeRect->notifyOnEvent([&canvas](\hyperlink{classcanvascv_1_1Shape}{Shape} *shape, \hyperlink{classcanvascv_1_1Shape_a3fa381d7be3c6bb3cd736e237a444d5c}{Shape::Event} evt)
+        \{
+            \textcolor{keywordflow}{if} (evt == Shape::SELECT)
+            \{
+                canvas.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(CCV\_STR(\textcolor{stringliteral}{"User clicked in rect "} << ((
+      \hyperlink{classcanvascv_1_1Rectangle}{Rectangle}*)shape)->getRect().boundingRect()));
+            \}
+        \});
+    \}
+\}
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char}** argv)
+\{
+    CommandLineParser parser(argc, argv, keys);
+
+    \textcolor{keywordflow}{if} (parser.has(\textcolor{stringliteral}{"help"}))
+    \{
+        cout << \textcolor{stringliteral}{"\(\backslash\)nThis program demonstrates the use of the HoG descriptor using\(\backslash\)n"}
+            \textcolor{stringliteral}{" HOGDescriptor::hog.setSVMDetector(HOGDescriptor::getDefaultPeopleDetector());\(\backslash\)n"};
+        parser.printMessage();
+        cout << \textcolor{stringliteral}{"During execution:\(\backslash\)n\(\backslash\)tHit q or ESC key to quit.\(\backslash\)n"}
+            \textcolor{stringliteral}{"\(\backslash\)tUsing OpenCV version "} << CV\_VERSION << \textcolor{stringliteral}{"\(\backslash\)n"}
+            \textcolor{stringliteral}{"Note: camera device number must be different from -1.\(\backslash\)n"} << endl;
+        \textcolor{keywordflow}{return} 0;
+    \}
+
+    HOGDescriptor hog;
+    hog.setSVMDetector(HOGDescriptor::getDefaultPeopleDetector());
+    namedWindow(\textcolor{stringliteral}{"people detector"}, 1);
+
+    \textcolor{comment}{// CanvasCV change#2 - attach a canvas to a window with mouse callbacks}
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} canvas(\textcolor{stringliteral}{"people detector"});
+    canvas.\hyperlink{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{enableScreenText}();
+    canvas.\hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{setMouseCallback}();
+
+    \textcolor{keywordtype}{string} pattern\_glob = \textcolor{stringliteral}{""};
+    \textcolor{keywordtype}{string} video\_filename = \textcolor{stringliteral}{"../data/vtest.avi"};
+    \textcolor{keywordtype}{int} camera\_id = -1;
+    \textcolor{keywordflow}{if} (parser.has(\textcolor{stringliteral}{"directory"}))
+    \{
+        pattern\_glob = parser.get<\textcolor{keywordtype}{string}>(\textcolor{stringliteral}{"directory"});
+    \}
+    \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (parser.has(\textcolor{stringliteral}{"image"}))
+    \{
+        pattern\_glob = parser.get<\textcolor{keywordtype}{string}>(\textcolor{stringliteral}{"image"});
+    \}
+    \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (parser.has(\textcolor{stringliteral}{"camera"}))
+    \{
+        camera\_id = parser.get<\textcolor{keywordtype}{int}>(\textcolor{stringliteral}{"camera"});
+    \}
+    \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (parser.has(\textcolor{stringliteral}{"video"}))
+    \{
+        video\_filename = parser.get<\textcolor{keywordtype}{string}>(\textcolor{stringliteral}{"video"});
+    \}
+
+    \textcolor{keywordflow}{if} (!pattern\_glob.empty() || camera\_id != -1 || !video\_filename.empty())
+    \{
+        \textcolor{comment}{//Read from input image files}
+        vector<String> filenames;
+        \textcolor{comment}{//Read from video file}
+        VideoCapture vc;
+        Mat frame;
+
+        \textcolor{keywordflow}{if} (!pattern\_glob.empty())
+        \{
+            String folder(pattern\_glob);
+            glob(folder, filenames);
+        \}
+        \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (camera\_id != -1)
+        \{
+            vc.open(camera\_id);
+            \textcolor{keywordflow}{if} (!vc.isOpened())
+            \{
+                \textcolor{comment}{// CanvasCV change#3 - using fatal}
+                Canvas::fatal(CCV\_STR(\textcolor{stringliteral}{"can't open camera: "} << camera\_id), -1);
+            \}
+        \}
+        \textcolor{keywordflow}{else}
+        \{
+            vc.open(video\_filename.c\_str());
+            \textcolor{comment}{// CanvasCV change#4 - using fatal}
+            \textcolor{keywordflow}{if} (!vc.isOpened())
+                Canvas::fatal(CCV\_STR(\textcolor{stringliteral}{"can't open video file: "} << video\_filename), -1);
+        \}
+
+        vector<String>::const\_iterator it\_image = filenames.begin();
+
+        Mat out;
+        \textcolor{keywordflow}{for} (;;)
+        \{
+            \textcolor{keywordflow}{if} (!pattern\_glob.empty())
+            \{
+                \textcolor{keywordtype}{bool} read\_image\_ok = \textcolor{keyword}{false};
+                \textcolor{keywordflow}{for} (; it\_image != filenames.end(); ++it\_image)
+                \{
+                    cout << \textcolor{stringliteral}{"\(\backslash\)nRead: "} << *it\_image << endl;
+                    \textcolor{comment}{// Read current image}
+                    frame = imread(*it\_image);
+
+                    \textcolor{keywordflow}{if} (!frame.empty())
+                    \{
+                        ++it\_image;
+                        read\_image\_ok = \textcolor{keyword}{true};
+                        \textcolor{keywordflow}{break};
+                    \}
+                \}
+
+                \textcolor{comment}{//No more valid images}
+                \textcolor{keywordflow}{if} (!read\_image\_ok)
+                \{
+                    \textcolor{comment}{//Release the image in order to exit the while loop}
+                    frame.release();
+                \}
+            \}
+            \textcolor{keywordflow}{else}
+            \{
+                vc >> frame;
+            \}
+
+            \textcolor{keywordflow}{if} (frame.empty())
+                \textcolor{keywordflow}{break};
+
+            \textcolor{comment}{// CanvasCV change#5 - clean & set canvas limits}
+            canvas.\hyperlink{classcanvascv_1_1Canvas_a8aa6686036b8a1a006718ae62f44b6c2}{clearShapes}();
+            canvas.\hyperlink{classcanvascv_1_1Canvas_ab9ffc28f7a21e1375da18cc4f03343ae}{setSize}(frame.size());
+
+            detectAndDraw(hog, frame, canvas);
+
+            \textcolor{comment}{// CanvasCV change#6 - draw shapes & widgets}
+            canvas.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(frame, out);
+            canvas.\hyperlink{classcanvascv_1_1Canvas_acaf9494a5668046dd0a8908aa97a7a43}{imshow}(out);
+
+            \textcolor{comment}{// CanvasCV change#7 - get keyboard events from the canvas}
+            \textcolor{keywordtype}{int} c = canvas.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}( vc.isOpened() ? 30 : 0 ) & 255;
+            \textcolor{keywordflow}{if} ( c == \textcolor{charliteral}{'q'} || c == \textcolor{charliteral}{'Q'} || c == 27)
+                \textcolor{keywordflow}{break};
+        \}
+    \}
+
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+ Notes for the {\ttfamily //\+Canvas\+CV change\#...} comments above\+:
+\begin{DoxyItemize}
+\item Here the canvas is cleared at each frame. There are ways to optimize this, but first you\textquotesingle{}ll need to see if this affects your performance at all.
+\item As a general rule, if the image size changes, then use \hyperlink{classcanvascv_1_1Canvas_ab9ffc28f7a21e1375da18cc4f03343ae}{canvascv\+::\+Canvas\+::set\+Size()} to adapt to the new size.
+\item When using the Canvas\+CV, you create shapes and widgets on the \hyperlink{classcanvascv_1_1Canvas}{canvascv\+::\+Canvas} and not on the {\itshape Mat}.
+\item \hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{canvascv\+::\+Canvas\+::wait\+Key\+Ex()} knows to update it\textquotesingle{}s internal shapes and widgets even if you pass 0 as a blocking delay indicator.
+\item {\itshape C\+C\+V\+\_\+\+S\+TR} lets you create a string as you would write into a stream.
+\item When executed with --video=\char`\"{}\+Path to opencv-\/3.\+2.\+0/samples/data/vtest.\+avi\char`\"{}, you can get  ~\newline
+
+\end{DoxyItemize}
+
+{\bfseries That\textquotesingle{}s all for this tutorial} \hypertarget{tutpersistency}{}\section{Persisting shapes}\label{tutpersistency}
+What if your user created the shapes you needed from him, and you want to save that setup?
+
+No problem! shapes can be saved to a file and read back from that file.
+
+Currently only the shapes of the entire {\itshape Canvas} can be written to a file and read from it.\hypertarget{tutpersistency_persistency_s1}{}\subsection{Write and read of the user Polygon}\label{tutpersistency_persistency_s1}
+This is the same program as from the previous tutorial (\hyperlink{tutshapes_shapes_s1}{Creating a polygon from the G\+UI})
+
+Adding only these lines to screen text\+:
+
+
+\begin{DoxyCode}
+s <<  \textcolor{stringliteral}{"Use s to save.\(\backslash\)n"};
+s <<  \textcolor{stringliteral}{"Use l to load."};
+\end{DoxyCode}
+
+
+And these lines to the switch\+:
+
+
+\begin{DoxyCode}
+\textcolor{keywordflow}{case} \textcolor{charliteral}{'s'}:
+    c.\hyperlink{classcanvascv_1_1Canvas_a494bb06b1a29232f05807f4a0e480ebb}{writeShapesToFile}(\textcolor{stringliteral}{"canvas.xml"});
+    \textcolor{keywordflow}{break};
+\textcolor{keywordflow}{case} \textcolor{charliteral}{'l'}:
+    c.\hyperlink{classcanvascv_1_1Canvas_ab68000bb631c2fa7bb8863e746a8cff3}{readShapesFromFile}(\textcolor{stringliteral}{"canvas.xml"});
+    \textcolor{keywordflow}{break};
+\end{DoxyCode}
+
+
+Which gives\+:
+
+
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+\textcolor{preprocessor}{#include <canvascv/shapes/polygon.h>}
+
+\textcolor{preprocessor}{#include <opencv2/highgui.hpp>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacestd}{std};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{void} handlePolyPoints(\hyperlink{classcanvascv_1_1Canvas}{Canvas} &c, \hyperlink{classcanvascv_1_1Polygon}{Polygon} &poly)
+\{
+    vector<Point> polyPoints;
+    poly.\hyperlink{classcanvascv_1_1Polygon_ada0df457225c06769d7a90d71f58ed7f}{getPoints}(polyPoints);
+    stringstream s;
+    s <<  \textcolor{stringliteral}{"polygon points are at :\(\backslash\)n["};
+    \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} &v : polyPoints)
+    \{
+        s << \textcolor{stringliteral}{" "} << v << \textcolor{stringliteral}{" "};
+    \}
+    s <<  \textcolor{stringliteral}{"]\(\backslash\)n\(\backslash\)n"};
+    s <<  \textcolor{stringliteral}{"Use q to exit.\(\backslash\)n"};
+    s <<  \textcolor{stringliteral}{"Use s to save.\(\backslash\)n"};
+    s <<  \textcolor{stringliteral}{"Use l to load."};
+    c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(s.str());
+\}
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    \textcolor{keywordflow}{if} (! argc)
+    \{
+        Canvas::fatal(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    Mat image = imread(argv[0]);
+    \textcolor{keywordflow}{if} (image.empty())
+    \{
+        Canvas::fatal(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -2);
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"Persistent Shapes"}, image.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{enableScreenText}();
+
+    c.\hyperlink{classcanvascv_1_1Canvas_a402c43a42c0089c48a96e5303c1c1fe8}{enableStatusMsg}();
+    c.\hyperlink{classcanvascv_1_1Canvas_a14828809edd29d789170284a86f16f23}{setDefaultStatusMsg}(\textcolor{stringliteral}{"Click-Release-Drag to create a single polygon.\(\backslash\)n"}
+                          \textcolor{stringliteral}{"Select/Unselect with the mouse.\(\backslash\)n"}
+                          \textcolor{stringliteral}{"Drag selected polygon with the mouse.\(\backslash\)n"}
+                          \textcolor{stringliteral}{"DEL deleted the selected shape."});
+
+    c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(Polygon::type); \textcolor{comment}{// default shape type for direct GUI creation}
+    c.\hyperlink{classcanvascv_1_1Canvas_a64a459b16965e23de992cd2a301c68f4}{notifyOnShapeCreate}([&c](\hyperlink{classcanvascv_1_1Shape}{Shape}* shape)
+    \{
+        handlePolyPoints(c, *(\hyperlink{classcanvascv_1_1Polygon}{Polygon}*) shape); \textcolor{comment}{// it can only be a Polygon}
+        c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(\textcolor{stringliteral}{""}); \textcolor{comment}{// default shape type for direct GUI creation}
+    \});
+    c.\hyperlink{classcanvascv_1_1Canvas_a5a6da8ae08b08a20d7fe15564bda5515}{notifyOnShapeModify}([&c](\hyperlink{classcanvascv_1_1Shape}{Shape}* shape)
+    \{
+        handlePolyPoints(c, *(\hyperlink{classcanvascv_1_1Polygon}{Polygon}*) shape);
+    \});
+    c.\hyperlink{classcanvascv_1_1Canvas_a1e7c26b39fd247e85941a6542f1b94c3}{notifyOnShapeDelete}([&c](\hyperlink{classcanvascv_1_1Shape}{Shape}*)
+    \{
+        c.\hyperlink{classcanvascv_1_1Canvas_ac61735c6f4cb6a88d84331540ab25d39}{setShapeType}(Polygon::type); \textcolor{comment}{// default shape type for direct GUI creation}
+    \});
+
+    namedWindow(\textcolor{stringliteral}{"Persistent Shapes"}, WINDOW\_AUTOSIZE);
+    c.\hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{setMouseCallback}(); \textcolor{comment}{// optional for mouse usage see also (example\_selectbox.cpp)}
+
+    \textcolor{keywordtype}{int} key = 0;
+    Mat out; \textcolor{comment}{// keeping it out of the loop is a little more efficient}
+    \textcolor{keywordflow}{do}
+    \{
+        \textcolor{keywordflow}{switch} (key)
+        \{
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'s'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_a494bb06b1a29232f05807f4a0e480ebb}{writeShapesToFile}(\textcolor{stringliteral}{"canvas.xml"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'l'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_ab68000bb631c2fa7bb8863e746a8cff3}{readShapesFromFile}(\textcolor{stringliteral}{"canvas.xml"});
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} 65535:
+            c.\hyperlink{classcanvascv_1_1Canvas_a2fb88addb88a21757d4272e64acd30ae}{deleteActive}();
+            c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(\textcolor{stringliteral}{""});
+            \textcolor{keywordflow}{break};
+        \}
+
+        c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(image, out);
+        c.\hyperlink{classcanvascv_1_1Canvas_acaf9494a5668046dd0a8908aa97a7a43}{imshow}(out);
+        key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(); \textcolor{comment}{// GUI and callbacks happen here}
+    \} \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'});
+
+    destroyAllWindows();
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+ Notes\+:
+\begin{DoxyItemize}
+\item The \hyperlink{classcanvascv_1_1Canvas_ab68000bb631c2fa7bb8863e746a8cff3}{canvascv\+::\+Canvas\+::read\+Shapes\+From\+File()} will clear itself from shapes before reading the shapes from the file.
+\item When executed with a path to an image, this gives you (depends on your image)\+:  ~\newline
+
+\end{DoxyItemize}
+
+{\bfseries That\textquotesingle{}s all for this tutorial} \hypertarget{tutbuttons}{}\section{Using buttons}\label{tutbuttons}
+A {\itshape Button} is one of the most a basic widgets.
+
+It changes its contour when pressed (according to the current \hyperlink{classcanvascv_1_1Theme}{canvascv\+::\+Theme}).
+
+It has text displayed on it and you attach a callback to know when it was pressed.\hypertarget{tutbuttons_buttons_s1}{}\subsection{Resizing the image with buttons}\label{tutbuttons_buttons_s1}
+Up to now we\textquotesingle{}ve been using W\+I\+N\+D\+O\+W\+\_\+\+A\+U\+T\+O\+S\+I\+ZE to avoid stretching the image when creating the window.
+
+Let\textquotesingle{}s write a small program which allows resizing of the image.
+
+This will be done with 2 buttons \char`\"{}+\char`\"{} and \char`\"{}-\/\char`\"{} to increse and decrease the size of the image respectively.
+
+Here we also make an effort to keep a button location aligned to a changing Canvas size. This won\textquotesingle{}t be needed when you\textquotesingle{}ll learn about the layout managers.
+
+Read the code and see the notes after it\+:
+
+
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/button.h>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    \textcolor{keywordflow}{if} (! argc)
+    \{
+        Canvas::fatal(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    Mat orig = imread(argv[0]);
+    \textcolor{keywordflow}{if} (orig.empty())
+    \{
+        Canvas::fatal(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -2);
+    \}
+    Mat image = orig;
+
+    namedWindow(\textcolor{stringliteral}{"Buttons"}, WINDOW\_AUTOSIZE); \textcolor{comment}{// disable mouse resize}
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"Buttons"}, orig.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_a402c43a42c0089c48a96e5303c1c1fe8}{enableStatusMsg}(); \textcolor{comment}{// shows hover over button msgs}
+    c.\hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{setMouseCallback}();
+
+    \textcolor{keywordtype}{double} ratio = 1.;
+
+    \textcolor{keyword}{auto} rightSideButton = Button::create(c,                                 \textcolor{comment}{// on the canvas}
+                                          Point(image.cols - 20, 0),         \textcolor{comment}{// top-right aligned on the
+       screen}
+                                          \textcolor{stringliteral}{"+"},                               \textcolor{comment}{// displayed on button}
+                                          \textcolor{stringliteral}{"increase size"},                   \textcolor{comment}{// displayed during mouse
+       hover}
+                                          [&c, &orig, &image, &ratio](Widget *w) \textcolor{comment}{// callback can be a C++11
+       lambda}
+    \{
+        ratio += 0.05;
+        cv::resize(orig, image, Size(), ratio, ratio);
+        c.setImage(image);  \textcolor{comment}{// change the image during waitKeyEx(0)}
+        w->setLocation(Point(image.cols - 20, 0)); \textcolor{comment}{// keep aligned to top right without a layout manager}
+    \}
+    );
+
+    Button::create(c,                               \textcolor{comment}{// on the canvas}
+                   Point(0, 0),                     \textcolor{comment}{// top-left aligned on the screen}
+                   \textcolor{stringliteral}{"-"},                             \textcolor{comment}{// displayed on button}
+                   \textcolor{stringliteral}{"decrease size"},                 \textcolor{comment}{// displayed during mouse hover}
+                   [&c, &orig, &image, &ratio, rightSideButton](Widget*) \textcolor{comment}{// callback can be a C++11 lambda}
+    \{
+        ratio -= 0.05;
+        cv::resize(orig, image, Size(), ratio, ratio);
+        c.\hyperlink{classcanvascv_1_1Canvas_a441c5882c7ebebd454a306b3c3478ae7}{setImage}(image);  \textcolor{comment}{// change the image during waitKeyEx(0)}
+        rightSideButton->setLocation(Point(image.cols - 20, 0)); \textcolor{comment}{// keep aligned to top right without a
+       layout manager}
+    \}
+    );
+
+    \textcolor{keywordtype}{int} key = 0;
+    Mat out;
+    \textcolor{keywordflow}{do}
+    \{
+        c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(image, out);  \textcolor{comment}{// draw the canvas on the image copy}
+        c.\hyperlink{classcanvascv_1_1Canvas_acaf9494a5668046dd0a8908aa97a7a43}{imshow}(out);
+        key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(); \textcolor{comment}{// GUI and callbacks happen here}
+
+    \} \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'});
+
+    destroyAllWindows();
+
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+ Notes\+:
+\begin{DoxyItemize}
+\item We only need a variable to widgets we want to acces by code, so only the {\itshape right\+Side\+Button} has a variable, since we\textquotesingle{}re manually aligning it to the right on resizing.
+\item For a single image display, the best practice is to use \hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{canvascv\+::\+Canvas\+::wait\+Key\+Ex()} (default delay is 0).
+\begin{DoxyItemize}
+\item Since during a zero delay, the Canvas is self updating, it needs to know that the image has changed, and this is what \hyperlink{classcanvascv_1_1Canvas_a441c5882c7ebebd454a306b3c3478ae7}{canvascv\+::\+Canvas\+::set\+Image()} is for.
+\end{DoxyItemize}
+\item We\textquotesingle{}re using {\itshape enable\+Status\+Msg} since we want the mouse hover over the buttons to show our status message for it.
+\item This tutorial is using C++11 lambda expressions as callbacks, but anything which has the \char`\"{}void(\+Widget$\ast$)\char`\"{} signature will work here.
+\item Here is an image decreased by this code\+:  ~\newline
+
+\end{DoxyItemize}\hypertarget{tutbuttons_buttons_s2}{}\subsection{Text alignment with buttons}\label{tutbuttons_buttons_s2}
+This will be more relevant on the {\itshape layout managers} tutorial, later on.
+
+Currently, lets assume we have a button with 2 lines of text, a short line and below it a long line.
+
+We could want the text to be centered, or aligned to left, or aligned to right.
+
+The way to do this is with anchoring to the flow. If you set your anchor at some point, then the text can\textquotesingle{}t move the anchor and flows to the other side. By doing that, it is aligned to the anchored side.
+
+See this code\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/button.h>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    \textcolor{keywordflow}{if} (! argc)
+    \{
+        Canvas::fatal(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    Mat image = imread(argv[0]);
+    \textcolor{keywordflow}{if} (image.empty())
+    \{
+        Canvas::fatal(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -2);
+    \}
+
+    namedWindow(\textcolor{stringliteral}{"ButTextAlign"}, WINDOW\_AUTOSIZE); \textcolor{comment}{// disable mouse resize}
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"ButTextAlign"}, image.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_a402c43a42c0089c48a96e5303c1c1fe8}{enableStatusMsg}(); \textcolor{comment}{// shows hover over button msgs}
+    c.\hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{setMouseCallback}();
+
+    \textcolor{keywordtype}{string} buttonText = \textcolor{stringliteral}{"short\(\backslash\)n"}
+                        \textcolor{stringliteral}{"a longer line"};
+    \textcolor{keyword}{auto} b1 = Button::create(c,               \textcolor{comment}{// on the canvas}
+                             Point(10,10),    \textcolor{comment}{// top-right aligned on the screen}
+                             buttonText,      \textcolor{comment}{// displayed on button}
+                             \textcolor{stringliteral}{"centered"});     \textcolor{comment}{// displayed during mouse hover}
+    b1->setFlowAnchor(Widget::CENTER);
+
+    \textcolor{keyword}{auto} b2 = Button::create(c,               \textcolor{comment}{// on the canvas}
+                             Point(10,110),    \textcolor{comment}{// top-right aligned on the screen}
+                             buttonText,      \textcolor{comment}{// displayed on button}
+                             \textcolor{stringliteral}{"left aligned"}); \textcolor{comment}{// displayed during mouse hover}
+    b2->setFlowAnchor(Widget::LEFT);
+
+    \textcolor{keyword}{auto} b3 = Button::create(c,               \textcolor{comment}{// on the canvas}
+                             Point(10,210),    \textcolor{comment}{// top-right aligned on the screen}
+                             buttonText,      \textcolor{comment}{// displayed on button}
+                             \textcolor{stringliteral}{"right aligned"});\textcolor{comment}{// displayed during mouse hover}
+    b3->setFlowAnchor(Widget::RIGHT);
+
+    \textcolor{keywordtype}{int} key = 0;
+    Mat out;
+    \textcolor{keywordflow}{do}
+    \{
+        c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(image, out);  \textcolor{comment}{// draw the canvas on the image copy}
+        c.\hyperlink{classcanvascv_1_1Canvas_acaf9494a5668046dd0a8908aa97a7a43}{imshow}(out);
+        key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(); \textcolor{comment}{// GUI and callbacks happen here}
+
+    \} \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'});
+
+    destroyAllWindows();
+
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+ Notes\+:
+\begin{DoxyItemize}
+\item the \hyperlink{classcanvascv_1_1Widget_a69f455f7fbf67f636ee1155795057b87}{canvascv\+::\+Widget\+::set\+Flow\+Anchor()} does the work here.
+\item Here is a possible outcome this code\+:  ~\newline
+
+\end{DoxyItemize}
+
+{\bfseries That\textquotesingle{}s all for this tutorial} \hypertarget{tutcheckbox}{}\section{Using Check\+Boxes (and Radio\+Buttons and a Selection\+Box)}\label{tutcheckbox}
+Giving the user multiple options and collecting them is common to \hyperlink{classcanvascv_1_1CheckBoxes}{canvascv\+::\+Check\+Boxes}, \hyperlink{classcanvascv_1_1RadioButtons}{canvascv\+::\+Radio\+Buttons} and \hyperlink{classcanvascv_1_1SelectionBox}{canvascv\+::\+Selection\+Box}.
+
+We going to take a look at using the {\itshape Check\+Boxes} now. The concept is similar to {\itshape Radio\+Buttons} and the {\itshape Selection\+Box}. In the tutorial about layout managers we\textquotesingle{}ll see an example frame with several of them together.\hypertarget{tutcheckbox_checkbox_s1}{}\subsection{Check\+Boxes with a callback}\label{tutcheckbox_checkbox_s1}
+This is the normal and preffered way of working with widgets.
+
+The {\itshape Check\+Box} alows you to register a \hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{canvascv\+::\+Widget\+::\+C\+B\+User\+Selection} callback, which will be called on user altering the widget selections.
+
+You get the widget and an index to the item that changed. It is then up to you to inspect the widget at that index (or other indexes).
+
+See this code example, and read the notes after it\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/checkboxes.h>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    \textcolor{keywordflow}{if} (! argc)
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    Mat image = imread(argv[0]);
+    \textcolor{keywordflow}{if} (image.empty())
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -2);
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"CheckBoxes"}, image.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{enableScreenText}();
+    c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(\textcolor{stringliteral}{"Use q to exit"});
+
+    namedWindow(\textcolor{stringliteral}{"CheckBoxes"}, WINDOW\_AUTOSIZE);
+
+    c.\hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{setMouseCallback}(); \textcolor{comment}{// optional for mouse usage (see also example\_selectbox.cpp)}
+
+    \hyperlink{classcanvascv_1_1CheckBoxes_a5108f52385a5cb19ad7fe52a18a91df0}{CheckBoxes::create}(c, \{
+                           \textcolor{stringliteral}{"Option1"},
+                           \textcolor{stringliteral}{"Option2"},
+                           \textcolor{stringliteral}{"Option3"}
+                       \},
+                       [&c](Widget *w, int)
+    \{
+        \hyperlink{classcanvascv_1_1CheckBoxes}{CheckBoxes} *checkBoxes = (\hyperlink{classcanvascv_1_1CheckBoxes}{CheckBoxes} *) w;
+        c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(CCV\_STR(
+                            \textcolor{stringliteral}{"Option1:"} <<  checkBoxes->\hyperlink{classcanvascv_1_1CheckBoxes_a2e544c7f81248c6b297460be5852506e}{isChecked}(0) << \textcolor{stringliteral}{"\(\backslash\)n"} <<
+                            \textcolor{stringliteral}{"Option2:"} <<  checkBoxes->\hyperlink{classcanvascv_1_1CheckBoxes_a2e544c7f81248c6b297460be5852506e}{isChecked}(1) << \textcolor{stringliteral}{"\(\backslash\)n"} <<
+                            \textcolor{stringliteral}{"Option3:"} <<  checkBoxes->\hyperlink{classcanvascv_1_1CheckBoxes_a2e544c7f81248c6b297460be5852506e}{isChecked}(2) << \textcolor{stringliteral}{"\(\backslash\)n\(\backslash\)n"} <<
+                            \textcolor{stringliteral}{"Use q to exit"}
+                            ));
+    \},
+    \{image.cols / 2, image.rows / 2\});
+
+    \textcolor{keywordtype}{int} key = 0;
+    c.\hyperlink{classcanvascv_1_1Canvas_a441c5882c7ebebd454a306b3c3478ae7}{setImage}(image);
+    \textcolor{keywordflow}{do}
+    \{
+        key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(); \textcolor{comment}{// GUI and callbacks happen here}
+    \} \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'});
+
+    destroyAllWindows();
+
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+ Notes\+:
+\begin{DoxyItemize}
+\item {\itshape C\+C\+V\+\_\+\+S\+TR} lets you create a string as you would write into a stream.
+\item This tutorial is using C++11 lambda expressions as callbacks, but anything which has the \char`\"{}void(\+Widget$\ast$,int)\char`\"{} signature will work.
+\item Note the alternate way of displaying images
+\begin{DoxyItemize}
+\item use \hyperlink{classcanvascv_1_1Canvas_a441c5882c7ebebd454a306b3c3478ae7}{canvascv\+::\+Canvas\+::set\+Image()} for the image you\textquotesingle{}re showing.
+\item use \hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{canvascv\+::\+Canvas\+::wait\+Key\+Ex()} without arguments to refresh widgets and handle internal events with your image as the background.
+\end{DoxyItemize}
+\item Here is a possible outcome of this code\+:  ~\newline
+
+\end{DoxyItemize}\hypertarget{tutcheckbox_checkbox_s2}{}\subsection{Check\+Boxes with polling}\label{tutcheckbox_checkbox_s2}
+Using polling might serve you right for some reason...
+
+Instead of using a callback, you can check the values on each iteration.
+
+This is not the recommended way.
+
+See this code and read the notes after it\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/checkboxes.h>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    \textcolor{keywordflow}{if} (! argc)
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    Mat image = imread(argv[0]);
+    \textcolor{keywordflow}{if} (image.empty())
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -2);
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"CheckBoxes"}, image.size());
+
+    namedWindow(\textcolor{stringliteral}{"CheckBoxes"}, WINDOW\_AUTOSIZE);
+
+    c.\hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{setMouseCallback}(); \textcolor{comment}{// optional for mouse usage (see also example\_selectbox.cpp)}
+
+    \textcolor{keyword}{auto} checkBox = \hyperlink{classcanvascv_1_1CheckBoxes_a5108f52385a5cb19ad7fe52a18a91df0}{CheckBoxes::create}(c, \{
+                                           \textcolor{stringliteral}{"Option1"}, \textcolor{comment}{// index 0}
+                                           \textcolor{stringliteral}{"Option2"}, \textcolor{comment}{// index 1}
+                                           \textcolor{stringliteral}{"Exit"}     \textcolor{comment}{// index 2}
+                                       \},
+                                       \hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget::CBUserSelection}(), \textcolor{comment}{// empty callback}
+                                       Point(image.cols / 2, image.rows / 2));
+
+    \textcolor{keywordtype}{int} key = 0;
+    \textcolor{keywordtype}{int} delay = 1000 / 25; \textcolor{comment}{// must use a delay when polling}
+    Mat out;
+    \textcolor{keywordflow}{do}
+    \{
+        c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(image, out);
+        c.\hyperlink{classcanvascv_1_1Canvas_acaf9494a5668046dd0a8908aa97a7a43}{imshow}(out);
+        key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(delay); \textcolor{comment}{// GUI and callbacks happen here}
+    \} \textcolor{keywordflow}{while} (! checkBox->isChecked(2));
+
+    destroyAllWindows();
+
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+ Notes\+:
+\begin{DoxyItemize}
+\item When polling is used we need all these stages in the main loop -\/
+\begin{DoxyItemize}
+\item \hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{canvascv\+::\+Canvas\+::redraw\+On()}
+\item \hyperlink{classcanvascv_1_1Canvas_acaf9494a5668046dd0a8908aa97a7a43}{canvascv\+::\+Canvas\+::imshow()}
+\item \hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{canvascv\+::\+Canvas\+::wait\+Key\+Ex()} with a non zero delay
+\end{DoxyItemize}
+\item Here is a possible outcome of this code\+:  ~\newline
+
+\end{DoxyItemize}
+
+{\bfseries That\textquotesingle{}s all for this tutorial} \hypertarget{tutlayouts}{}\section{Auto widget layouts}\label{tutlayouts}
+In the previous tutorials we\textquotesingle{}ve positioned the Widgets independetly.
+
+In many cases you want a set of widgets to be located together in a certain order.
+
+For this you need Auto\+Layout derived classes\+:
+\begin{DoxyItemize}
+\item \hyperlink{classcanvascv_1_1HorizontalLayout}{canvascv\+::\+Horizontal\+Layout}
+\item \hyperlink{classcanvascv_1_1VerticalLayout}{canvascv\+::\+Vertical\+Layout}
+\item \hyperlink{classcanvascv_1_1HFrame}{canvascv\+::\+H\+Frame}
+\item \hyperlink{classcanvascv_1_1VFrame}{canvascv\+::\+V\+Frame}
+\end{DoxyItemize}
+
+In this tutorial we\textquotesingle{}ll return to some previous tutorial code and see how to do it in a layout. Then we\textquotesingle{}ll write a simple form which gets inputs from the user.
+
+Notice along the tutorial the usage of anchors and and stretching.
+
+For anchors, you have 2 different A\+P\+Is\+:
+\begin{DoxyItemize}
+\item \hyperlink{classcanvascv_1_1Widget_a69f455f7fbf67f636ee1155795057b87}{canvascv\+::\+Widget\+::set\+Flow\+Anchor()} -\/ used internally by the widget to determine into which direction to grow.
+\item \hyperlink{classcanvascv_1_1Widget_a7180ca0054874c853e805e7842741596}{canvascv\+::\+Widget\+::set\+Layout\+Anchor()}-\/ used by the layout holding this widget for alignments.
+\end{DoxyItemize}
+
+For stretching, you have 2 different A\+P\+Is\+:
+\begin{DoxyItemize}
+\item \hyperlink{classcanvascv_1_1Widget_a7cdddebd755c499712793f727a057733}{canvascv\+::\+Widget\+::set\+Stretch\+X()} and \hyperlink{classcanvascv_1_1Widget_a3ef50b76d33c332cea4e632346b6df33}{canvascv\+::\+Widget\+::set\+Stretch\+Y()}, which tells if we want to be equal in width/height to the largest widget in our layout.
+\item \hyperlink{classcanvascv_1_1Widget_a7b1ed6190950de22565c244f5aac49a4}{canvascv\+::\+Widget\+::set\+Stretch\+X\+To\+Parent()} and \hyperlink{classcanvascv_1_1Widget_a825028e2405bfdf9d92d372e60585703}{canvascv\+::\+Widget\+::set\+Stretch\+Y\+To\+Parent()}, which tells if we want to be streched to the full width/height of our layout.
+\end{DoxyItemize}\hypertarget{tutlayouts_layouts_s1}{}\subsection{Center text on the screen}\label{tutlayouts_layouts_s1}
+In the tutorial \hyperlink{tutscreentext_screentext_s2_3}{Displaying text where ever you want} we created a {\itshape Text} widget and manually tried to center it on the screen.
+
+To center it vertically and horizontally, you would use 2 layout managers -\/ \hyperlink{classcanvascv_1_1VerticalLayout}{canvascv\+::\+Vertical\+Layout} and \hyperlink{classcanvascv_1_1HorizontalLayout}{canvascv\+::\+Horizontal\+Layout}.
+
+The top layout should stretch to the full dimensions of the screen (because we want {\itshape C\+E\+N\+T\+ER} to be relative to that). Here we choose a {\itshape Vertical\+Layout}, in which widgets are layered automatically veritcally, but horizontally you can specify where to put your widget.
+
+Now we\textquotesingle{}ll add a {\itshape Horizontal\+Layout} to the above layout and request to be anchored to the {\itshape C\+E\+N\+T\+ER}.
+
+In the {\itshape Horizontal\+Layout}, widgets are layered automatically horizontally, but vertically you can specify where to put your widget. This widget will strectch in the Y direction, so {\itshape C\+E\+N\+T\+ER} in it will be relative to the height of the image.
+
+So finally we\textquotesingle{}ll add our {\itshape Text}, just like before, but now instead of adding it to the {\itshape Canvas}, we\textquotesingle{}ll add it to the above {\itshape Horizontal\+Layout}, and ask to be anchored to the {\itshape C\+E\+N\+T\+ER} of it.
+
+So the {\itshape Vertical\+Layout} will {\itshape C\+E\+N\+T\+ER} the {\itshape Horizontal\+Layout} and it will {\itshape C\+E\+N\+T\+ER} the {\itshape Text}. Since the layouts are stretching to the full dimension of the image, it will always be centered.
+
+The added/changed code is much shorter than the explanation\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{comment}{// ...}
+
+\textcolor{keyword}{auto} vLayout = \hyperlink{classcanvascv_1_1VerticalLayout_a3e0ae249db062663815d2d822e178dd3}{VerticalLayout::create}(c);
+vLayout->setStretchXToParent(\textcolor{keyword}{true});
+vLayout->setStretchYToParent(\textcolor{keyword}{true});
+
+\textcolor{keyword}{auto} hLayout = \hyperlink{classcanvascv_1_1HorizontalLayout_aea31dd787cbf985687ead6a55efa1839}{HorizontalLayout::create}(*vLayout);
+hLayout->setLayoutAnchor(\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea2cd62693af40f3c5f559a07d6a61a55d}{Widget::CENTER});
+hLayout->setStretchYToParent(\textcolor{keyword}{true});
+
+\textcolor{keyword}{auto} txt = \hyperlink{classcanvascv_1_1Text_a7f3552263b6f185f78d90549e7ac38f7}{Text::create}(*hLayout, \textcolor{stringliteral}{"Target Acquired!"});
+txt->setLayoutAnchor(\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea2cd62693af40f3c5f559a07d6a61a55d}{Widget::CENTER});
+
+\textcolor{comment}{// ...}
+\end{DoxyCode}
+
+
+This is the full code\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/text.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/verticallayout.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/horizontallayout.h>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{void} help(\hyperlink{classcanvascv_1_1Canvas}{Canvas} &c)
+\{
+    \textcolor{keyword}{static} \textcolor{keywordtype}{bool} showHelp = \textcolor{keyword}{true};
+    \textcolor{keyword}{static} \textcolor{keywordtype}{string} helpMsg =
+            \textcolor{stringliteral}{"Usage:\(\backslash\)n"}
+            \textcolor{stringliteral}{"=====\(\backslash\)n"}
+            \textcolor{stringliteral}{"h: toggle usage message\(\backslash\)n"}
+            \textcolor{stringliteral}{"*: toggle canvas on/off\(\backslash\)n"}
+            \textcolor{stringliteral}{"q: exit"};
+
+
+    \textcolor{keywordflow}{if} (showHelp) c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(helpMsg);
+    \textcolor{keywordflow}{else} c.\hyperlink{classcanvascv_1_1Canvas_aaedea276b82a8a4cfc0895ae81113cfd}{setScreenText}(\textcolor{stringliteral}{""});
+
+    showHelp = ! showHelp;
+\}
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    \textcolor{keywordflow}{if} (! argc)
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    Mat image = imread(argv[0]);
+    \textcolor{keywordflow}{if} (image.empty())
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -2);
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"LayoutTxt"}, image.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_ae68d3277e738d349232400b38f0e5f9e}{enableScreenText}(); \textcolor{comment}{// see it's documentation}
+
+    help(c);
+
+    namedWindow(\textcolor{stringliteral}{"LayoutTxt"}, WINDOW\_AUTOSIZE); \textcolor{comment}{// disable mouse resize}
+
+    \textcolor{keyword}{auto} vLayout = \hyperlink{classcanvascv_1_1VerticalLayout_a3e0ae249db062663815d2d822e178dd3}{VerticalLayout::create}(c);
+    vLayout->setStretchXToParent(\textcolor{keyword}{true});
+    vLayout->setStretchYToParent(\textcolor{keyword}{true});
+
+    \textcolor{keyword}{auto} hLayout = \hyperlink{classcanvascv_1_1HorizontalLayout_aea31dd787cbf985687ead6a55efa1839}{HorizontalLayout::create}(*vLayout);
+    hLayout->setLayoutAnchor(\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea2cd62693af40f3c5f559a07d6a61a55d}{Widget::CENTER});
+    hLayout->setStretchYToParent(\textcolor{keyword}{true});
+
+    \textcolor{keyword}{auto} txt = \hyperlink{classcanvascv_1_1Text_a7f3552263b6f185f78d90549e7ac38f7}{Text::create}(*hLayout, \textcolor{stringliteral}{"Target Acquired!"});
+    txt->setLayoutAnchor(\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea2cd62693af40f3c5f559a07d6a61a55d}{Widget::CENTER});
+    txt->setFontHeight(50);
+    txt->setOutlineColor(\hyperlink{classcanvascv_1_1Colors_a10aff24c53edf45b038d0636b061f9c2}{Colors::Red});
+    txt->setThickness(2);
+
+    \textcolor{keywordtype}{int} key = 0;
+    Mat out;
+    \textcolor{keywordflow}{do}
+    \{
+        \textcolor{keywordflow}{switch} (key)
+        \{
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'h'}:
+            help(c);
+            \textcolor{keywordflow}{break};
+        \textcolor{keywordflow}{case} \textcolor{charliteral}{'*'}:
+            c.\hyperlink{classcanvascv_1_1Canvas_aba149ea25c6cdad2673133a060355954}{setOn}(! c.\hyperlink{classcanvascv_1_1Canvas_afe6a2955a5bbee8903350b4fba3f4473}{getOn}());
+            \textcolor{keywordflow}{break};
+        \}
+
+        c.\hyperlink{classcanvascv_1_1Canvas_a018c66e277de7904b8146ea3f3feebdd}{redrawOn}(image, out);  \textcolor{comment}{// draw the canvas on the image copy}
+
+        imshow(\textcolor{stringliteral}{"LayoutTxt"}, out);
+
+        key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(); \textcolor{comment}{// GUI and callbacks happen here}
+
+    \} \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'});
+
+    destroyAllWindows();
+
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+ Notes\+:
+\begin{DoxyItemize}
+\item To expand the widget to the full extent of it\textquotesingle{}s parent layout use \hyperlink{classcanvascv_1_1Widget_a7b1ed6190950de22565c244f5aac49a4}{canvascv\+::\+Widget\+::set\+Stretch\+X\+To\+Parent()} with {\itshape true} to match the layout width and \hyperlink{classcanvascv_1_1Widget_a825028e2405bfdf9d92d372e60585703}{canvascv\+::\+Widget\+::set\+Stretch\+Y\+To\+Parent()} with {\itshape true} to match the layout height.
+\item Here is a possible outcome of this code\+:  ~\newline
+
+\end{DoxyItemize}\hypertarget{tutlayouts_layouts_s2}{}\subsection{A simple buttons group}\label{tutlayouts_layouts_s2}
+Here we\textquotesingle{}re going to create some buttons in a group.
+
+The buttons are going to be evenly spaced in a {\itshape Vertical\+Layout}.
+
+The code is simple\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/button.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/verticallayout.h>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    \textcolor{keywordflow}{if} (! argc)
+    \{
+        Canvas::fatal(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    Mat image = imread(argv[0]);
+    \textcolor{keywordflow}{if} (image.empty())
+    \{
+        Canvas::fatal(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -2);
+    \}
+
+    namedWindow(\textcolor{stringliteral}{"LayoutButtons"}, WINDOW\_AUTOSIZE); \textcolor{comment}{// disable mouse resize}
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"LayoutButtons"}, image.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{setMouseCallback}();
+    c.\hyperlink{classcanvascv_1_1Canvas_a402c43a42c0089c48a96e5303c1c1fe8}{enableStatusMsg}();
+
+    \textcolor{keyword}{auto} vLayout = VerticalLayout::create(c, \{100,100\});
+
+    Button::create(*vLayout,        \textcolor{comment}{// on the canvas}
+                   \textcolor{stringliteral}{"First Button"},  \textcolor{comment}{// displayed on button}
+                   \textcolor{stringliteral}{"one"});          \textcolor{comment}{// displayed during mouse hover}
+
+    Button::create(*vLayout,        \textcolor{comment}{// on the canvas}
+                   \textcolor{stringliteral}{"Second Button"}, \textcolor{comment}{// displayed on button}
+                   \textcolor{stringliteral}{"two"});          \textcolor{comment}{// displayed during mouse hover}
+
+    Button::create(*vLayout,        \textcolor{comment}{// on the canvas}
+                   \textcolor{stringliteral}{"Third Button"},  \textcolor{comment}{// displayed on button}
+                   \textcolor{stringliteral}{"three"});        \textcolor{comment}{// displayed during mouse hover}
+
+    \textcolor{keywordtype}{int} key = 0;
+    c.\hyperlink{classcanvascv_1_1Canvas_a441c5882c7ebebd454a306b3c3478ae7}{setImage}(image);
+    \textcolor{keywordflow}{do}
+    \{
+        key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(); \textcolor{comment}{// GUI and callbacks happen here}
+
+    \} \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'});
+
+    destroyAllWindows();
+
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+ Notes\+:
+\begin{DoxyItemize}
+\item When creating widgets the first parameter is the containing layout (the {\itshape Canvas} is also a {\itshape Layout}).
+\item As you can see, there is a possible problem with this code -\/ the length of the buttons\+: 
+\item To fix this, add these lines after the creation of the buttons\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+\textcolor{comment}{// ...}
+
+vLayout->at<\hyperlink{classcanvascv_1_1Button}{Button}>(0)->setStretchX(\textcolor{keyword}{true});
+vLayout->at<\hyperlink{classcanvascv_1_1Button}{Button}>(1)->setStretchX(\textcolor{keyword}{true});
+vLayout->at<\hyperlink{classcanvascv_1_1Button}{Button}>(2)->setStretchX(\textcolor{keyword}{true});
+
+\textcolor{comment}{// ...}
+\end{DoxyCode}
+ Notes\+:
+\item Notice how we can access the items in a layout by their index.
+\item Again -\/ \hyperlink{classcanvascv_1_1Widget_a7cdddebd755c499712793f727a057733}{canvascv\+::\+Widget\+::set\+Stretch\+X()} and \hyperlink{classcanvascv_1_1Widget_a3ef50b76d33c332cea4e632346b6df33}{canvascv\+::\+Widget\+::set\+Stretch\+Y()} will stretch self to size of the largest widget in our layout.
+\item Now the buttons have the same length\+:  ~\newline
+
+\end{DoxyItemize}\hypertarget{tutlayouts_layouts_s3}{}\subsection{A full dialog}\label{tutlayouts_layouts_s3}
+Now it\textquotesingle{}s time to take all the widgets we\textquotesingle{}ve been talking about in the tutorials and make a dialog frame for our user.
+
+As always it\textquotesingle{}s going to be displayed on an image, but this time we\textquotesingle{}ll make sure the image size fits into the screen. Since Open\+CV doesn\textquotesingle{}t expose the desktop size, we\textquotesingle{}ll hard code a rough estimation of 1024x768 maximum size.
+
+
+\begin{DoxyItemize}
+\item The dialog will be in a {\itshape V\+Frame}.
+\begin{DoxyItemize}
+\item top -\/ title in a {\itshape R\+A\+I\+S\+ED} V\+Frame/\+H\+Frame
+\item bottom -\/ body in a {\itshape H\+Frame} -\/ split into 2 horizontal parts\+:
+\begin{DoxyItemize}
+\item Left part will have a {\itshape S\+U\+N\+K\+EN} V\+Frame with
+\begin{DoxyItemize}
+\item {\itshape Radio\+Buttons}
+\item {\itshape Check\+Boxes}
+\end{DoxyItemize}
+\item Right part will have a {\itshape V\+Frame} with
+\begin{DoxyItemize}
+\item {\itshape H\+Frame} with {\itshape Text} to display the user\textquotesingle{}s {\itshape Radio\+Buttons} and {\itshape Check\+Boxes} selections
+\item {\itshape Horizontal\+Layout} with \char`\"{}\+Reset\char`\"{}/\char`\"{}\+Cancel\char`\"{}/\char`\"{}\+Ok\char`\"{} buttons (aligned to {\itshape B\+O\+T\+T\+OM})
+\end{DoxyItemize}
+\end{DoxyItemize}
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/button.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/hframe.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/vframe.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/radiobuttons.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/checkboxes.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/text.h>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{void} buildDemoDialog(\hyperlink{classcanvascv_1_1Canvas}{Canvas} &c)
+\{
+    \textcolor{keyword}{auto} topFrame = VFrame::create(c, \{100,100\});
+    \textcolor{keyword}{auto} titleFrame = VFrame::create(*topFrame);
+    \textcolor{keyword}{auto} bodyFrame = HFrame::create(*topFrame);
+    \textcolor{keyword}{auto} leftBodyFrame = VFrame::create(*bodyFrame);
+    \textcolor{keyword}{auto} rightBodyFrame = VFrame::create(*bodyFrame);
+    \textcolor{keyword}{auto} textInfoFrame = HFrame::create(*rightBodyFrame);
+    \textcolor{keyword}{auto} buttonsLayout = HorizontalLayout::create(*rightBodyFrame);
+
+    leftBodyFrame->setFrameRelief(Widget::SUNKEN);
+    textInfoFrame->setFrameRelief(Widget::SUNKEN);
+
+    \textcolor{comment}{// The title frame and body frame adapt to each other width}
+    titleFrame->setStretchX(\textcolor{keyword}{true});
+    bodyFrame->setStretchX(\textcolor{keyword}{true});
+
+    rightBodyFrame->setStretchY(\textcolor{keyword}{true});
+
+    \textcolor{comment}{// Adjust to titleFrame width and put the text at the center}
+    \textcolor{keyword}{auto} title = Text::create(*titleFrame, \textcolor{stringliteral}{"Dialog title goes here"}, Widget::CENTER);
+    title->setStretchXToParent(\textcolor{keyword}{true});
+    title->setAlpha(0);
+    titleFrame->setFrameRelief(Widget::RAISED);
+
+    shared\_ptr<Text> textInfo = Text::create(*textInfoFrame, \textcolor{stringliteral}{""});
+    shared\_ptr<RadioButtons> radioButtons = RadioButtons::create(*leftBodyFrame, \{\textcolor{stringliteral}{"RBOption1"}, \textcolor{stringliteral}{"RBOption2"}\}
+      , 0);
+    shared\_ptr<CheckBoxes> checkBoxes = CheckBoxes::create(*leftBodyFrame, \{\textcolor{stringliteral}{"CBOption1"}, \textcolor{stringliteral}{"CBOption2"}, \textcolor{stringliteral}{"
+      CBOption3"}\});
+
+    \textcolor{comment}{// The same callback will be used for several widgets}
+    \hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{Widget::CBUserSelection} cb = [textInfo, radioButtons, checkBoxes](Widget*,int)
+    \{
+        stringstream s;
+        \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < checkBoxes->size(); ++i)
+            s << \textcolor{stringliteral}{"CheckBox option '"} << checkBoxes->\hyperlink{classcanvascv_1_1CheckBoxes_a1ca004ddd840090415924b1f79b2ee47}{getTextAt}(i) << \textcolor{stringliteral}{"' is "} << checkBoxes->
+      isChecked(i) << \textcolor{stringliteral}{"\(\backslash\)n"};
+        s << \textcolor{stringliteral}{"RadioButtons selection is '"} << radioButtons->getTextAt(radioButtons->getSelection())<< \textcolor{stringliteral}{"'\(\backslash\)n"}
+      ;
+        textInfo->setText(s.str());
+    \};
+
+    cb(0,0); \textcolor{comment}{// manually initialize the textInfo by invoking the callback}
+    textInfo->setAlpha(0);
+
+    radioButtons->setUserCB(cb);
+    checkBoxes->setUserCB(cb);
+
+    Button::create(*buttonsLayout, \textcolor{stringliteral}{"Reset"})->onPress([radioButtons, checkBoxes](Widget *)
+    \{
+        \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < checkBoxes->size(); ++i)
+            checkBoxes->setChecked(i, \textcolor{keyword}{false});
+        radioButtons->setSelection(0);
+    \});
+    Button::create(*buttonsLayout, \textcolor{stringliteral}{"Cancel"});
+    Button::create(*buttonsLayout, \textcolor{stringliteral}{"Ok"});
+    buttonsLayout->setStretchYToParent(\textcolor{keyword}{true});
+    buttonsLayout->setLayoutAnchor(Widget::CENTER);
+    buttonsLayout->doForAll([](Widget *w)
+    \{
+        w->\hyperlink{classcanvascv_1_1Widget_a7cdddebd755c499712793f727a057733}{setStretchX}(\textcolor{keyword}{true});
+        w->\hyperlink{classcanvascv_1_1Widget_a7180ca0054874c853e805e7842741596}{setLayoutAnchor}(Widget::BOTTOM);
+    \}, 1, \textcolor{keyword}{false});
+\}
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    Mat image;
+    \textcolor{keywordflow}{if} (argc)
+    \{
+        Mat orig = imread(argv[0]);
+        \textcolor{keywordflow}{if} (orig.empty())
+        \{
+            Canvas::fatal(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -1);
+        \}
+        \textcolor{keywordflow}{if} (orig.cols > 1024)
+        \{
+            \textcolor{keywordtype}{double} ratio = 1024. / orig.cols;
+            cv::resize(orig, image, Size(), ratio, ratio);
+        \}
+        \textcolor{keywordflow}{else}
+        \{
+            image = orig;
+        \}
+    \}
+    \textcolor{keywordflow}{else}
+    \{
+        Canvas::fatal(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -2);
+    \}
+
+    namedWindow(\textcolor{stringliteral}{"Dialog"}, WINDOW\_AUTOSIZE); \textcolor{comment}{// disable mouse resize}
+    moveWindow(\textcolor{stringliteral}{"Dialog"}, 10, 10); \textcolor{comment}{// optional - some control on window position}
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"Dialog"}, image.size());
+    c.\hyperlink{classcanvascv_1_1Canvas_acf6e5d4b40aec610b0dc8c4f6bf93ac1}{setMouseCallback}();
+    c.\hyperlink{classcanvascv_1_1Canvas_a402c43a42c0089c48a96e5303c1c1fe8}{enableStatusMsg}();
+
+    buildDemoDialog(c);
+
+    \textcolor{keywordtype}{int} key = 0;
+    c.\hyperlink{classcanvascv_1_1Canvas_a441c5882c7ebebd454a306b3c3478ae7}{setImage}(image);
+    \textcolor{keywordflow}{do}
+    \{
+        key = c.\hyperlink{classcanvascv_1_1Canvas_a59397db05f5d9e45264f626f6a2ae528}{waitKeyEx}(); \textcolor{comment}{// GUI and callbacks happen here}
+
+    \} \textcolor{keywordflow}{while} (key != \textcolor{charliteral}{'q'});
+
+    destroyAllWindows();
+
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+ Notes\+:
+\begin{DoxyItemize}
+\item Creating the frames and layouts first is recommended. Everything is inserted into them after that.
+\item We\textquotesingle{}re using the same callback here for handling changes in the {\itshape Check\+Boxes} and {\itshape Radio\+Buttons}.
+\item Since widgets are layered on top of each other, you might want to make some of the widget transparent, by using \hyperlink{classcanvascv_1_1Widget_a4c16525b31e70acd43372af0c1e60d42}{canvascv\+::\+Widget\+::set\+Alpha()}.
+\item You can perform actions recursively on {\itshape Compound\+Widgets} with \hyperlink{classcanvascv_1_1CompoundWidget_aa7d0f488468fca5707aa49ea35e9c67e}{canvascv\+::\+Compound\+Widget\+::do\+For\+All()}.
+\item This is what you should get\+:  ~\newline
+
+\end{DoxyItemize}
+
+{\bfseries That\textquotesingle{}s all for this tutorial} 

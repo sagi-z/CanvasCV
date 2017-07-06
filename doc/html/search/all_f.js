@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['radiobuttons',['RadioButtons',['../classcanvascv_1_1RadioButtons.html',1,'canvascv']]],
+  ['raised',['raised',['../classcanvascv_1_1Theme.html#ae23eaf232b60504c82fc46b59ccfee67',1,'canvascv::Theme::raised()'],['../classcanvascv_1_1TwoColoredTheme.html#a5c3d937a5e36e80eff6f7683f2898589',1,'canvascv::TwoColoredTheme::raised()']]],
+  ['raisedwidget',['raisedWidget',['../classcanvascv_1_1Widget.html#a09cf72b5592a91ef0ff91a59c7d1852d',1,'canvascv::Widget']]],
+  ['readshapesfromfile',['readShapesFromFile',['../classcanvascv_1_1Canvas.html#ab68000bb631c2fa7bb8863e746a8cff3',1,'canvascv::Canvas']]],
+  ['recalc',['recalc',['../classcanvascv_1_1CompoundWidget.html#aac9694f4fbc3e31d3b5d37df4a25a753',1,'canvascv::CompoundWidget::recalc()'],['../classcanvascv_1_1MatWidget.html#a01c9f938495de6c6d99ef6d41c925c21',1,'canvascv::MatWidget::recalc()'],['../classcanvascv_1_1Text.html#a94ccca8b1e03869a73699617a8c7f189',1,'canvascv::Text::recalc()'],['../classcanvascv_1_1Widget.html#a1d6d9b43efb60d591280cf5997380731',1,'canvascv::Widget::recalc()']]],
+  ['recalccompound',['recalcCompound',['../classcanvascv_1_1CheckBoxes.html#a50cae1ae73c9d69f864bc7fe6d6fedd6',1,'canvascv::CheckBoxes::recalcCompound()'],['../classcanvascv_1_1CompoundWidget.html#a4a4f8241d6fd187ffcae2c7968f13864',1,'canvascv::CompoundWidget::recalcCompound()'],['../classcanvascv_1_1HorizontalLayout.html#ab6e59f3499bde32be889d3898cdf6888',1,'canvascv::HorizontalLayout::recalcCompound()'],['../classcanvascv_1_1MsgBox.html#a1eea452acb76e5a5a0588bf83cc91325',1,'canvascv::MsgBox::recalcCompound()'],['../classcanvascv_1_1RadioButtons.html#af4f863f492ca723a0ddac03139a1f187',1,'canvascv::RadioButtons::recalcCompound()'],['../classcanvascv_1_1SelectionBox.html#a78bf141cda79618e972f173627d07e1a',1,'canvascv::SelectionBox::recalcCompound()'],['../classcanvascv_1_1VerticalLayout.html#a0d4661776d5cb6dc4eccebcb3e5ff17c',1,'canvascv::VerticalLayout::recalcCompound()']]],
+  ['reconnect',['reconnect',['../classcanvascv_1_1ShapesConnector.html#afddfa95e10779b106070a24177d9d9be',1,'canvascv::ShapesConnector']]],
+  ['rectangle',['Rectangle',['../classcanvascv_1_1Rectangle.html',1,'canvascv']]],
+  ['red',['Red',['../classcanvascv_1_1Colors.html#a10aff24c53edf45b038d0636b061f9c2',1,'canvascv::Colors']]],
+  ['redrawon',['redrawOn',['../classcanvascv_1_1Canvas.html#a018c66e277de7904b8146ea3f3feebdd',1,'canvascv::Canvas::redrawOn(const cv::Mat &amp;src, cv::Mat &amp;dst)'],['../classcanvascv_1_1Canvas.html#a0eed02e6923d903c3af1bf6692ad87fe',1,'canvascv::Canvas::redrawOn(cv::Mat &amp;dst)']]],
+  ['release',['RELEASE',['../classcanvascv_1_1Widget.html#afc39a6533455cbc3161ae3a021da0dc8a52f4926c38703c4bd44be4b04a4720e7',1,'canvascv::Widget']]],
+  ['relief',['Relief',['../classcanvascv_1_1Widget.html#a8253daa509c55c24c92ce0d3dd93e4cd',1,'canvascv::Widget']]],
+  ['removed',['REMOVED',['../classcanvascv_1_1Shape.html#a3fa381d7be3c6bb3cd736e237a444d5caa6787a2dc8627b989f9befaf2e50c9ad',1,'canvascv::Shape']]],
+  ['renderon',['renderOn',['../classcanvascv_1_1CompoundWidget.html#a1ceebdcae41eadc0796306ca88698411',1,'canvascv::CompoundWidget::renderOn()'],['../classcanvascv_1_1Widget.html#a74130cdbcc974dfa7e8ceb9a53c112b9',1,'canvascv::Widget::renderOn()']]],
+  ['right',['RIGHT',['../classcanvascv_1_1Widget.html#a98ca3c300ba50b316fa5a1d300456abeaa426f2ee5f621cfc973e1032931932ef',1,'canvascv::Widget']]],
+  ['rmvfromlayout',['rmvFromLayout',['../classcanvascv_1_1Widget.html#ac3f34f3b8b3b57f000e5f5182d6396ab',1,'canvascv::Widget']]],
+  ['rmvwidget',['rmvWidget',['../classcanvascv_1_1Canvas.html#a70248a9be2eedcacad74c9be5fd615eb',1,'canvascv::Canvas::rmvWidget()'],['../classcanvascv_1_1AutoLayout.html#abc436c90f50a5331c391e351bef9e659',1,'canvascv::AutoLayout::rmvWidget(const std::shared_ptr&lt; Widget &gt; &amp;widget)'],['../classcanvascv_1_1AutoLayout.html#a2e518f91b260856c3e22fcb7c61e841d',1,'canvascv::AutoLayout::rmvWidget(int i)'],['../classcanvascv_1_1CompoundWidget.html#ad4a37bf31f9cf6410b41526a5b83c75a',1,'canvascv::CompoundWidget::rmvWidget()'],['../classcanvascv_1_1Layout.html#a7b532816232c436ea5b6e7c4c3254779',1,'canvascv::Layout::rmvWidget()']]],
+  ['rosybrown',['RosyBrown',['../classcanvascv_1_1Colors.html#a490b8f4293572c230f377968f6ed1252',1,'canvascv::Colors']]],
+  ['royalblue',['RoyalBlue',['../classcanvascv_1_1Colors.html#acabb2042568dac2c0fbefcc92b48be0b',1,'canvascv::Colors']]]
+];

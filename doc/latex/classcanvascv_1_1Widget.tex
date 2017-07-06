@@ -1,0 +1,436 @@
+\hypertarget{classcanvascv_1_1Widget}{}\section{canvascv\+:\+:Widget Class Reference}
+\label{classcanvascv_1_1Widget}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}}
+
+
+The \hyperlink{classcanvascv_1_1Widget}{Widget} class.  
+
+
+
+
+{\ttfamily \#include $<$widget.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Widget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.234637cm]{classcanvascv_1_1Widget}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::function$<$ void(\hyperlink{classcanvascv_1_1Widget}{Widget} $\ast$)$>$ \hyperlink{classcanvascv_1_1Widget_ad27bca771ee1c14454c77c91d9d49925}{C\+B\+Widget}\hypertarget{classcanvascv_1_1Widget_ad27bca771ee1c14454c77c91d9d49925}{}\label{classcanvascv_1_1Widget_ad27bca771ee1c14454c77c91d9d49925}
+
+\begin{DoxyCompactList}\small\item\em signature of a callback which only gets the widget \end{DoxyCompactList}\item 
+typedef std\+::function$<$ void(\hyperlink{classcanvascv_1_1Widget}{Widget} $\ast$, \hyperlink{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8}{State})$>$ \hyperlink{classcanvascv_1_1Widget_a410a6951e3d1f30b87702577a389d937}{C\+B\+Widget\+State}\hypertarget{classcanvascv_1_1Widget_a410a6951e3d1f30b87702577a389d937}{}\label{classcanvascv_1_1Widget_a410a6951e3d1f30b87702577a389d937}
+
+\begin{DoxyCompactList}\small\item\em signature of a callback which gets the State \end{DoxyCompactList}\item 
+typedef std\+::function$<$ void(\hyperlink{classcanvascv_1_1Widget}{Widget} $\ast$, int)$>$ \hyperlink{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{C\+B\+User\+Selection}\hypertarget{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}{}\label{classcanvascv_1_1Widget_a977cbd39cf203c5866f07f3645c7e4bc}
+
+\begin{DoxyCompactList}\small\item\em signature of a callback which gets a user selection \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcanvascv_1_1Widget_a1879deafb7cb8ad80e2262568ef2bde1}{Widget} (const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))\hypertarget{classcanvascv_1_1Widget_a1879deafb7cb8ad80e2262568ef2bde1}{}\label{classcanvascv_1_1Widget_a1879deafb7cb8ad80e2262568ef2bde1}
+
+\begin{DoxyCompactList}\small\item\em constructor \end{DoxyCompactList}\item 
+virtual \hyperlink{classcanvascv_1_1Widget_abaa2a6266a947194fe240e9385cfaa6f}{$\sim$\+Widget} ()\hypertarget{classcanvascv_1_1Widget_abaa2a6266a947194fe240e9385cfaa6f}{}\label{classcanvascv_1_1Widget_abaa2a6266a947194fe240e9385cfaa6f}
+
+\begin{DoxyCompactList}\small\item\em virtual destructor \end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{classcanvascv_1_1Widget_a85884269bd53ab91203f099a586efa43}{get\+Type} () const =0
+\begin{DoxyCompactList}\small\item\em get\+Type is always implemented by derived to return the same static pointer per widget. \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_abdb1aed0ca76845ba6a56c4f8db502c9}{notify\+On\+Change} (\hyperlink{classcanvascv_1_1Widget_a410a6951e3d1f30b87702577a389d937}{C\+B\+Widget\+State} cb)
+\begin{DoxyCompactList}\small\item\em used to register for notifications on a widget \end{DoxyCompactList}\item 
+cv\+::\+Scalar \hyperlink{classcanvascv_1_1Widget_aadbc81d960f158f2e3c8e0d96167408e}{get\+Outline\+Color} () const \hypertarget{classcanvascv_1_1Widget_aadbc81d960f158f2e3c8e0d96167408e}{}\label{classcanvascv_1_1Widget_aadbc81d960f158f2e3c8e0d96167408e}
+
+\begin{DoxyCompactList}\small\item\em get the outline color \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Widget_a6e79b6a861cfb54fea56d5705fec44d7}{set\+Outline\+Color} (const cv\+::\+Scalar \&value)\hypertarget{classcanvascv_1_1Widget_a6e79b6a861cfb54fea56d5705fec44d7}{}\label{classcanvascv_1_1Widget_a6e79b6a861cfb54fea56d5705fec44d7}
+
+\begin{DoxyCompactList}\small\item\em set the outline color \end{DoxyCompactList}\item 
+cv\+::\+Scalar \hyperlink{classcanvascv_1_1Widget_a0563e98b43c8eba6760a3f5157619104}{get\+Fill\+Color} () const \hypertarget{classcanvascv_1_1Widget_a0563e98b43c8eba6760a3f5157619104}{}\label{classcanvascv_1_1Widget_a0563e98b43c8eba6760a3f5157619104}
+
+\begin{DoxyCompactList}\small\item\em get the bg color \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Widget_a527b421eb4503da4275df8f6685ad8ea}{set\+Fill\+Color} (const cv\+::\+Scalar \&value)\hypertarget{classcanvascv_1_1Widget_a527b421eb4503da4275df8f6685ad8ea}{}\label{classcanvascv_1_1Widget_a527b421eb4503da4275df8f6685ad8ea}
+
+\begin{DoxyCompactList}\small\item\em set the bg color \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1Widget_adc23c79ecc1cbb20343a678854b82c9f}{get\+Visible} () const \hypertarget{classcanvascv_1_1Widget_adc23c79ecc1cbb20343a678854b82c9f}{}\label{classcanvascv_1_1Widget_adc23c79ecc1cbb20343a678854b82c9f}
+
+\begin{DoxyCompactList}\small\item\em is the widget visible \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Widget_a3c9bd8b6b90dbe3958e452e04843feb1}{set\+Visible} (bool value)\hypertarget{classcanvascv_1_1Widget_a3c9bd8b6b90dbe3958e452e04843feb1}{}\label{classcanvascv_1_1Widget_a3c9bd8b6b90dbe3958e452e04843feb1}
+
+\begin{DoxyCompactList}\small\item\em set the widget visible state \end{DoxyCompactList}\item 
+int \hyperlink{classcanvascv_1_1Widget_a75c8818ca95f88f674d9e4668c5071c6}{get\+Thickness} () const \hypertarget{classcanvascv_1_1Widget_a75c8818ca95f88f674d9e4668c5071c6}{}\label{classcanvascv_1_1Widget_a75c8818ca95f88f674d9e4668c5071c6}
+
+\begin{DoxyCompactList}\small\item\em get line thickness to use when drawing \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Widget_a8514776cac6c75fb723eefafa9b5b8b6}{set\+Thickness} (int value)\hypertarget{classcanvascv_1_1Widget_a8514776cac6c75fb723eefafa9b5b8b6}{}\label{classcanvascv_1_1Widget_a8514776cac6c75fb723eefafa9b5b8b6}
+
+\begin{DoxyCompactList}\small\item\em set line thickness to use when drawing \end{DoxyCompactList}\item 
+int \hyperlink{classcanvascv_1_1Widget_a09656f51cc84ab95048191083ff7cfa7}{get\+Line\+Type} () const \hypertarget{classcanvascv_1_1Widget_a09656f51cc84ab95048191083ff7cfa7}{}\label{classcanvascv_1_1Widget_a09656f51cc84ab95048191083ff7cfa7}
+
+\begin{DoxyCompactList}\small\item\em get the line type (L\+I\+N\+E\+\_\+4, L\+I\+N\+E\+\_\+8, L\+I\+N\+E\+\_\+\+AA) \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Widget_ad61f8a9fe81e1d1e7247a83b2eefc52a}{set\+Line\+Type} (int value)\hypertarget{classcanvascv_1_1Widget_ad61f8a9fe81e1d1e7247a83b2eefc52a}{}\label{classcanvascv_1_1Widget_ad61f8a9fe81e1d1e7247a83b2eefc52a}
+
+\begin{DoxyCompactList}\small\item\em set the line type (L\+I\+N\+E\+\_\+4, L\+I\+N\+E\+\_\+8, L\+I\+N\+E\+\_\+\+AA) \end{DoxyCompactList}\item 
+uchar \hyperlink{classcanvascv_1_1Widget_a5e7e4bfb43a2c8179114ed63a2e25cff}{get\+Alpha} () const \hypertarget{classcanvascv_1_1Widget_a5e7e4bfb43a2c8179114ed63a2e25cff}{}\label{classcanvascv_1_1Widget_a5e7e4bfb43a2c8179114ed63a2e25cff}
+
+\begin{DoxyCompactList}\small\item\em get the alpha value used for the widge background \mbox{[}0,255\mbox{]} =$>$ \mbox{[}transparent,opaque\mbox{]} \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_a4c16525b31e70acd43372af0c1e60d42}{set\+Alpha} (uchar value)\hypertarget{classcanvascv_1_1Widget_a4c16525b31e70acd43372af0c1e60d42}{}\label{classcanvascv_1_1Widget_a4c16525b31e70acd43372af0c1e60d42}
+
+\begin{DoxyCompactList}\small\item\em set the alpha value used for the widge background \mbox{[}0,255\mbox{]} =$>$ \mbox{[}transparent,opaque\mbox{]} \end{DoxyCompactList}\item 
+\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abe}{Anchor} \hyperlink{classcanvascv_1_1Widget_a3b460d40be2a634153bf0785c46383b9}{get\+Layout\+Anchor} () const 
+\begin{DoxyCompactList}\small\item\em get\+Layout\+Anchor returns the anchor for using in the \hyperlink{classcanvascv_1_1Layout}{Layout} we\textquotesingle{}re in \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_a7180ca0054874c853e805e7842741596}{set\+Layout\+Anchor} (const \hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abe}{Anchor} \&value)
+\begin{DoxyCompactList}\small\item\em set\+Layout\+Anchor sets the anchor for using in the \hyperlink{classcanvascv_1_1Layout}{Layout} we\textquotesingle{}re in \end{DoxyCompactList}\item 
+\hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abe}{Anchor} \hyperlink{classcanvascv_1_1Widget_a4956e8b0ced615c3177dc38f553732fb}{get\+Flow\+Anchor} () const 
+\begin{DoxyCompactList}\small\item\em get\+Flow\+Anchor get internal widget alignment and direction of growth \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_a69f455f7fbf67f636ee1155795057b87}{set\+Flow\+Anchor} (const \hyperlink{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abe}{Anchor} \&value)
+\begin{DoxyCompactList}\small\item\em set\+Flow\+Anchor set internal widget alignment and direction of growth \end{DoxyCompactList}\item 
+int \hyperlink{classcanvascv_1_1Widget_af68aa024314497681d3f1cac1c511d53}{get\+Id} ()\hypertarget{classcanvascv_1_1Widget_af68aa024314497681d3f1cac1c511d53}{}\label{classcanvascv_1_1Widget_af68aa024314497681d3f1cac1c511d53}
+
+\begin{DoxyCompactList}\small\item\em Widgets have a unique id per instance. \end{DoxyCompactList}\item 
+virtual const std\+::string \& \hyperlink{classcanvascv_1_1Widget_a5619c96f65d3853f2463043a814191ac}{get\+Status\+Msg} () const 
+\begin{DoxyCompactList}\small\item\em get\+Status\+Msg \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_ac882ef922394c8d55cc824bf83be0004}{set\+Status\+Msg} (const std\+::string \&value)
+\begin{DoxyCompactList}\small\item\em set\+Status\+Msg \end{DoxyCompactList}\item 
+const cv\+::\+Point \& \hyperlink{classcanvascv_1_1Widget_a22aa393604eaa7fe6645a0b6422db9e6}{get\+Location} () const \hypertarget{classcanvascv_1_1Widget_a22aa393604eaa7fe6645a0b6422db9e6}{}\label{classcanvascv_1_1Widget_a22aa393604eaa7fe6645a0b6422db9e6}
+
+\begin{DoxyCompactList}\small\item\em get widget position in \hyperlink{classcanvascv_1_1Canvas}{Canvas} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Widget_a8a36b15a1c777baffbb4fcd4ccda3c45}{set\+Location} (const cv\+::\+Point \&value)\hypertarget{classcanvascv_1_1Widget_a8a36b15a1c777baffbb4fcd4ccda3c45}{}\label{classcanvascv_1_1Widget_a8a36b15a1c777baffbb4fcd4ccda3c45}
+
+\begin{DoxyCompactList}\small\item\em set widget position in \hyperlink{classcanvascv_1_1Canvas}{Canvas} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Widget_a05344fc28d0e558fd2e940e672329dec}{translate} (const cv\+::\+Point \&translation)\hypertarget{classcanvascv_1_1Widget_a05344fc28d0e558fd2e940e672329dec}{}\label{classcanvascv_1_1Widget_a05344fc28d0e558fd2e940e672329dec}
+
+\begin{DoxyCompactList}\small\item\em move the widget \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1Widget_a7cc134719de14cfb5b391e1a950a4840}{get\+StretchX} () const \hypertarget{classcanvascv_1_1Widget_a7cc134719de14cfb5b391e1a950a4840}{}\label{classcanvascv_1_1Widget_a7cc134719de14cfb5b391e1a950a4840}
+
+\begin{DoxyCompactList}\small\item\em get if the \hyperlink{classcanvascv_1_1Layout}{Layout} we\textquotesingle{}re in should stretch us in the X direction \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_a7cdddebd755c499712793f727a057733}{set\+StretchX} (bool value)\hypertarget{classcanvascv_1_1Widget_a7cdddebd755c499712793f727a057733}{}\label{classcanvascv_1_1Widget_a7cdddebd755c499712793f727a057733}
+
+\begin{DoxyCompactList}\small\item\em set if the \hyperlink{classcanvascv_1_1Layout}{Layout} we\textquotesingle{}re in should stretch us in the X direction (and calls set\+Stretch\+X\+To\+Parent(false)) \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1Widget_a267ab2d3df58dce8c1e823050d811157}{get\+StretchY} () const \hypertarget{classcanvascv_1_1Widget_a267ab2d3df58dce8c1e823050d811157}{}\label{classcanvascv_1_1Widget_a267ab2d3df58dce8c1e823050d811157}
+
+\begin{DoxyCompactList}\small\item\em get if the \hyperlink{classcanvascv_1_1Layout}{Layout} we\textquotesingle{}re in should stretch us in the Y direction \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_a3ef50b76d33c332cea4e632346b6df33}{set\+StretchY} (bool value)\hypertarget{classcanvascv_1_1Widget_a3ef50b76d33c332cea4e632346b6df33}{}\label{classcanvascv_1_1Widget_a3ef50b76d33c332cea4e632346b6df33}
+
+\begin{DoxyCompactList}\small\item\em set if the \hyperlink{classcanvascv_1_1Layout}{Layout} we\textquotesingle{}re in should stretch us in the Y direction (and calls set\+Stretch\+Y\+To\+Parent(false)) \end{DoxyCompactList}\item 
+cv\+::\+Scalar \hyperlink{classcanvascv_1_1Widget_a37432df7d7e0029c98154d99d1e621bc}{get\+Select\+Color} () const \hypertarget{classcanvascv_1_1Widget_a37432df7d7e0029c98154d99d1e621bc}{}\label{classcanvascv_1_1Widget_a37432df7d7e0029c98154d99d1e621bc}
+
+\begin{DoxyCompactList}\small\item\em get the color to use when a widget is selected \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Widget_a64e1123175981fca5219519fac987596}{set\+Select\+Color} (const cv\+::\+Scalar \&value)\hypertarget{classcanvascv_1_1Widget_a64e1123175981fca5219519fac987596}{}\label{classcanvascv_1_1Widget_a64e1123175981fca5219519fac987596}
+
+\begin{DoxyCompactList}\small\item\em set the color to use when a widget is selected \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1Widget}{Widget} $>$ \hyperlink{classcanvascv_1_1Widget_ac3f34f3b8b3b57f000e5f5182d6396ab}{rmv\+From\+Layout} ()\hypertarget{classcanvascv_1_1Widget_ac3f34f3b8b3b57f000e5f5182d6396ab}{}\label{classcanvascv_1_1Widget_ac3f34f3b8b3b57f000e5f5182d6396ab}
+
+\begin{DoxyCompactList}\small\item\em get rid of the widget \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1Widget_a7a2e233c96587b142c6c937cc3bdeaa4}{get\+Is\+Selectable} () const \hypertarget{classcanvascv_1_1Widget_a7a2e233c96587b142c6c937cc3bdeaa4}{}\label{classcanvascv_1_1Widget_a7a2e233c96587b142c6c937cc3bdeaa4}
+
+\begin{DoxyCompactList}\small\item\em get if the widget should appear as selected when the mouse is over it \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_a2d873d23e3f7f07d2ea1a487ea4665e9}{set\+Is\+Selectable} (bool value)\hypertarget{classcanvascv_1_1Widget_a2d873d23e3f7f07d2ea1a487ea4665e9}{}\label{classcanvascv_1_1Widget_a2d873d23e3f7f07d2ea1a487ea4665e9}
+
+\begin{DoxyCompactList}\small\item\em set if the widget should appear as selected when the mouse is over it \end{DoxyCompactList}\item 
+int \hyperlink{classcanvascv_1_1Widget_a97720a3b8073edecd43fe32ad1ce4f93}{get\+Forced\+Width} () const \hypertarget{classcanvascv_1_1Widget_a97720a3b8073edecd43fe32ad1ce4f93}{}\label{classcanvascv_1_1Widget_a97720a3b8073edecd43fe32ad1ce4f93}
+
+\begin{DoxyCompactList}\small\item\em get the forced width for this widget \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_a2dec191f9e2be6a1a291e6da275adca5}{set\+Forced\+Width} (int value)\hypertarget{classcanvascv_1_1Widget_a2dec191f9e2be6a1a291e6da275adca5}{}\label{classcanvascv_1_1Widget_a2dec191f9e2be6a1a291e6da275adca5}
+
+\begin{DoxyCompactList}\small\item\em set the forced width for this widget (and calls set\+Stretch\+X/set\+Stretch\+X\+To\+Parent(false)) \end{DoxyCompactList}\item 
+int \hyperlink{classcanvascv_1_1Widget_afd30c281d961fa92498f1eea83c22e6a}{get\+Forced\+Height} () const \hypertarget{classcanvascv_1_1Widget_afd30c281d961fa92498f1eea83c22e6a}{}\label{classcanvascv_1_1Widget_afd30c281d961fa92498f1eea83c22e6a}
+
+\begin{DoxyCompactList}\small\item\em get the forced height for this widget \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_aa88e20a2d34e335b134213cccfdef529}{set\+Forced\+Height} (int value)\hypertarget{classcanvascv_1_1Widget_aa88e20a2d34e335b134213cccfdef529}{}\label{classcanvascv_1_1Widget_aa88e20a2d34e335b134213cccfdef529}
+
+\begin{DoxyCompactList}\small\item\em set the forced height for this widget (and calls set\+Stretch\+Y/set\+Stretch\+Y\+To\+Parent(false)) \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_a5cfbbfb73055a55d679c7519926793bc}{update} ()\hypertarget{classcanvascv_1_1Widget_a5cfbbfb73055a55d679c7519926793bc}{}\label{classcanvascv_1_1Widget_a5cfbbfb73055a55d679c7519926793bc}
+
+\begin{DoxyCompactList}\small\item\em removes \textquotesingle{}dirty\textquotesingle{} state and invokes the derived \textquotesingle{}recalc/recalc\+Compound\textquotesingle{} \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1Widget_ae7ba2e02a399317607a2a5dcd3b4a800}{is\+Removed} () const \hypertarget{classcanvascv_1_1Widget_ae7ba2e02a399317607a2a5dcd3b4a800}{}\label{classcanvascv_1_1Widget_ae7ba2e02a399317607a2a5dcd3b4a800}
+
+\begin{DoxyCompactList}\small\item\em returns true if the widget has no layout and false if it does \end{DoxyCompactList}\item 
+virtual const cv\+::\+Rect \& \hyperlink{classcanvascv_1_1Widget_afa0105481f639d660de98287a879810c}{get\+Rect} ()=0\hypertarget{classcanvascv_1_1Widget_afa0105481f639d660de98287a879810c}{}\label{classcanvascv_1_1Widget_afa0105481f639d660de98287a879810c}
+
+\begin{DoxyCompactList}\small\item\em Actual size the widget is occupying due to \hyperlink{classcanvascv_1_1Layout}{Layout} manager. \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1Widget_ac9c864272c04f65f233c470dec917930}{get\+Stretch\+X\+To\+Parent} () const \hypertarget{classcanvascv_1_1Widget_ac9c864272c04f65f233c470dec917930}{}\label{classcanvascv_1_1Widget_ac9c864272c04f65f233c470dec917930}
+
+\begin{DoxyCompactList}\small\item\em get if this widget streches to parent layout width \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_a7b1ed6190950de22565c244f5aac49a4}{set\+Stretch\+X\+To\+Parent} (bool value)\hypertarget{classcanvascv_1_1Widget_a7b1ed6190950de22565c244f5aac49a4}{}\label{classcanvascv_1_1Widget_a7b1ed6190950de22565c244f5aac49a4}
+
+\begin{DoxyCompactList}\small\item\em set if this widget streches to parent layout width (and calls set\+Stretch\+X(false)) \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1Widget_a3423f2e0dab494c6da99d43d186760bc}{get\+Stretch\+Y\+To\+Parent} () const \hypertarget{classcanvascv_1_1Widget_a3423f2e0dab494c6da99d43d186760bc}{}\label{classcanvascv_1_1Widget_a3423f2e0dab494c6da99d43d186760bc}
+
+\begin{DoxyCompactList}\small\item\em get if this widget streches to parent layout height \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_a825028e2405bfdf9d92d372e60585703}{set\+Stretch\+Y\+To\+Parent} (bool value)\hypertarget{classcanvascv_1_1Widget_a825028e2405bfdf9d92d372e60585703}{}\label{classcanvascv_1_1Widget_a825028e2405bfdf9d92d372e60585703}
+
+\begin{DoxyCompactList}\small\item\em set if this widget streches to parent layout height (and calls set\+Stretch\+Y(false)) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcanvascv_1_1Widget_a5b94411875ff9f65b4da857e3ee2734a}{set\+State\+Changes\+BG} ()\hypertarget{classcanvascv_1_1Widget_a5b94411875ff9f65b4da857e3ee2734a}{}\label{classcanvascv_1_1Widget_a5b94411875ff9f65b4da857e3ee2734a}
+
+\begin{DoxyCompactList}\small\item\em widgets like buttons change bg on mouse events \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_a0102a02ca60dad4dafc4bb1d0bba046b}{allocate\+BG} (const cv\+::\+Size \&size)\hypertarget{classcanvascv_1_1Widget_a0102a02ca60dad4dafc4bb1d0bba046b}{}\label{classcanvascv_1_1Widget_a0102a02ca60dad4dafc4bb1d0bba046b}
+
+\begin{DoxyCompactList}\small\item\em invokes \hyperlink{classcanvascv_1_1Theme_a5f8c0e382d893419f9097bbc07e04130}{Theme\+::allocate\+B\+G()} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Widget_a1d6d9b43efb60d591280cf5997380731}{recalc} ()=0\hypertarget{classcanvascv_1_1Widget_a1d6d9b43efb60d591280cf5997380731}{}\label{classcanvascv_1_1Widget_a1d6d9b43efb60d591280cf5997380731}
+
+\begin{DoxyCompactList}\small\item\em update self so next call to \textquotesingle{}draw\textquotesingle{} will display correctly \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_ae84a6b77b417f8b9eb6d2e4f8e0fde60}{flat\+Widget} ()\hypertarget{classcanvascv_1_1Widget_ae84a6b77b417f8b9eb6d2e4f8e0fde60}{}\label{classcanvascv_1_1Widget_ae84a6b77b417f8b9eb6d2e4f8e0fde60}
+
+\begin{DoxyCompactList}\small\item\em delegate to \hyperlink{classcanvascv_1_1Theme}{Theme} \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_a09cf72b5592a91ef0ff91a59c7d1852d}{raised\+Widget} ()\hypertarget{classcanvascv_1_1Widget_a09cf72b5592a91ef0ff91a59c7d1852d}{}\label{classcanvascv_1_1Widget_a09cf72b5592a91ef0ff91a59c7d1852d}
+
+\begin{DoxyCompactList}\small\item\em delegate to \hyperlink{classcanvascv_1_1Theme}{Theme} \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_ad4e11c2d30dc54520b80a442a07fb7a0}{sunken\+Widget} ()\hypertarget{classcanvascv_1_1Widget_ad4e11c2d30dc54520b80a442a07fb7a0}{}\label{classcanvascv_1_1Widget_ad4e11c2d30dc54520b80a442a07fb7a0}
+
+\begin{DoxyCompactList}\small\item\em delegate to \hyperlink{classcanvascv_1_1Theme}{Theme} \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_a92e0bbdd196ff9282ee738ad6861d4cb}{selected\+Widget} ()\hypertarget{classcanvascv_1_1Widget_a92e0bbdd196ff9282ee738ad6861d4cb}{}\label{classcanvascv_1_1Widget_a92e0bbdd196ff9282ee738ad6861d4cb}
+
+\begin{DoxyCompactList}\small\item\em delegate to \hyperlink{classcanvascv_1_1Theme}{Theme} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Widget_a74130cdbcc974dfa7e8ceb9a53c112b9}{render\+On} (cv\+::\+Mat \&dst)
+\begin{DoxyCompactList}\small\item\em render the widget to dst \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Widget_a8143c9c92abd2a0e0e8ce4c3c50a0f7a}{draw\+FG} (cv\+::\+Mat \&dst)=0\hypertarget{classcanvascv_1_1Widget_a8143c9c92abd2a0e0e8ce4c3c50a0f7a}{}\label{classcanvascv_1_1Widget_a8143c9c92abd2a0e0e8ce4c3c50a0f7a}
+
+\begin{DoxyCompactList}\small\item\em dst is the roi of the widget size and not the full image \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Widget_a4e25259aef4fd707add107f4e4229a9f}{call\+Draw\+FG} (bool pre\+Allocate\+Mat=true)\hypertarget{classcanvascv_1_1Widget_a4e25259aef4fd707add107f4e4229a9f}{}\label{classcanvascv_1_1Widget_a4e25259aef4fd707add107f4e4229a9f}
+
+\begin{DoxyCompactList}\small\item\em helper method which delgates to draw\+FG for derived \end{DoxyCompactList}\item 
+virtual const cv\+::\+Rect \& \hyperlink{classcanvascv_1_1Widget_a5bae1daca295a6d7e2d1932d76529207}{get\+Minimal\+Rect} ()=0\hypertarget{classcanvascv_1_1Widget_a5bae1daca295a6d7e2d1932d76529207}{}\label{classcanvascv_1_1Widget_a5bae1daca295a6d7e2d1932d76529207}
+
+\begin{DoxyCompactList}\small\item\em Minimal size the widget coould have occupy. \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1Widget_ac98faa983ed13b0394ec1542d89997eb}{set\+Dirty} ()
+\begin{DoxyCompactList}\small\item\em set\+Dirty \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Widget_a3ea1ca9e064178a5647ce04bc531655f}{is\+At\+Pos} (const cv\+::\+Point \&pos)
+\begin{DoxyCompactList}\small\item\em is\+At\+Pos \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyNote}{Note}
+All widgets have a static create methods, which is the only way to create them. The create will return a shared\+\_\+ptr$<$\+T$>$ instance, which you don\textquotesingle{}t have to keep since another one is kept by the \hyperlink{classcanvascv_1_1Layout}{Layout} in which the widget is placed. Never use delete on a \hyperlink{classcanvascv_1_1Widget}{Widget} pointer. 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_add_theme_8cpp-example}{example\+\_\+add\+\_\+theme.\+cpp}, \hyperlink{example_add_widget_8cpp-example}{example\+\_\+add\+\_\+widget.\+cpp}, \hyperlink{example_checkboxes_8cpp-example}{example\+\_\+checkboxes.\+cpp}, \hyperlink{example_msgbox_8cpp-example}{example\+\_\+msgbox.\+cpp}, \hyperlink{example_radiobuttons_8cpp-example}{example\+\_\+radiobuttons.\+cpp}, \hyperlink{example_selectbox_8cpp-example}{example\+\_\+selectbox.\+cpp}, and \hyperlink{example_shapes_widgets_8cpp-example}{example\+\_\+shapes\+\_\+widgets.\+cpp}.\end{Desc}
+
+
+\subsection{Member Enumeration Documentation}
+\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!Anchor@{Anchor}}
+\index{Anchor@{Anchor}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}
+\subsubsection[{\texorpdfstring{Anchor}{Anchor}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf canvascv\+::\+Widget\+::\+Anchor}}\hypertarget{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abe}{}\label{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abe}
+Used for both aligment in the \hyperlink{classcanvascv_1_1Layout}{Layout} we belong to and internal widget alignments \begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1Widget_a3b460d40be2a634153bf0785c46383b9}{get\+Layout\+Anchor()}, \hyperlink{classcanvascv_1_1Widget_a7180ca0054874c853e805e7842741596}{set\+Layout\+Anchor()}, \hyperlink{classcanvascv_1_1Widget_a4956e8b0ced615c3177dc38f553732fb}{get\+Flow\+Anchor()}, \hyperlink{classcanvascv_1_1Widget_a69f455f7fbf67f636ee1155795057b87}{set\+Flow\+Anchor()} 
+\end{DoxySeeAlso}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{T\+OP@{T\+OP}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!T\+OP@{T\+OP}}\item[{\em 
+T\+OP\hypertarget{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeaa6a2c9d829ceed729afe8cb2f51b2f0c}{}\label{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeaa6a2c9d829ceed729afe8cb2f51b2f0c}
+}]top \index{B\+O\+T\+T\+OM@{B\+O\+T\+T\+OM}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!B\+O\+T\+T\+OM@{B\+O\+T\+T\+OM}}\item[{\em 
+B\+O\+T\+T\+OM\hypertarget{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea8612ea17f4627ffaf6aa00af2595efe7}{}\label{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea8612ea17f4627ffaf6aa00af2595efe7}
+}]bottom \index{L\+E\+FT@{L\+E\+FT}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!L\+E\+FT@{L\+E\+FT}}\item[{\em 
+L\+E\+FT\hypertarget{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea684450835b6203aa50c0290911305c55}{}\label{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea684450835b6203aa50c0290911305c55}
+}]left \index{R\+I\+G\+HT@{R\+I\+G\+HT}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!R\+I\+G\+HT@{R\+I\+G\+HT}}\item[{\em 
+R\+I\+G\+HT\hypertarget{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeaa426f2ee5f621cfc973e1032931932ef}{}\label{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeaa426f2ee5f621cfc973e1032931932ef}
+}]right \index{C\+E\+N\+T\+ER@{C\+E\+N\+T\+ER}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!C\+E\+N\+T\+ER@{C\+E\+N\+T\+ER}}\item[{\em 
+C\+E\+N\+T\+ER\hypertarget{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea2cd62693af40f3c5f559a07d6a61a55d}{}\label{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea2cd62693af40f3c5f559a07d6a61a55d}
+}]center \index{T\+O\+P\+\_\+\+L\+E\+FT@{T\+O\+P\+\_\+\+L\+E\+FT}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!T\+O\+P\+\_\+\+L\+E\+FT@{T\+O\+P\+\_\+\+L\+E\+FT}}\item[{\em 
+T\+O\+P\+\_\+\+L\+E\+FT\hypertarget{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeade1c5e9202b56dcd7d2f5f9825a36cf9}{}\label{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeade1c5e9202b56dcd7d2f5f9825a36cf9}
+}]top-\/left \index{T\+O\+P\+\_\+\+R\+I\+G\+HT@{T\+O\+P\+\_\+\+R\+I\+G\+HT}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!T\+O\+P\+\_\+\+R\+I\+G\+HT@{T\+O\+P\+\_\+\+R\+I\+G\+HT}}\item[{\em 
+T\+O\+P\+\_\+\+R\+I\+G\+HT\hypertarget{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea28a2d9d47839ff200bcc800acc32bc92}{}\label{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea28a2d9d47839ff200bcc800acc32bc92}
+}]top-\/right \index{B\+O\+T\+T\+O\+M\+\_\+\+L\+E\+FT@{B\+O\+T\+T\+O\+M\+\_\+\+L\+E\+FT}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!B\+O\+T\+T\+O\+M\+\_\+\+L\+E\+FT@{B\+O\+T\+T\+O\+M\+\_\+\+L\+E\+FT}}\item[{\em 
+B\+O\+T\+T\+O\+M\+\_\+\+L\+E\+FT\hypertarget{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeac4159b45246e8422a6638f5cb32254d9}{}\label{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeac4159b45246e8422a6638f5cb32254d9}
+}]bottom-\/left \index{B\+O\+T\+T\+O\+M\+\_\+\+R\+I\+G\+HT@{B\+O\+T\+T\+O\+M\+\_\+\+R\+I\+G\+HT}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!B\+O\+T\+T\+O\+M\+\_\+\+R\+I\+G\+HT@{B\+O\+T\+T\+O\+M\+\_\+\+R\+I\+G\+HT}}\item[{\em 
+B\+O\+T\+T\+O\+M\+\_\+\+R\+I\+G\+HT\hypertarget{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea21bfb46eb1646b1bb4f7a11f5af11f06}{}\label{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea21bfb46eb1646b1bb4f7a11f5af11f06}
+}]bottom-\/right \index{C\+E\+N\+T\+E\+R\+\_\+\+T\+OP@{C\+E\+N\+T\+E\+R\+\_\+\+T\+OP}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!C\+E\+N\+T\+E\+R\+\_\+\+T\+OP@{C\+E\+N\+T\+E\+R\+\_\+\+T\+OP}}\item[{\em 
+C\+E\+N\+T\+E\+R\+\_\+\+T\+OP\hypertarget{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea53733f4c8ffd20b6a370dd4b57515568}{}\label{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea53733f4c8ffd20b6a370dd4b57515568}
+}]center-\/top \index{C\+E\+N\+T\+E\+R\+\_\+\+B\+O\+T\+T\+OM@{C\+E\+N\+T\+E\+R\+\_\+\+B\+O\+T\+T\+OM}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!C\+E\+N\+T\+E\+R\+\_\+\+B\+O\+T\+T\+OM@{C\+E\+N\+T\+E\+R\+\_\+\+B\+O\+T\+T\+OM}}\item[{\em 
+C\+E\+N\+T\+E\+R\+\_\+\+B\+O\+T\+T\+OM\hypertarget{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeae3610baf202db83817a7065a40172cf9}{}\label{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abeae3610baf202db83817a7065a40172cf9}
+}]center-\/bottom \index{C\+E\+N\+T\+E\+R\+\_\+\+L\+E\+FT@{C\+E\+N\+T\+E\+R\+\_\+\+L\+E\+FT}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!C\+E\+N\+T\+E\+R\+\_\+\+L\+E\+FT@{C\+E\+N\+T\+E\+R\+\_\+\+L\+E\+FT}}\item[{\em 
+C\+E\+N\+T\+E\+R\+\_\+\+L\+E\+FT\hypertarget{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea26b8b7defafe6949d3f32e13f28b142d}{}\label{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea26b8b7defafe6949d3f32e13f28b142d}
+}]center-\/left \index{C\+E\+N\+T\+E\+R\+\_\+\+R\+I\+G\+HT@{C\+E\+N\+T\+E\+R\+\_\+\+R\+I\+G\+HT}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!C\+E\+N\+T\+E\+R\+\_\+\+R\+I\+G\+HT@{C\+E\+N\+T\+E\+R\+\_\+\+R\+I\+G\+HT}}\item[{\em 
+C\+E\+N\+T\+E\+R\+\_\+\+R\+I\+G\+HT\hypertarget{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea7b56bd20d12edab822694472014d868a}{}\label{classcanvascv_1_1Widget_a98ca3c300ba50b316fa5a1d300456abea7b56bd20d12edab822694472014d868a}
+}]center-\/right \end{description}
+\end{Desc}
+\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!State@{State}}
+\index{State@{State}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}
+\subsubsection[{\texorpdfstring{State}{State}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf canvascv\+::\+Widget\+::\+State}}\hypertarget{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8}{}\label{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{E\+N\+T\+ER@{E\+N\+T\+ER}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!E\+N\+T\+ER@{E\+N\+T\+ER}}\item[{\em 
+E\+N\+T\+ER\hypertarget{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8a2aa88ba430e7c541fb251c57d448145b}{}\label{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8a2aa88ba430e7c541fb251c57d448145b}
+}]got gocus \index{L\+E\+A\+VE@{L\+E\+A\+VE}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!L\+E\+A\+VE@{L\+E\+A\+VE}}\item[{\em 
+L\+E\+A\+VE\hypertarget{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8a0e9a42432c62ead77dad3e4b9c0d6a9e}{}\label{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8a0e9a42432c62ead77dad3e4b9c0d6a9e}
+}]lost focus \index{P\+R\+E\+SS@{P\+R\+E\+SS}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!P\+R\+E\+SS@{P\+R\+E\+SS}}\item[{\em 
+P\+R\+E\+SS\hypertarget{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8abb395c6efa7fc11a3176d1f801bdbc86}{}\label{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8abb395c6efa7fc11a3176d1f801bdbc86}
+}]mouse pressed \index{R\+E\+L\+E\+A\+SE@{R\+E\+L\+E\+A\+SE}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!R\+E\+L\+E\+A\+SE@{R\+E\+L\+E\+A\+SE}}\item[{\em 
+R\+E\+L\+E\+A\+SE\hypertarget{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8a52f4926c38703c4bd44be4b04a4720e7}{}\label{classcanvascv_1_1Widget_afc39a6533455cbc3161ae3a021da0dc8a52f4926c38703c4bd44be4b04a4720e7}
+}]mouse left \end{description}
+\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!get\+Flow\+Anchor@{get\+Flow\+Anchor}}
+\index{get\+Flow\+Anchor@{get\+Flow\+Anchor}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}
+\subsubsection[{\texorpdfstring{get\+Flow\+Anchor() const }{getFlowAnchor() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Anchor} canvascv\+::\+Widget\+::get\+Flow\+Anchor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcanvascv_1_1Widget_a4956e8b0ced615c3177dc38f553732fb}{}\label{classcanvascv_1_1Widget_a4956e8b0ced615c3177dc38f553732fb}
+\begin{DoxyReturn}{Returns}
+the Anchor of our own flow 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1VerticalLayout}{Vertical\+Layout}, \hyperlink{classcanvascv_1_1HorizontalLayout}{Horizontal\+Layout}, \hyperlink{classcanvascv_1_1Text}{Text} 
+\end{DoxySeeAlso}
+\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!get\+Layout\+Anchor@{get\+Layout\+Anchor}}
+\index{get\+Layout\+Anchor@{get\+Layout\+Anchor}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}
+\subsubsection[{\texorpdfstring{get\+Layout\+Anchor() const }{getLayoutAnchor() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Anchor} canvascv\+::\+Widget\+::get\+Layout\+Anchor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcanvascv_1_1Widget_a3b460d40be2a634153bf0785c46383b9}{}\label{classcanvascv_1_1Widget_a3b460d40be2a634153bf0785c46383b9}
+\begin{DoxyReturn}{Returns}
+the Anchor related to the \hyperlink{classcanvascv_1_1Layout}{Layout} we\textquotesingle{}re in 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1VerticalLayout}{Vertical\+Layout}, \hyperlink{classcanvascv_1_1HorizontalLayout}{Horizontal\+Layout} 
+\end{DoxySeeAlso}
+\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!get\+Status\+Msg@{get\+Status\+Msg}}
+\index{get\+Status\+Msg@{get\+Status\+Msg}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}
+\subsubsection[{\texorpdfstring{get\+Status\+Msg() const }{getStatusMsg() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const std\+::string\& canvascv\+::\+Widget\+::get\+Status\+Msg (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Widget_a5619c96f65d3853f2463043a814191ac}{}\label{classcanvascv_1_1Widget_a5619c96f65d3853f2463043a814191ac}
+\begin{DoxyReturn}{Returns}
+a message to display during mouse hover 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1Canvas_a402c43a42c0089c48a96e5303c1c1fe8}{Canvas\+::enable\+Status\+Msg} 
+\end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1CompoundWidget_a7b8afb0ea8e8803f201b9ee8aa7e153a}{canvascv\+::\+Compound\+Widget}.
+
+\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}
+\subsubsection[{\texorpdfstring{get\+Type() const =0}{getType() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ canvascv\+::\+Widget\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classcanvascv_1_1Widget_a85884269bd53ab91203f099a586efa43}{}\label{classcanvascv_1_1Widget_a85884269bd53ab91203f099a586efa43}
+\begin{DoxyReturn}{Returns}
+const char $\ast$ pointer to string with widget type name 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classcanvascv_1_1MsgBox_ad846e38adb000c10fac57e433d894001}{canvascv\+::\+Msg\+Box}, \hyperlink{classcanvascv_1_1CheckBoxes_a59d8af71b4304f97f9caa178d38c99be}{canvascv\+::\+Check\+Boxes}, \hyperlink{classcanvascv_1_1RadioButtons_ab62b0f2908eebb4881844bfc25f6319f}{canvascv\+::\+Radio\+Buttons}, \hyperlink{classcanvascv_1_1SelectionBox_aef13ee1ea2023ccb5589b6328b458e1c}{canvascv\+::\+Selection\+Box}, \hyperlink{classcanvascv_1_1VerticalLayout_a1b6eaaa782a4c9c880feb49d595d45b6}{canvascv\+::\+Vertical\+Layout}, \hyperlink{classcanvascv_1_1HorizontalLayout_a7ccafb8692a2a63eb645e9a9c6b2b9b8}{canvascv\+::\+Horizontal\+Layout}, \hyperlink{classcanvascv_1_1Button_ace294c72ce39507268ffd752f4ca0034}{canvascv\+::\+Button}, \hyperlink{classcanvascv_1_1Text_ae81d87d43167c2e8d1e58fa620a80579}{canvascv\+::\+Text}, \hyperlink{classcanvascv_1_1MatWidget_abb3e9e14071456367a4e6717d064f1dd}{canvascv\+::\+Mat\+Widget}, \hyperlink{classcanvascv_1_1HFrame_a32535b523b26b4db03f46a59fda8237a}{canvascv\+::\+H\+Frame}, and \hyperlink{classcanvascv_1_1VFrame_a8a87d2a05ca0f42a8deeaefa698347a9}{canvascv\+::\+V\+Frame}.
+
+\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!is\+At\+Pos@{is\+At\+Pos}}
+\index{is\+At\+Pos@{is\+At\+Pos}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}
+\subsubsection[{\texorpdfstring{is\+At\+Pos(const cv\+::\+Point \&pos)}{isAtPos(const cv::Point &pos)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Widget\+::is\+At\+Pos (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Widget_a3ea1ca9e064178a5647ce04bc531655f}{}\label{classcanvascv_1_1Widget_a3ea1ca9e064178a5647ce04bc531655f}
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true or false if at location 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1CompoundWidget_a00a67f3864155e74c60df66bc78c940e}{canvascv\+::\+Compound\+Widget}.
+
+\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!notify\+On\+Change@{notify\+On\+Change}}
+\index{notify\+On\+Change@{notify\+On\+Change}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}
+\subsubsection[{\texorpdfstring{notify\+On\+Change(\+C\+B\+Widget\+State cb)}{notifyOnChange(CBWidgetState cb)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Widget\+::notify\+On\+Change (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+B\+Widget\+State}}]{cb}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Widget_abdb1aed0ca76845ba6a56c4f8db502c9}{}\label{classcanvascv_1_1Widget_abdb1aed0ca76845ba6a56c4f8db502c9}
+
+\begin{DoxyParams}{Parameters}
+{\em cb} & to invoke on widget state change \\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_add_widget_8cpp-example}{example\+\_\+add\+\_\+widget.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!render\+On@{render\+On}}
+\index{render\+On@{render\+On}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}
+\subsubsection[{\texorpdfstring{render\+On(cv\+::\+Mat \&dst)}{renderOn(cv::Mat &dst)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Widget\+::render\+On (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Mat \&}]{dst}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Widget_a74130cdbcc974dfa7e8ceb9a53c112b9}{}\label{classcanvascv_1_1Widget_a74130cdbcc974dfa7e8ceb9a53c112b9}
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & is the full size image \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1CompoundWidget_a1ceebdcae41eadc0796306ca88698411}{canvascv\+::\+Compound\+Widget}.
+
+\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!set\+Dirty@{set\+Dirty}}
+\index{set\+Dirty@{set\+Dirty}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}
+\subsubsection[{\texorpdfstring{set\+Dirty()}{setDirty()}}]{\setlength{\rightskip}{0pt plus 5cm}bool canvascv\+::\+Widget\+::set\+Dirty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classcanvascv_1_1Widget_ac98faa983ed13b0394ec1542d89997eb}{}\label{classcanvascv_1_1Widget_ac98faa983ed13b0394ec1542d89997eb}
+Mark us as \textquotesingle{}dirty\textquotesingle{} so before the next draw, our \textquotesingle{}update\textquotesingle{} will be called \begin{DoxyReturn}{Returns}
+true if marked as dirty for later or false if changes were done on the spot 
+\end{DoxyReturn}
+\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!set\+Flow\+Anchor@{set\+Flow\+Anchor}}
+\index{set\+Flow\+Anchor@{set\+Flow\+Anchor}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}
+\subsubsection[{\texorpdfstring{set\+Flow\+Anchor(const Anchor \&value)}{setFlowAnchor(const Anchor &value)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Widget\+::set\+Flow\+Anchor (
+\begin{DoxyParamCaption}
+\item[{const {\bf Anchor} \&}]{value}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Widget_a69f455f7fbf67f636ee1155795057b87}{}\label{classcanvascv_1_1Widget_a69f455f7fbf67f636ee1155795057b87}
+
+\begin{DoxyParams}{Parameters}
+{\em value} & is used to set the flow\+Anchor \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1VerticalLayout}{Vertical\+Layout}, \hyperlink{classcanvascv_1_1HorizontalLayout}{Horizontal\+Layout}, \hyperlink{classcanvascv_1_1Text}{Text} 
+\end{DoxySeeAlso}
+\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!set\+Layout\+Anchor@{set\+Layout\+Anchor}}
+\index{set\+Layout\+Anchor@{set\+Layout\+Anchor}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}
+\subsubsection[{\texorpdfstring{set\+Layout\+Anchor(const Anchor \&value)}{setLayoutAnchor(const Anchor &value)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Widget\+::set\+Layout\+Anchor (
+\begin{DoxyParamCaption}
+\item[{const {\bf Anchor} \&}]{value}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Widget_a7180ca0054874c853e805e7842741596}{}\label{classcanvascv_1_1Widget_a7180ca0054874c853e805e7842741596}
+
+\begin{DoxyParams}{Parameters}
+{\em value} & is used to set the layout\+Anchor \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1VerticalLayout}{Vertical\+Layout}, \hyperlink{classcanvascv_1_1HorizontalLayout}{Horizontal\+Layout} 
+\end{DoxySeeAlso}
+\index{canvascv\+::\+Widget@{canvascv\+::\+Widget}!set\+Status\+Msg@{set\+Status\+Msg}}
+\index{set\+Status\+Msg@{set\+Status\+Msg}!canvascv\+::\+Widget@{canvascv\+::\+Widget}}
+\subsubsection[{\texorpdfstring{set\+Status\+Msg(const std\+::string \&value)}{setStatusMsg(const std::string &value)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Widget\+::set\+Status\+Msg (
+\begin{DoxyParamCaption}
+\item[{const std\+::string \&}]{value}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Widget_ac882ef922394c8d55cc824bf83be0004}{}\label{classcanvascv_1_1Widget_ac882ef922394c8d55cc824bf83be0004}
+
+\begin{DoxyParams}{Parameters}
+{\em value} & a message to display during mouse hover \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classcanvascv_1_1Canvas_a402c43a42c0089c48a96e5303c1c1fe8}{Canvas\+::enable\+Status\+Msg} 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/widgets/widget.\+h\end{DoxyCompactItemize}

@@ -1,0 +1,42 @@
+
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <opencv2/highgui.hpp>}
+
+\textcolor{preprocessor}{#include <canvascv/canvas.h>}
+\textcolor{preprocessor}{#include <canvascv/colors.h>}
+\textcolor{preprocessor}{#include <canvascv/widgets/msgbox.h>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacestd}{std};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{keywordtype}{int} main()
+\{
+    Mat image(600, 800, CV\_8UC3);
+    image = Colors::White;
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"Canvas"}, image.size());
+
+    namedWindow(\textcolor{stringliteral}{"Canvas"},
+                WINDOW\_AUTOSIZE); \textcolor{comment}{// diable mouse resize since resizing}
+                                  \textcolor{comment}{// the window will stretch the widgets}
+
+    c.setMouseCallback(); \textcolor{comment}{// optional for mouse usage (see also example\_selectbox.cpp)}
+
+    \textcolor{keyword}{auto} msgBox = MsgBox::create(c, \textcolor{stringliteral}{"Do you really want to do that?"}, \{\textcolor{stringliteral}{"Yes"}, \textcolor{stringliteral}{"No"}\});
+
+    \textcolor{keywordtype}{int} delay = 1000/25; \textcolor{comment}{// if using a polling API we need a delay}
+    \textcolor{keywordtype}{int} key = -1;
+    Mat out;
+    \textcolor{keywordflow}{do}
+    \{
+        c.redrawOn(image, out);
+        imshow(\textcolor{stringliteral}{"Canvas"}, out);
+        key = c.waitKeyEx(delay);
+    \} \textcolor{keywordflow}{while} (msgBox->getUserSelection() == -1);
+    cout << \textcolor{stringliteral}{"user choose option with index "} << msgBox->getUserSelection() << endl;
+
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCode}
+ 

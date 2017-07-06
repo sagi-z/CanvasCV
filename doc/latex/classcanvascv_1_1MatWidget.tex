@@ -1,0 +1,106 @@
+\hypertarget{classcanvascv_1_1MatWidget}{}\section{canvascv\+:\+:Mat\+Widget Class Reference}
+\label{classcanvascv_1_1MatWidget}\index{canvascv\+::\+Mat\+Widget@{canvascv\+::\+Mat\+Widget}}
+
+
+The \hyperlink{classcanvascv_1_1MatWidget}{Mat\+Widget} class.  
+
+
+
+
+{\ttfamily \#include $<$matwidget.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Mat\+Widget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcanvascv_1_1MatWidget}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+const cv\+::\+Mat \& \hyperlink{classcanvascv_1_1MatWidget_ae6d1de3cf8ba58584154fa4f5d38dbe6}{get\+Mat} () const \hypertarget{classcanvascv_1_1MatWidget_ae6d1de3cf8ba58584154fa4f5d38dbe6}{}\label{classcanvascv_1_1MatWidget_ae6d1de3cf8ba58584154fa4f5d38dbe6}
+
+\begin{DoxyCompactList}\small\item\em get the FG Mat which is displayed by the widget \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1MatWidget_af46e7d8f9a6c4a3688f1fad6e5ad351e}{set\+Mat} (const cv\+::\+Mat \&value)
+\begin{DoxyCompactList}\small\item\em set\+Mat \end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{classcanvascv_1_1MatWidget_abb3e9e14071456367a4e6717d064f1dd}{get\+Type} () const 
+\begin{DoxyCompactList}\small\item\em get\+Type is always implemented by derived to return the same static pointer per widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::shared\+\_\+ptr$<$ \hyperlink{classcanvascv_1_1MatWidget}{Mat\+Widget} $>$ \hyperlink{classcanvascv_1_1MatWidget_aca0ea4c34265c70f59a929968ca64aba}{create} (\hyperlink{classcanvascv_1_1Layout}{Layout} \&layout, cv\+::\+Mat mat=cv\+::\+Mat(), const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))
+\begin{DoxyCompactList}\small\item\em create a \hyperlink{classcanvascv_1_1MatWidget}{Mat\+Widget} widget \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual const cv\+::\+Rect \& \hyperlink{classcanvascv_1_1MatWidget_a318736f6602bc2fccc7758be88ca3c4d}{get\+Rect} ()\hypertarget{classcanvascv_1_1MatWidget_a318736f6602bc2fccc7758be88ca3c4d}{}\label{classcanvascv_1_1MatWidget_a318736f6602bc2fccc7758be88ca3c4d}
+
+\begin{DoxyCompactList}\small\item\em Actual size the widget is occupying due to \hyperlink{classcanvascv_1_1Layout}{Layout} manager. \end{DoxyCompactList}\item 
+virtual const cv\+::\+Rect \& \hyperlink{classcanvascv_1_1MatWidget_a8348b409495b367b48f297cef4c577c0}{get\+Minimal\+Rect} ()\hypertarget{classcanvascv_1_1MatWidget_a8348b409495b367b48f297cef4c577c0}{}\label{classcanvascv_1_1MatWidget_a8348b409495b367b48f297cef4c577c0}
+
+\begin{DoxyCompactList}\small\item\em Minimal size the widget coould have occupy. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1MatWidget_a01c9f938495de6c6d99ef6d41c925c21}{recalc} ()\hypertarget{classcanvascv_1_1MatWidget_a01c9f938495de6c6d99ef6d41c925c21}{}\label{classcanvascv_1_1MatWidget_a01c9f938495de6c6d99ef6d41c925c21}
+
+\begin{DoxyCompactList}\small\item\em update self so next call to \textquotesingle{}draw\textquotesingle{} will display correctly \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1MatWidget_abea96f3d0ef3407bc63b112624756247}{draw\+FG} (cv\+::\+Mat \&dst)\hypertarget{classcanvascv_1_1MatWidget_abea96f3d0ef3407bc63b112624756247}{}\label{classcanvascv_1_1MatWidget_abea96f3d0ef3407bc63b112624756247}
+
+\begin{DoxyCompactList}\small\item\em dst is the roi of the widget size and not the full image \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Displaying a Mat on an Open\+CV window, with alpha channel support. 
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Mat\+Widget@{canvascv\+::\+Mat\+Widget}!create@{create}}
+\index{create@{create}!canvascv\+::\+Mat\+Widget@{canvascv\+::\+Mat\+Widget}}
+\subsubsection[{\texorpdfstring{create(\+Layout \&layout, cv\+::\+Mat mat=cv\+::\+Mat(), const cv\+::\+Point \&pos=cv\+::\+Point(0, 0))}{create(Layout &layout, cv::Mat mat=cv::Mat(), const cv::Point &pos=cv::Point(0, 0))}}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::shared\+\_\+ptr$<${\bf Mat\+Widget}$>$ canvascv\+::\+Mat\+Widget\+::create (
+\begin{DoxyParamCaption}
+\item[{{\bf Layout} \&}]{layout, }
+\item[{cv\+::\+Mat}]{mat = {\ttfamily cv\+:\+:Mat()}, }
+\item[{const cv\+::\+Point \&}]{pos = {\ttfamily cv\+:\+:Point(0,~0)}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classcanvascv_1_1MatWidget_aca0ea4c34265c70f59a929968ca64aba}{}\label{classcanvascv_1_1MatWidget_aca0ea4c34265c70f59a929968ca64aba}
+
+\begin{DoxyParams}{Parameters}
+{\em layout} & widgets are placed in layouts Canvas/\+V\+Frame/\+H\+Frame/... \\
+\hline
+{\em mat} & will be referenced by this widget (not copied) \\
+\hline
+{\em pos} & location in the \hyperlink{classcanvascv_1_1Layout}{Layout} (Layouts can ignore that) \\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{example_matwidget_8cpp-example}{example\+\_\+matwidget.\+cpp}.\end{Desc}
+\index{canvascv\+::\+Mat\+Widget@{canvascv\+::\+Mat\+Widget}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!canvascv\+::\+Mat\+Widget@{canvascv\+::\+Mat\+Widget}}
+\subsubsection[{\texorpdfstring{get\+Type() const }{getType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ canvascv\+::\+Mat\+Widget\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1MatWidget_abb3e9e14071456367a4e6717d064f1dd}{}\label{classcanvascv_1_1MatWidget_abb3e9e14071456367a4e6717d064f1dd}
+\begin{DoxyReturn}{Returns}
+const char $\ast$ pointer to string with widget type name 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Widget_a85884269bd53ab91203f099a586efa43}{canvascv\+::\+Widget}.
+
+\index{canvascv\+::\+Mat\+Widget@{canvascv\+::\+Mat\+Widget}!set\+Mat@{set\+Mat}}
+\index{set\+Mat@{set\+Mat}!canvascv\+::\+Mat\+Widget@{canvascv\+::\+Mat\+Widget}}
+\subsubsection[{\texorpdfstring{set\+Mat(const cv\+::\+Mat \&value)}{setMat(const cv::Mat &value)}}]{\setlength{\rightskip}{0pt plus 5cm}void canvascv\+::\+Mat\+Widget\+::set\+Mat (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Mat \&}]{value}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1MatWidget_af46e7d8f9a6c4a3688f1fad6e5ad351e}{}\label{classcanvascv_1_1MatWidget_af46e7d8f9a6c4a3688f1fad6e5ad351e}
+set the FG Mat which is displayed by the widget 
+\begin{DoxyParams}{Parameters}
+{\em value} & will assigned (not copied) to an internal Mat \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/widgets/matwidget.\+h\end{DoxyCompactItemize}

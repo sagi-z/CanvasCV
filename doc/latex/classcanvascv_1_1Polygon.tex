@@ -1,0 +1,202 @@
+\hypertarget{classcanvascv_1_1Polygon}{}\section{canvascv\+:\+:Polygon Class Reference}
+\label{classcanvascv_1_1Polygon}\index{canvascv\+::\+Polygon@{canvascv\+::\+Polygon}}
+
+
+The \hyperlink{classcanvascv_1_1Polygon}{Polygon} class.  
+
+
+
+
+{\ttfamily \#include $<$polygon.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Polygon\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classcanvascv_1_1Polygon}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classcanvascv_1_1Polygon_a974ef1dbfb5314bd4c60fa07bf318b54}{is\+Point\+In\+Poly} (const cv\+::\+Point \&pos) const \hypertarget{classcanvascv_1_1Polygon_a974ef1dbfb5314bd4c60fa07bf318b54}{}\label{classcanvascv_1_1Polygon_a974ef1dbfb5314bd4c60fa07bf318b54}
+
+\begin{DoxyCompactList}\small\item\em returns true if pos is in the polygon \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename \+\_\+\+TP $>$ }\\void \hyperlink{classcanvascv_1_1Polygon_ada0df457225c06769d7a90d71f58ed7f}{get\+Points} (vector$<$ Point\+\_\+$<$ \+\_\+\+TP $>$$>$ \&out)
+\begin{DoxyCompactList}\small\item\em get\+Points \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Polygon_a9934b8f096b4eba4580f6bd0ce0a4ab9}{is\+At\+Pos} (const cv\+::\+Point \&pos)\hypertarget{classcanvascv_1_1Polygon_a9934b8f096b4eba4580f6bd0ce0a4ab9}{}\label{classcanvascv_1_1Polygon_a9934b8f096b4eba4580f6bd0ce0a4ab9}
+
+\begin{DoxyCompactList}\small\item\em returns true if shape is at pos, false otherwise \end{DoxyCompactList}\item 
+virtual std\+::list$<$ \hyperlink{classcanvascv_1_1Handle}{Handle} $\ast$ $>$ \hyperlink{classcanvascv_1_1Polygon_a4e15fc33d4dceb99e4f063b5dda2e658}{get\+Connection\+Targets} ()
+\begin{DoxyCompactList}\small\item\em get\+Connection\+Targets \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Polygon_aca22b914de1ced559faf4fd5426073ff}{key\+Pressed} (int \&key)
+\begin{DoxyCompactList}\small\item\em key\+Pressed will be called by \hyperlink{classcanvascv_1_1Canvas}{Canvas} for active shapes \end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{classcanvascv_1_1Polygon_a58dab27bcdfcaab026e0e79157e68318}{get\+Type} () const 
+\begin{DoxyCompactList}\small\item\em get\+Type is always implemented by derived to return the same static pointer per shape. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classcanvascv_1_1Polygon_a32e073cb9579fdf4645daf14e5143f22}{draw} (cv\+::\+Mat \&canvas)
+\begin{DoxyCompactList}\small\item\em draw shape on the canvas \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Polygon_a87ce20dbc22fd0ce39d6e81de5e515ae}{mouse\+Pressed} (const cv\+::\+Point \&pos, bool on\+Create=false)
+\begin{DoxyCompactList}\small\item\em mouse\+Pressed \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Polygon_aacc442ef4c0438ddb78c6ccce8e86618}{mouse\+Moved} (const cv\+::\+Point \&pos)
+\begin{DoxyCompactList}\small\item\em mouse\+Moved \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Polygon_afea6bbe1beef916e6ec47ed257cb2374}{mouse\+Released} (const cv\+::\+Point \&pos)
+\begin{DoxyCompactList}\small\item\em mouse\+Released \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcanvascv_1_1Polygon_a9cc78c0ace7940aa2cd78245b63938bc}{lost\+Focus} ()\hypertarget{classcanvascv_1_1Polygon_a9cc78c0ace7940aa2cd78245b63938bc}{}\label{classcanvascv_1_1Polygon_a9cc78c0ace7940aa2cd78245b63938bc}
+
+\begin{DoxyCompactList}\small\item\em lost\+Focus is called by \hyperlink{classcanvascv_1_1Canvas}{Canvas} if we\textquotesingle{}re in it and just became non-\/active \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Allows you to draw a polygon by mouse or from code \begin{DoxySeeAlso}{See also}
+
+\end{DoxySeeAlso}
+
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Polygon@{canvascv\+::\+Polygon}!draw@{draw}}
+\index{draw@{draw}!canvascv\+::\+Polygon@{canvascv\+::\+Polygon}}
+\subsubsection[{\texorpdfstring{draw(cv\+::\+Mat \&canvas)}{draw(cv::Mat &canvas)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Polygon\+::draw (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Mat \&}]{canvas}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Polygon_a32e073cb9579fdf4645daf14e5143f22}{}\label{classcanvascv_1_1Polygon_a32e073cb9579fdf4645daf14e5143f22}
+
+\begin{DoxyParams}{Parameters}
+{\em canvas} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_a6ec60ee0340ed25274e3ac1349345953}{canvascv\+::\+Compound\+Shape}.
+
+\index{canvascv\+::\+Polygon@{canvascv\+::\+Polygon}!get\+Connection\+Targets@{get\+Connection\+Targets}}
+\index{get\+Connection\+Targets@{get\+Connection\+Targets}!canvascv\+::\+Polygon@{canvascv\+::\+Polygon}}
+\subsubsection[{\texorpdfstring{get\+Connection\+Targets()}{getConnectionTargets()}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::list$<${\bf Handle} $\ast$$>$ canvascv\+::\+Polygon\+::get\+Connection\+Targets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Polygon_a4e15fc33d4dceb99e4f063b5dda2e658}{}\label{classcanvascv_1_1Polygon_a4e15fc33d4dceb99e4f063b5dda2e658}
+Return a list of Handles this shape allows to connect to from other shapes (mainly for \hyperlink{classcanvascv_1_1ShapesConnector}{Shapes\+Connector}) \begin{DoxyReturn}{Returns}
+list of \hyperlink{classcanvascv_1_1Handle}{Handle} pointers we \hyperlink{classcanvascv_1_1ShapesConnector}{Shapes\+Connector} can use to connect 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Shape_a827822e17e24118e16fa932ac0e71cd2}{canvascv\+::\+Shape}.
+
+\index{canvascv\+::\+Polygon@{canvascv\+::\+Polygon}!get\+Points@{get\+Points}}
+\index{get\+Points@{get\+Points}!canvascv\+::\+Polygon@{canvascv\+::\+Polygon}}
+\subsubsection[{\texorpdfstring{get\+Points(vector$<$ Point\+\_\+$<$ \+\_\+\+T\+P $>$$>$ \&out)}{getPoints(vector< Point_< _TP >> &out)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename \+\_\+\+TP $>$ void canvascv\+::\+Polygon\+::get\+Points (
+\begin{DoxyParamCaption}
+\item[{vector$<$ Point\+\_\+$<$ \+\_\+\+TP $>$$>$ \&}]{out}
+\end{DoxyParamCaption}
+)}\hypertarget{classcanvascv_1_1Polygon_ada0df457225c06769d7a90d71f58ed7f}{}\label{classcanvascv_1_1Polygon_ada0df457225c06769d7a90d71f58ed7f}
+return the vertices of the polygon 
+\begin{DoxyParams}{Parameters}
+{\em out} & will contain the vertices on return \\
+\hline
+\end{DoxyParams}
+\index{canvascv\+::\+Polygon@{canvascv\+::\+Polygon}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!canvascv\+::\+Polygon@{canvascv\+::\+Polygon}}
+\subsubsection[{\texorpdfstring{get\+Type() const }{getType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ canvascv\+::\+Polygon\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Polygon_a58dab27bcdfcaab026e0e79157e68318}{}\label{classcanvascv_1_1Polygon_a58dab27bcdfcaab026e0e79157e68318}
+\begin{DoxyReturn}{Returns}
+const char $\ast$ pointer to string with shape type name 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Shape_adee3cc696c7e82b0d2946e7e667ddd46}{canvascv\+::\+Shape}.
+
+\index{canvascv\+::\+Polygon@{canvascv\+::\+Polygon}!key\+Pressed@{key\+Pressed}}
+\index{key\+Pressed@{key\+Pressed}!canvascv\+::\+Polygon@{canvascv\+::\+Polygon}}
+\subsubsection[{\texorpdfstring{key\+Pressed(int \&key)}{keyPressed(int &key)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Polygon\+::key\+Pressed (
+\begin{DoxyParamCaption}
+\item[{int \&}]{key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Polygon_aca22b914de1ced559faf4fd5426073ff}{}\label{classcanvascv_1_1Polygon_aca22b914de1ced559faf4fd5426073ff}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & was pressed. You must set it to -\/1 if you consumed it. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if we want to stay in focus and false otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_ac739f68737099c6f5c6d2c70196cd07b}{canvascv\+::\+Compound\+Shape}.
+
+\index{canvascv\+::\+Polygon@{canvascv\+::\+Polygon}!mouse\+Moved@{mouse\+Moved}}
+\index{mouse\+Moved@{mouse\+Moved}!canvascv\+::\+Polygon@{canvascv\+::\+Polygon}}
+\subsubsection[{\texorpdfstring{mouse\+Moved(const cv\+::\+Point \&pos)}{mouseMoved(const cv::Point &pos)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Polygon\+::mouse\+Moved (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Polygon_aacc442ef4c0438ddb78c6ccce8e86618}{}\label{classcanvascv_1_1Polygon_aacc442ef4c0438ddb78c6ccce8e86618}
+
+\begin{DoxyEnumerate}
+\item Was a mouse moved over this shape?
+\item If shape is during edit, then these are the mouse position. 
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if a mouse moved over this shape, or it is during edit. false otherwise. 
+\end{DoxyReturn}
+
+\end{DoxyEnumerate}
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_a387d1705b99d2053306ffd8d8e67b63b}{canvascv\+::\+Compound\+Shape}.
+
+\index{canvascv\+::\+Polygon@{canvascv\+::\+Polygon}!mouse\+Pressed@{mouse\+Pressed}}
+\index{mouse\+Pressed@{mouse\+Pressed}!canvascv\+::\+Polygon@{canvascv\+::\+Polygon}}
+\subsubsection[{\texorpdfstring{mouse\+Pressed(const cv\+::\+Point \&pos, bool on\+Create=false)}{mousePressed(const cv::Point &pos, bool onCreate=false)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Polygon\+::mouse\+Pressed (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos, }
+\item[{bool}]{on\+Create = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Polygon_a87ce20dbc22fd0ce39d6e81de5e515ae}{}\label{classcanvascv_1_1Polygon_a87ce20dbc22fd0ce39d6e81de5e515ae}
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+{\em on\+Create} & is true if this is the mouse press which cerated this shape \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for keep in focus, false for leave focus 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_a821d046dceaba47114385d1c87e197ce}{canvascv\+::\+Compound\+Shape}.
+
+\index{canvascv\+::\+Polygon@{canvascv\+::\+Polygon}!mouse\+Released@{mouse\+Released}}
+\index{mouse\+Released@{mouse\+Released}!canvascv\+::\+Polygon@{canvascv\+::\+Polygon}}
+\subsubsection[{\texorpdfstring{mouse\+Released(const cv\+::\+Point \&pos)}{mouseReleased(const cv::Point &pos)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Polygon\+::mouse\+Released (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Polygon_afea6bbe1beef916e6ec47ed257cb2374}{}\label{classcanvascv_1_1Polygon_afea6bbe1beef916e6ec47ed257cb2374}
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for keep in focus, false for leave focus 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_a01cf027fd5f7ec96525949d0c8ae08a1}{canvascv\+::\+Compound\+Shape}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/shapes/polygon.\+h\end{DoxyCompactItemize}

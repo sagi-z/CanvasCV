@@ -1,0 +1,235 @@
+\hypertarget{classcanvascv_1_1Line}{}\section{canvascv\+:\+:Line Class Reference}
+\label{classcanvascv_1_1Line}\index{canvascv\+::\+Line@{canvascv\+::\+Line}}
+
+
+The \hyperlink{classcanvascv_1_1Line}{Line} class.  
+
+
+
+
+{\ttfamily \#include $<$line.\+h$>$}
+
+Inheritance diagram for canvascv\+:\+:Line\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{classcanvascv_1_1Line}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcanvascv_1_1Line_ad58eb26a9f759fcef069ef088eda016a}{lock\+Tail} (bool is\+Locked)\hypertarget{classcanvascv_1_1Line_ad58eb26a9f759fcef069ef088eda016a}{}\label{classcanvascv_1_1Line_ad58eb26a9f759fcef069ef088eda016a}
+
+\begin{DoxyCompactList}\small\item\em set if to lock the tail (\hyperlink{classcanvascv_1_1Handle}{Handle}) of the line \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Line_a7ed04307f5469a0f3dbb56843e4def30}{lock\+Head} (bool is\+Locked)\hypertarget{classcanvascv_1_1Line_a7ed04307f5469a0f3dbb56843e4def30}{}\label{classcanvascv_1_1Line_a7ed04307f5469a0f3dbb56843e4def30}
+
+\begin{DoxyCompactList}\small\item\em set if to lock the head (\hyperlink{classcanvascv_1_1Handle}{Handle}) of the line \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Line_ad8792291c57126a5ce100cc53c58ad59}{show\+Tail} (bool is\+Visible)\hypertarget{classcanvascv_1_1Line_ad8792291c57126a5ce100cc53c58ad59}{}\label{classcanvascv_1_1Line_ad8792291c57126a5ce100cc53c58ad59}
+
+\begin{DoxyCompactList}\small\item\em set if to show the tail (\hyperlink{classcanvascv_1_1Handle}{Handle}) of the line \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Line_a606cc47470a49cb689f9a536d019552e}{show\+Head} (bool is\+Visible)\hypertarget{classcanvascv_1_1Line_a606cc47470a49cb689f9a536d019552e}{}\label{classcanvascv_1_1Line_a606cc47470a49cb689f9a536d019552e}
+
+\begin{DoxyCompactList}\small\item\em set if to show the head (\hyperlink{classcanvascv_1_1Handle}{Handle}) of the line \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Line_a51eccef05df0ea69f99ee9eca3f3b12c}{set\+Tail\+Pos} (const cv\+::\+Point \&pos)\hypertarget{classcanvascv_1_1Line_a51eccef05df0ea69f99ee9eca3f3b12c}{}\label{classcanvascv_1_1Line_a51eccef05df0ea69f99ee9eca3f3b12c}
+
+\begin{DoxyCompactList}\small\item\em will move the tail (\hyperlink{classcanvascv_1_1Handle}{Handle}) of the line to pos \end{DoxyCompactList}\item 
+void \hyperlink{classcanvascv_1_1Line_a0aa66e5c23a5c1173786f6c7c9519bfa}{set\+Head\+Pos} (const cv\+::\+Point \&pos)\hypertarget{classcanvascv_1_1Line_a0aa66e5c23a5c1173786f6c7c9519bfa}{}\label{classcanvascv_1_1Line_a0aa66e5c23a5c1173786f6c7c9519bfa}
+
+\begin{DoxyCompactList}\small\item\em will move the head (\hyperlink{classcanvascv_1_1Handle}{Handle}) of the line to pos \end{DoxyCompactList}\item 
+double \hyperlink{classcanvascv_1_1Line_a7a076a5ac4f7f4aa99e0323daa04677c}{length} () const \hypertarget{classcanvascv_1_1Line_a7a076a5ac4f7f4aa99e0323daa04677c}{}\label{classcanvascv_1_1Line_a7a076a5ac4f7f4aa99e0323daa04677c}
+
+\begin{DoxyCompactList}\small\item\em returns the length of the line in pixels \end{DoxyCompactList}\item 
+bool \hyperlink{classcanvascv_1_1Line_a4b7e7bc0c752743768e9d0e850c27288}{is\+Point\+On\+Line} (const cv\+::\+Point \&p3, int threshold=3) const \hypertarget{classcanvascv_1_1Line_a4b7e7bc0c752743768e9d0e850c27288}{}\label{classcanvascv_1_1Line_a4b7e7bc0c752743768e9d0e850c27288}
+
+\begin{DoxyCompactList}\small\item\em returns true if the point \textquotesingle{}p3\textquotesingle{} is on the line, give or take \textquotesingle{}threshold\textquotesingle{} pixels \end{DoxyCompactList}\item 
+\hyperlink{classcanvascv_1_1Handle}{Handle} \& \hyperlink{classcanvascv_1_1Line_a685abcca89d05c63186ef71c0ef8b0a2}{get\+P\+T1} ()\hypertarget{classcanvascv_1_1Line_a685abcca89d05c63186ef71c0ef8b0a2}{}\label{classcanvascv_1_1Line_a685abcca89d05c63186ef71c0ef8b0a2}
+
+\begin{DoxyCompactList}\small\item\em get the \hyperlink{classcanvascv_1_1Handle}{Handle} to the tail of the \end{DoxyCompactList}\item 
+\hyperlink{classcanvascv_1_1Handle}{Handle} \& \hyperlink{classcanvascv_1_1Line_a7a0fc9d06ab0fc575b1596068dff0484}{get\+P\+T2} ()\hypertarget{classcanvascv_1_1Line_a7a0fc9d06ab0fc575b1596068dff0484}{}\label{classcanvascv_1_1Line_a7a0fc9d06ab0fc575b1596068dff0484}
+
+\begin{DoxyCompactList}\small\item\em get the \hyperlink{classcanvascv_1_1Handle}{Handle} to the head of the \end{DoxyCompactList}\item 
+const cv\+::\+Point \& \hyperlink{classcanvascv_1_1Line_a0f3a3d49c01ac13e45496f197a0b0ab8}{get\+Tail} () const \hypertarget{classcanvascv_1_1Line_a0f3a3d49c01ac13e45496f197a0b0ab8}{}\label{classcanvascv_1_1Line_a0f3a3d49c01ac13e45496f197a0b0ab8}
+
+\begin{DoxyCompactList}\small\item\em get the Point position og the tail \hyperlink{classcanvascv_1_1Handle}{Handle} \end{DoxyCompactList}\item 
+const cv\+::\+Point \& \hyperlink{classcanvascv_1_1Line_aa0dfcc4fcfbc07eefac5b962f12c7fb0}{get\+Head} () const \hypertarget{classcanvascv_1_1Line_aa0dfcc4fcfbc07eefac5b962f12c7fb0}{}\label{classcanvascv_1_1Line_aa0dfcc4fcfbc07eefac5b962f12c7fb0}
+
+\begin{DoxyCompactList}\small\item\em get the Point position og the head \hyperlink{classcanvascv_1_1Handle}{Handle} \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Line_aa7bd63d71cc0f63cef68b397c0c24168}{is\+At\+Pos} (const cv\+::\+Point \&pos)\hypertarget{classcanvascv_1_1Line_aa7bd63d71cc0f63cef68b397c0c24168}{}\label{classcanvascv_1_1Line_aa7bd63d71cc0f63cef68b397c0c24168}
+
+\begin{DoxyCompactList}\small\item\em returns true if shape is at pos, false otherwise \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Line_a4059736cde05ffc90dda8ed1ff4f9ba2}{key\+Pressed} (int \&key)
+\begin{DoxyCompactList}\small\item\em key\+Pressed will be called by \hyperlink{classcanvascv_1_1Canvas}{Canvas} for active shapes \end{DoxyCompactList}\item 
+virtual std\+::list$<$ \hyperlink{classcanvascv_1_1Handle}{Handle} $\ast$ $>$ \hyperlink{classcanvascv_1_1Line_a4a4293ae8f9600ee7f9d3a8089e6965a}{get\+Connection\+Targets} ()
+\begin{DoxyCompactList}\small\item\em get\+Connection\+Targets \end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{classcanvascv_1_1Line_a863306159fbca892702fd3d0047b63c3}{get\+Type} () const 
+\begin{DoxyCompactList}\small\item\em get\+Type is always implemented by derived to return the same static pointer per shape. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classcanvascv_1_1Line_aad801107019337b6e369fed331539d56}{draw} (cv\+::\+Mat \&canvas)
+\begin{DoxyCompactList}\small\item\em draw shape on the canvas \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Line_aab4d23d336fe71c6d7000d8da9a54269}{mouse\+Pressed} (const cv\+::\+Point \&pos, bool on\+Create=false)
+\begin{DoxyCompactList}\small\item\em mouse\+Pressed \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Line_ad758464d98d455d2ea3aa591667fb595}{mouse\+Moved} (const cv\+::\+Point \&pos)
+\begin{DoxyCompactList}\small\item\em mouse\+Moved \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classcanvascv_1_1Line_ace7269cabd2acbb2c9da009740f46fa3}{mouse\+Released} (const cv\+::\+Point \&pos)
+\begin{DoxyCompactList}\small\item\em mouse\+Released \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Allows you to draw a line by mouse or from code 
+
+\subsection{Member Function Documentation}
+\index{canvascv\+::\+Line@{canvascv\+::\+Line}!draw@{draw}}
+\index{draw@{draw}!canvascv\+::\+Line@{canvascv\+::\+Line}}
+\subsubsection[{\texorpdfstring{draw(cv\+::\+Mat \&canvas)}{draw(cv::Mat &canvas)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void canvascv\+::\+Line\+::draw (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Mat \&}]{canvas}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Line_aad801107019337b6e369fed331539d56}{}\label{classcanvascv_1_1Line_aad801107019337b6e369fed331539d56}
+
+\begin{DoxyParams}{Parameters}
+{\em canvas} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_a6ec60ee0340ed25274e3ac1349345953}{canvascv\+::\+Compound\+Shape}.
+
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1Arrow_a8ba5b890df49a2d8fc6630df5fe80351}{canvascv\+::\+Arrow}.
+
+\index{canvascv\+::\+Line@{canvascv\+::\+Line}!get\+Connection\+Targets@{get\+Connection\+Targets}}
+\index{get\+Connection\+Targets@{get\+Connection\+Targets}!canvascv\+::\+Line@{canvascv\+::\+Line}}
+\subsubsection[{\texorpdfstring{get\+Connection\+Targets()}{getConnectionTargets()}}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\+::list$<${\bf Handle} $\ast$$>$ canvascv\+::\+Line\+::get\+Connection\+Targets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Line_a4a4293ae8f9600ee7f9d3a8089e6965a}{}\label{classcanvascv_1_1Line_a4a4293ae8f9600ee7f9d3a8089e6965a}
+Return a list of Handles this shape allows to connect to from other shapes (mainly for \hyperlink{classcanvascv_1_1ShapesConnector}{Shapes\+Connector}) \begin{DoxyReturn}{Returns}
+list of \hyperlink{classcanvascv_1_1Handle}{Handle} pointers we \hyperlink{classcanvascv_1_1ShapesConnector}{Shapes\+Connector} can use to connect 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Shape_a827822e17e24118e16fa932ac0e71cd2}{canvascv\+::\+Shape}.
+
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1ShapesConnector_a90672acd22f69f3d143f08197d4108b8}{canvascv\+::\+Shapes\+Connector}.
+
+\index{canvascv\+::\+Line@{canvascv\+::\+Line}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!canvascv\+::\+Line@{canvascv\+::\+Line}}
+\subsubsection[{\texorpdfstring{get\+Type() const }{getType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ canvascv\+::\+Line\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Line_a863306159fbca892702fd3d0047b63c3}{}\label{classcanvascv_1_1Line_a863306159fbca892702fd3d0047b63c3}
+\begin{DoxyReturn}{Returns}
+const char $\ast$ pointer to string with shape type name 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classcanvascv_1_1Shape_adee3cc696c7e82b0d2946e7e667ddd46}{canvascv\+::\+Shape}.
+
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1ShapesConnector_aedda9e8fd9c1be85704f289df94905a2}{canvascv\+::\+Shapes\+Connector}, \hyperlink{classcanvascv_1_1LabeledShapesConnector_aebeccdf1e7c4efb0bde504b361eac801}{canvascv\+::\+Labeled\+Shapes\+Connector}, and \hyperlink{classcanvascv_1_1Arrow_a4d0857dec7276f993bd390e944edef34}{canvascv\+::\+Arrow}.
+
+\index{canvascv\+::\+Line@{canvascv\+::\+Line}!key\+Pressed@{key\+Pressed}}
+\index{key\+Pressed@{key\+Pressed}!canvascv\+::\+Line@{canvascv\+::\+Line}}
+\subsubsection[{\texorpdfstring{key\+Pressed(int \&key)}{keyPressed(int &key)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Line\+::key\+Pressed (
+\begin{DoxyParamCaption}
+\item[{int \&}]{key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Line_a4059736cde05ffc90dda8ed1ff4f9ba2}{}\label{classcanvascv_1_1Line_a4059736cde05ffc90dda8ed1ff4f9ba2}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & was pressed. You must set it to -\/1 if you consumed it. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if we want to stay in focus and false otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_ac739f68737099c6f5c6d2c70196cd07b}{canvascv\+::\+Compound\+Shape}.
+
+\index{canvascv\+::\+Line@{canvascv\+::\+Line}!mouse\+Moved@{mouse\+Moved}}
+\index{mouse\+Moved@{mouse\+Moved}!canvascv\+::\+Line@{canvascv\+::\+Line}}
+\subsubsection[{\texorpdfstring{mouse\+Moved(const cv\+::\+Point \&pos)}{mouseMoved(const cv::Point &pos)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Line\+::mouse\+Moved (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Line_ad758464d98d455d2ea3aa591667fb595}{}\label{classcanvascv_1_1Line_ad758464d98d455d2ea3aa591667fb595}
+
+\begin{DoxyEnumerate}
+\item Was a mouse moved over this shape?
+\item If shape is during edit, then these are the mouse position. 
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if a mouse moved over this shape, or it is during edit. false otherwise. 
+\end{DoxyReturn}
+
+\end{DoxyEnumerate}
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_a387d1705b99d2053306ffd8d8e67b63b}{canvascv\+::\+Compound\+Shape}.
+
+\index{canvascv\+::\+Line@{canvascv\+::\+Line}!mouse\+Pressed@{mouse\+Pressed}}
+\index{mouse\+Pressed@{mouse\+Pressed}!canvascv\+::\+Line@{canvascv\+::\+Line}}
+\subsubsection[{\texorpdfstring{mouse\+Pressed(const cv\+::\+Point \&pos, bool on\+Create=false)}{mousePressed(const cv::Point &pos, bool onCreate=false)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Line\+::mouse\+Pressed (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos, }
+\item[{bool}]{on\+Create = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Line_aab4d23d336fe71c6d7000d8da9a54269}{}\label{classcanvascv_1_1Line_aab4d23d336fe71c6d7000d8da9a54269}
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+{\em on\+Create} & is true if this is the mouse press which cerated this shape \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for keep in focus, false for leave focus 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_a821d046dceaba47114385d1c87e197ce}{canvascv\+::\+Compound\+Shape}.
+
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1ShapesConnector_a6c6400403c6c2809af1e0a64e477f592}{canvascv\+::\+Shapes\+Connector}.
+
+\index{canvascv\+::\+Line@{canvascv\+::\+Line}!mouse\+Released@{mouse\+Released}}
+\index{mouse\+Released@{mouse\+Released}!canvascv\+::\+Line@{canvascv\+::\+Line}}
+\subsubsection[{\texorpdfstring{mouse\+Released(const cv\+::\+Point \&pos)}{mouseReleased(const cv::Point &pos)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool canvascv\+::\+Line\+::mouse\+Released (
+\begin{DoxyParamCaption}
+\item[{const cv\+::\+Point \&}]{pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classcanvascv_1_1Line_ace7269cabd2acbb2c9da009740f46fa3}{}\label{classcanvascv_1_1Line_ace7269cabd2acbb2c9da009740f46fa3}
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true for keep in focus, false for leave focus 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classcanvascv_1_1CompoundShape_a01cf027fd5f7ec96525949d0c8ae08a1}{canvascv\+::\+Compound\+Shape}.
+
+
+
+Reimplemented in \hyperlink{classcanvascv_1_1ShapesConnector_a56ab827f3d72e495ccfd1101807413f8}{canvascv\+::\+Shapes\+Connector}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Canvas\+C\+V-\/doxygen/src/canvascv/shapes/line.\+h\end{DoxyCompactItemize}

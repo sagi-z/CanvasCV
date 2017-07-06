@@ -1,0 +1,106 @@
+\hypertarget{example_msgbox_8cpp-example}{}\section{example\+\_\+msgbox.\+cpp}
+This is an example of how to use the Msg\+Box Widget.
+
+
+\begin{DoxyCodeInclude}
+\textcolor{preprocessor}{#include "canvascv/canvas.h"}
+
+\textcolor{comment}{// These are used to create widgets}
+\textcolor{preprocessor}{#include "canvascv/widgets/msgbox.h"}
+
+\textcolor{preprocessor}{#include <iostream>}
+\textcolor{preprocessor}{#include <iterator>}
+
+\textcolor{preprocessor}{#include <opencv2/highgui.hpp>}
+
+\textcolor{keyword}{using namespace }\hyperlink{namespacestd}{std};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecv}{cv};
+\textcolor{keyword}{using namespace }\hyperlink{namespacecanvascv}{canvascv};
+
+\textcolor{comment}{// This is needed for user interaction - creating/editing choosing shapes.}
+\textcolor{comment}{// Clicking on interactive widgets.}
+\textcolor{comment}{// We don't need this code if we only want to display "on screen" messages and "status bar" messages.}
+\textcolor{keyword}{static} \textcolor{keywordtype}{void} mouseCB(\textcolor{keywordtype}{int} event, \textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y, \textcolor{keywordtype}{int} flags, \textcolor{keywordtype}{void}* userData) \{
+    (void)flags;
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} *pCanvas=\textcolor{keyword}{reinterpret\_cast<}\hyperlink{classcanvascv_1_1Canvas}{Canvas}*\textcolor{keyword}{>}(userData);
+    \textcolor{keywordflow}{switch}( event )
+    \{
+    \textcolor{keywordflow}{case} EVENT\_LBUTTONDOWN:
+        pCanvas->\hyperlink{classcanvascv_1_1Canvas_abe53228080133efe5d9fecf6982b823e}{onMousePress}(Point(x,y));
+        \textcolor{keywordflow}{break};
+    \textcolor{keywordflow}{case} EVENT\_LBUTTONUP:
+        pCanvas->\hyperlink{classcanvascv_1_1Canvas_aca936fe492da286d5fb8eabbcd061793}{onMouseRelease}(Point(x,y));
+        \textcolor{keywordflow}{break};
+    \textcolor{keywordflow}{case} EVENT\_MOUSEMOVE:
+        pCanvas->\hyperlink{classcanvascv_1_1Canvas_a1189823898c4022fd0eed4cfb99535c2}{onMouseMove}(Point(x,y));
+        \textcolor{keywordflow}{break};
+    \}
+\}
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} **argv)
+\{
+    --argc;
+    ++argv;
+    Mat image;
+    \textcolor{keywordflow}{if} (argc)
+    \{
+        Mat orig = imread(argv[0], IMREAD\_UNCHANGED);
+        \textcolor{keywordflow}{if} (orig.empty()) \{
+            \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Cannot load image "}) + argv[0], -1);
+        \}
+        \textcolor{keywordflow}{if} (orig.cols > 1024)
+        \{
+            \textcolor{keywordtype}{double} ratio = 1024. / orig.cols;
+            cv::resize(orig, image, Size(), ratio, ratio);
+        \}
+        \textcolor{keywordflow}{else}
+        \{
+            image = orig;
+        \}
+    \}
+    \textcolor{keywordflow}{else}
+    \{
+        \hyperlink{classcanvascv_1_1Canvas_add93c0d5cc1e9b49f97510952a8a1961}{Canvas::fatal}(\textcolor{stringliteral}{"Must get a path to an image as a parameter"} , -1);
+    \}
+
+    \hyperlink{classcanvascv_1_1Canvas}{Canvas} c(\textcolor{stringliteral}{"Canvas"}, image.size());
+    \textcolor{keyword}{auto} msgBox = \hyperlink{classcanvascv_1_1MsgBox_a3bf0019e83e367e415da29286db2c5d0}{MsgBox::create}(c,
+                                 \textcolor{stringliteral}{"This is a MsgBox example\(\backslash\)n"}
+                                 \textcolor{stringliteral}{"with 2 lines"}, \{
+                                     \textcolor{stringliteral}{"Ok"},           \textcolor{comment}{// index 0}
+                                     \textcolor{stringliteral}{"Cancel"},       \textcolor{comment}{// index 1}
+                                     \textcolor{stringliteral}{"Somthing else"} \textcolor{comment}{// index 2}
+                                 \});
+
+    namedWindow(\textcolor{stringliteral}{"Canvas"}, WINDOW\_AUTOSIZE);
+    setMouseCallback(\textcolor{stringliteral}{"Canvas"}, mouseCB, &c);
+
+    \textcolor{keywordtype}{int} key = 0;
+    \textcolor{keywordtype}{int} delay = 1000/25;  \textcolor{comment}{// if using a polling API we need a delay}
+    Mat out; \textcolor{comment}{// keeping it out of the loop is a little more efficient}
+    \textcolor{keywordflow}{while} (msgBox && key != \textcolor{charliteral}{'q'})
+    \{
+        \textcolor{keywordflow}{if} (msgBox->getUserSelection() != -1)
+        \{
+            \textcolor{keywordtype}{int} selection = msgBox->getUserSelection();
+            cout << \textcolor{stringliteral}{"MsgBox was pressed with key index "} << selection <<
+                    \textcolor{stringliteral}{"("} << msgBox->getTextAt(selection) << \textcolor{stringliteral}{")"} << endl;
+            msgBox = \hyperlink{classcanvascv_1_1MsgBox_a3bf0019e83e367e415da29286db2c5d0}{MsgBox::create}(c,
+                                    \textcolor{stringliteral}{"Do you really want to exit?"},
+                                    \{\textcolor{stringliteral}{"Yes"}, \textcolor{stringliteral}{"No"}\},
+                                    [&c, &key, &msgBox](\hyperlink{classcanvascv_1_1Widget}{Widget} *, \textcolor{keywordtype}{int} i) \{
+                \textcolor{keywordflow}{if} (i == 0) msgBox.reset();
+                \textcolor{keywordflow}{else} msgBox = \hyperlink{classcanvascv_1_1MsgBox_a3bf0019e83e367e415da29286db2c5d0}{MsgBox::create}(c, \textcolor{stringliteral}{"Just another MsgBox\(\backslash\)nWaiting for exit
+       approval"});
+            \});
+        \}
+        c.redrawOn(image, out);
+        imshow(\textcolor{stringliteral}{"Canvas"}, out);
+        key = c.waitKeyEx(delay); \textcolor{comment}{// GUI and callbacks happen here}
+    \}
+
+    destroyAllWindows();
+    \textcolor{keywordflow}{return} 0;
+\}
+\end{DoxyCodeInclude}
+ 
