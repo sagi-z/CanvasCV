@@ -5,6 +5,10 @@ permalink: /screenshots/
 ---
 These are taken from the source code examples and tutorials
 -----------------------------------------------------------
+* You can see some short videos
+[here](https://www.youtube.com/watch?v=FjCGTdyMUkk&list=PLf8XPecJ27DYm1T-dxqwTwS-9Wd1kBKeK "Youtube playlist").
+
+
 A dialog from the tutorials:
 
 ![CanvasCV]({{ site.baseurl }}/assets/img/screenshots/tut_layout_dialog.jpg)
