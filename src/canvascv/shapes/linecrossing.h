@@ -65,7 +65,9 @@ public:
      * @param lineStart the start of the line to check against (path origin Point).
      * @param lineEnd the end of the line to check against (path latest Point).
      * @return
-     * - 0 if the segments are not crossing
+     * -  0 if the segments are not crossing
+     * -  1 if the segment crossed according to direction
+     * - -1 if the segment crossed against the direction
      */
     int isCrossedBySegment(const Point &lineStart, const Point &lineEnd) const;
 
