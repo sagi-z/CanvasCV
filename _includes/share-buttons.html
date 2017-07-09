@@ -1,0 +1,31 @@
+<div class="social-buttons-box">
+    <p><b>Share on:</b>&nbsp;&nbsp;<p>
+    <!-- Code for Facebook share button -->
+    <!-- Code for Linkedin share button -->
+    <div class="social-button">
+        <a href="http://www.linkedin.com/shareArticle?mini=true&url={{ site.url }}{{ include.url }}&title={{ include.title }}&source={{ include.title }}">
+            <!-- use the linkedin logo for the link -->
+            <img alt="..."
+                class="footer-icon"
+                width="34px"
+                src="{{ site.baseurl }}/assets/img/social/In-2C-34px-R.png">
+            </img>
+            Linkedin
+        </a>
+    </div>
+
+    <!-- Code for Google+ share button -->
+    <div class="social-button">
+        <a href="https://plus.google.com/share?url={{ site.url }}{{ include.url }}&hl=en-US"
+         onclick="javascript:window.open(this.href,'',
+          'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+            <!-- use the google+ logo for the link -->
+            <img
+                class="footer-icon"
+                width="28px"
+                src="{{ site.baseurl }}/assets/img/social/gplus-32.png">
+            </img>
+            Google+
+        </a>
+    </div>
+</div>

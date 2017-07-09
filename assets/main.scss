@@ -47,3 +47,18 @@ $code-background-color: #000000;
 .highlighter-rouge .highlight { background: $code-background-color; }
 pre, code { background-color: $code-background-color; }
 
+.social-buttons-box {
+        display: flex;
+        padding: 15px;
+        border: 2px solid white;
+        border-radius: 25px;
+}
+.social-button {
+        margin: 2px;
+        padding: 2px;
+        background-color: $grey-color-dark;
+        text-size-adjust: none;
+        width: auto;
+        border-radius: 5px;
+        box-shadow: 0px 1px 2px black;
+}
