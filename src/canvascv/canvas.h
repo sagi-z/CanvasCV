@@ -16,6 +16,7 @@
 #include <functional>
 #include <sstream>
 
+/// This namespace holds all the classes of the CanvasCV library
 namespace canvascv
 {
 
@@ -451,8 +452,16 @@ void readShapes(const cv::FileNode& node, Canvas& x, const Canvas&);
 #define CCV_STR(X) ((std::stringstream&)(std::stringstream() << X)).str()
 #define CCV_C_STR(X) CCV_STR(X).c_str()
 
+// doxygen markups below
+
 /** @example example_shapes_widgets.cpp
  * This is an example of using shapes and widgets together.
  */
+
+/// The c++ std namespace
+namespace std {}
+
+/// The OpenCV namespace
+namespace cv {}
 
 #endif // CANVAS_H
