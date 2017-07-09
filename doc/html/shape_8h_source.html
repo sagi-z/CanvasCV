@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li><a href="examples.html"><span>Examples</span></a></li>
@@ -119,7 +120,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classcanvascv_1_1Shape_html_a67d3bdec3be2a29c3612c87208589838"><div class="ttname"><a href="classcanvascv_1_1Shape.html#a67d3bdec3be2a29c3612c87208589838">canvascv::Shape::getOutlineColor</a></div><div class="ttdeci">cv::Scalar getOutlineColor() const </div><div class="ttdoc">get the outline color </div></div>
 <div class="ttc" id="classcanvascv_1_1Shape_html_a3d777d9ff2724ff61c30f45c526354a4"><div class="ttname"><a href="classcanvascv_1_1Shape.html#a3d777d9ff2724ff61c30f45c526354a4">canvascv::Shape::setLocked</a></div><div class="ttdeci">virtual void setLocked(bool value)</div><div class="ttdoc">set the shape lock state (can/can&amp;#39;t be moved/edited) </div></div>
 <div class="ttc" id="classcanvascv_1_1Shape_html_a057f3ea47ffc60678feaa663b375ce27"><div class="ttname"><a href="classcanvascv_1_1Shape.html#a057f3ea47ffc60678feaa663b375ce27">canvascv::Shape::getFillColor</a></div><div class="ttdeci">cv::Scalar getFillColor() const </div><div class="ttdoc">get the fill color (fill color is not very useful for shapes right now) </div></div>
-<div class="ttc" id="namespacecanvascv_html"><div class="ttname"><a href="namespacecanvascv.html">canvascv</a></div><div class="ttdef"><b>Definition:</b> canvas.h:19</div></div>
+<div class="ttc" id="namespacecanvascv_html"><div class="ttname"><a href="namespacecanvascv.html">canvascv</a></div><div class="ttdoc">This namespace holds all the classes of the CanvasCV library. </div><div class="ttdef"><b>Definition:</b> canvas.h:20</div></div>
 <div class="ttc" id="classcanvascv_1_1Shape_html_ab36440a99a65779c9b3270dc83625b9b"><div class="ttname"><a href="classcanvascv_1_1Shape.html#ab36440a99a65779c9b3270dc83625b9b">canvascv::Shape::CBPerShape</a></div><div class="ttdeci">std::function&lt; void(Shape *, Event)&gt; CBPerShape</div><div class="ttdoc">signature of a callback which gets the Event </div><div class="ttdef"><b>Definition:</b> shape.h:57</div></div>
 <div class="ttc" id="classcanvascv_1_1Shape_html_a5819d123de258453c06b0e9dcdf60e77"><div class="ttname"><a href="classcanvascv_1_1Shape.html#a5819d123de258453c06b0e9dcdf60e77">canvascv::Shape::~Shape</a></div><div class="ttdeci">virtual ~Shape()</div><div class="ttdoc">virtual destructor </div></div>
 <div class="ttc" id="classcanvascv_1_1Shape_html_adee3cc696c7e82b0d2946e7e667ddd46"><div class="ttname"><a href="classcanvascv_1_1Shape.html#adee3cc696c7e82b0d2946e7e667ddd46">canvascv::Shape::getType</a></div><div class="ttdeci">virtual const char * getType() const =0</div><div class="ttdoc">getType is always implemented by derived to return the same static pointer per shape. </div></div>
@@ -130,12 +131,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classcanvascv_1_1Shape_html_ae35177d229d3e67a39043f82a73fda6a"><div class="ttname"><a href="classcanvascv_1_1Shape.html#ae35177d229d3e67a39043f82a73fda6a">canvascv::Shape::setVisible</a></div><div class="ttdeci">virtual void setVisible(bool value)</div><div class="ttdoc">set the shape visible state </div></div>
 <div class="ttc" id="classcanvascv_1_1Shape_html_a020a0b73278de5db5404b662b6a41363"><div class="ttname"><a href="classcanvascv_1_1Shape.html#a020a0b73278de5db5404b662b6a41363">canvascv::Shape::drawHelper</a></div><div class="ttdeci">void drawHelper(cv::Mat &amp;canvas, Shape *other)</div><div class="ttdoc">helper method for non compund shapes to draw their members </div></div>
 <div class="ttc" id="classcanvascv_1_1Shape_html_aee4961631c033ff309e8993c0a8f57b0"><div class="ttname"><a href="classcanvascv_1_1Shape.html#aee4961631c033ff309e8993c0a8f57b0">canvascv::Shape::setFillColor</a></div><div class="ttdeci">virtual void setFillColor(const cv::Scalar &amp;value)</div><div class="ttdoc">set the fill color (fill color is not very useful for shapes right now) </div></div>
-<div class="ttc" id="classcanvascv_1_1Canvas_html"><div class="ttname"><a href="classcanvascv_1_1Canvas.html">canvascv::Canvas</a></div><div class="ttdoc">The Canvas class is the entry point into CanvasCV. </div><div class="ttdef"><b>Definition:</b> canvas.h:32</div></div>
+<div class="ttc" id="classcanvascv_1_1Canvas_html"><div class="ttname"><a href="classcanvascv_1_1Canvas.html">canvascv::Canvas</a></div><div class="ttdoc">The Canvas class is the entry point into CanvasCV. </div><div class="ttdef"><b>Definition:</b> canvas.h:33</div></div>
 <div class="ttc" id="classcanvascv_1_1Shape_html_a67c1ccb98b4d24735e368ebbd03fb76d"><div class="ttname"><a href="classcanvascv_1_1Shape.html#a67c1ccb98b4d24735e368ebbd03fb76d">canvascv::Shape::setThickness</a></div><div class="ttdeci">virtual void setThickness(int value)</div><div class="ttdoc">set line thickness to use when drawing </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 8 2017 22:56:26 for CanvasCV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

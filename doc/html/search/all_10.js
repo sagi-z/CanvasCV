@@ -60,8 +60,8 @@ var searchData=
   ['setusercb',['setUserCB',['../classcanvascv_1_1CheckBoxes.html#a940fd899b9d206d4d2fc41b309bd0423',1,'canvascv::CheckBoxes::setUserCB()'],['../classcanvascv_1_1RadioButtons.html#abc50e587c83543df58d8cedcab44daaf',1,'canvascv::RadioButtons::setUserCB()'],['../classcanvascv_1_1SelectionBox.html#a760cb57780d64eee6dda96b2971ea3af',1,'canvascv::SelectionBox::setUserCB()']]],
   ['setvisible',['setVisible',['../classcanvascv_1_1CompoundShape.html#a85f3aa483aa21bae7dc60de118a60580',1,'canvascv::CompoundShape::setVisible()'],['../classcanvascv_1_1Shape.html#ae35177d229d3e67a39043f82a73fda6a',1,'canvascv::Shape::setVisible()'],['../classcanvascv_1_1CompoundWidget.html#ab81cd287c73d8ed098d0914596dd40ba',1,'canvascv::CompoundWidget::setVisible()'],['../classcanvascv_1_1Widget.html#a3c9bd8b6b90dbe3958e452e04843feb1',1,'canvascv::Widget::setVisible()']]],
   ['setwrap',['setWrap',['../classcanvascv_1_1AutoLayout.html#a633172f81a61be4e6840457ea538a694',1,'canvascv::AutoLayout']]],
-  ['shape',['Shape',['../classcanvascv_1_1Shape.html#a291cd0e85563ad130fdb91882645b3ad',1,'canvascv::Shape::Shape()'],['../classcanvascv_1_1Shape.html#a625c1941672f157dc6b9fdc83b7f360d',1,'canvascv::Shape::Shape(const Shape &amp;other)']]],
   ['shape',['Shape',['../classcanvascv_1_1Shape.html',1,'canvascv']]],
+  ['shape',['Shape',['../classcanvascv_1_1Shape.html#a291cd0e85563ad130fdb91882645b3ad',1,'canvascv::Shape::Shape()'],['../classcanvascv_1_1Shape.html#a625c1941672f157dc6b9fdc83b7f360d',1,'canvascv::Shape::Shape(const Shape &amp;other)']]],
   ['shapefactory',['ShapeFactory',['../classcanvascv_1_1ShapeFactory.html',1,'canvascv']]],
   ['shapefactoryt',['ShapeFactoryT',['../classcanvascv_1_1ShapeFactoryT.html',1,'canvascv']]],
   ['shapesconnector',['ShapesConnector',['../classcanvascv_1_1ShapesConnector.html',1,'canvascv']]],
@@ -76,6 +76,7 @@ var searchData=
   ['snow',['Snow',['../classcanvascv_1_1Colors.html#ad216ac2fbbdb22a98ebcda7d10e4f54d',1,'canvascv::Colors']]],
   ['springgreen',['SpringGreen',['../classcanvascv_1_1Colors.html#a6b3f1c0fed7b8bab92b0cd2576b9b56f',1,'canvascv::Colors']]],
   ['state',['State',['../classcanvascv_1_1Widget.html#afc39a6533455cbc3161ae3a021da0dc8',1,'canvascv::Widget']]],
+  ['std',['std',['../namespacestd.html',1,'']]],
   ['steelblue',['SteelBlue',['../classcanvascv_1_1Colors.html#ad126676b619c3cd83b37d390144b81d6',1,'canvascv::Colors']]],
   ['sunken',['sunken',['../classcanvascv_1_1Theme.html#a65ca2a83a09be3707304aeae3c53fd7e',1,'canvascv::Theme::sunken()'],['../classcanvascv_1_1TwoColoredTheme.html#a2b39a62e7aa5836b9957d1c8257167c3',1,'canvascv::TwoColoredTheme::sunken()']]],
   ['sunkenwidget',['sunkenWidget',['../classcanvascv_1_1Widget.html#ad4e11c2d30dc54520b80a442a07fb7a0',1,'canvascv::Widget']]]

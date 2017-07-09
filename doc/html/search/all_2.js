@@ -2,8 +2,9 @@ var searchData=
 [
   ['cadetblue',['CadetBlue',['../classcanvascv_1_1Colors.html#aa13abe6a87f845ca8b9ca6422c93b341',1,'canvascv::Colors']]],
   ['calldrawfg',['callDrawFG',['../classcanvascv_1_1Widget.html#a4e25259aef4fd707add107f4e4229a9f',1,'canvascv::Widget']]],
-  ['canvas',['Canvas',['../classcanvascv_1_1Canvas.html#a7049e8c687a2ac33331820d32f4f6464',1,'canvascv::Canvas']]],
   ['canvas',['Canvas',['../classcanvascv_1_1Canvas.html',1,'canvascv']]],
+  ['canvas',['Canvas',['../classcanvascv_1_1Canvas.html#a7049e8c687a2ac33331820d32f4f6464',1,'canvascv::Canvas']]],
+  ['canvascv',['canvascv',['../namespacecanvascv.html',1,'']]],
   ['cbcanvasshape',['CBCanvasShape',['../classcanvascv_1_1Canvas.html#a6436ebb5dbadc3dbf9de3da8a499cf44',1,'canvascv::Canvas']]],
   ['cbpershape',['CBPerShape',['../classcanvascv_1_1Shape.html#ab36440a99a65779c9b3270dc83625b9b',1,'canvascv::Shape']]],
   ['cbuserselection',['CBUserSelection',['../classcanvascv_1_1Widget.html#a977cbd39cf203c5866f07f3645c7e4bc',1,'canvascv::Widget']]],
@@ -33,6 +34,7 @@ var searchData=
   ['createmodal',['createModal',['../classcanvascv_1_1MsgBox.html#a1eb6af15c2393ce6cda9ce277c01d200',1,'canvascv::MsgBox']]],
   ['createshape',['createShape',['../classcanvascv_1_1Canvas.html#a630ac92458f1718d0c597e96dd5a4aef',1,'canvascv::Canvas::createShape(std::string type, const cv::Point &amp;pos=cv::Point(0, 0))'],['../classcanvascv_1_1Canvas.html#ac126ef1547509744d9968ba83ddfef36',1,'canvascv::Canvas::createShape(const cv::Point &amp;pos=cv::Point(0, 0))']]],
   ['crimson',['Crimson',['../classcanvascv_1_1Colors.html#a0ea3ae498dcd6dd86f3a2b1cffe23b26',1,'canvascv::Colors']]],
+  ['cv',['cv',['../namespacecv.html',1,'']]],
   ['cyan',['Cyan',['../classcanvascv_1_1Colors.html#a5bb20fa77dd40915ce6949e7531f925c',1,'canvascv::Colors']]],
   ['canvascv_20documentation',['CanvasCV documentation',['../index.html',1,'']]],
   ['creating_20shapes',['Creating shapes',['../tutshapes.html',1,'tutorials']]]
