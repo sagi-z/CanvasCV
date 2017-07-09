@@ -38,6 +38,7 @@ $code-background-color: #000000;
 
 // Change title color
 .site-title {
+  color: $site-title-color;
   &:visited {
     color: $site-title-color;
   }
