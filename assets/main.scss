@@ -36,6 +36,25 @@ $code-background-color: #000000;
 	height:100%;
 }
 
+// doxygen containers
+.doxygen-search-container {
+	position:relative;
+	padding-bottom:40px;
+	padding-top:20px;
+	height:0;
+	overflow:hidden;
+}
+
+.doxygen-search-results-container {
+	position:relative;
+	overflow:auto;
+}
+
+// navigation is in front of all (on mobile)
+nav.site-nav {
+    z-index: 255;
+}
+
 // Change title color
 .site-title {
   color: $site-title-color;
