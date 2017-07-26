@@ -355,7 +355,7 @@ void Canvas::deleteShape(const std::shared_ptr<Shape> &shape)
 
 void Canvas::deleteWidget(const std::shared_ptr<Widget> &widget)
 {
-    widgets.erase(find(widgets.begin(),widgets.end(),widget));
+    widget->rmvFromLayout();
     isDirty = true;
 }
 
@@ -428,6 +428,7 @@ void Canvas::enableScreenText(Scalar color, Scalar bgColor, double scale, int th
     if (! screenText.get())
     {
         screenText = Text::create(*this, Point(5,5));
+        widgets.erase(find(widgets.begin(),widgets.end(),screenText));// we manage this out of the loop
         screenText->setMaxWidth(boundaries.width);
     }
     screenText->setOutlineColor(color);
@@ -444,6 +445,7 @@ void Canvas::enableStatusMsg(Scalar color, Scalar bgColor, double scale, int thi
     if (! statusMsg.get())
     {
         statusMsg = Text::create(*this, Point(0,0));  // location, size dependent, is set during redrawOn
+        widgets.erase(find(widgets.begin(),widgets.end(),statusMsg));// we manage this out of the loop
         statusMsg->setMaxWidth(boundaries.width);
         statusMsg->setFlowAnchor(Widget::BOTTOM_LEFT);
     }
