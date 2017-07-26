@@ -94,10 +94,7 @@ void Handle::disconnectFrom(Handle &other)
 
 void Handle::broadcastPosChanged(const Point &pos)
 {
-    for (auto &cb : posChangedCBs)
-    {
-        cb(pos);
-    }
+    posChangeDispatcher.broadcast(pos);
 }
 
 void Handle::lostFocus()
@@ -183,13 +180,12 @@ int Handle::getRadius() const
 
 Handle::CBID Handle::addPosChangedCB(Handle::PosChangedCB cb)
 {
-    posChangedCBs.push_back(cb);
-    return --posChangedCBs.end();
+    return posChangeDispatcher.addCB(cb);
 }
 
 void Handle::delPosChangedCB(const Handle::CBID &id)
 {
-    posChangedCBs.erase(id);
+    return posChangeDispatcher.delCB(id);
 }
 
 }

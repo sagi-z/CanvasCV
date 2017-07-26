@@ -3,6 +3,7 @@
 
 #include "shape.h"
 #include "shapefactory.h"
+#include "canvascv/utils.h"
 
 #include <opencv2/opencv.hpp>
 #include <functional>
@@ -18,9 +19,10 @@ namespace canvascv
  */
 class Handle : public Shape
 {
+    typedef Dispathcer<const cv::Point &> DispathcerType;
 public:
-    typedef std::function<void(const cv::Point &)> PosChangedCB;
-    typedef std::list<PosChangedCB>::iterator CBID;
+    typedef DispathcerType::CBType PosChangedCB;
+    typedef DispathcerType::CBID CBID;
 
     /// return the Point location of this Handle
     const cv::Point &operator()() const {
@@ -98,7 +100,7 @@ private:
 
     void broadcastPosChanged(const cv::Point& pos);
 
-    std::list<PosChangedCB> posChangedCBs;
+    Dispathcer<const cv::Point &> posChangeDispatcher;
     std::map<Handle*, CBID> connectedHandles;
     cv::Point pt;
     bool allowSetPos;

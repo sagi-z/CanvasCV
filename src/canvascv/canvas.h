@@ -3,6 +3,7 @@
 
 #include "canvascv/colors.h"
 #include "canvascv/consts.h"
+#include "canvascv/utils.h"
 
 #include "shapes/shape.h"
 #include "widgets/widget.h"
@@ -32,9 +33,13 @@ namespace canvascv
  */
 class Canvas : public LayoutBase
 {
+    typedef Dispathcer<Shape*> ShapeDispathcer;
 public:
-    /// notification on shapes create/modify/delete from this Canvas instance
-    typedef std::function<void(Shape*)> CBCanvasShape;
+    /// CB for notification on shapes create/modify/delete from this Canvas instance
+    typedef ShapeDispathcer::CBType CBCanvasShape;
+    
+    /// CBID for notification on shapes create/modify/delete from this Canvas instance
+    typedef ShapeDispathcer::CBID CBIDCanvasShape;
 
     /**
      * @brief Canvas
@@ -154,24 +159,54 @@ public:
      *
      * Multiple registrations are allowed.
      * @param cb to invoke on shape creation
+     * @return an id to use in rmvNotifyOnShapeCreate()
      */
-    void notifyOnShapeCreate(CBCanvasShape cb);
+    CBIDCanvasShape notifyOnShapeCreate(CBCanvasShape cb);
 
     /**
      * @brief used to register for notifications on shape modification (actually when it is deselected)
      * 
      * Multiple registrations are allowed.
      * @param cb to invoke on shape modification
+     * @return an id to use in rmvNotifyOnShapeModify()
      */
-    void notifyOnShapeModify(CBCanvasShape cb);
+    CBIDCanvasShape notifyOnShapeModify(CBCanvasShape cb);
 
     /**
      * @brief used to register for notifications on shape deletion
      * 
      * Multiple registrations are allowed.
      * @param cb to invoke on shape deletion
+     * @return an id to use in rmvNotifyOnShapeDelete()
+     * @note
+     * Since the Canvas is removing all the shapes in it's DTOR (and calling CBs),
+     * your cb code should either be alive during that time, or use rmvNotifyOnShapeDelete()
+     * in your own DTORs.
      */
-    void notifyOnShapeDelete(CBCanvasShape cb);
+    CBIDCanvasShape notifyOnShapeDelete(CBCanvasShape cb);
+    
+    /**
+     * @brief used to unregister for notifications on shape creation
+     *
+     * @param cbid id returned previously from notifyOnShapeCreate()
+     */
+    void rmvNotifyOnShapeCreate(CBIDCanvasShape cbid);
+
+    /**
+     * @brief used to unregister for notifications on shape modification (actually when it is deselected)
+     * 
+     * Using the wrong cbid results in an undefined behavior.
+     * @param cbid id returned previously from notifyOnShapeModify()
+     */
+    void rmvNotifyOnShapeModify(CBIDCanvasShape cbid);
+
+    /**
+     * @brief used to unregister for notifications on shape deletion
+     * 
+     * Using the wrong cbid results in an undefined behavior.
+     * @param cbid id returned previously from notifyOnShapeDelete()
+     */
+    void rmvNotifyOnShapeDelete(CBIDCanvasShape cbid);
 
     /**
      * @brief clear all shapes from Canvas
@@ -405,9 +440,9 @@ private:
     std::list<std::shared_ptr<Widget>> widgets;
     std::shared_ptr<Shape> activeShape;
     std::shared_ptr<Widget> activeWidget;
-    std::list<CBCanvasShape> createNotifs;
-    std::list<CBCanvasShape> modifyNotifs;
-    std::list<CBCanvasShape> deleteNotifs;
+    ShapeDispathcer createNotifs;
+    ShapeDispathcer modifyNotifs;
+    ShapeDispathcer deleteNotifs;
 
     friend void operator >> (const cv::FileNode& n, Canvas& value)
     {

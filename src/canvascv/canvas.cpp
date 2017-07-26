@@ -359,19 +359,34 @@ void Canvas::deleteWidget(const std::shared_ptr<Widget> &widget)
     isDirty = true;
 }
 
-void Canvas::notifyOnShapeCreate(Canvas::CBCanvasShape cb)
+Canvas::CBIDCanvasShape Canvas::notifyOnShapeCreate(Canvas::CBCanvasShape cb)
 {
-    createNotifs.push_back(cb);
+    return createNotifs.addCB(cb);
 }
 
-void Canvas::notifyOnShapeModify(Canvas::CBCanvasShape cb)
+Canvas::CBIDCanvasShape Canvas::notifyOnShapeModify(Canvas::CBCanvasShape cb)
 {
-    modifyNotifs.push_back(cb);
+    return modifyNotifs.addCB(cb);
 }
 
-void Canvas::notifyOnShapeDelete(Canvas::CBCanvasShape cb)
+Canvas::CBIDCanvasShape Canvas::notifyOnShapeDelete(Canvas::CBCanvasShape cb)
 {
-    deleteNotifs.push_back(cb);
+    return deleteNotifs.addCB(cb);
+}
+
+void Canvas::rmvNotifyOnShapeCreate(Canvas::CBIDCanvasShape cbid)
+{
+    createNotifs.delCB(cbid); 
+}
+
+void Canvas::rmvNotifyOnShapeModify(Canvas::CBIDCanvasShape cbid)
+{
+    modifyNotifs.delCB(cbid); 
+}
+
+void Canvas::rmvNotifyOnShapeDelete(Canvas::CBIDCanvasShape cbid)
+{
+    deleteNotifs.delCB(cbid); 
 }
 
 void Canvas::clearShapes()
@@ -481,26 +496,17 @@ void Canvas::setScreenText(const string &msg)
 
 void Canvas::broadcastCreate(Shape *shape)
 {
-    for (auto &cb : createNotifs)
-    {
-        cb(shape);
-    }
+    createNotifs.broadcast(shape);
 }
 
 void Canvas::broadcastModify(Shape *shape)
 {
-    for (auto &cb : modifyNotifs)
-    {
-        cb(shape);
-    }
+    modifyNotifs.broadcast(shape);
 }
 
 void Canvas::broadcastDelete(Shape *shape)
 {
-    for (auto &cb : deleteNotifs)
-    {
-        cb(shape);
-    }
+    deleteNotifs.broadcast(shape);
 }
 
 void Canvas::processNewShape()

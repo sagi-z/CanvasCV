@@ -85,7 +85,7 @@ private:
 class CountingManager
 {
 public:
-    CountingManager(Canvas &c)
+    CountingManager(Canvas &c) : canvas(c)
     {
         c.notifyOnShapeCreate([&c, this](Shape* shape)
         {
@@ -95,7 +95,7 @@ public:
                 lineCrossings.push_back(make_pair(pLineCrossing, 0));
             }
         });
-        c.notifyOnShapeDelete([&c, this](Shape* shape)
+        delCbId = c.notifyOnShapeDelete([&c, this](Shape* shape)
         {
             if (shape->getType() == LineCrossing::type)
             {
@@ -124,9 +124,18 @@ public:
         }
         return false;
     }
+    
+    ~CountingManager()
+    {
+        // The Canvas DTOR will otherwise call
+        //  our cb after out death and crash
+        canvas.rmvNotifyOnShapeDelete(delCbId);
+    }
 
 private:
 
+    Canvas &canvas;
+    Canvas::CBIDCanvasShape delCbId;
     typedef pair<LineCrossing*,int> CountingLine;
     list<CountingLine> lineCrossings;
 };
@@ -309,7 +318,6 @@ int main()
 
     destroyAllWindows();
 
-    c.clearShapes(); // workaround for v1.0.0
     return 0;
 }
 
